@@ -1,6 +1,6 @@
 # angular-oauth2-oidc
 
-Support for OAuth 2 and OpenId Connect (OIDC) for Angular.
+Support for OAuth 2 and OpenId Connect (OIDC) in Angular.
 
 ## Credits
 
@@ -30,8 +30,7 @@ Username/Password: max/geheim
 
 ## Resources
 
-- Sample for using this lib: **will be available soon**
-- Sources of this lib: **will be available soon**
+- Sources of this lib: https://github.com/manfredsteyer/angular-oauth2-oidc
 
 
 ## Setup Provider for OAuthService

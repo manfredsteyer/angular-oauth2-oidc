@@ -444,7 +444,7 @@ export class OAuthService {
         return "Bearer " + this.getAccessToken();
     }
     
-    logOut() {
+    logOut(noRedirectToLogoutUrl: boolean = false) {
         var id_token = this.getIdToken();
         this._storage.removeItem("access_token");
         this._storage.removeItem("id_token");
@@ -455,6 +455,7 @@ export class OAuthService {
         this._storage.removeItem("id_token_expires_at");
         
         if (!this.logoutUrl) return;
+        if (noRedirectToLogoutUrl) return;
         
         let logoutUrl: string;
         
