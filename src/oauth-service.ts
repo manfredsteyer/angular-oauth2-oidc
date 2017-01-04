@@ -46,8 +46,14 @@ export class OAuthService {
         }).publish().connect();
     }
 
-    loadDiscoveryDocument(fullUrl: string): Promise<any> {
-        return new Promise((resolve, reject) => { 
+    loadDiscoveryDocument(fullUrl: string = null): Promise<any> {
+
+        return new Promise((resolve, reject) => {
+
+            if (!fullUrl) {
+                fullUrl = this.issuer + '/.well-known/openid-configuration';
+            }
+
             this.http.get(fullUrl).map(r => r.json()).subscribe(
                 (doc) => {
 

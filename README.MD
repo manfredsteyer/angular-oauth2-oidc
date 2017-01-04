@@ -145,11 +145,14 @@ export class AppComponent {
         // To also enable single-sign-out set the url for your auth-server's logout-endpoint here
         this.oauthService.logoutUrl = "https://steyer-identity-server.azurewebsites.net/identity/connect/endsession?id_token={{id_token}}";
 
-        // Discovery Document of your AuthServer as defined by OIDC 
-        let url = 'https://steyer-identity-server.azurewebsites.net/identity/.well-known/openid-configuration';
-        
+        // Discovery Document of your AuthServer as defined by OIDC
+        // You don't need to set this, when the url aligns with the oidc standard 
+        // (IssuerUrl + '/.well-known/openid-configuration') 
+        // let url = 'https://steyer-identity-server.azurewebsites.net/identity/.well-known/openid-configuration';
+        // this.oauthService.loadDiscoveryDocument(url);
+
         // Load Discovery Document and then try to login the user
-        this.oauthService.loadDiscoveryDocument(url).then(() => {
+        this.oauthService.loadDiscoveryDocument().then(() => {
 
             // This method just tries to parse the token(s) within the url when
             // the auth-server redirects the user back to the web-app
