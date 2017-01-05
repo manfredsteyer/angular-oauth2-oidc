@@ -11,6 +11,10 @@
     "moduleResolution": "node",
     "outDir": "./dist"
   },
+  "files": [
+    "src/deps.d.ts",
+    "index.ts"
+  ],
   "exclude": [
     "node_modules",
     "dist"
