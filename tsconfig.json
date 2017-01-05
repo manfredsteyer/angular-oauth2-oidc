@@ -7,13 +7,10 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "declaration": true,
+    "typeRoots": ["node_modules/@types"],
     "moduleResolution": "node",
     "outDir": "./dist"
   },
-  "files": [
-    "src/deps.d.ts",
-    "index.ts"
-  ],
   "exclude": [
     "node_modules",
     "dist"
