@@ -11,7 +11,6 @@
     "outDir": "./dist"
   },
   "files": [
-    "typings/index.d.ts",
     "src/deps.d.ts",
     "index.ts"
   ],
