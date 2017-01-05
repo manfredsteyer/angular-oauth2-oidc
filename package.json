@@ -25,9 +25,6 @@
   },
   "main": "./dist/index.js",
   "dependencies": {
-    "@types/core-js": "^0.9.35",
-    "@types/jasmine": "^2.5.40",
-    "@types/node": "^6.0.57",
     "base64-js": "^1.2.0",
     "js-base64": "^2.1.9",
     "sha256": "^0.2.0"
@@ -41,6 +38,9 @@
     "rxjs": "^5.0.1",
     "tslint": "^3.15.1",
     "typescript": "2.0.2",
+    "@types/core-js": "^0.9.35",
+    "@types/jasmine": "^2.5.40",
+    "@types/node": "^6.0.57",
     "zone.js": "0.7.2"
   },
   "engines": {
