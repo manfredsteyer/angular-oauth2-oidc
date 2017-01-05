@@ -1,6 +1,6 @@
 {
   "name": "angular-oauth2-oidc",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "scripts": {
     "lint": "tslint src/**/*.ts",
     "test": "tsc && karma start",
