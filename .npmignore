@@ -8,6 +8,8 @@ npm-debug.log
 # *.map
 # *.d.ts
 
+src/*
+
 # JetBrains
 .idea
 .project
