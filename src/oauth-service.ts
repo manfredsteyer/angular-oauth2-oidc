@@ -283,7 +283,7 @@ export class OAuthService {
         var nonceInState = stateParts[0];
         if (savedNonce === nonceInState) {
             
-            this.storeAccessTokenResponse(accessToken, null, parts['expiresIn']);
+            this.storeAccessTokenResponse(accessToken, null, parts['expires_in']);
 
             if (stateParts.length > 1) {
                 this.state = stateParts[1];
