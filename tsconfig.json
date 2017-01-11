@@ -9,7 +9,10 @@
     "declaration": true,
     "typeRoots": ["node_modules/@types"],
     "moduleResolution": "node",
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "lib": [
+      "es6", "dom"
+    ]
   },
   "files": [
     "src/deps.d.ts",
