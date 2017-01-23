@@ -338,9 +338,16 @@ export class OAuthService {
             var claims = JSON.parse(claimsJson);
             var savedNonce = this._storage.getItem("nonce");
             
-            if (claims.aud !== this.clientId) {
-                console.warn("Wrong audience: " + claims.aud);
-                return false;
+            if (Array.isArray(claims.aud)) {
+                if (claims.aud.every(v => v !== this.clientId)) {
+                    console.warn("Wrong audience: " + claims.aud.join(","));
+                    return false;
+                }
+            } else {
+                if (claims.aud !== this.clientId) {
+                    console.warn("Wrong audience: " + claims.aud);
+                    return false;
+                }
             }
 
             if (this.issuer && claims.iss !== this.issuer) {
