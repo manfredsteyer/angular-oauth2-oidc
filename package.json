@@ -4,7 +4,7 @@
   "scripts": {
     "lint": "tslint src/**/*.ts",
     "test": "tsc && karma start",
-    "prepublish": "tsc",
+    "prepublish": "ngc",
     "tsc": "tsc",
     "ngc": "ngc"
   },
