@@ -5,7 +5,8 @@
     "lint": "tslint src/**/*.ts",
     "test": "tsc && karma start",
     "prepublish": "tsc",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "ngc": "ngc"
   },
   "repository": {
     "type": "git",
