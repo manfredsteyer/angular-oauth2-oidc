@@ -479,7 +479,7 @@ export class OAuthService {
         else {
             logoutUrl = this.logoutUrl + "?id_token=" 
                                 + encodeURIComponent(id_token)
-                                + "&redirect_uri="
+                                + "&post_logout_redirect_uri="
                                 + encodeURIComponent(this.redirectUri);
         }
         location.href = logoutUrl;
