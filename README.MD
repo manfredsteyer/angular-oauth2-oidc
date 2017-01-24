@@ -31,7 +31,7 @@ Username/Password: max/geheim
 ## Resources
 
 - Sources of this lib: https://github.com/manfredsteyer/angular-oauth2-oidc
-
+- Sample Project: https://github.com/manfredsteyer/angular2-oauth-oidc-demo
 
 ## Setup Provider for OAuthService
 
@@ -91,11 +91,11 @@ export class AppComponent {
         // instead of localStorage
         this.oauthService.setStorage(sessionStorage);
 
-        // Discovery Document of your AuthServer as defined by OIDC 
-        let url = 'https://steyer-identity-server.azurewebsites.net/identity/.well-known/openid-configuration';
+        // The name of the auth-server that has to be mentioned within the token
+        this.oauthService.issuer = "https://steyer-identity-server.azurewebsites.net/identity";
         
         // Load Discovery Document and then try to login the user
-        this.oauthService.loadDiscoveryDocument(url).then(() => {
+        this.oauthService.loadDiscoveryDocument().then(() => {
 
             // This method just tries to parse the token(s) within the url when
             // the auth-server redirects the user back to the web-app
@@ -128,9 +128,6 @@ export class AppComponent {
         // The SPA's id. Register SPA with this id at the auth-server
         this.oauthService.clientId = "spa-demo";
 
-        // The name of the auth-server that has to be mentioned within the token
-        this.oauthService.issuer = "https://steyer-identity-server.azurewebsites.net/identity";
-
         // set the scope for the permissions the client should request
         this.oauthService.scope = "openid profile email voucher";
 
@@ -145,21 +142,11 @@ export class AppComponent {
         // To also enable single-sign-out set the url for your auth-server's logout-endpoint here
         this.oauthService.logoutUrl = "https://steyer-identity-server.azurewebsites.net/identity/connect/endsession?id_token={{id_token}}";
 
-        // Discovery Document of your AuthServer as defined by OIDC
-        // You don't need to set this, when the url aligns with the oidc standard 
-        // (IssuerUrl + '/.well-known/openid-configuration') 
-        // let url = 'https://steyer-identity-server.azurewebsites.net/identity/.well-known/openid-configuration';
-        // this.oauthService.loadDiscoveryDocument(url);
+        // This method just tries to parse the token(s) within the url when
+        // the auth-server redirects the user back to the web-app
+        // It dosn't send the user the the login page
+        this.oauthService.tryLogin({});      
 
-        // Load Discovery Document and then try to login the user
-        this.oauthService.loadDiscoveryDocument().then(() => {
-
-            // This method just tries to parse the token(s) within the url when
-            // the auth-server redirects the user back to the web-app
-            // It dosn't send the user the the login page
-            this.oauthService.tryLogin({});      
-
-        });
 
   }
 
