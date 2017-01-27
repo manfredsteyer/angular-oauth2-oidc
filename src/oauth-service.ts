@@ -477,7 +477,7 @@ export class OAuthService {
             logoutUrl = this.logoutUrl.replace(/\{\{id_token\}\}/, id_token);
         }
         else {
-            logoutUrl = this.logoutUrl + "?id_token=" 
+            logoutUrl = this.logoutUrl + "?id_token_hint=" 
                                 + encodeURIComponent(id_token)
                                 + "&post_logout_redirect_uri="
                                 + encodeURIComponent(this.redirectUri);
