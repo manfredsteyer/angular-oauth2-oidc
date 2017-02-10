@@ -17,6 +17,7 @@ export class OAuthService {
     public resource = "";
     public rngUrl = "";
     public oidc = false;
+    public hybrid = false;
     public options: any;
     public state = "";
     public issuer = "";
@@ -143,16 +144,15 @@ export class OAuthService {
 
     }
 
+    fetchTokenUsingCode(code: string) {
 
-    refreshToken() {
-
-        return new Promise((resolve, reject) => { 
+        return new Promise((resolve, reject) => {
             let search = new URLSearchParams();
-            search.set('grant_type', 'refresh_token');
+            search.set('grant_type', 'authorization_code');
             search.set('client_id', this.clientId);
-            search.set('scope', this.scope);
-            search.set('refresh_token', this._storage.getItem('refresh_token'));
-            
+            search.set('redirect_uri', this.redirectUri);
+            search.set('code', code);
+
             if (this.dummyClientSecret) {
                 search.set('client_secret', this.dummyClientSecret);
             }
@@ -164,16 +164,54 @@ export class OAuthService {
 
             this.http.post(this.tokenEndpoint, params, { headers }).map(r => r.json()).subscribe(
                 (tokenResponse) => {
-                    console.debug('refresh tokenResponse', tokenResponse);
+                    console.debug('tokenResponse', tokenResponse);
                     this.storeAccessTokenResponse(tokenResponse.access_token, tokenResponse.refresh_token, tokenResponse.expires_in);
+
                     resolve(tokenResponse);
                 },
                 (err) => {
-                    console.error('Error performing password flow', err);
+                    console.error('Error performing code flow', err);
                     reject(err);
                 }
             );
         });
+
+    }
+
+
+    refreshToken() {
+
+        const refreshToken = this._storage.getItem('refresh_token');
+        if (refreshToken) {
+            return new Promise((resolve, reject) => { 
+                let search = new URLSearchParams();
+                search.set('grant_type', 'refresh_token');
+                search.set('client_id', this.clientId);
+                search.set('scope', this.scope);
+                search.set('refresh_token', refreshToken);
+                
+                if (this.dummyClientSecret) {
+                    search.set('client_secret', this.dummyClientSecret);
+                }
+
+                let headers = new Headers();
+                headers.set('Content-Type', 'application/x-www-form-urlencoded');
+
+                let params = search.toString();
+
+                this.http.post(this.tokenEndpoint, params, { headers }).map(r => r.json()).subscribe(
+                    (tokenResponse) => {
+                        console.debug('refresh tokenResponse', tokenResponse);
+                        this.storeAccessTokenResponse(tokenResponse.access_token, tokenResponse.refresh_token, tokenResponse.expires_in);
+                        resolve(tokenResponse);
+                    },
+                    (err) => {
+                        console.error('Error performing password flow', err);
+                        reject(err);
+                    }
+                );
+            });
+        }
 
     }
 
@@ -195,7 +233,11 @@ export class OAuthService {
             var response_type = "token";
 
             if (that.oidc) {
-                response_type = "id_token+token";
+                response_type = "id_token " + response_type;
+            }
+
+            if (that.hybrid) {
+                response_type = "code " + response_type;
             }
 
             var url = that.loginUrl 
@@ -270,6 +312,7 @@ export class OAuthService {
         var accessToken = parts["access_token"];
         var idToken = parts["id_token"];
         var state = parts["state"];
+        var code = parts["code"];
         
         var oidcSuccess = false;
         var oauthSuccess = false;
@@ -296,10 +339,14 @@ export class OAuthService {
         if (!oauthSuccess) return false;
 
         if (this.oidc) {
-            oidcSuccess = this.processIdToken(idToken, accessToken);
+            oidcSuccess = this.processIdToken(idToken, accessToken, code);
             if (!oidcSuccess) return false;  
         }
-        
+
+        if (this.hybrid && code) {
+            this.fetchTokenUsingCode(code);
+        }
+
         if (options.validationHandler) {
             
             var validationParams = {accessToken: accessToken, idToken: idToken};
@@ -331,7 +378,7 @@ export class OAuthService {
         return true;
     };
     
-    processIdToken(idToken, accessToken) {
+    processIdToken(idToken, accessToken, code) {
             var tokenParts = idToken.split(".");
             var claimsBase64 = this.padBase64(tokenParts[1]);
             var claimsJson = Base64.decode(claimsBase64);
@@ -362,6 +409,11 @@ export class OAuthService {
             
             if (accessToken && !this.checkAtHash(accessToken, claims)) {
                 console.warn("Wrong at_hash");
+                return false;
+            }
+
+            if (code && !this.checkCHash(code, claims)) {
+                console.warn("Wrong c_hash");
                 return false;
             }
             
@@ -575,5 +627,24 @@ export class OAuthService {
         
         return (atHash == claimsAtHash);
     }
+
+    checkCHash(code, idClaims) {
+        if (!code || !idClaims || !idClaims.c_hash) return true;
+        var codeHash: Array<any> = sha256(code, { asBytes: true });
+        var leftMostHalf = codeHash.slice(0, (codeHash.length / 2));
+        var codeHashBase64 = fromByteArray(leftMostHalf);
+        var cHash = codeHashBase64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
+        var claimsCHash = idClaims.c_hash.replace(/=/g, "");
+
+        var cHash = codeHashBase64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
+
+        if (cHash != claimsCHash) {
+            console.warn("exptected c_hash: " + cHash);
+            console.warn("actual c_hash: " + claimsCHash);
+        }
+
+
+        return (cHash == claimsCHash);
+    };
     
 }
