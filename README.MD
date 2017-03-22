@@ -35,7 +35,7 @@ Username/Password: max/geheim
 
 ## Setup Provider for OAuthService
 
-```
+```ts
 import { OAuthModule } from 'angular-oauth2-oidc';
 [...]
 
@@ -67,7 +67,9 @@ This section shows how to use the implicit flow, which is redirecting the user t
 
 To configure the library you just have to set some properties on startup. For this, the following sample uses the constructor of the AppComponent which is called before routing kicks in.
 
-```
+```ts
+import { OAuthService } from "angular-oauth2-oidc/dist";
+
 @Component({ ... })
 export class AppComponent {
 
@@ -113,7 +115,9 @@ export class AppComponent {
 
 When you don't have a discovery document, you have to configure more properties manually:
 
-```
+```ts
+import { OAuthService } from "angular-oauth2-oidc/dist";
+
 @Component({ ... })
 export class AppComponent {
 
@@ -155,9 +159,8 @@ export class AppComponent {
 
 ### Home-Component (for login)
 
-```
-import { Component } from '@angular/core';
-import { OAuthService } from 'angular2-oauth2/oauth-service';
+```ts
+import { OAuthService } from "angular-oauth2-oidc/dist";
 
 @Component({
     templateUrl: "app/home.html" 
@@ -184,7 +187,7 @@ export class HomeComponent {
 }
 ```
 
-```
+```html
 <h1 *ngIf="!name">
     Hallo
 </h1>
@@ -210,7 +213,7 @@ In cases where security relies on the id_token (e. g. in hybrid apps that use it
 you could use the callback ``validationHandler`` to define the logic to validate the token's signature. 
 The following sample uses the validation-endpoint of [IdentityServer3](https://github.com/IdentityServer/IdentityServer3) for this:
 
-```
+```ts
 this.oauthService.tryLogin({
     validationHandler: context => {
         var search = new URLSearchParams();
@@ -225,7 +228,7 @@ this.oauthService.tryLogin({
 
 Pass this Header to the used method of the ``Http``-Service within an Instance of the class ``Headers``:
 
-```
+```ts
 var headers = new Headers({
     "Authorization": "Bearer " + this.oauthService.getAccessToken()
 });
@@ -239,7 +242,7 @@ well as the id_token, if it was requested. If there is an id_token, the lib vali
 (aud, iss, nbf, exp, at_hash) and - if a ``validationHandler`` has been set up - with this ``validationHandler``, e. g. to validate
 the signature of the id_token.
 
-```
+```ts
 this.oauthService.tryLogin({
     onTokenReceived: context => {
         //
@@ -268,7 +271,9 @@ To configure the library you just have to set some properties on startup. For th
 
 Please not, that this configuation is quite similar to the one for the implcit flow.
 
-```
+```ts
+import { OAuthService } from "angular-oauth2-oidc/dist";
+
 @Component({ ... })
 export class AppComponent {
 
@@ -307,7 +312,9 @@ export class AppComponent {
 
 In cases where you don't have an OIDC based discovery document you have to configure some more properties manually:
 
-```
+```ts
+import { OAuthService } from "angular-oauth2-oidc/dist";
+
 @Component({ ... })
 export class AppComponent {
 
@@ -353,7 +360,7 @@ export class AppComponent {
 
 ## Fetching an Access Token by providing the current user's credentials
 
-```
+```ts
 this.oauthService.fetchTokenUsingPasswordFlow('max', 'geheim').then((resp) => {
           
       // Loading data about the user
@@ -370,7 +377,7 @@ this.oauthService.fetchTokenUsingPasswordFlow('max', 'geheim').then((resp) => {
 
 There is also a short form for fetching the token and loading the user profile:
 
-```
+```ts
 this.oauthService.fetchTokenUsingPasswordFlowAndLoadUserProfile('max', 'geheim').then(() => {
       let claims = this.oAuthService.getIdentityClaims();
       if (claims) console.debug('given_name', claims.given_name); 
@@ -381,7 +388,7 @@ this.oauthService.fetchTokenUsingPasswordFlowAndLoadUserProfile('max', 'geheim')
 
 Using the password flow you MIGHT get a refresh token (which isn't the case with the implicit flow by design!). You can use this token later to get a new access token, e. g. after it expired.
 
-```
+```ts
 this.oauthService.refreshToken().then(() => {
           console.debug('ok');
 })
