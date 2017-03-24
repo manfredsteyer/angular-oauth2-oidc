@@ -1,5 +1,5 @@
-import {Base64} from 'js-base64';
-import {fromByteArray} from 'base64-js';
+import { Base64 } from 'js-base64';
+import { fromByteArray } from 'base64-js';
 import * as _sha256 from 'sha256';
 import { Http, URLSearchParams, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
@@ -25,9 +25,10 @@ export class OAuthService {
     public clearHashAfterLogin: boolean = true;
     public tokenEndpoint: string;
     public userinfoEndpoint: string;
+    public revocationEndpoint: string;
 
     public dummyClientSecret: string;
-    
+
     public discoveryDocumentLoaded: boolean = false;
     public discoveryDocumentLoaded$: Observable<any>;
     private discoveryDocumentLoadedSender: Observer<any>;
@@ -37,7 +38,7 @@ export class OAuthService {
     public setStorage(storage: Storage) {
         this._storage = storage;
     }
-    
+
     private _storage: Storage = localStorage;
 
     constructor(private http: Http) {
@@ -64,6 +65,7 @@ export class OAuthService {
                     // this.jwks_uri = this.jwks_uri;
                     this.tokenEndpoint = doc.token_endpoint;
                     this.userinfoEndpoint = doc.userinfo_endpoint;
+                    this.revocationEndpoint = doc.revocation_endpoint;
 
                     this.discoveryDocumentLoaded = true;
                     this.discoveryDocumentLoadedSender.next(doc);
@@ -80,8 +82,8 @@ export class OAuthService {
 
     fetchTokenUsingPasswordFlowAndLoadUserProfile(userName: string, password: string) {
         return this
-                .fetchTokenUsingPasswordFlow(userName, password)
-                .then(() => this.loadUserProfile());
+            .fetchTokenUsingPasswordFlow(userName, password)
+            .then(() => this.loadUserProfile());
     }
 
     loadUserProfile() {
@@ -110,14 +112,14 @@ export class OAuthService {
 
     fetchTokenUsingPasswordFlow(userName: string, password: string) {
 
-        return new Promise((resolve, reject) => { 
+        return new Promise((resolve, reject) => {
             let search = new URLSearchParams();
             search.set('grant_type', 'password');
             search.set('client_id', this.clientId);
             search.set('scope', this.scope);
             search.set('username', userName);
             search.set('password', password);
-            
+
             if (this.dummyClientSecret) {
                 search.set('client_secret', this.dummyClientSecret);
             }
@@ -143,16 +145,45 @@ export class OAuthService {
 
     }
 
+    revokeToken() {
+       return new Promise((resolve, reject) => {
+            let search = new URLSearchParams();
+            search.set('token_type_hint', 'refresh_token');
+            search.set('client_id', this.clientId);
+            search.set('token', this._storage.getItem('refresh_token'));
+
+            if (this.dummyClientSecret) {
+                search.set('client_secret', this.dummyClientSecret);
+            }
+
+            let headers = new Headers();
+            headers.set('Content-Type', 'application/x-www-form-urlencoded');
+
+            let params = search.toString();
+            this.logOut(true);
+            this.http.post(this.revocationEndpoint, params, { headers }).map(r => r.json()).subscribe(
+                () => {
+                    console.debug('token revoked');
+                    resolve();
+                },
+                (err) => {
+                    console.error('Error performing token revocation', err);
+                    reject(err);
+                }
+            );
+        });
+    }
+
 
     refreshToken() {
 
-        return new Promise((resolve, reject) => { 
+        return new Promise((resolve, reject) => {
             let search = new URLSearchParams();
             search.set('grant_type', 'refresh_token');
             search.set('client_id', this.clientId);
             search.set('scope', this.scope);
             search.set('refresh_token', this._storage.getItem('refresh_token'));
-            
+
             if (this.dummyClientSecret) {
                 search.set('client_secret', this.dummyClientSecret);
             }
@@ -177,7 +208,7 @@ export class OAuthService {
 
     }
 
-    
+
     createLoginUrl(state) {
         var that = this;
 
@@ -189,7 +220,7 @@ export class OAuthService {
                 state = nonce + ";" + state;
             }
             else {
-                state = nonce;   
+                state = nonce;
             }
 
             var response_type = "token";
@@ -198,26 +229,26 @@ export class OAuthService {
                 response_type = "id_token+token";
             }
 
-            var url = that.loginUrl 
-                        + "?response_type="
-                        + response_type
-                        + "&client_id=" 
-                        + encodeURIComponent(that.clientId)
-                        + "&state=" 
-                        + encodeURIComponent(state)
-                        + "&redirect_uri=" 
-                        + encodeURIComponent(that.redirectUri) 
-                        + "&scope=" 
-                        + encodeURIComponent(that.scope);
+            var url = that.loginUrl
+                + "?response_type="
+                + response_type
+                + "&client_id="
+                + encodeURIComponent(that.clientId)
+                + "&state="
+                + encodeURIComponent(state)
+                + "&redirect_uri="
+                + encodeURIComponent(that.redirectUri)
+                + "&scope="
+                + encodeURIComponent(that.scope);
 
             if (that.resource) {
                 url += "&resource=" + encodeURIComponent(that.resource);
             }
-            
+
             if (that.oidc) {
                 url += "&nonce=" + encodeURIComponent(nonce);
             }
-            
+
             return url;
         });
     };
@@ -226,16 +257,16 @@ export class OAuthService {
         this.createLoginUrl(additionalState).then(function (url) {
             location.href = url;
         })
-        .catch(function (error) {
-            console.error("Error in initImplicitFlow");
-            console.error(error);
-        });
+            .catch(function (error) {
+                console.error("Error in initImplicitFlow");
+                console.error(error);
+            });
     };
-    
+
     callEventIfExists(options: any) {
         var that = this;
         if (options.onTokenReceived) {
-            var tokenParams = { 
+            var tokenParams = {
                 idClaims: that.getIdentityClaims(),
                 idToken: that.getIdToken(),
                 accessToken: that.getAccessToken(),
@@ -261,16 +292,16 @@ export class OAuthService {
     }
 
     tryLogin(options) {
-        
-        options = options || { };
-        
-        
+
+        options = options || {};
+
+
         var parts = this.getFragment();
 
         var accessToken = parts["access_token"];
         var idToken = parts["id_token"];
         var state = parts["state"];
-        
+
         var oidcSuccess = false;
         var oauthSuccess = false;
 
@@ -282,7 +313,7 @@ export class OAuthService {
         var stateParts = state.split(';');
         var nonceInState = stateParts[0];
         if (savedNonce === nonceInState) {
-            
+
             this.storeAccessTokenResponse(accessToken, null, parts['expires_in']);
 
             if (stateParts.length > 1) {
@@ -292,24 +323,24 @@ export class OAuthService {
             oauthSuccess = true;
 
         }
-        
+
         if (!oauthSuccess) return false;
 
         if (this.oidc) {
             oidcSuccess = this.processIdToken(idToken, accessToken);
-            if (!oidcSuccess) return false;  
+            if (!oidcSuccess) return false;
         }
-        
+
         if (options.validationHandler) {
-            
-            var validationParams = {accessToken: accessToken, idToken: idToken};
-            
+
+            var validationParams = { accessToken: accessToken, idToken: idToken };
+
             options
                 .validationHandler(validationParams)
                 .then(() => {
                     this.callEventIfExists(options);
                 })
-                .catch(function(reason) {
+                .catch(function (reason) {
                     console.error('Error validating tokens');
                     console.error(reason);
                 })
@@ -317,7 +348,7 @@ export class OAuthService {
         else {
             this.callEventIfExists(options);
         }
-        
+
         // NEXT VERSION: Notify parent-window (iframe-refresh)
         /*
         var win = window;
@@ -327,83 +358,83 @@ export class OAuthService {
         */
 
         if (this.clearHashAfterLogin) location.hash = '';
-        
+
         return true;
     };
-    
+
     processIdToken(idToken, accessToken) {
-            var tokenParts = idToken.split(".");
-            var claimsBase64 = this.padBase64(tokenParts[1]);
-            var claimsJson = Base64.decode(claimsBase64);
-            var claims = JSON.parse(claimsJson);
-            var savedNonce = this._storage.getItem("nonce");
-            
-            if (Array.isArray(claims.aud)) {
-                if (claims.aud.every(v => v !== this.clientId)) {
-                    console.warn("Wrong audience: " + claims.aud.join(","));
-                    return false;
-                }
-            } else {
-                if (claims.aud !== this.clientId) {
-                    console.warn("Wrong audience: " + claims.aud);
-                    return false;
-                }
-            }
+        var tokenParts = idToken.split(".");
+        var claimsBase64 = this.padBase64(tokenParts[1]);
+        var claimsJson = Base64.decode(claimsBase64);
+        var claims = JSON.parse(claimsJson);
+        var savedNonce = this._storage.getItem("nonce");
 
-            if (this.issuer && claims.iss !== this.issuer) {
-                console.warn("Wrong issuer: " + claims.iss);
+        if (Array.isArray(claims.aud)) {
+            if (claims.aud.every(v => v !== this.clientId)) {
+                console.warn("Wrong audience: " + claims.aud.join(","));
                 return false;
             }
-
-            if (claims.nonce !== savedNonce) {
-                console.warn("Wrong nonce: " + claims.nonce);
+        } else {
+            if (claims.aud !== this.clientId) {
+                console.warn("Wrong audience: " + claims.aud);
                 return false;
             }
-            
-            if (accessToken && !this.checkAtHash(accessToken, claims)) {
-                console.warn("Wrong at_hash");
-                return false;
-            }
-            
-            // Das Prüfen des Zertifikates wird der Serverseite überlassen!
+        }
 
-            var now = Date.now();
-            var issuedAtMSec = claims.iat * 1000;
-            var expiresAtMSec = claims.exp * 1000;
-            
-            var tenMinutesInMsec = 1000 * 60 * 10;
+        if (this.issuer && claims.iss !== this.issuer) {
+            console.warn("Wrong issuer: " + claims.iss);
+            return false;
+        }
 
-            if (issuedAtMSec - tenMinutesInMsec >= now  || expiresAtMSec + tenMinutesInMsec <= now) {
-                console.warn("Token has been expired");
-                console.warn({
-                    now: now,
-                    issuedAtMSec: issuedAtMSec,
-                    expiresAtMSec: expiresAtMSec
-                });
-                return false;
-            }
+        if (claims.nonce !== savedNonce) {
+            console.warn("Wrong nonce: " + claims.nonce);
+            return false;
+        }
 
-            this._storage.setItem("id_token", idToken);
-            this._storage.setItem("id_token_claims_obj", claimsJson);
-            this._storage.setItem("id_token_expires_at", "" + expiresAtMSec);
-            
-            if (this.validationHandler) {
-                this.validationHandler(idToken)
-            }
-            
-            return true;
+        if (accessToken && !this.checkAtHash(accessToken, claims)) {
+            console.warn("Wrong at_hash");
+            return false;
+        }
+
+        // Das Prüfen des Zertifikates wird der Serverseite überlassen!
+
+        var now = Date.now();
+        var issuedAtMSec = claims.iat * 1000;
+        var expiresAtMSec = claims.exp * 1000;
+
+        var tenMinutesInMsec = 1000 * 60 * 10;
+
+        if (issuedAtMSec - tenMinutesInMsec >= now || expiresAtMSec + tenMinutesInMsec <= now) {
+            console.warn("Token has been expired");
+            console.warn({
+                now: now,
+                issuedAtMSec: issuedAtMSec,
+                expiresAtMSec: expiresAtMSec
+            });
+            return false;
+        }
+
+        this._storage.setItem("id_token", idToken);
+        this._storage.setItem("id_token_claims_obj", claimsJson);
+        this._storage.setItem("id_token_expires_at", "" + expiresAtMSec);
+
+        if (this.validationHandler) {
+            this.validationHandler(idToken)
+        }
+
+        return true;
     }
-    
+
     getIdentityClaims() {
         var claims = this._storage.getItem("id_token_claims_obj");
         if (!claims) return null;
         return JSON.parse(claims);
     }
-    
+
     getIdToken() {
         return this._storage.getItem("id_token");
     }
-    
+
     padBase64(base64data) {
         while (base64data.length % 4 !== 0) {
             base64data += "=";
@@ -414,7 +445,7 @@ export class OAuthService {
     tryLoginWithIFrame() {
         throw new Error("tryLoginWithIFrame has not been implemented so far");
     };
-    
+
     tryRefresh(timeoutInMsec) {
         throw new Error("tryRefresh has not been implemented so far");
     };
@@ -437,7 +468,7 @@ export class OAuthService {
 
         return false;
     };
-    
+
     hasValidIdToken() {
         if (this.getIdToken()) {
 
@@ -452,11 +483,11 @@ export class OAuthService {
 
         return false;
     };
-    
+
     authorizationHeader() {
         return "Bearer " + this.getAccessToken();
     }
-    
+
     logOut(noRedirectToLogoutUrl: boolean = false) {
         var id_token = this.getIdToken();
         this._storage.removeItem("access_token");
@@ -466,21 +497,21 @@ export class OAuthService {
         this._storage.removeItem("expires_at");
         this._storage.removeItem("id_token_claims_obj");
         this._storage.removeItem("id_token_expires_at");
-        
+
         if (!this.logoutUrl) return;
         if (noRedirectToLogoutUrl) return;
-        
+
         let logoutUrl: string;
-        
+
         // For backward compatibility
         if (this.logoutUrl.indexOf('{{') > -1) {
             logoutUrl = this.logoutUrl.replace(/\{\{id_token\}\}/, id_token);
         }
         else {
-            logoutUrl = this.logoutUrl + "?id_token_hint=" 
-                                + encodeURIComponent(id_token)
-                                + "&post_logout_redirect_uri="
-                                + encodeURIComponent(this.redirectUri);
+            logoutUrl = this.logoutUrl + "?id_token_hint="
+                + encodeURIComponent(id_token)
+                + "&post_logout_redirect_uri="
+                + encodeURIComponent(this.redirectUri);
         }
         location.href = logoutUrl;
     };
@@ -495,9 +526,9 @@ export class OAuthService {
     };
 
     createNonce() {
-        
-        return new Promise((resolve, reject) => { 
-        
+
+        return new Promise((resolve, reject) => {
+
             if (this.rngUrl) {
                 throw new Error("createNonce with rng-web-api has not been implemented so far");
             }
@@ -507,10 +538,10 @@ export class OAuthService {
 
                 for (var i = 0; i < 40; i++)
                     text += possible.charAt(Math.floor(Math.random() * possible.length));
-                
+
                 resolve(text);
             }
-        
+
         });
     };
 
@@ -555,25 +586,25 @@ export class OAuthService {
         return data;
     };
 
-    
+
 
     checkAtHash(accessToken, idClaims) {
-        if (!accessToken || !idClaims || !idClaims.at_hash ) return true;
+        if (!accessToken || !idClaims || !idClaims.at_hash) return true;
         var tokenHash: Array<any> = sha256(accessToken, { asBytes: true });
-        var leftMostHalf = tokenHash.slice(0, (tokenHash.length/2) );
+        var leftMostHalf = tokenHash.slice(0, (tokenHash.length / 2));
         var tokenHashBase64 = fromByteArray(leftMostHalf);
         var atHash = tokenHashBase64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
         var claimsAtHash = idClaims.at_hash.replace(/=/g, "");
-        
+
         var atHash = tokenHashBase64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
 
         if (atHash != claimsAtHash) {
-            console.warn("exptected at_hash: " + atHash);    
+            console.warn("exptected at_hash: " + atHash);
             console.warn("actual at_hash: " + claimsAtHash);
         }
-        
-        
+
+
         return (atHash == claimsAtHash);
     }
-    
+
 }
