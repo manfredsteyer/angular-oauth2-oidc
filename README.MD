@@ -157,7 +157,7 @@ export class AppComponent {
 
 ```
 import { Component } from '@angular/core';
-import { OAuthService } from 'angular2-oauth2/oauth-service';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
     templateUrl: "app/home.html" 
