@@ -4,6 +4,7 @@ import * as _sha256 from 'sha256';
 import { Http, URLSearchParams, Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { Observable, Observer } from 'rxjs';
+import * as moment from 'moment';
 
 let sha256: any = _sha256;
 
@@ -26,8 +27,8 @@ export class OAuthService {
     public tokenEndpoint: string;
     public userinfoEndpoint: string;
     public revocationEndpoint: string;
-
     public dummyClientSecret: string;
+    public autoRefreshToken: boolean = false;
 
     public discoveryDocumentLoaded: boolean = false;
     public discoveryDocumentLoaded$: Observable<any>;
@@ -36,6 +37,9 @@ export class OAuthService {
     private grantTypesSupported: Array<string> = [];
 
     private _storage: Storage = localStorage;
+
+    private TOKEN_REFRESH_WHEN_X_SECONDS_LEFT = 30;
+    private refreshTimeout: any;
 
     public setStorage(storage: Storage) {
         this._storage = storage;
@@ -134,6 +138,10 @@ export class OAuthService {
                     console.debug('tokenResponse', tokenResponse);
                     this.storeAccessTokenResponse(tokenResponse.access_token, tokenResponse.refresh_token, tokenResponse.expires_in);
 
+                    if (this.autoRefreshToken) {
+                        this.startRefreshTimer();
+                    }
+
                     resolve(tokenResponse);
                 },
                 (err) => {
@@ -161,7 +169,7 @@ export class OAuthService {
 
             let params = search.toString();
             this.logOut(true);
-            this.http.post(this.revocationEndpoint, params, { headers }).map(r => r.json()).subscribe(
+            this.http.post(this.revocationEndpoint, params, { headers }).subscribe(
                 () => {
                     console.debug('token revoked');
                     resolve();
@@ -197,6 +205,11 @@ export class OAuthService {
                 (tokenResponse) => {
                     console.debug('refresh tokenResponse', tokenResponse);
                     this.storeAccessTokenResponse(tokenResponse.access_token, tokenResponse.refresh_token, tokenResponse.expires_in);
+
+                    if (this.autoRefreshToken) {
+                        this.startRefreshTimer();
+                    }
+
                     resolve(tokenResponse);
                 },
                 (err) => {
@@ -208,6 +221,30 @@ export class OAuthService {
 
     }
 
+
+
+    calculateRefreshTimeOut() {
+
+        let tokenExpiresAt = moment(parseInt(this._storage.getItem('expires_at')));
+
+        let timeout = tokenExpiresAt.diff(moment()) - (this.TOKEN_REFRESH_WHEN_X_SECONDS_LEFT * 1000);
+
+        console.debug('JWT Access Token expires at ' + tokenExpiresAt.format('HH:mm:ss'));
+        console.debug('Will refresh JWT token in ' + (timeout / 1000) + ' seconds (at ' + moment().add(timeout, 'milliseconds').format('HH:mm:ss') + ')');
+
+        return timeout;
+    }
+
+    startRefreshTimer() {
+        let interval = this.calculateRefreshTimeOut();
+        if (interval > 0) {
+            clearTimeout(this.refreshTimeout);
+            this.refreshTimeout = setTimeout(() => { this.refreshToken(); }, interval);
+        }
+    }
+    stopRefreshTimer() {
+        clearTimeout(this.refreshTimeout);
+    }
 
     createLoginUrl(state) {
         let that = this;
@@ -357,6 +394,10 @@ export class OAuthService {
 
         if (this.clearHashAfterLogin) { location.hash = ''; }
 
+        if (this.autoRefreshToken) {
+            this.startRefreshTimer();
+        }
+
         return true;
     };
 
@@ -487,6 +528,11 @@ export class OAuthService {
     }
 
     logOut(noRedirectToLogoutUrl: boolean = false) {
+
+        if (this.autoRefreshToken) {
+            this.stopRefreshTimer();
+        }
+
         let id_token = this.getIdToken();
         this._storage.removeItem('access_token');
         this._storage.removeItem('id_token');
