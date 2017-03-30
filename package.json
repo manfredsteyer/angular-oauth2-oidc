@@ -29,6 +29,7 @@
   "dependencies": {
     "base64-js": "^1.2.0",
     "js-base64": "^2.1.9",
+    "moment": "^2.18.1",
     "sha256": "^0.2.0"
   },
   "devDependencies": {

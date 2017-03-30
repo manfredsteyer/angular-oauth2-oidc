@@ -1,6 +1,6 @@
 import { OAuthService } from './src/oauth-service';
-import { NgModule, ModuleWithProviders } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 export * from './src/oauth-service';
 
