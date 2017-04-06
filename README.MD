@@ -68,7 +68,7 @@ This section shows how to use the implicit flow, which is redirecting the user t
 To configure the library you just have to set some properties on startup. For this, the following sample uses the constructor of the AppComponent which is called before routing kicks in.
 
 ```ts
-import { OAuthService } from "angular-oauth2-oidc/dist";
+import { OAuthService } from "angular-oauth2-oidc";
 
 @Component({ ... })
 export class AppComponent {
@@ -116,7 +116,7 @@ export class AppComponent {
 When you don't have a discovery document, you have to configure more properties manually:
 
 ```ts
-import { OAuthService } from "angular-oauth2-oidc/dist";
+import { OAuthService } from "angular-oauth2-oidc";
 
 @Component({ ... })
 export class AppComponent {
@@ -160,7 +160,7 @@ export class AppComponent {
 ### Home-Component (for login)
 
 ```ts
-import { OAuthService } from "angular-oauth2-oidc/dist";
+import { OAuthService } from "angular-oauth2-oidc";
 
 @Component({
     templateUrl: "app/home.html" 
@@ -272,7 +272,7 @@ To configure the library you just have to set some properties on startup. For th
 Please not, that this configuation is quite similar to the one for the implcit flow.
 
 ```ts
-import { OAuthService } from "angular-oauth2-oidc/dist";
+import { OAuthService } from "angular-oauth2-oidc";
 
 @Component({ ... })
 export class AppComponent {
@@ -313,7 +313,7 @@ export class AppComponent {
 In cases where you don't have an OIDC based discovery document you have to configure some more properties manually:
 
 ```ts
-import { OAuthService } from "angular-oauth2-oidc/dist";
+import { OAuthService } from "angular-oauth2-oidc";
 
 @Component({ ... })
 export class AppComponent {
