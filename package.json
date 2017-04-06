@@ -3,7 +3,7 @@
   "version": "1.0.20",
   "scripts": {
     "lint": "tslint src/**/*.ts",
-    "test": "tsc && karma start",
+    "test": "node node_modules/karma/bin/karma start karma.config.js --auto-watch",
     "prepublish": "ngc",
     "tsc": "tsc",
     "ngc": "ngc"
@@ -44,7 +44,7 @@
     "codelyzer": "^0.0.28",
     "rxjs": "^5.0.1",
     "tslint": "^3.15.1",
-    "typescript": "2.0.2",
+    "typescript": "^2.2.2",
     "zone.js": "0.7.2"
   },
   "engines": {
