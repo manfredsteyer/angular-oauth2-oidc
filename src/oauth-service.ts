@@ -266,6 +266,9 @@ export class OAuthService {
         
         
         var parts = this.getFragment();
+        if(parts === false){
+           return false;
+        }
 
         var accessToken = parts["access_token"];
         var idToken = parts["id_token"];
@@ -516,7 +519,14 @@ export class OAuthService {
 
     getFragment() {
         if (window.location.hash.indexOf("#") === 0) {
-            return this.parseQueryString(window.location.hash.substr(1));
+            if(this.redirectUri.indexOf('#')) {
+                var returnUrlHashPart = this.redirectUri.split('#');
+                var currentHashPart = window.location.hash.substr(1);
+                if(currentHashPart.indexOf(returnUrlHashPart[1]) === 0) {
+                    return this.parseQueryString(window.location.hash.substr(1));
+                }
+            }
+            return false;
         } else {
             return {};
         }
@@ -530,7 +540,10 @@ export class OAuthService {
         }
 
         pairs = queryString.split("&");
-
+        if(pairs.length && pairs[0].indexOf("?")){
+            var firstPart = pairs[0].split("?");
+            pairs[0] = firstPart[1];
+        }
         for (var i = 0; i < pairs.length; i++) {
             pair = pairs[i];
             separatorIndex = pair.indexOf("=");
