@@ -211,6 +211,10 @@ export class OAuthService {
                         + "&scope=" 
                         + encodeURIComponent(that.scope);
 
+            if (that.loginUrlArgs != null && that.loginUrlArgs != '') {
+                url = url + "&" + that.loginUrlArgs;
+            }
+            
             if (that.resource) {
                 url += "&resource=" + encodeURIComponent(that.resource);
             }
