@@ -13,6 +13,7 @@ export class OAuthService {
     public clientId = "";
     public redirectUri = "";
     public loginUrl = "";
+    public loginUrlArgs = "";
     public scope = "";
     public resource = "";
     public rngUrl = "";
