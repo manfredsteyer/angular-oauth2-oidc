@@ -135,14 +135,14 @@ export class OAuthService {
 
     fetchTokenUsingPasswordFlow(userName: string, password: string, namespace?: string) {
 
-        return new Promise((resolve, reject) => { 
+        return new Promise((resolve, reject) => {
             let search = new URLSearchParams();
             search.set('grant_type', 'password');
             search.set('client_id', this.clientId);
             search.set('scope', this.scope);
             search.set('username', userName);
             search.set('password', password);
-            
+
             if (this.dummyClientSecret) {
                 search.set('client_secret', this.dummyClientSecret);
             }
@@ -171,13 +171,13 @@ export class OAuthService {
 
     refreshToken(namespace?: string) {
 
-        return new Promise((resolve, reject) => { 
+        return new Promise((resolve, reject) => {
             let search = new URLSearchParams();
             search.set('grant_type', 'refresh_token');
             search.set('client_id', this.clientId);
             search.set('scope', this.scope);
             search.set('refresh_token', this._loadItem('refresh_token', namespace));
-            
+
             if (this.dummyClientSecret) {
                 search.set('client_secret', this.dummyClientSecret);
             }
@@ -202,7 +202,7 @@ export class OAuthService {
 
     }
 
-    
+
     createLoginUrl(state, namespace?: string) {
         var that = this;
 
@@ -214,7 +214,7 @@ export class OAuthService {
                 state = nonce + ";" + state;
             }
             else {
-                state = nonce;   
+                state = nonce;
             }
 
             var response_type = "token";
@@ -223,35 +223,48 @@ export class OAuthService {
                 response_type = "id_token+token";
             }
 
-            var url = that.loginUrl 
+            var url = that.loginUrl
                         + "?response_type="
                         + response_type
-                        + "&client_id=" 
+                        + "&client_id="
                         + encodeURIComponent(that.clientId)
-                        + "&state=" 
+                        + "&state="
                         + encodeURIComponent(state)
-                        + "&redirect_uri=" 
-                        + encodeURIComponent(that.redirectUri) 
-                        + "&scope=" 
+                        + "&redirect_uri="
+                        + encodeURIComponent(that.redirectUri)
+                        + "&scope="
                         + encodeURIComponent(that.scope);
 
             if (that.loginUrlArgs != null && that.loginUrlArgs != '') {
                 url = url + "&" + that.loginUrlArgs;
             }
-            
+
             if (that.resource) {
                 url += "&resource=" + encodeURIComponent(that.resource);
             }
-            
+
             if (that.oidc) {
                 url += "&nonce=" + encodeURIComponent(nonce);
             }
-            
+
             return url;
         });
     };
 
-    initImplicitFlow(additionalState = "") {
+    initImplicitFlow(additionalState = "", logInAnotherWindows = false) {
+        if(logInAnotherWindows){
+            this.createLoginUrl(additionalState).then(function (url) {
+                location.href = url;
+            });
+        } else {
+            this.createLoginUrl(additionalState).then(function (url) {
+                window.open(
+                    url,
+                    '_blank' // <- This is what makes it open in a new window.
+                );
+            });
+
+        }
         this.createLoginUrl(additionalState).then(function (url) {
             location.href = url;
         })
@@ -260,11 +273,11 @@ export class OAuthService {
             console.error(error);
         });
     };
-    
+
     callEventIfExists(options: any, namespace?: string) {
         var that = this;
         if (options.onTokenReceived) {
-            var tokenParams = { 
+            var tokenParams = {
                 idClaims: that.getIdentityClaims(namespace),
                 idToken: that.getIdToken(namespace),
                 accessToken: that.getAccessToken(namespace),
@@ -290,16 +303,16 @@ export class OAuthService {
     }
 
     tryLogin(options, namespace?: string) {
-        
+
         options = options || { };
-        
-        
+
+
         var parts = this.getFragment();
 
         var accessToken = parts["access_token"];
         var idToken = parts["id_token"];
         var state = parts["state"];
-        
+
         var oidcSuccess = false;
         var oauthSuccess = false;
 
@@ -311,7 +324,7 @@ export class OAuthService {
         var stateParts = state.split(';');
         var nonceInState = stateParts[0];
         if (savedNonce === nonceInState) {
-            
+
             this.storeAccessTokenResponse(accessToken, null, parts['expires_in'], namespace);
 
             if (stateParts.length > 1) {
@@ -321,18 +334,18 @@ export class OAuthService {
             oauthSuccess = true;
 
         }
-        
+
         if (!oauthSuccess) return false;
 
         if (this.oidc) {
             oidcSuccess = this.processIdToken(idToken, accessToken, namespace);
-            if (!oidcSuccess) return false;  
+            if (!oidcSuccess) return false;
         }
-        
+
         if (options.validationHandler) {
-            
+
             var validationParams = {accessToken: accessToken, idToken: idToken};
-            
+
             options
                 .validationHandler(validationParams)
                 .then(() => {
@@ -346,27 +359,27 @@ export class OAuthService {
         else {
             this.callEventIfExists(options);
         }
-        
+
         // NEXT VERSION: Notify parent-window (iframe-refresh)
         /*
         var win = window;
         if (win.parent && win.parent.onOAuthCallback) {
             win.parent.onOAuthCallback(this.state);
-        }            
+        }
         */
 
         if (this.clearHashAfterLogin) location.hash = '';
-        
+
         return true;
     };
-    
+
     processIdToken(idToken, accessToken, namespace?: string) {
             var tokenParts = idToken.split(".");
             var claimsBase64 = this.padBase64(tokenParts[1]);
             var claimsJson = Base64.decode(claimsBase64);
             var claims = JSON.parse(claimsJson);
             var savedNonce = this._loadItem("nonce", namespace);
-            
+
             if (Array.isArray(claims.aud)) {
                 if (claims.aud.every(v => v !== this.clientId)) {
                     console.warn("Wrong audience: " + claims.aud.join(","));
@@ -388,18 +401,18 @@ export class OAuthService {
                 console.warn("Wrong nonce: " + claims.nonce);
                 return false;
             }
-            
+
             if (accessToken && !this.checkAtHash(accessToken, claims)) {
                 console.warn("Wrong at_hash");
                 return false;
             }
-            
+
             // Das Prüfen des Zertifikates wird der Serverseite überlassen!
 
             var now = Date.now();
             var issuedAtMSec = claims.iat * 1000;
             var expiresAtMSec = claims.exp * 1000;
-            
+
             var tenMinutesInMsec = 1000 * 60 * 10;
 
             if (issuedAtMSec - tenMinutesInMsec >= now  || expiresAtMSec + tenMinutesInMsec <= now) {
@@ -415,24 +428,24 @@ export class OAuthService {
             this._saveItem("id_token", idToken, namespace);
             this._saveItem("id_token_claims_obj", claimsJson, namespace);
             this._saveItem("id_token_expires_at", "" + expiresAtMSec, namespace);
-            
+
             if (this.validationHandler) {
                 this.validationHandler(idToken)
             }
-            
+
             return true;
     }
-    
+
     getIdentityClaims(namespace?: string) {
         var claims = this._loadItem("id_token_claims_obj", namespace);
         if (!claims) return null;
         return JSON.parse(claims);
     }
-    
+
     getIdToken(namespace?: string) {
         return this._loadItem("id_token", namespace);
     }
-    
+
     padBase64(base64data) {
         while (base64data.length % 4 !== 0) {
             base64data += "=";
@@ -443,7 +456,7 @@ export class OAuthService {
     tryLoginWithIFrame() {
         throw new Error("tryLoginWithIFrame has not been implemented so far");
     };
-    
+
     tryRefresh(timeoutInMsec) {
         throw new Error("tryRefresh has not been implemented so far");
     };
@@ -466,7 +479,7 @@ export class OAuthService {
 
         return false;
     };
-    
+
     hasValidIdToken(namespace?: string) {
         if (this.getIdToken(namespace)) {
 
@@ -481,11 +494,11 @@ export class OAuthService {
 
         return false;
     };
-    
+
     authorizationHeader(namespace?: string) {
         return "Bearer " + this.getAccessToken(namespace);
     }
-    
+
     logOut(noRedirectToLogoutUrl: boolean = false, namespace?: string) {
         var id_token = this.getIdToken(namespace);
         this._removeItem("access_token", namespace);
@@ -495,18 +508,18 @@ export class OAuthService {
         this._removeItem("expires_at", namespace);
         this._removeItem("id_token_claims_obj", namespace);
         this._removeItem("id_token_expires_at", namespace);
-        
+
         if (!this.logoutUrl) return;
         if (noRedirectToLogoutUrl) return;
-        
+
         let logoutUrl: string;
-        
+
         // For backward compatibility
         if (this.logoutUrl.indexOf('{{') > -1) {
             logoutUrl = this.logoutUrl.replace(/\{\{id_token\}\}/, id_token);
         }
         else {
-            logoutUrl = this.logoutUrl + "?id_token_hint=" 
+            logoutUrl = this.logoutUrl + "?id_token_hint="
                                 + encodeURIComponent(id_token)
                                 + "&post_logout_redirect_uri="
                                 + encodeURIComponent(this.redirectUri);
