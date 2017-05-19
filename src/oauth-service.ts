@@ -1,9 +1,10 @@
-import {Base64} from 'js-base64';
-import {fromByteArray} from 'base64-js';
-import * as _sha256 from 'sha256';
-import { Http, URLSearchParams, Headers } from '@angular/http';
-import { Injectable } from '@angular/core';
-import { Observable, Observer } from 'rxjs';
+import {Base64} from "js-base64";
+import {fromByteArray} from "base64-js";
+import * as _sha256 from "sha256";
+import {Headers, Http, URLSearchParams} from "@angular/http";
+import {Injectable} from "@angular/core";
+import {Observable, Observer} from "rxjs";
+import {isNullOrUndefined} from "util";
 
 var sha256: any = _sha256;
 
@@ -13,6 +14,7 @@ export class OAuthService {
     public clientId = "";
     public redirectUri = "";
     public loginUrl = "";
+    public loginUrlArgs = "";
     public scope = "";
     public resource = "";
     public rngUrl = "";
@@ -39,6 +41,29 @@ export class OAuthService {
     }
     
     private _storage: Storage = localStorage;
+
+    private _saveItem(key: string, data: string, namespace?: string): void {
+            if (!isNullOrUndefined(namespace)) {
+            key = namespace + '/' + key;
+        }
+        this._storage.setItem(key, JSON.stringify(data));
+    }
+
+    private _loadItem(key: string, namespace?: string): string | null {
+        if (!isNullOrUndefined(namespace)) {
+            key = namespace + '/' + key;
+        }
+        return this._storage.getItem(key)
+    }
+
+    private _removeItem(key: string, namespace?: string): void {
+        if (!isNullOrUndefined(namespace)) {
+            key = namespace + '/' + key;
+        }
+        this._storage.removeItem(key);
+    }
+
+
 
     constructor(private http: Http) {
         this.discoveryDocumentLoaded$ = Observable.create(sender => {
@@ -78,24 +103,24 @@ export class OAuthService {
 
     }
 
-    fetchTokenUsingPasswordFlowAndLoadUserProfile(userName: string, password: string) {
+    fetchTokenUsingPasswordFlowAndLoadUserProfile(userName: string, password: string, namespace?: string) {
         return this
                 .fetchTokenUsingPasswordFlow(userName, password)
-                .then(() => this.loadUserProfile());
+                .then(() => this.loadUserProfile(namespace));
     }
 
-    loadUserProfile() {
-        if (!this.hasValidAccessToken()) throw Error("Can not load User Profile without access_token");
+    loadUserProfile(namespace?: string) {
+        if (!this.hasValidAccessToken(namespace)) throw Error("Can not load User Profile without access_token");
 
         return new Promise((resolve, reject) => {
 
             let headers = new Headers();
-            headers.set('Authorization', 'Bearer ' + this.getAccessToken());
+            headers.set('Authorization', 'Bearer ' + this.getAccessToken(namespace));
 
             this.http.get(this.userinfoEndpoint, { headers }).map(r => r.json()).subscribe(
                 (doc) => {
                     console.debug('userinfo received', doc);
-                    this._storage.setItem('id_token_claims_obj', JSON.stringify(doc));
+                    this._saveItem('id_token_claims_obj', JSON.stringify(doc), namespace);
                     resolve(doc);
                 },
                 (err) => {
@@ -108,16 +133,16 @@ export class OAuthService {
 
     }
 
-    fetchTokenUsingPasswordFlow(userName: string, password: string) {
+    fetchTokenUsingPasswordFlow(userName: string, password: string, namespace?: string) {
 
-        return new Promise((resolve, reject) => { 
+        return new Promise((resolve, reject) => {
             let search = new URLSearchParams();
             search.set('grant_type', 'password');
             search.set('client_id', this.clientId);
             search.set('scope', this.scope);
             search.set('username', userName);
             search.set('password', password);
-            
+
             if (this.dummyClientSecret) {
                 search.set('client_secret', this.dummyClientSecret);
             }
@@ -130,7 +155,7 @@ export class OAuthService {
             this.http.post(this.tokenEndpoint, params, { headers }).map(r => r.json()).subscribe(
                 (tokenResponse) => {
                     console.debug('tokenResponse', tokenResponse);
-                    this.storeAccessTokenResponse(tokenResponse.access_token, tokenResponse.refresh_token, tokenResponse.expires_in);
+                    this.storeAccessTokenResponse(tokenResponse.access_token, tokenResponse.refresh_token, tokenResponse.expires_in, namespace);
 
                     resolve(tokenResponse);
                 },
@@ -144,15 +169,15 @@ export class OAuthService {
     }
 
 
-    refreshToken() {
+    refreshToken(namespace?: string) {
 
-        return new Promise((resolve, reject) => { 
+        return new Promise((resolve, reject) => {
             let search = new URLSearchParams();
             search.set('grant_type', 'refresh_token');
             search.set('client_id', this.clientId);
             search.set('scope', this.scope);
-            search.set('refresh_token', this._storage.getItem('refresh_token'));
-            
+            search.set('refresh_token', this._loadItem('refresh_token', namespace));
+
             if (this.dummyClientSecret) {
                 search.set('client_secret', this.dummyClientSecret);
             }
@@ -165,7 +190,7 @@ export class OAuthService {
             this.http.post(this.tokenEndpoint, params, { headers }).map(r => r.json()).subscribe(
                 (tokenResponse) => {
                     console.debug('refresh tokenResponse', tokenResponse);
-                    this.storeAccessTokenResponse(tokenResponse.access_token, tokenResponse.refresh_token, tokenResponse.expires_in);
+                    this.storeAccessTokenResponse(tokenResponse.access_token, tokenResponse.refresh_token, tokenResponse.expires_in, namespace);
                     resolve(tokenResponse);
                 },
                 (err) => {
@@ -177,19 +202,19 @@ export class OAuthService {
 
     }
 
-    
-    createLoginUrl(state) {
+
+    createLoginUrl(state, namespace?: string) {
         var that = this;
 
         if (typeof state === "undefined") { state = ""; }
 
-        return this.createAndSaveNonce().then(function (nonce: any) {
+        return this.createAndSaveNonce(namespace).then(function (nonce: any) {
 
             if (state) {
                 state = nonce + ";" + state;
             }
             else {
-                state = nonce;   
+                state = nonce;
             }
 
             var response_type = "token";
@@ -198,31 +223,48 @@ export class OAuthService {
                 response_type = "id_token+token";
             }
 
-            var url = that.loginUrl 
+            var url = that.loginUrl
                         + "?response_type="
                         + response_type
-                        + "&client_id=" 
+                        + "&client_id="
                         + encodeURIComponent(that.clientId)
-                        + "&state=" 
+                        + "&state="
                         + encodeURIComponent(state)
-                        + "&redirect_uri=" 
-                        + encodeURIComponent(that.redirectUri) 
-                        + "&scope=" 
+                        + "&redirect_uri="
+                        + encodeURIComponent(that.redirectUri)
+                        + "&scope="
                         + encodeURIComponent(that.scope);
+
+            if (that.loginUrlArgs != null && that.loginUrlArgs != '') {
+                url = url + "&" + that.loginUrlArgs;
+            }
 
             if (that.resource) {
                 url += "&resource=" + encodeURIComponent(that.resource);
             }
-            
+
             if (that.oidc) {
                 url += "&nonce=" + encodeURIComponent(nonce);
             }
-            
+
             return url;
         });
     };
 
-    initImplicitFlow(additionalState = "") {
+    initImplicitFlow(additionalState = ""/*, logInAnotherWindows?:boolean*/) {
+        //if(logInAnotherWindows){
+        //    this.createLoginUrl(additionalState).then(function (url) {
+        //        location.href = url;
+        //    });
+        //} else {
+        //    this.createLoginUrl(additionalState).then(function (url) {
+        //        window.open(
+        //            url,
+        //            '_blank' // <- This is what makes it open in a new window.
+        //        );
+        //    });
+        //}
+        
         this.createLoginUrl(additionalState).then(function (url) {
             location.href = url;
         })
@@ -231,59 +273,59 @@ export class OAuthService {
             console.error(error);
         });
     };
-    
-    callEventIfExists(options: any) {
+
+    callEventIfExists(options: any, namespace?: string) {
         var that = this;
         if (options.onTokenReceived) {
-            var tokenParams = { 
-                idClaims: that.getIdentityClaims(),
-                idToken: that.getIdToken(),
-                accessToken: that.getAccessToken(),
+            var tokenParams = {
+                idClaims: that.getIdentityClaims(namespace),
+                idToken: that.getIdToken(namespace),
+                accessToken: that.getAccessToken(namespace),
                 state: that.state
             };
             options.onTokenReceived(tokenParams);
         }
     }
 
-    private storeAccessTokenResponse(accessToken: string, refreshToken: string, expiresIn: number) {
-        this._storage.setItem("access_token", accessToken);
+    private storeAccessTokenResponse(accessToken: string, refreshToken: string, expiresIn: number, namespace?: string) {
+        this._saveItem("access_token", accessToken, namespace);
 
         if (expiresIn) {
             var expiresInMilliSeconds = expiresIn * 1000;
             var now = new Date();
             var expiresAt = now.getTime() + expiresInMilliSeconds;
-            this._storage.setItem("expires_at", "" + expiresAt);
+            this._saveItem("expires_at", "" + expiresAt, namespace);
         }
 
         if (refreshToken) {
-            this._storage.setItem("refresh_token", refreshToken);
+            this._saveItem("refresh_token", refreshToken, namespace);
         }
     }
 
-    tryLogin(options) {
-        
+    tryLogin(options, namespace?: string) {
+
         options = options || { };
-        
-        
+
+
         var parts = this.getFragment();
 
         var accessToken = parts["access_token"];
         var idToken = parts["id_token"];
         var state = parts["state"];
-        
+
         var oidcSuccess = false;
         var oauthSuccess = false;
 
         if (!accessToken || !state) return false;
         if (this.oidc && !idToken) return false;
 
-        var savedNonce = this._storage.getItem("nonce");
+        var savedNonce = this._loadItem("nonce", namespace);
 
         var stateParts = state.split(';');
         var nonceInState = stateParts[0];
         if (savedNonce === nonceInState) {
-            
-            this.storeAccessTokenResponse(accessToken, null, parts['expires_in']);
+
+            this.storeAccessTokenResponse(accessToken, null, parts['expires_in'], namespace);
 
             if (stateParts.length > 1) {
                 this.state = stateParts[1];
@@ -292,18 +334,18 @@ export class OAuthService {
             oauthSuccess = true;
 
         }
-        
+
         if (!oauthSuccess) return false;
 
         if (this.oidc) {
-            oidcSuccess = this.processIdToken(idToken, accessToken);
-            if (!oidcSuccess) return false;  
+            oidcSuccess = this.processIdToken(idToken, accessToken, namespace);
+            if (!oidcSuccess) return false;
         }
-        
+
         if (options.validationHandler) {
-            
+
             var validationParams = {accessToken: accessToken, idToken: idToken};
-            
+
             options
                 .validationHandler(validationParams)
                 .then(() => {
@@ -317,27 +359,27 @@ export class OAuthService {
         else {
             this.callEventIfExists(options);
         }
-        
+
         // NEXT VERSION: Notify parent-window (iframe-refresh)
         /*
         var win = window;
         if (win.parent && win.parent.onOAuthCallback) {
             win.parent.onOAuthCallback(this.state);
-        }            
+        }
         */
 
         if (this.clearHashAfterLogin) location.hash = '';
-        
+
         return true;
     };
-    
-    processIdToken(idToken, accessToken) {
+
+    processIdToken(idToken, accessToken, namespace?: string) {
             var tokenParts = idToken.split(".");
             var claimsBase64 = this.padBase64(tokenParts[1]);
             var claimsJson = Base64.decode(claimsBase64);
             var claims = JSON.parse(claimsJson);
-            var savedNonce = this._storage.getItem("nonce");
-            
+            var savedNonce = this._loadItem("nonce", namespace);
+
             if (Array.isArray(claims.aud)) {
                 if (claims.aud.every(v => v !== this.clientId)) {
                     console.warn("Wrong audience: " + claims.aud.join(","));
@@ -359,18 +401,18 @@ export class OAuthService {
                 console.warn("Wrong nonce: " + claims.nonce);
                 return false;
             }
-            
+
             if (accessToken && !this.checkAtHash(accessToken, claims)) {
                 console.warn("Wrong at_hash");
                 return false;
             }
-            
+
             // Das Prüfen des Zertifikates wird der Serverseite überlassen!
 
             var now = Date.now();
             var issuedAtMSec = claims.iat * 1000;
             var expiresAtMSec = claims.exp * 1000;
-            
+
             var tenMinutesInMsec = 1000 * 60 * 10;
 
             if (issuedAtMSec - tenMinutesInMsec >= now  || expiresAtMSec + tenMinutesInMsec <= now) {
@@ -383,27 +425,27 @@ export class OAuthService {
                 return false;
             }
 
-            this._storage.setItem("id_token", idToken);
-            this._storage.setItem("id_token_claims_obj", claimsJson);
-            this._storage.setItem("id_token_expires_at", "" + expiresAtMSec);
-            
+            this._saveItem("id_token", idToken, namespace);
+            this._saveItem("id_token_claims_obj", claimsJson, namespace);
+            this._saveItem("id_token_expires_at", "" + expiresAtMSec, namespace);
+
             if (this.validationHandler) {
                 this.validationHandler(idToken)
             }
-            
+
             return true;
     }
-    
-    getIdentityClaims() {
-        var claims = this._storage.getItem("id_token_claims_obj");
+
+    getIdentityClaims(namespace?: string) {
+        var claims = this._loadItem("id_token_claims_obj", namespace);
         if (!claims) return null;
         return JSON.parse(claims);
     }
-    
-    getIdToken() {
-        return this._storage.getItem("id_token");
+
+    getIdToken(namespace?: string) {
+        return this._loadItem("id_token", namespace);
     }
-    
+
     padBase64(base64data) {
         while (base64data.length % 4 !== 0) {
             base64data += "=";
@@ -414,19 +456,19 @@ export class OAuthService {
     tryLoginWithIFrame() {
         throw new Error("tryLoginWithIFrame has not been implemented so far");
     };
-    
+
     tryRefresh(timeoutInMsec) {
         throw new Error("tryRefresh has not been implemented so far");
     };
 
-    getAccessToken() {
-        return this._storage.getItem("access_token");
+    getAccessToken(namespace?: string) {
+        return this._loadItem("access_token", namespace);
     };
 
-    hasValidAccessToken() {
-        if (this.getAccessToken()) {
+    hasValidAccessToken(namespace?: string) {
+        if (this.getAccessToken(namespace)) {
 
-            var expiresAt = this._storage.getItem("expires_at");
+            var expiresAt = this._loadItem("expires_at",namespace);
             var now = new Date();
             if (expiresAt && parseInt(expiresAt) < now.getTime()) {
                 return false;
@@ -437,11 +479,11 @@ export class OAuthService {
 
         return false;
     };
-    
-    hasValidIdToken() {
-        if (this.getIdToken()) {
 
-            var expiresAt = this._storage.getItem("id_token_expires_at");
+    hasValidIdToken(namespace?: string) {
+        if (this.getIdToken(namespace)) {
+
+            var expiresAt = this._loadItem("id_token_expires_at", namespace);
             var now = new Date();
             if (expiresAt && parseInt(expiresAt) < now.getTime()) {
                 return false;
@@ -452,32 +494,32 @@ export class OAuthService {
 
         return false;
     };
-    
-    authorizationHeader() {
-        return "Bearer " + this.getAccessToken();
+
+    authorizationHeader(namespace?: string) {
+        return "Bearer " + this.getAccessToken(namespace);
     }
-    
-    logOut(noRedirectToLogoutUrl: boolean = false) {
-        var id_token = this.getIdToken();
-        this._storage.removeItem("access_token");
-        this._storage.removeItem("id_token");
-        this._storage.removeItem("refresh_token");
-        this._storage.removeItem("nonce");
-        this._storage.removeItem("expires_at");
-        this._storage.removeItem("id_token_claims_obj");
-        this._storage.removeItem("id_token_expires_at");
-        
+
+    logOut(noRedirectToLogoutUrl: boolean = false, namespace?: string) {
+        var id_token = this.getIdToken(namespace);
+        this._removeItem("access_token", namespace);
+        this._removeItem("id_token", namespace);
+        this._removeItem("refresh_token", namespace);
+        this._removeItem("nonce", namespace);
+        this._removeItem("expires_at", namespace);
+        this._removeItem("id_token_claims_obj", namespace);
+        this._removeItem("id_token_expires_at", namespace);
+
         if (!this.logoutUrl) return;
         if (noRedirectToLogoutUrl) return;
-        
+
         let logoutUrl: string;
-        
+
         // For backward compatibility
         if (this.logoutUrl.indexOf('{{') > -1) {
             logoutUrl = this.logoutUrl.replace(/\{\{id_token\}\}/, id_token);
         }
         else {
-            logoutUrl = this.logoutUrl + "?id_token_hint=" 
+            logoutUrl = this.logoutUrl + "?id_token_hint="
                                 + encodeURIComponent(id_token)
                                 + "&post_logout_redirect_uri="
                                 + encodeURIComponent(this.redirectUri);
@@ -485,10 +527,10 @@ export class OAuthService {
         location.href = logoutUrl;
     };
 
-    createAndSaveNonce() {
+    createAndSaveNonce(namespace?: string) {
         var that = this;
         return this.createNonce().then(function (nonce: any) {
-            that._storage.setItem("nonce", nonce);
+            that._saveItem("nonce", nonce, namespace);
             return nonce;
         })
 
