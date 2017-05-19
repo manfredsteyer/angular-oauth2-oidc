@@ -263,8 +263,8 @@ export class OAuthService {
         //            '_blank' // <- This is what makes it open in a new window.
         //        );
         //    });
-
-        }
+        //}
+        
         this.createLoginUrl(additionalState).then(function (url) {
             location.href = url;
         })
