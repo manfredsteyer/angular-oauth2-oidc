@@ -251,18 +251,18 @@ export class OAuthService {
         });
     };
 
-    initImplicitFlow(additionalState = "", logInAnotherWindows = false) {
-        if(logInAnotherWindows){
-            this.createLoginUrl(additionalState).then(function (url) {
-                location.href = url;
-            });
-        } else {
-            this.createLoginUrl(additionalState).then(function (url) {
-                window.open(
-                    url,
-                    '_blank' // <- This is what makes it open in a new window.
-                );
-            });
+    initImplicitFlow(additionalState = ""/*, logInAnotherWindows?:boolean*/) {
+        //if(logInAnotherWindows){
+        //    this.createLoginUrl(additionalState).then(function (url) {
+        //        location.href = url;
+        //    });
+        //} else {
+        //    this.createLoginUrl(additionalState).then(function (url) {
+        //        window.open(
+        //            url,
+        //            '_blank' // <- This is what makes it open in a new window.
+        //        );
+        //    });
 
         }
         this.createLoginUrl(additionalState).then(function (url) {
