@@ -525,7 +525,7 @@ export class OAuthService {
                 if(currentHashPart.indexOf(returnUrlHashPart[1]) === 0) {
                     return this.parseQueryString(window.location.hash.substr(1));
                 }else{
-                    return  JSON.parse('{"' + decodeURI(currentHashPart).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
+                    return JSON.parse('{"' + decodeURI(currentHashPart).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
                 }
             }
             return false;
