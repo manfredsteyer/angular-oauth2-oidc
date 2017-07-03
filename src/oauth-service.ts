@@ -25,6 +25,7 @@ export class OAuthService {
     public clearHashAfterLogin: boolean = true;
     public tokenEndpoint: string;
     public userinfoEndpoint: string;
+    public responseType: string = "token";
 
     public dummyClientSecret: string;
     
@@ -192,16 +193,14 @@ export class OAuthService {
                 state = nonce;   
             }
 
-            var response_type = "token";
-
             if (that.oidc) {
-                response_type = "id_token+token";
+                that.responseType = "id_token+token";
             }
 
             var url = that.loginUrl 
                         + "?response_type="
-                        + response_type
-                        + "&client_id=" 
+                        + encodeURIComponent(that.responseType)
+                        + "&client_id="
                         + encodeURIComponent(that.clientId)
                         + "&state=" 
                         + encodeURIComponent(state)
