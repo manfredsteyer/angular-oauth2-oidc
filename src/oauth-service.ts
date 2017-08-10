@@ -267,6 +267,9 @@ export class OAuthService {
         
         
         var parts = this.getFragment();
+        if(parts === false){
+           return false;
+        }
 
         if (parts["error"]) {
             console.debug('error trying to login');
@@ -537,7 +540,16 @@ export class OAuthService {
 
     getFragment() {
         if (window.location.hash.indexOf("#") === 0) {
-            return this.parseQueryString(window.location.hash.substr(1));
+            if(this.redirectUri.indexOf('#')) {
+                var returnUrlHashPart = this.redirectUri.split('#');
+                var currentHashPart = window.location.hash.substr(1);
+                if(currentHashPart.indexOf(returnUrlHashPart[1]) === 0) {
+                    return this.parseQueryString(window.location.hash.substr(1));
+                }else{
+                    return JSON.parse('{"' + decodeURI(currentHashPart).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g,'":"') + '"}');
+                }
+            }
+            return false;
         } else {
             return {};
         }
@@ -551,7 +563,10 @@ export class OAuthService {
         }
 
         pairs = queryString.split("&");
-
+        if(pairs.length && pairs[0].indexOf("?")){
+            var firstPart = pairs[0].split("?");
+            pairs[0] = firstPart[1];
+        }
         for (var i = 0; i < pairs.length; i++) {
             pair = pairs[i];
             separatorIndex = pair.indexOf("=");
