@@ -287,6 +287,13 @@ export class OAuthService {
 
         var savedNonce = this._storage.getItem("nonce");
 
+        // Our state might be URL encoded
+        // Check for this and then decode it if it is
+        let decodedState = decodeURIComponent(state);
+        if (decodedState != state) {
+          state = decodedState;
+        }
+        
         var stateParts = state.split(';');
         var nonceInState = stateParts[0];
         if (savedNonce === nonceInState) {
