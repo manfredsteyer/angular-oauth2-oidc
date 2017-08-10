@@ -180,7 +180,7 @@ export class OAuthService {
     }
 
     
-    createLoginUrl(state) {
+    createLoginUrl(state, loginHint) {
         var that = this;
 
         if (typeof state === "undefined") { state = ""; }
@@ -208,7 +208,9 @@ export class OAuthService {
                         + "&redirect_uri=" 
                         + encodeURIComponent(that.redirectUri) 
                         + "&scope=" 
-                        + encodeURIComponent(that.scope);
+                        + encodeURIComponent(that.scope)
+                        + "&login_hint="
+                        + encodeURIComponent(loginHint);
 
             if (that.resource) {
                 url += "&resource=" + encodeURIComponent(that.resource);
@@ -222,8 +224,8 @@ export class OAuthService {
         });
     };
 
-    initImplicitFlow(additionalState = "") {
-        this.createLoginUrl(additionalState).then(function (url) {
+    initImplicitFlow(additionalState = "", loginHint="") {
+        this.createLoginUrl(additionalState, loginHint).then(function (url) {
             location.href = url;
         })
         .catch(function (error) {
