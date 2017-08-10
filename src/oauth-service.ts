@@ -269,6 +269,12 @@ export class OAuthService {
         
         var parts = this.getFragment();
 
+        if (parts["error"]) {
+            console.debug('error trying to login');
+            this.handleLoginError(options, parts);
+            return false;
+        }
+
         var accessToken = parts["access_token"];
         var idToken = parts["id_token"];
         var state = decodeURIComponent(parts["state"]);
@@ -332,6 +338,13 @@ export class OAuthService {
         
         return true;
     };
+
+    handleLoginError(options: any, parts: any): void {
+        var savedNonce = this._storage.getItem("nonce");
+        if (savedNonce === parts.state && options.onLoginError)
+            options.onLoginError(parts)
+        if (this.clearHashAfterLogin) location.hash = '';
+    }
     
     processIdToken(idToken, accessToken) {
             var tokenParts = idToken.split(".");
