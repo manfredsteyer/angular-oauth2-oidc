@@ -269,7 +269,7 @@ export class OAuthService {
 
         var accessToken = parts["access_token"];
         var idToken = parts["id_token"];
-        var state = parts["state"];
+        var state = decodeURIComponent(parts["state"]);
         
         var oidcSuccess = false;
         var oauthSuccess = false;
