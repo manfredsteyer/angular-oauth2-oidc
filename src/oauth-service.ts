@@ -80,9 +80,9 @@ export class OAuthService {
 
     }
 
-    fetchTokenUsingPasswordFlowAndLoadUserProfile(userName: string, password: string) {
+    fetchTokenUsingPasswordFlowAndLoadUserProfile(userName: string, password: string, headers: Headers = new Headers()) {
         return this
-                .fetchTokenUsingPasswordFlow(userName, password)
+                .fetchTokenUsingPasswordFlow(userName, password, headers)
                 .then(() => this.loadUserProfile());
     }
 
@@ -110,7 +110,7 @@ export class OAuthService {
 
     }
 
-    fetchTokenUsingPasswordFlow(userName: string, password: string) {
+    fetchTokenUsingPasswordFlow(userName: string, password: string, headers: Headers = new Headers()) {
 
         return new Promise((resolve, reject) => { 
             let search = new URLSearchParams();
@@ -124,7 +124,6 @@ export class OAuthService {
                 search.set('client_secret', this.dummyClientSecret);
             }
 
-            let headers = new Headers();
             headers.set('Content-Type', 'application/x-www-form-urlencoded');
 
             let params = search.toString();
