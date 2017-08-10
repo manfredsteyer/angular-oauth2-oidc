@@ -12,6 +12,7 @@ export class OAuthService {
 
     public clientId = "";
     public redirectUri = "";
+    public postLogoutRedirectUri = "";
     public loginUrl = "";
     public scope = "";
     public resource = "";
@@ -479,7 +480,7 @@ export class OAuthService {
             logoutUrl = this.logoutUrl + "?id_token_hint=" 
                                 + encodeURIComponent(id_token)
                                 + "&post_logout_redirect_uri="
-                                + encodeURIComponent(this.redirectUri);
+                                + encodeURIComponent(this.postLogoutRedirectUri || this.redirectUri);
         }
         location.href = logoutUrl;
     };
