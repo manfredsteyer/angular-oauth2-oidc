@@ -40,9 +40,16 @@ export class OAuthService {
         this._storage = storage;
     }
     
-    private _storage: Storage = localStorage;
+    private _storage: Storage;
 
     constructor(private http: Http) {
+        // Access to localstorage might be a probleme in IE and Edge
+        try {
+            this._storage = localStorage;
+        } catch (err) {
+            this._storage = sessionStorage;
+        }
+        
         this.discoveryDocumentLoaded$ = Observable.create(sender => {
             this.discoveryDocumentLoadedSender = sender;
         }).publish().connect();
