@@ -6,6 +6,14 @@ Support for OAuth 2 and OpenId Connect (OIDC) in Angular.
 
 - generator-angular2-library: https://github.com/jvandemo/generator-angular2-library
 
+## Resources
+
+- Sources and Sample:
+https://github.com/manfredsteyer/angular-oauth2-oidc
+
+- Source Code Documentation
+https://manfredsteyer.github.io/angular-oauth2-oidc/angular-oauth2-oidc/docs/
+
 ## Tested Environment
 
 Successfully tested with the Angular 2 and 4 and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we've used IdentityServer (.NET/ .NET Core) and Redhat's Keycloak (Java).
@@ -42,13 +50,15 @@ You can use the OIDC-Sample-Server mentioned in the samples for Testing. It assu
 
 Username/Password: max/geheim
 
-## Resources
+*clientIds:* 
+- spa-demo (implicit flow)
+- demo-resource-owner (resource owner password flow)
 
-- Sources and Sample:
-https://github.com/manfredsteyer/angular-oauth2-oidc
+*redirectUris:*
+- localhost:[8080-8089|4200-4202]
+- localhost:[8080-8089|4200-4202]/index.html
+- localhost:[8080-8089|4200-4202]/silent-refresh.html
 
-- Source Code Documentation
-https://manfredsteyer.github.io/angular-oauth2-oidc/angular-oauth2-oidc/docs/
 
 ## Setup Provider for OAuthService
 
