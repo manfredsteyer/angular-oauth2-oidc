@@ -44,8 +44,11 @@ Username/Password: max/geheim
 
 ## Resources
 
-Sources and Sample:
+- Sources and Sample:
 https://github.com/manfredsteyer/angular-oauth2-oidc
+
+- Source Code Documentation
+https://manfredsteyer.github.io/angular-oauth2-oidc/angular-oauth2-oidc/docs/
 
 ## Setup Provider for OAuthService
 
