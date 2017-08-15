@@ -1,0 +1,17 @@
+<div style="padding:20px;"
+     [ngStyle]="{'background-color': (selectedItem == item) ?  'orange' : 'lightsteelblue' }">
+
+    <h2>{{item.from}} - {{item.to}}</h2>
+    <p>Flugnr. #{{item.id}}</p>
+    <p>Datum: {{item.date | date:'dd.MM.yyyy HH:mm'}}</p>
+
+    <p>
+        <input type="button"
+               value="Auswählen"
+               class="btn btn-default"
+               (click)="select()" />
+
+        <ng-content></ng-content>
+
+    </p>
+</div>

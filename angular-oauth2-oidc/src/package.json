@@ -1,0 +1,30 @@
+{
+  "name": "angular-oauth2-oidc",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/username/repo"
+  },
+  "author": {
+    "name": "ManfredSteyer",
+    "email": "manfred.steyer@gmx.net"
+  },
+  "keywords": [
+    "angular"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/username/repo/issues"
+  },
+  "module": "angular-oauth2-oidc.js",
+  "jsnext:main": "angular-oauth2-oidc.js",
+  "typings": "angular-oauth2-oidc.d.ts",
+  "peerDependencies": {
+    "@angular/core": "^4.0.0",
+    "rxjs": "^5.1.0",
+    "zone.js": "^0.8.4"
+  },
+  "dependencies": {
+    "jsrsasign": "^8.0.3"
+  }
+}

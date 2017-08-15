@@ -1,0 +1,780 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>angular-oauth2-oidc</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	    <link rel="stylesheet" href="./styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="./" class="navbar-brand">angular-oauth2-oidc</a>
+            <button type="button" class="btn btn-default btn-menu fa fa-bars" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+            <div id="book-search-input" role="search">
+                <input type="text" placeholder="Type to search">
+            </div>
+            <nav>
+            
+                <ul class="list">
+            
+                    <li class="title">
+                        <a href="./index.html">angular-oauth2-oidc</a>
+                    </li>
+            
+                    <li class="divider"></li>
+            
+            
+                    <li class="chapter">
+                        <a data-type="chapter-link" href="./index.html"><span class="fa fa-home"></span>Getting started</a>
+                        <ul class="links">
+                                <li class="link">
+                                    <a 
+                                        
+                                         href="./overview.html" 
+                                         href="./overview.html" 
+                                        >
+                                        <span class="fa fa-th"></span>Overview
+                                    </a>
+                                </li>
+                                <li class="link">
+                                  <a href="./index.html"  class="active" ><span class="fa fa-file-text-o"></span>README</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./license.html"
+                                        >
+                                        <span class="fa fa-file-text-o"></span>LICENSE
+                                    </a>
+                                </li>
+                        </ul>
+                    </li>
+            
+            
+                    <li class="chapter">
+                        <a data-type="chapter-link" href="./modules.html" >
+                            <div class="menu-toggler linked" data-toggle="collapse"
+                                    data-target="#xs-modules-links"
+                            >
+                                <span class="fa fa-archive"></span>
+                                <span class="link-name">Modules</span>
+                                <span class="fa fa-angle-down"></span>
+                            </div>
+                        </a>
+                        <ul class="links collapse "
+                                id="xs-modules-links"
+                            >
+                                <li class="link">
+                                    <a href="./modules/OAuthModule.html" >OAuthModule</a>
+                                </li>
+                        </ul>
+                    </li>
+            
+            
+            
+                    <li class="chapter">
+                        <div class="simple menu-toggler" data-toggle="collapse"
+                                data-target="#xs-classes-links"
+                            >
+                            <span class="fa fa-file-code-o"></span>
+                            <span>Classes</span>
+                            <span class="fa fa-angle-down"></span>
+                        </div>
+                        <ul class="links collapse "
+                                id="xs-classes-links"
+                            >
+                                <li class="link">
+                                    <a href="./classes/AbstractValidationHandler.html" >AbstractValidationHandler</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./classes/JwksValidationHandler.html" >JwksValidationHandler</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./classes/LoginOptions.html" >LoginOptions</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./classes/NullValidationHandler.html" >NullValidationHandler</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./classes/OAuthErrorEvent.html" >OAuthErrorEvent</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./classes/OAuthEvent.html" >OAuthEvent</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./classes/OAuthInfoEvent.html" >OAuthInfoEvent</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./classes/OAuthSuccessEvent.html" >OAuthSuccessEvent</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./classes/ReceivedTokens.html" >ReceivedTokens</a>
+                                </li>
+                        </ul>
+                    </li>
+            
+                    <li class="chapter">
+                        <div class="simple menu-toggler" data-toggle="collapse"
+                                data-target="#xs-injectables-links"
+                            >
+                            <span class="fa fa-long-arrow-down"></span>
+                            <span>Injectables</span>
+                            <span class="fa fa-angle-down"></span>
+                        </div>
+                        <ul class="links collapse "
+                                id="xs-injectables-links"
+                            >
+                                <li class="link">
+                                    <a href="./injectables/OAuthService.html" >OAuthService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./injectables/UrlHelperService.html" >UrlHelperService</a>
+                                </li>
+                        </ul>
+                    </li>
+            
+                    <li class="chapter">
+                        <div class="simple menu-toggler" data-toggle="collapse"
+                                data-target="#xs-interfaces-links"
+                            >
+                            <span class="fa fa-info"></span>
+                            <span>Interfaces</span>
+                            <span class="fa fa-angle-down"></span>
+                        </div>
+                        <ul class="links collapse "
+                                id="xs-interfaces-links"
+                            >
+                                <li class="link">
+                                    <a href="./interfaces/OAuthStorage.html" >OAuthStorage</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./interfaces/ParsedIdToken.html" >ParsedIdToken</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./interfaces/ValidationHandler.html" >ValidationHandler</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./interfaces/ValidationParams.html" >ValidationParams</a>
+                                </li>
+                        </ul>
+                    </li>
+            
+            
+                    <li class="chapter">
+                        <div class="simple menu-toggler" data-toggle="collapse"
+                                data-target="#xs-miscellaneous-links"
+                            >
+                            <span class="fa fa-cubes"></span>
+                            <span>Miscellaneous</span>
+                            <span class="fa fa-angle-down"></span>
+                        </div>
+                        <ul class="links collapse "
+                                id="xs-miscellaneous-links"
+                            >
+                                <li class="link">
+                                  <a href="./miscellaneous/typealiases.html" data-type="entity-link" >Type aliases</a>
+                                </li>
+                                <li class="link">
+                                  <a href="./miscellaneous/variables.html" data-type="entity-link" >Variables</a>
+                                </li>
+                        </ul>
+                    </li>
+            
+            
+            
+            
+                </ul>
+            
+            </nav>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <nav>
+                   
+                       <ul class="list">
+                   
+                           <li class="title">
+                               <a href="./index.html">angular-oauth2-oidc</a>
+                           </li>
+                   
+                           <li class="divider"></li>
+                   
+                               <div id="book-search-input" role="search">
+                                   <input type="text" placeholder="Type to search">
+                               </div>
+                   
+                           <li class="chapter">
+                               <a data-type="chapter-link" href="./index.html"><span class="fa fa-home"></span>Getting started</a>
+                               <ul class="links">
+                                       <li class="link">
+                                           <a 
+                                               
+                                                href="./overview.html" 
+                                                href="./overview.html" 
+                                               >
+                                               <span class="fa fa-th"></span>Overview
+                                           </a>
+                                       </li>
+                                       <li class="link">
+                                         <a href="./index.html"  class="active" ><span class="fa fa-file-text-o"></span>README</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./license.html"
+                                               >
+                                               <span class="fa fa-file-text-o"></span>LICENSE
+                                           </a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                   
+                           <li class="chapter">
+                               <a data-type="chapter-link" href="./modules.html" >
+                                   <div class="menu-toggler linked" data-toggle="collapse"
+                                           data-target="#modules-links"
+                                   >
+                                       <span class="fa fa-archive"></span>
+                                       <span class="link-name">Modules</span>
+                                       <span class="fa fa-angle-down"></span>
+                                   </div>
+                               </a>
+                               <ul class="links collapse "
+                                       id="modules-links"
+                   >
+                                       <li class="link">
+                                           <a href="./modules/OAuthModule.html" >OAuthModule</a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                   
+                   
+                           <li class="chapter">
+                               <div class="simple menu-toggler" data-toggle="collapse"
+                                       data-target="#classes-links"
+                   >
+                                   <span class="fa fa-file-code-o"></span>
+                                   <span>Classes</span>
+                                   <span class="fa fa-angle-down"></span>
+                               </div>
+                               <ul class="links collapse "
+                                       id="classes-links"
+                   >
+                                       <li class="link">
+                                           <a href="./classes/AbstractValidationHandler.html" >AbstractValidationHandler</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./classes/JwksValidationHandler.html" >JwksValidationHandler</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./classes/LoginOptions.html" >LoginOptions</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./classes/NullValidationHandler.html" >NullValidationHandler</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./classes/OAuthErrorEvent.html" >OAuthErrorEvent</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./classes/OAuthEvent.html" >OAuthEvent</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./classes/OAuthInfoEvent.html" >OAuthInfoEvent</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./classes/OAuthSuccessEvent.html" >OAuthSuccessEvent</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./classes/ReceivedTokens.html" >ReceivedTokens</a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                           <li class="chapter">
+                               <div class="simple menu-toggler" data-toggle="collapse"
+                                       data-target="#injectables-links"
+                   >
+                                   <span class="fa fa-long-arrow-down"></span>
+                                   <span>Injectables</span>
+                                   <span class="fa fa-angle-down"></span>
+                               </div>
+                               <ul class="links collapse "
+                                       id="injectables-links"
+                   >
+                                       <li class="link">
+                                           <a href="./injectables/OAuthService.html" >OAuthService</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./injectables/UrlHelperService.html" >UrlHelperService</a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                           <li class="chapter">
+                               <div class="simple menu-toggler" data-toggle="collapse"
+                                       data-target="#interfaces-links"
+                   >
+                                   <span class="fa fa-info"></span>
+                                   <span>Interfaces</span>
+                                   <span class="fa fa-angle-down"></span>
+                               </div>
+                               <ul class="links collapse "
+                                       id="interfaces-links"
+                   >
+                                       <li class="link">
+                                           <a href="./interfaces/OAuthStorage.html" >OAuthStorage</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./interfaces/ParsedIdToken.html" >ParsedIdToken</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./interfaces/ValidationHandler.html" >ValidationHandler</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./interfaces/ValidationParams.html" >ValidationParams</a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                   
+                           <li class="chapter">
+                               <div class="simple menu-toggler" data-toggle="collapse"
+                                       data-target="#miscellaneous-links"
+                   >
+                                   <span class="fa fa-cubes"></span>
+                                   <span>Miscellaneous</span>
+                                   <span class="fa fa-angle-down"></span>
+                               </div>
+                               <ul class="links collapse "
+                                       id="miscellaneous-links"
+                   >
+                                       <li class="link">
+                                         <a href="./miscellaneous/typealiases.html" data-type="entity-link" >Type aliases</a>
+                                       </li>
+                                       <li class="link">
+                                         <a href="./miscellaneous/variables.html" data-type="entity-link" >Variables</a>
+                                       </li>
+                               </ul>
+                           </li>
+                   
+                   
+                   
+                   
+                       </ul>
+                   
+                   </nav>
+               </div>
+               <div class="content getting-started">
+                   <div class="content-data">
+
+<h1 id="angular-oauth2-oidc">angular-oauth2-oidc</h1>
+<p>Support for OAuth 2 and OpenId Connect (OIDC) in Angular.</p>
+<h2 id="credits">Credits</h2>
+<ul>
+<li>generator-angular2-library: <a href="https://github.com/jvandemo/generator-angular2-library">https://github.com/jvandemo/generator-angular2-library</a></li>
+</ul>
+<h2 id="tested-environment">Tested Environment</h2>
+<p>Successfully tested with the Angular 2 and 4 and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we&#39;ve used IdentityServer (.NET/ .NET Core) and Redhat&#39;s Keycloak (Java).</p>
+<h2 id="new-features-in-version-2">New Features in Version 2</h2>
+<ul>
+<li>Token Refresh for Implicit Flow by implementing &quot;silent refresh&quot;</li>
+<li>Validating the signature of the received id_token</li>
+<li>Providing Events via the observable <code>events</code>.</li>
+<li>The event <code>token_expires</code> can be used togehter with a silent refresh to automatically refresh a token when/ before it expires (see also property <code>timeoutFactor</code>).</li>
+</ul>
+<h2 id="additional-features">Additional Features</h2>
+<ul>
+<li>Logging in via OAuth2 and OpenId Connect (OIDC) Implicit Flow (where user is redirected to Identity Provider)</li>
+<li>&quot;Logging in&quot; via Password Flow (where user enters his/her password into the client)</li>
+<li>Token Refresh for Password Flow by using a Refresh Token</li>
+<li>Automatically refreshing a token when/ some time before it expires</li>
+<li>Querying Userinfo Endpoint</li>
+<li>Querying Discovery Document to ease configuration</li>
+<li>Validating claims of the id_token regarding the specs</li>
+<li>Hook for further custom validations</li>
+<li>Single-Sign-Out by redirecting to the auth-server&#39;s logout-endpoint</li>
+</ul>
+<h2 id="breaking-changes-in-version-2">Breaking Changes in Version 2</h2>
+<ul>
+<li>The property <code>oidc</code> defaults to <code>true</code>.</li>
+<li>If you are just using oauth2, you have to set <code>oidc</code> to <code>false</code>. Otherwise, the validation of the user profile will fail!</li>
+<li>By default, <code>sessionStorage</code> is used. To use <code>localStorage</code> call method setStorage</li>
+<li>Demands using https as OIDC and OAuth2 relay on it. This rule can be relaxed using the property <code>requireHttps</code>, e. g. for local testing.</li>
+<li>Demands that every url provided by the discovery document starts with the issuer&#39;s url. This can be relaxed by using the property <code>strictDiscoveryDocumentValidation</code>.</li>
+</ul>
+<h2 id="sample-auth-server">Sample-Auth-Server</h2>
+<p>You can use the OIDC-Sample-Server mentioned in the samples for Testing. It assumes, that your Web-App runns on <a href="http://localhost:8080">http://localhost:8080</a>.</p>
+<p>Username/Password: max/geheim</p>
+<h2 id="resources">Resources</h2>
+<ul>
+<li>Sources of this lib: <a href="https://github.com/manfredsteyer/angular-oauth2-oidc">https://github.com/manfredsteyer/angular-oauth2-oidc</a></li>
+<li>Sample Project: <a href="https://github.com/manfredsteyer/angular2-oauth-oidc-demo">https://github.com/manfredsteyer/angular2-oauth-oidc-demo</a></li>
+</ul>
+<h2 id="setup-provider-for-oauthservice">Setup Provider for OAuthService</h2>
+<pre class="line-numbers"><code class="language-none">import { OAuthModule } from &#39;angular-oauth2-oidc&#39;;
+[...]
+
+&#64;NgModule({
+  imports: [ 
+    [...]
+    HttpModule,
+    OAuthModule.forRoot()
+  ],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    [...]
+  ],
+  bootstrap: [
+    AppComponent 
+  ]
+})
+export class AppModule {
+}</code></pre><h2 id="using-implicit-flow">Using Implicit Flow</h2>
+<p>This section shows how to use the implicit flow, which is redirecting the user to the auth-server for the login.</p>
+<h3 id="configure-library-for-implicit-flow-using-discovery-document-">Configure Library for Implicit Flow (using discovery document)</h3>
+<p>To configure the library you just have to set some properties on startup. For this, the following sample uses the constructor of the AppComponent which is called before routing kicks in.</p>
+<pre class="line-numbers"><code class="language-none">&#64;Component({ ... })
+export class AppComponent {
+
+  constructor(private oauthService: OAuthService) {
+
+        // URL of the SPA to redirect the user to after login
+        this.oauthService.redirectUri = window.location.origin + &quot;/index.html&quot;;
+
+        // The SPA&#39;s id. The SPA is registerd with this id at the auth-server
+        this.oauthService.clientId = &quot;spa-demo&quot;;
+
+        // set the scope for the permissions the client should request
+        // The first three are defined by OIDC. The 4th is a usecase-specific one
+        this.oauthService.scope = &quot;openid profile email voucher&quot;;
+
+        // The name of the auth-server that has to be mentioned within the token
+        this.oauthService.issuer = &quot;https://steyer-identity-server.azurewebsites.net/identity&quot;;
+
+        // Load Discovery Document and then try to login the user
+        this.oauthService.loadDiscoveryDocument().then(() =&gt; {
+
+            // This method just tries to parse the token(s) within the url when
+            // the auth-server redirects the user back to the web-app
+            // It dosn&#39;t send the user the the login page
+            this.oauthService.tryLogin();      
+
+        });
+
+  }
+
+}</code></pre><h3 id="configure-library-for-implicit-flow-without-discovery-document-">Configure Library for Implicit Flow (without discovery document)</h3>
+<p>When you don&#39;t have a discovery document, you have to configure more properties manually:</p>
+<pre class="line-numbers"><code class="language-none">&#64;Component({ ... })
+export class AppComponent {
+
+  constructor(private oauthService: OAuthService) {
+
+        // Login-Url
+        this.oauthService.loginUrl = &quot;https://steyer-identity-server.azurewebsites.net/identity/connect/authorize&quot;; //Id-Provider?
+
+        // URL of the SPA to redirect the user to after login
+        this.oauthService.redirectUri = window.location.origin + &quot;/index.html&quot;;
+
+        // The SPA&#39;s id. Register SPA with this id at the auth-server
+        this.oauthService.clientId = &quot;spa-demo&quot;;
+
+        // set the scope for the permissions the client should request
+        this.oauthService.scope = &quot;openid profile email voucher&quot;;
+
+        // Use setStorage to use sessionStorage or another implementation of the TS-type Storage
+        // instead of localStorage
+        this.oauthService.setStorage(sessionStorage);
+
+        // To also enable single-sign-out set the url for your auth-server&#39;s logout-endpoint here
+        this.oauthService.logoutUrl = &quot;https://steyer-identity-server.azurewebsites.net/identity/connect/endsession&quot;;
+
+        // This method just tries to parse the token(s) within the url when
+        // the auth-server redirects the user back to the web-app
+        // It dosn&#39;t send the user the the login page
+        this.oauthService.tryLogin();      
+
+
+  }
+
+}</code></pre><h3 id="home-component-for-login-">Home-Component (for login)</h3>
+<pre class="line-numbers"><code class="language-none">import { Component } from &#39;&#64;angular/core&#39;;
+import { OAuthService } from &#39;angular-oauth2-oidc&#39;;
+
+&#64;Component({
+    templateUrl: &quot;app/home.html&quot; 
+})
+export class HomeComponent {
+
+    constructor(private oAuthService: OAuthService) {
+    }
+
+    public login() {
+        this.oAuthService.initImplicitFlow();
+    }
+
+    public logoff() {
+        this.oAuthService.logOut();
+    }
+
+    public get name() {
+        let claims = this.oAuthService.getIdentityClaims();
+        if (!claims) return null;
+        return claims.given_name; 
+    }
+
+}</code></pre><pre class="line-numbers"><code class="language-none">&lt;h1 *ngIf=&quot;!name&quot;&gt;
+    Hallo
+&lt;/h1&gt;
+&lt;h1 *ngIf=&quot;name&quot;&gt;
+    Hallo, {{name}}
+&lt;/h1&gt;
+
+&lt;button class=&quot;btn btn-default&quot; (click)=&quot;login()&quot;&gt;
+    Login
+&lt;/button&gt;
+&lt;button class=&quot;btn btn-default&quot; (click)=&quot;logoff()&quot;&gt;
+    Logout
+&lt;/button&gt;
+
+&lt;div&gt;
+    Username/Passwort zum Testen: max/geheim
+&lt;/div&gt;</code></pre><h3 id="validate-id_token">Validate id_token</h3>
+<p>You can hook in an implementation of the interface <code>TokenValidator</code> to validate the signature of the received id_token and its at_hash property. This packages provides two implementations:</p>
+<ul>
+<li>JwksValidationHandler</li>
+<li>NullValidationHandler</li>
+</ul>
+<p>The former one validates the signature against public keys received via the discovery document (property jwks) and the later one skips the validation on client side. </p>
+<pre class="line-numbers"><code class="language-none">import { JwksValidationHandler } from &#39;angular-oauth2-oidc&#39;;
+
+[...]
+
+this.oauthService.tokenValidationHandler = new JwksValidationHandler();</code></pre><p>In cases where no ValidationHandler is defined, you receive a warning on the console. This means that the library wants you to explicitly decide on this. </p>
+<h3 id="validate-id_token-legacy-deprecated-">Validate id_token (legacy, deprecated)</h3>
+<p>In cases where security relies on the id_token (e. g. in hybrid apps that use it to provide access to local resources)
+you could use the callback <code>validationHandler</code> to define the logic to validate the token&#39;s signature. 
+The following sample uses the validation-endpoint of <a href="https://github.com/IdentityServer/IdentityServer3">IdentityServer3</a> for this:</p>
+<pre class="line-numbers"><code class="language-none">this.oauthService.tryLogin({
+    validationHandler: context =&gt; {
+        var search = new URLSearchParams();
+        search.set(&#39;token&#39;, context.idToken); 
+        search.set(&#39;client_id&#39;, oauthService.clientId);
+        return http.get(validationUrl, { search }).toPromise();
+    }
+});</code></pre><h3 id="calling-a-web-api-with-oauth-token">Calling a Web API with OAuth-Token</h3>
+<p>Pass this Header to the used method of the <code>Http</code>-Service within an Instance of the class <code>Headers</code>:</p>
+<pre class="line-numbers"><code class="language-none">var headers = new Headers({
+    &quot;Authorization&quot;: &quot;Bearer &quot; + this.oauthService.getAccessToken()
+});</code></pre><h3 id="refreshing-a-token-when-using-implicit-flow">Refreshing a Token when using Implicit Flow</h3>
+<p>To refresh your tokens when using implicit flow you can use a silent refresh. This is a well-known solution that compensates the fact that implicit flow does not allow for issuing a refresh token. It uses a hidden iframe to get another token from the auth-server. When the user is there still logged in (by using a cookie) it will respond without user interaction and provide new tokens.</p>
+<p>To use this approach, setup a redirect uri for the silent refresh:</p>
+<pre class="line-numbers"><code class="language-none">this.oauthService.silentRefreshRedirectUri = window.location.origin + &quot;/silent-refresh.html&quot;;</code></pre><p>Please keep in mind that this uri has to be configured at the auth-server too.</p>
+<p>This file is loaded into the hidden iframe after getting new tokens. Its only task is to send the received tokens to the main application:</p>
+<pre class="line-numbers"><code class="language-none">&lt;html&gt;
+&lt;body&gt;
+    &lt;script&gt;
+    parent.postMessage(location.hash, location.origin);
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><p>Please make sure that this file is copied to your output directory by your build task. When using the CLI you can define it as an asset for this. For this, you have to add the following line to the file <code>.angular-cli.json</code>:</p>
+<pre class="line-numbers"><code class="language-none">&quot;assets&quot;: [
+    [...],
+    &quot;silent-refresh.html&quot;
+],</code></pre><p>To perform a silent refresh, just call the following method:</p>
+<pre class="line-numbers"><code class="language-none">this
+    .oauthService
+    .silentRefresh()
+    .then(info =&gt; console.debug(&#39;refresh ok&#39;, info))
+    .catch(err =&gt; console.error(&#39;refresh error&#39;, err));</code></pre><p>When there is an error in the iframe that prevents the communication with the main application, silentRefresh will give you a timeout. To configure the timespan for this, you can set the property <code>siletRefreshTimeout</code> (msec). The default value is 20.000 (20 seconds).</p>
+<h3 id="automatically-refreshing-a-token-when-before-it-expires">Automatically refreshing a token when/ before it expires</h3>
+<p>To automatically refresh a token when/ some time before it expires, you can make use of the event <code>token_expires</code>:</p>
+<pre class="line-numbers"><code class="language-none">this
+    .oauthService
+    .events
+    .filter(e =&gt; e.type == &#39;token_expires&#39;)
+    .subscribe(e =&gt; {
+        this.oauthService.silentRefresh();
+    });</code></pre><p>By default, this event is fired after 75% of the token&#39;s life time is over. You can adjust this factor by setting the property <code>timeoutFactor</code> to a value between 0 and 1. For instance, 0.5 means, that the event is fired after half of the life time is over and 0.33 triggers the event after a third.</p>
+<h3 id="callback-after-successful-login">Callback after successful login</h3>
+<p>There is a callback <code>onTokenReceived</code>, that is called after a successful login. In this case, the lib received the access_token as
+well as the id_token, if it was requested. If there is an id_token, the lib validated it.</p>
+<pre class="line-numbers"><code class="language-none">this.oauthService.tryLogin({
+    onTokenReceived: context =&gt; {
+        //
+        // Output just for purpose of demonstration
+        // Don&#39;t try this at home ... ;-)
+        // 
+        console.debug(&quot;logged in&quot;);
+        console.debug(context);
+    }
+});</code></pre><h2 id="preserving-state-like-the-requested-url">Preserving State like the requested URL</h2>
+<p>When calling <code>initImplicitFlow</code>, you can pass an optional state which could be the requested url:</p>
+<pre class="line-numbers"><code class="language-none">this.oauthService.initImplicitFlow(&#39;http://www.myurl.com/x/y/z&#39;);</code></pre><p>After login succeeded, you can read this state:</p>
+<pre class="line-numbers"><code class="language-none">this.oauthService.tryLogin({
+    onTokenReceived: (info) =&gt; {
+        console.debug(&#39;state&#39;, info.state);
+    }
+})</code></pre><h3 id="custom-query-parameter">Custom Query Parameter</h3>
+<p>You can set the property <code>customQueryParams</code> to a hash with custom parameter that are transmitted when starting implicit flow.</p>
+<pre class="line-numbers"><code class="language-none">this.oauthService.customQueryParams = {
+    &#39;tenant&#39;: &#39;4711&#39;,
+    &#39;otherParam&#39;: &#39;someValue&#39;
+};</code></pre><h2 id="routing-with-the-hashstrategy">Routing with the HashStrategy</h2>
+<p>If you are leveraging the <code>LocationStrategy</code> which the Router is using by default, you can skip this section.</p>
+<p>When using the <code>HashStrategy</code> for Routing, the Router will override the received hash fragment with the tokens when it performs it initial navigation. This prevents the library from reading them. To avoid this, disable initial navigation when setting up the routes for your root module:</p>
+<pre class="line-numbers"><code class="language-none">export let AppRouterModule = RouterModule.forRoot(APP_ROUTES, { 
+    useHash: true,
+    initialNavigation: false
+});</code></pre><p>After tryLogin did its job, you can manually perform the initial navigation:</p>
+<pre class="line-numbers"><code class="language-none">this.oauthService.tryLogin().then(_ =&gt; {
+    this.router.navigate([&#39;/&#39;]);
+})</code></pre><p>Another solution is the use a redirect uri that already contains the initial route. In this case the router will not override it. An example for such a redirect uri is</p>
+<pre class="line-numbers"><code class="language-none">    http://localhost:8080/#/home</code></pre><h2 id="events">Events</h2>
+<pre class="line-numbers"><code class="language-none">this.oauthService.events.subscribe(e =&gt; {
+    console.debug(&#39;oauth/oidc event&#39;, e);
+})</code></pre><h2 id="using-password-flow">Using Password-Flow</h2>
+<p>This section shows how to use the password flow, which demands the user to directly enter his or her password into the client.</p>
+<h3 id="configure-library-for-password-flow-using-discovery-document-">Configure Library for Password Flow (using discovery document)</h3>
+<p>To configure the library you just have to set some properties on startup. For this, the following sample uses the constructor of the AppComponent which is called before routing kicks in.</p>
+<p>Please not, that this configuation is quite similar to the one for the implcit flow.</p>
+<pre class="line-numbers"><code class="language-none">&#64;Component({ ... })
+export class AppComponent {
+
+  constructor(private oauthService: OAuthService) {
+
+        // The SPA&#39;s id. Register SPA with this id at the auth-server
+        this.oauthService.clientId = &quot;demo-resource-owner&quot;;
+
+        // set the scope for the permissions the client should request
+        // The auth-server used here only returns a refresh token (see below), when the scope offline_access is requested
+        this.oauthService.scope = &quot;openid profile email voucher offline_access&quot;;
+
+        // Use setStorage to use sessionStorage or another implementation of the TS-type Storage
+        // instead of localStorage
+        this.oauthService.setStorage(sessionStorage);
+
+        // Set a dummy secret
+        // Please note that the auth-server used here demand the client to transmit a client secret, although
+        // the standard explicitly cites that the password flow can also be used without it. Using a client secret
+        // does not make sense for a SPA that runs in the browser. That&#39;s why the property is called dummyClientSecret
+        // Using such a dummy secreat is as safe as using no secret.
+        this.oauthService.dummyClientSecret = &quot;geheim&quot;;
+
+        // Load Discovery Document and then try to login the user
+        let url = &#39;https://steyer-identity-server.azurewebsites.net/identity/.well-known/openid-configuration&#39;;
+        this.oauthService.loadDiscoveryDocument(url).then(() =&gt; {
+            // Do what ever you want here
+        });
+
+  }
+
+}</code></pre><h3 id="configure-library-for-password-flow-without-discovery-document-">Configure Library for Password Flow (without discovery document)</h3>
+<p>In cases where you don&#39;t have an OIDC based discovery document you have to configure some more properties manually:</p>
+<pre class="line-numbers"><code class="language-none">&#64;Component({ ... })
+export class AppComponent {
+
+  constructor(private oauthService: OAuthService) {
+
+        // Login-Url
+        this.oauthService.tokenEndpoint = &quot;https://steyer-identity-server.azurewebsites.net/identity/connect/token&quot;; 
+
+        // Url with user info endpoint
+        // This endpont is described by OIDC and provides data about the loggin user
+        // This sample uses it, because we don&#39;t get an id_token when we use the password flow
+        // If you don&#39;t want this lib to fetch data about the user (e. g. id, name, email) you can skip this line
+        this.oauthService.userinfoEndpoint = &quot;https://steyer-identity-server.azurewebsites.net/identity/connect/userinfo&quot;;
+
+        // The SPA&#39;s id. Register SPA with this id at the auth-server
+        this.oauthService.clientId = &quot;demo-resource-owner&quot;;
+
+        // set the scope for the permissions the client should request
+        this.oauthService.scope = &quot;openid profile email voucher offline_access&quot;;
+
+        // Set a dummy secret
+        // Please note that the auth-server used here demand the client to transmit a client secret, although
+        // the standard explicitly cites that the password flow can also be used without it. Using a client secret
+        // does not make sense for a SPA that runs in the browser. That&#39;s why the property is called dummyClientSecret
+        // Using such a dummy secreat is as safe as using no secret.
+        this.oauthService.dummyClientSecret = &quot;geheim&quot;;
+
+  }
+
+}</code></pre><h3 id="fetching-an-access-token-by-providing-the-current-user-s-credentials">Fetching an Access Token by providing the current user&#39;s credentials</h3>
+<pre class="line-numbers"><code class="language-none">this.oauthService.fetchTokenUsingPasswordFlow(&#39;max&#39;, &#39;geheim&#39;).then((resp) =&gt; {
+
+      // Loading data about the user
+      return this.oauthService.loadUserProfile();
+
+}).then(() =&gt; {
+
+      // Using the loaded user data
+      let claims = this.oAuthService.getIdentityClaims();
+      if (claims) console.debug(&#39;given_name&#39;, claims.given_name); 
+
+})</code></pre><p>There is also a short form for fetching the token and loading the user profile:</p>
+<pre class="line-numbers"><code class="language-none">this.oauthService.fetchTokenUsingPasswordFlowAndLoadUserProfile(&#39;max&#39;, &#39;geheim&#39;).then(() =&gt; {
+      let claims = this.oAuthService.getIdentityClaims();
+      if (claims) console.debug(&#39;given_name&#39;, claims.given_name); 
+});</code></pre><h3 id="refreshing-the-current-access-token">Refreshing the current Access Token</h3>
+<p>Using the password flow you MIGHT get a refresh token (which isn&#39;t the case with the implicit flow by design!). You can use this token later to get a new access token, e. g. after it expired.</p>
+<pre class="line-numbers"><code class="language-none">this.oauthService.refreshToken().then(() =&gt; {
+          console.debug(&#39;ok&#39;);
+})</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+           </div>
+       </div>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+       <script src="./js/libs/zepto.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script>var COMPODOC_CURRENT_PAGE_DEPTH = 0;</script>
+
+       <script src="./js/search/search.js"></script>
+       <script src="./js/search/lunr.min.js"></script>
+       <script src="./js/search/search-lunr.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+       <script src="./js/search/search_index.js"></script>
+
+    </body>
+</html>

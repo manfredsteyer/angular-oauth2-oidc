@@ -1,0 +1,25 @@
+
+<nav class="navbar navbar-default">
+    <ul class="nav navbar-nav">
+        <li><a [routerLink]="['/home', {showDetail:false}]">Home</a></li>
+        <li><a [routerLink]="['/flight-booking/flight-search']">Flug buchen</a></li>
+<!--
+        <li><a [routerLink]="[{outlets: { aux: ['history', {showDetail: true}] }}]">History einblenden</a></li>
+        <li><a [routerLink]="[{outlets: { aux: null }}]">History ausblenden</a></li>
+-->
+    </ul>
+</nav>
+
+<div class="container">
+
+<div class="row">
+    <router-outlet></router-outlet>
+</div>
+
+<div class="row">
+    <router-outlet name="aux"></router-outlet>
+</div>
+
+</div>
+
+<!-- Fußzeile -->
