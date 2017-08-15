@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/username/repo"
+    "url": "https://github.com/manfredsteyer/angular-oauth2-oidc"
   },
   "author": {
     "name": "ManfredSteyer",
