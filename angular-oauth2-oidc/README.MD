@@ -4,7 +4,10 @@ Support for OAuth 2 and OpenId Connect (OIDC) in Angular.
 
 ## Credits
 
-- generator-angular2-library: https://github.com/jvandemo/generator-angular2-library
+- [generator-angular2-library](https://github.com/jvandemo/generator-angular2-library) for scaffolding a angular library
+- [jsrasign](https://kjur.github.io/jsrsasign/) for validating token signature and for hashing
+- [Identity Server](https://github.com/identityserver) (used for Testing with an .NET/.NET Core Backend)
+- [Keycloak (Redhad)](http://www.keycloak.org/) for Testing with Java
 
 ## Resources
 
@@ -237,23 +240,6 @@ this.oauthService.tokenValidationHandler = new JwksValidationHandler();
 ```
 
 In cases where no ValidationHandler is defined, you receive a warning on the console. This means that the library wants you to explicitly decide on this. 
-
-### Validate id_token (legacy, deprecated)
-
-In cases where security relies on the id_token (e. g. in hybrid apps that use it to provide access to local resources)
-you could use the callback ``validationHandler`` to define the logic to validate the token's signature. 
-The following sample uses the validation-endpoint of [IdentityServer3](https://github.com/IdentityServer/IdentityServer3) for this:
-
-```
-this.oauthService.tryLogin({
-    validationHandler: context => {
-        var search = new URLSearchParams();
-        search.set('token', context.idToken); 
-        search.set('client_id', oauthService.clientId);
-        return http.get(validationUrl, { search }).toPromise();
-    }
-});
-```
 
 ### Calling a Web API with OAuth-Token
 
