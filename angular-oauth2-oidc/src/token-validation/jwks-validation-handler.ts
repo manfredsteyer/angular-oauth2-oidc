@@ -35,16 +35,25 @@ export class JwksValidationHandler extends AbstractValidationHandler {
         let keys: object[] = params.jwks['keys'];
         let key: object;
         
-        if (!kid && params.jwks['keys'].length > 1) {
-            let error = 'Multiple keys but no kid in token!';
-            console.error(error);
-            return Promise.reject(error);
-        }
-        else if (!kid) {
-            key = params.jwks['keys'][0];
+        let alg = params.idTokenHeader['alg'];
+
+        if (kid) {
+            key = keys.find(k => k['kid'] == kid && k['use'] == 'sig');
         }
         else {
-            key = keys.find(k => k['kid'] == kid && k['use'] == 'sig');
+            let kty = this.alg2kty(alg)
+            let matchingKeys = keys.filter(k => k['kty'] == kty && k['use'] == 'sig');
+            if (matchingKeys.length == 0) {
+                let error = 'No matching key found.';
+                console.error(error);
+                return Promise.reject(error);
+            }
+            else if (matchingKeys.length > 1) {
+                let error = 'More than one matching key found. Please specify a kid in the id_token header.';
+                console.error(error);
+                return Promise.reject(error);
+            }
+            key = matchingKeys[0];
         }
 
         if (!key) {
@@ -65,6 +74,14 @@ export class JwksValidationHandler extends AbstractValidationHandler {
         }
         else {
             return Promise.reject('Signature not valid');
+        }
+    }
+
+    private alg2kty(alg: string) {
+        switch(alg.charAt(0)) {
+            case 'R': return 'RSA';
+            case 'E': return 'EC';
+            default: throw new Error('Cannot infer kty from alg: ' + alg);
         }
     }
 

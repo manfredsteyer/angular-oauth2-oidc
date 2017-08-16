@@ -7,6 +7,8 @@ export class UrlHelperService {
         
         let hash = customHashFragment || window.location.hash;
 
+        hash = decodeURIComponent(hash);
+
         if (hash.indexOf("#") !== 0) {
             return {};
         }
