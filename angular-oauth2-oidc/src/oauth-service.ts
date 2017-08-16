@@ -970,7 +970,7 @@ export class OAuthService {
                 }
             }
 
-            if (this.getKeyCount() > 1 && !claims.kid) {
+            if (this.getKeyCount() > 1 && !header.kid) {
                 let err = 'There needs to be a kid claim in the id_token when multiple keys are defined via the property jwks';
                 console.warn(err);
                 return Promise.reject(err);
