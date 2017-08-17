@@ -752,9 +752,11 @@ export class OAuthService {
                         + "&redirect_uri=" 
                         + encodeURIComponent(redirectUri) 
                         + "&scope=" 
-                        + encodeURIComponent(scope)
-                        + "&login_hint="
-                        + encodeURIComponent(loginHint);
+                        + encodeURIComponent(scope);
+            
+            if (loginHint) {
+                url += "&login_hint=" + encodeURIComponent(loginHint);
+            }
 
             if (that.resource) {
                 url += "&resource=" + encodeURIComponent(that.resource);
