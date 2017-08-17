@@ -11,9 +11,41 @@ import { Router } from "@angular/router";
 export class AppComponent {
     public info: string = "Welt";
 
+
+    public configureLogin() {
+        this.oauthService.loginUrl = "https://phenomenexauthserver.azurewebsites.net/connect/authorize";
+        this.oauthService.redirectUri = "http://localhost:4200";
+        this.oauthService.clientId = "testClient";
+        this.oauthService.scope = "openid profile email PhxAppMgrScope";
+        this.oauthService.setStorage(sessionStorage);
+        this.oauthService.oidc = true;
+        this.oauthService.issuer = "https://phenomenexauthserver.azurewebsites.net";
+        this.oauthService.logoutUrl = "https://phenomenexauthserver.azurewebsites.net/connect/endsession?id_token={{id_token}}";
+        this.oauthService.loadDiscoveryDocument().then((d) => {
+            console.debug('discovery ok', this.oauthService);
+            this.oauthService.tryLogin({
+                onTokenReceived: context => {
+                    //
+                    // Output just for purpose of demonstration
+                    // Don't try this at home ... ;-)
+                    // 
+                    console.log("logged in");
+                    console.log(context);
+                }
+
+            });      
+        });  
+ 
+    }
+
+
     constructor(
         private router: Router,
         private oauthService: OAuthService) {
+
+
+            this.configureLogin();
+            if (1==1) return;
 
         // URL of the SPA to redirect the user to after login
         this.oauthService.redirectUri = window.location.origin + "/index.html";

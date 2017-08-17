@@ -192,6 +192,9 @@ export class OAuthService {
     private accessTokenTimeoutSubscription: Subscription;
     private idTokenTimeoutSubscription: Subscription;
 
+    private jwksUri: string;
+
+
     constructor(
         private http: Http,
         private urlHelper: UrlHelperService) {
@@ -237,6 +240,9 @@ export class OAuthService {
     }
 
     private validateUrlForHttps(url: string): boolean {
+        
+        if (!url) return true;
+        
         let lcUrl = url.toLowerCase();
         
         if (this.requireHttps == false) return true;
@@ -318,8 +324,8 @@ export class OAuthService {
     private calcTimeout(expiration: number): number {
         let now = Date.now();
         let delta = (expiration - now) * this.timeoutFactor;
-        let timeout = now + delta;
-        return timeout;
+        // let timeout = now + delta;
+        return delta;
     }
 
     /**
@@ -370,28 +376,20 @@ export class OAuthService {
                     this.issuer = doc.issuer;
                     this.tokenEndpoint = doc.token_endpoint;
                     this.userinfoEndpoint = doc.userinfo_endpoint;
-
+                    this.jwksUri = doc.jwks_uri;
                     this.discoveryDocumentLoaded = true;
                     this.discoveryDocumentLoadedSubject.next(doc);
 
-                    if (doc.jwks_uri) {
-                        this.http.get(doc.jwks_uri).map(r => r.json()).subscribe(
-                            jwks => {
-                                this.jwks = jwks;
-                                this.eventsSubject.next(new OAuthSuccessEvent('discovery_document_loaded'));
-                                resolve(doc);
-                            },
-                            err => {
-                                console.error('error loading jwks', err);
-                                this.eventsSubject.next(new OAuthErrorEvent('jwks_load_error', err));
-                                reject(err);
-                            }
-                        )
-                    }
-                    else {
-                        this.eventsSubject.next(new OAuthSuccessEvent('discovery_document_loaded'));
-                        resolve(doc);
-                    }
+                    this.loadJwks().then(_ => {
+                        let result = new OAuthSuccessEvent('discovery_document_loaded');
+                        this.eventsSubject.next(result);
+                        resolve(result);
+                        return;
+                    }).catch(err => {
+                        this.eventsSubject.next(new OAuthErrorEvent('discovery_document_load_error', err));
+                        reject(err);
+                        return;
+                    });
                 },
                 (err) => {
                     console.error('error loading dicovery document', err);
@@ -400,6 +398,29 @@ export class OAuthService {
                 }
             );
         });
+    }
+
+    private loadJwks(): Promise<object> {
+        return new Promise<object>((resolve, reject) => {
+            if (this.jwksUri) {
+                this.http.get(this.jwksUri).map(r => r.json()).subscribe(
+                    jwks => {
+                        this.jwks = jwks;
+                        this.eventsSubject.next(new OAuthSuccessEvent('discovery_document_loaded'));
+                        resolve(jwks);
+                    },
+                    err => {
+                        console.error('error loading jwks', err);
+                        this.eventsSubject.next(new OAuthErrorEvent('jwks_load_error', err));
+                        reject(err);
+                    }
+                )
+            }
+            else {
+                resolve(null);
+            }
+        });
+
     }
 
     private validateDiscoveryDocument(doc: object): boolean {
@@ -946,8 +967,10 @@ export class OAuthService {
         if (this.clearHashAfterLogin) location.hash = '';
     }
     
-
-    protected processIdToken(idToken: string, accessToken: string): Promise<ParsedIdToken>  {
+    /**
+     * @ignore
+     */
+    public processIdToken(idToken: string, accessToken: string): Promise<ParsedIdToken>  {
             
             let tokenParts = idToken.split(".");
             let headerBase64 = this.padBase64(tokenParts[0]);
@@ -1031,7 +1054,8 @@ export class OAuthService {
                 idToken: idToken,
                 jwks: this.jwks,
                 idTokenClaims: claims,
-                idTokenHeader: header
+                idTokenHeader: header,
+                loadKeys: () => this.loadJwks()
             };
 
             if (this.requestAccessToken && !this.checkAtHash(validationParams)) {
@@ -1181,7 +1205,10 @@ export class OAuthService {
         location.href = logoutUrl;
     };
 
-    private createAndSaveNonce(): Promise<string> {
+    /**
+     * @ignore
+     */
+    public createAndSaveNonce(): Promise<string> {
         var that = this;
         return this.createNonce().then(function (nonce: any) {
             that._storage.setItem("nonce", nonce);

@@ -87,14 +87,16 @@ export class HomeComponent implements OnInit {
     userProfile: object;
 
     constructor(private oauthService: OAuthService) {
+        //this.configureLogin();
     }
+
 
     login() {
         /*
          * Tweak config for implicit flow.
          * This is needed b/c this sample uses both flows
         */
-        this.oauthService.clientId = "spa-demo";
+        //this.oauthService.clientId = "spa-demo";
         this.oauthService.oidc = true;
 
         this.oauthService.initImplicitFlow('http://www.myurl.com/x/y/z');

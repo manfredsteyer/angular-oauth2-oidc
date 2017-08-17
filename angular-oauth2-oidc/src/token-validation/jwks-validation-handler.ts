@@ -22,7 +22,7 @@ export class JwksValidationHandler extends AbstractValidationHandler {
      */
     gracePeriodInSec: number = 600;
 
-    validateSignature(params: ValidationParams): Promise<any> {
+    validateSignature(params: ValidationParams, retry: boolean = false): Promise<any> {
         if (!params.idToken) throw new Error('Parameter idToken expected!');
         if (!params.idTokenHeader) throw new Error('Parameter idTokenHandler expected.');
         if (!params.jwks) throw new Error('Parameter jwks expected!');
@@ -31,6 +31,8 @@ export class JwksValidationHandler extends AbstractValidationHandler {
             throw new Error('Array keys in jwks missing!');
         }
 
+        console.debug('validateSignature: retry', retry);
+        
         let kid: string = params.idTokenHeader['kid'];
         let keys: object[] = params.jwks['keys'];
         let key: object;
@@ -43,20 +45,37 @@ export class JwksValidationHandler extends AbstractValidationHandler {
         else {
             let kty = this.alg2kty(alg)
             let matchingKeys = keys.filter(k => k['kty'] == kty && k['use'] == 'sig');
+            
+            /*
             if (matchingKeys.length == 0) {
                 let error = 'No matching key found.';
                 console.error(error);
                 return Promise.reject(error);
-            }
-            else if (matchingKeys.length > 1) {
+            }*/
+            if (matchingKeys.length > 1) {
                 let error = 'More than one matching key found. Please specify a kid in the id_token header.';
                 console.error(error);
                 return Promise.reject(error);
             }
-            key = matchingKeys[0];
+            else if (matchingKeys.length == 1) {
+               key = matchingKeys[0];
+            }
         }
 
-        if (!key) {
+        if (!key && !retry && params.loadKeys) {
+            return params
+                    .loadKeys()
+                    .then(keys => params.jwks = keys)
+                    .then(_ => this.validateSignature(params, true));
+        }
+        
+        if (!key && retry && !kid) {
+            let error = 'No matching key found.';
+            console.error(error);
+            return Promise.reject(error);
+        }
+        
+        if (!key && retry && kid) {
             let error = 'expected key not found in property jwks. '
                             + 'This property is most likely loaded with the '
                             + 'discovery document. '

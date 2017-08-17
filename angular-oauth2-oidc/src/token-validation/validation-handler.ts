@@ -4,6 +4,7 @@ export interface ValidationParams {
     idTokenHeader: object;
     idTokenClaims: object;
     jwks: object;
+    loadKeys: () => Promise<object>;
 }
 
 /**
