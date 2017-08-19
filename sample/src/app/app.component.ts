@@ -44,8 +44,8 @@ export class AppComponent {
         private oauthService: OAuthService) {
 
 
-            this.configureLogin();
-            if (1==1) return;
+            //this.configureLogin();
+            //if (1==1) return;
 
         // URL of the SPA to redirect the user to after login
         this.oauthService.redirectUri = window.location.origin + "/index.html";

@@ -1,6 +1,6 @@
 {
   "name": "angular-oauth2-oidc",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "repository": {
     "type": "git",
     "url": "https://github.com/manfredsteyer/angular-oauth2-oidc"
@@ -16,11 +16,14 @@
   "bugs": {
     "url": "https://github.com/manfredsteyer/angular-oauth2-oidc/issues"
   },
+  "main": "angular-oauth2-oidc.umd.js",
   "module": "angular-oauth2-oidc.js",
   "jsnext:main": "angular-oauth2-oidc.js",
   "typings": "angular-oauth2-oidc.d.ts",
   "peerDependencies": {
     "@angular/core": "^4.0.0",
+    "@angular/http": "^4.0.0",
+    "@angular/common": "^4.0.0",
     "rxjs": "^5.1.0",
     "zone.js": "^0.8.4"
   },

@@ -23,7 +23,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class FlightEditComponent implements OnInit {
 
-    private id: string;
+    public id: string;
 
     constructor(private route: ActivatedRoute) {
 
