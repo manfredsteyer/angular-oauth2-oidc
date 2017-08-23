@@ -53,6 +53,11 @@ export class AppComponent {
         // URL of the SPA to redirect the user after silent refresh
         this.oauthService.silentRefreshRedirectUri = window.location.origin + "/silent-refresh.html";
  
+        //this.oauthService.timeoutFactor = 0;
+
+        //For debugging:
+        //this.oauthService.silentRefreshShowIFrame = true;
+
         // The SPA's id. The SPA is registerd with this id at the auth-server
         this.oauthService.clientId = "spa-demo";
  
@@ -98,6 +103,7 @@ export class AppComponent {
             // This method just tries to parse the token(s) within the url when
             // the auth-server redirects the user back to the web-app
             // It dosn't send the user the the login page
+
 
             console.debug(this.oauthService.tokenEndpoint);
 

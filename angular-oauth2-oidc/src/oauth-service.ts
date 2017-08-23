@@ -107,6 +107,13 @@ export class OAuthService {
     public silentRefreshMessagePrefix: string = '';
 
     /**
+     * Set this to true to display the iframe used for 
+     * silent refresh for debugging.
+     */
+    public silentRefreshShowIFrame: boolean = false;
+    
+
+    /**
      * Timeout for silent refresh. 
      */
     public siletRefreshTimeout: number = 1000 * 20; 
@@ -193,7 +200,6 @@ export class OAuthService {
     private idTokenTimeoutSubscription: Subscription;
 
     private jwksUri: string;
-
 
     constructor(
         private http: Http,
@@ -306,7 +312,7 @@ export class OAuthService {
             Observable
                 .of(new OAuthInfoEvent('token_expires', 'id_token'))
                 .delay(timeout)
-                .subscribe(this.eventsSubject);
+                .subscribe(e => this.eventsSubject.next(e));
     }
 
     private clearAccessTokenTimer(): void {
@@ -690,7 +696,9 @@ export class OAuthService {
         let redirectUri = this.silentRefreshRedirectUri || this.redirectUri;
         this.createLoginUrl(null, null, redirectUri).then(url => {
             iframe.setAttribute('src', url);
-            iframe.style.visibility = 'hidden';
+            if (!this.silentRefreshShowIFrame) {
+               iframe.style.visibility = 'hidden';
+            }
             document.body.appendChild(iframe);
         });
 
