@@ -264,6 +264,7 @@ export class OAuthService {
 
     private validateUrlAgainstIssuer(url: string) {
         if (!this.strictDiscoveryDocumentValidation) return true;
+        if (!url) return true;
         return url.toLowerCase().startsWith(this.issuer.toLowerCase());
     }
 
