@@ -187,6 +187,9 @@
                     </li>
             
             
+                    <li class="chapter">
+                        <a data-type="chapter-link" href="../coverage.html" ><span class="fa fa-tasks"></span>Documentation coverage</a>
+                    </li>
             
             
                 </ul>
@@ -366,6 +369,9 @@
                            </li>
                    
                    
+                           <li class="chapter">
+                               <a data-type="chapter-link" href="../coverage.html" ><span class="fa fa-tasks"></span>Documentation coverage</a>
+                           </li>
                    
                    
                        </ul>
@@ -480,7 +486,7 @@ and the parsed claims from the id-token.</p>
                                 </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/types.ts:54</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/types.ts:64</a></div>
                                         </td>
                                     </tr>
             
@@ -509,7 +515,7 @@ and the parsed claims from the id-token.</p>
                                 </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/types.ts:55</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/types.ts:65</a></div>
                                         </td>
                                     </tr>
             
@@ -538,7 +544,7 @@ and the parsed claims from the id-token.</p>
                                 </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/types.ts:53</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">src/types.ts:63</a></div>
                                         </td>
                                     </tr>
             
@@ -567,7 +573,7 @@ and the parsed claims from the id-token.</p>
                                 </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/types.ts:56</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/types.ts:66</a></div>
                                         </td>
                                     </tr>
             
@@ -609,6 +615,16 @@ and the parsed claims from the id-token.</p>
      * pass the iframes hash fragment to this method.
     */
     customHashFragment?: string;
+
+    /**
+     * Set this to true to disable the oauth2 state
+     * check which is a best practice to avoid
+     * security attacks. 
+     * As OIDC defines a nonce check that includes
+     * this, this can be set to true when only doing
+     * OIDC.
+     */
+    disableOAuth2StateCheck?: boolean;
 }
 
 /**

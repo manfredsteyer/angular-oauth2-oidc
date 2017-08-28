@@ -187,6 +187,9 @@
                     </li>
             
             
+                    <li class="chapter">
+                        <a data-type="chapter-link" href="../coverage.html" ><span class="fa fa-tasks"></span>Documentation coverage</a>
+                    </li>
             
             
                 </ul>
@@ -366,6 +369,9 @@
                            </li>
                    
                    
+                           <li class="chapter">
+                               <a data-type="chapter-link" href="../coverage.html" ><span class="fa fa-tasks"></span>Documentation coverage</a>
+                           </li>
                    
                    
                        </ul>
@@ -469,7 +475,7 @@ but you can also create your own implementations.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">src/types.ts:43</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/types.ts:53</a></div>
                                         </td>
                                     </tr>
             
@@ -501,7 +507,7 @@ but you can also create your own implementations.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/types.ts:44</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/types.ts:54</a></div>
                                         </td>
                                     </tr>
             
@@ -533,7 +539,7 @@ but you can also create your own implementations.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">src/types.ts:45</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/types.ts:55</a></div>
                                         </td>
                                     </tr>
             
@@ -585,6 +591,16 @@ but you can also create your own implementations.</p>
      * pass the iframes hash fragment to this method.
     */
     customHashFragment?: string;
+
+    /**
+     * Set this to true to disable the oauth2 state
+     * check which is a best practice to avoid
+     * security attacks. 
+     * As OIDC defines a nonce check that includes
+     * this, this can be set to true when only doing
+     * OIDC.
+     */
+    disableOAuth2StateCheck?: boolean;
 }
 
 /**

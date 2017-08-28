@@ -187,6 +187,9 @@
                     </li>
             
             
+                    <li class="chapter">
+                        <a data-type="chapter-link" href="../coverage.html" ><span class="fa fa-tasks"></span>Documentation coverage</a>
+                    </li>
             
             
                 </ul>
@@ -366,6 +369,9 @@
                            </li>
                    
                    
+                           <li class="chapter">
+                               <a data-type="chapter-link" href="../coverage.html" ><span class="fa fa-tasks"></span>Documentation coverage</a>
+                           </li>
                    
                    
                        </ul>
@@ -435,6 +441,9 @@
                                 </li>
                                 <li>
                                         <a href="#jwks">jwks</a>
+                                </li>
+                                <li>
+                                        <a href="#loadKeys">loadKeys</a>
                                 </li>
                             </ul>
                         </td>
@@ -612,6 +621,39 @@
 
                         </tbody>
                     </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="loadKeys"></a>
+                                        <b>loadKeys</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>loadKeys:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="7" class="link-to-prism">src/token-validation/validation-handler.ts:7</a></div>
+                                        </td>
+                                    </tr>
+
+                        </tbody>
+                    </table>
             </section>
     </div>
 
@@ -623,6 +665,7 @@
     idTokenHeader: object;
     idTokenClaims: object;
     jwks: object;
+    loadKeys: () &#x3D;&gt; Promise&lt;object&gt;;
 }
 
 /**

@@ -1,0 +1,23 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Users\\Manfred\\AppData\\Roaming\\npm\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'run',
+1 verbose cli   'docs' ]
+2 info using npm@4.0.5
+3 info using node@v6.10.0
+4 verbose stack Error: ENOENT: no such file or directory, open 'C:\Users\Manfred\Documents\bücher\Angular 2\src\oauth-lib4\angular-oauth2-oidc\package.json'
+4 verbose stack     at Error (native)
+5 verbose cwd C:\Users\Manfred\Documents\bücher\Angular 2\src\oauth-lib4\angular-oauth2-oidc
+6 error Windows_NT 10.0.10586
+7 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Users\\Manfred\\AppData\\Roaming\\npm\\node_modules\\npm\\bin\\npm-cli.js" "run" "docs"
+8 error node v6.10.0
+9 error npm  v4.0.5
+10 error path C:\Users\Manfred\Documents\bücher\Angular 2\src\oauth-lib4\angular-oauth2-oidc\package.json
+11 error code ENOENT
+12 error errno -4058
+13 error syscall open
+14 error enoent ENOENT: no such file or directory, open 'C:\Users\Manfred\Documents\bücher\Angular 2\src\oauth-lib4\angular-oauth2-oidc\package.json'
+15 error enoent ENOENT: no such file or directory, open 'C:\Users\Manfred\Documents\bücher\Angular 2\src\oauth-lib4\angular-oauth2-oidc\package.json'
+15 error enoent This is most likely not a problem with npm itself
+15 error enoent and is related to npm not being able to find a file.
+16 verbose exit [ -4058, true ]

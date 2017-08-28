@@ -187,6 +187,9 @@
                     </li>
             
             
+                    <li class="chapter">
+                        <a data-type="chapter-link" href="../coverage.html" ><span class="fa fa-tasks"></span>Documentation coverage</a>
+                    </li>
             
             
                 </ul>
@@ -366,6 +369,9 @@
                            </li>
                    
                    
+                           <li class="chapter">
+                               <a data-type="chapter-link" href="../coverage.html" ><span class="fa fa-tasks"></span>Documentation coverage</a>
+                           </li>
                    
                    
                        </ul>
@@ -456,6 +462,9 @@ of the keys of an JSON Web Key Set (jwks).</p>
                             <td class="col-md-4">
                                 <ul class="index-list">
                                     <li>
+                                        <span class="modifier">Private</span> <a href="#alg2kty">alg2kty</a>
+                                    </li>
+                                    <li>
                                          <a href="#calcHash">calcHash</a>
                                     </li>
                                     <li>
@@ -481,6 +490,39 @@ of the keys of an JSON Web Key Set (jwks).</p>
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
+                                    <a name="alg2kty"></a>
+                                    <b><span class="modifier">Private</span> alg2kty</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon method fa fa-play lock"></span>
+                                    <code>alg2kty(alg: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                                </td>
+                            </tr>
+            
+            
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="99" class="link-to-prism">src/token-validation/jwks-validation-handler.ts:99</a></div>
+                                        </td>
+                                    </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            
+                                        <div class="io-description">
+                                            <b>Returns : </b>    <code>&quot;RSA&quot; | &quot;EC&quot;</code>
+            
+                                        </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
                                     <a name="calcHash"></a>
                                     <b> calcHash</b>
                                 </td>
@@ -494,7 +536,7 @@ of the keys of an JSON Web Key Set (jwks).</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/token-validation/jwks-validation-handler.ts:71</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="107" class="link-to-prism">src/token-validation/jwks-validation-handler.ts:107</a></div>
                                         </td>
                                     </tr>
             
@@ -526,7 +568,7 @@ of the keys of an JSON Web Key Set (jwks).</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">src/token-validation/jwks-validation-handler.ts:78</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="114" class="link-to-prism">src/token-validation/jwks-validation-handler.ts:114</a></div>
                                         </td>
                                     </tr>
             
@@ -551,7 +593,7 @@ of the keys of an JSON Web Key Set (jwks).</p>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-            <code>validateSignature(params: <a href="../interfaces/ValidationParams.html">ValidationParams</a>)</code>
+            <code>validateSignature(params: <a href="../interfaces/ValidationParams.html">ValidationParams</a>, retry: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
                                 </td>
                             </tr>
             
@@ -686,7 +728,7 @@ export class JwksValidationHandler extends AbstractValidationHandler {
      */
     gracePeriodInSec: number &#x3D; 600;
 
-    validateSignature(params: ValidationParams): Promise&lt;any&gt; {
+    validateSignature(params: ValidationParams, retry: boolean &#x3D; false): Promise&lt;any&gt; {
         if (!params.idToken) throw new Error(&#x27;Parameter idToken expected!&#x27;);
         if (!params.idTokenHeader) throw new Error(&#x27;Parameter idTokenHandler expected.&#x27;);
         if (!params.jwks) throw new Error(&#x27;Parameter jwks expected!&#x27;);
@@ -695,23 +737,51 @@ export class JwksValidationHandler extends AbstractValidationHandler {
             throw new Error(&#x27;Array keys in jwks missing!&#x27;);
         }
 
+        console.debug(&#x27;validateSignature: retry&#x27;, retry);
+        
         let kid: string &#x3D; params.idTokenHeader[&#x27;kid&#x27;];
         let keys: object[] &#x3D; params.jwks[&#x27;keys&#x27;];
         let key: object;
         
-        if (!kid &amp;&amp; params.jwks[&#x27;keys&#x27;].length &gt; 1) {
-            let error &#x3D; &#x27;Multiple keys but no kid in token!&#x27;;
+        let alg &#x3D; params.idTokenHeader[&#x27;alg&#x27;];
+
+        if (kid) {
+            key &#x3D; keys.find(k &#x3D;&gt; k[&#x27;kid&#x27;] &#x3D;&#x3D; kid &amp;&amp; k[&#x27;use&#x27;] &#x3D;&#x3D; &#x27;sig&#x27;);
+        }
+        else {
+            let kty &#x3D; this.alg2kty(alg)
+            let matchingKeys &#x3D; keys.filter(k &#x3D;&gt; k[&#x27;kty&#x27;] &#x3D;&#x3D; kty &amp;&amp; k[&#x27;use&#x27;] &#x3D;&#x3D; &#x27;sig&#x27;);
+            
+            /*
+            if (matchingKeys.length &#x3D;&#x3D; 0) {
+                let error &#x3D; &#x27;No matching key found.&#x27;;
+                console.error(error);
+                return Promise.reject(error);
+            }*/
+            if (matchingKeys.length &gt; 1) {
+                let error &#x3D; &#x27;More than one matching key found. Please specify a kid in the id_token header.&#x27;;
+                console.error(error);
+                return Promise.reject(error);
+            }
+            else if (matchingKeys.length &#x3D;&#x3D; 1) {
+               key &#x3D; matchingKeys[0];
+            }
+        }
+
+        if (!key &amp;&amp; !retry &amp;&amp; params.loadKeys) {
+            return params
+                    .loadKeys()
+                    .then(keys &#x3D;&gt; params.jwks &#x3D; keys)
+                    .then(_ &#x3D;&gt; this.validateSignature(params, true));
+        }
+        
+        if (!key &amp;&amp; retry &amp;&amp; !kid) {
+            let error &#x3D; &#x27;No matching key found.&#x27;;
             console.error(error);
             return Promise.reject(error);
         }
-        else if (!kid) {
-            key &#x3D; params.jwks[&#x27;keys&#x27;][0];
-        }
-        else {
-            key &#x3D; keys.find(k &#x3D;&gt; k[&#x27;kid&#x27;] &#x3D;&#x3D; kid &amp;&amp; k[&#x27;use&#x27;] &#x3D;&#x3D; &#x27;sig&#x27;);
-        }
-
-        if (!key) {
+        
+        if (!key &amp;&amp; retry &amp;&amp; kid) {
             let error &#x3D; &#x27;expected key not found in property jwks. &#x27;
                             + &#x27;This property is most likely loaded with the &#x27;
                             + &#x27;discovery document. &#x27;
@@ -729,6 +799,14 @@ export class JwksValidationHandler extends AbstractValidationHandler {
         }
         else {
             return Promise.reject(&#x27;Signature not valid&#x27;);
+        }
+    }
+
+    private alg2kty(alg: string) {
+        switch(alg.charAt(0)) {
+            case &#x27;R&#x27;: return &#x27;RSA&#x27;;
+            case &#x27;E&#x27;: return &#x27;EC&#x27;;
+            default: throw new Error(&#x27;Cannot infer kty from alg: &#x27; + alg);
         }
     }
 
