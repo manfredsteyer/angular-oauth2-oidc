@@ -895,7 +895,8 @@ export class OAuthService {
             return Promise.reject('Either requestAccessToken or oidc or both must be true.');
         }
 
-        if (this.requestAccessToken && (!accessToken || !state)) return Promise.resolve();
+        if (this.requestAccessToken && !accessToken) return Promise.resolve();
+        if (this.requestAccessToken && !options.disableOAuth2StateCheck && !state) return Promise.resolve();
         if (this.oidc && !idToken) return Promise.resolve();
         
         var stateParts = state.split(';');
@@ -905,22 +906,16 @@ export class OAuthService {
         var nonceInState = stateParts[0];
 
 
-        // Our state might be URL encoded
-        // Check for this and then decode it if it is
-        // TODO: Check this!
-        /*
-        let decodedState = decodeURIComponent(state);
-        if (decodedState != state) {
-          state = decodedState;
-        }
-        */
-        if (this.requestAccessToken) {
+        if (this.requestAccessToken && !options.disableOAuth2StateCheck) {
             let success = this.validateNonceForAccessToken(accessToken, nonceInState);
             if (!success) {
                 let event = new OAuthErrorEvent('invalid_nonce_in_state', null);
                 this.eventsSubject.next(event);
                 return Promise.reject(event);
             }
+        }
+
+        if (this.requestAccessToken) {
             this.storeAccessTokenResponse(accessToken, null, parts['expires_in']);
         }
 

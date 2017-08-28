@@ -31,6 +31,16 @@ export class LoginOptions {
      * pass the iframes hash fragment to this method.
     */
     customHashFragment?: string;
+
+    /**
+     * Set this to true to disable the oauth2 state
+     * check which is a best practice to avoid
+     * security attacks. 
+     * As OIDC defines a nonce check that includes
+     * this, this can be set to true when only doing
+     * OIDC.
+     */
+    disableOAuth2StateCheck?: boolean;
 }
 
 /**
