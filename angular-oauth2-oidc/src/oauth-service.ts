@@ -270,7 +270,7 @@ export class OAuthService {
 
     private setupTimer(): void {
         
-        if (!window) {
+        if (typeof window === 'undefined') {
             this.debug('timer not supported on this plattform')
             return;
         } 
