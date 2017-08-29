@@ -208,7 +208,7 @@ export class OAuthService {
         this.discoveryDocumentLoaded$ = this.discoveryDocumentLoadedSubject.asObservable();
         this.events = this.eventsSubject.asObservable();
 
-        if (sessionStorage) {
+        if (typeof sessionStorage !== 'undefined') {
             this._storage = sessionStorage;
         }
 
