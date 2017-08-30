@@ -4,7 +4,7 @@ import {OAuthService} from "angular-oauth2-oidc";
 @Component({
     template: `
         <h1 *ngIf="!givenName">Willkommen!</h1>
-        <h1 *ngIf="givenName">Willkommen, {{givenName}}!</h1>
+        <h1 *ngIf="givenName">Willkommen, {{givenName}} {{familyName}}!</h1>
         
         <div class="panel panel-default">
             <div class="panel-body">
@@ -118,6 +118,12 @@ export class HomeComponent implements OnInit {
         var claims = this.oauthService.getIdentityClaims();
         if (!claims) return null;
         return claims['given_name'];
+    }
+
+    get familyName() {
+        var claims = this.oauthService.getIdentityClaims();
+        if (!claims) return null;
+        return claims['family_name'];
     }
 
     testSilentRefresh() {

@@ -8,6 +8,7 @@ import { UrlHelperService } from "./url-helper.service";
 import { Subscription } from "rxjs/Subscription";
 import { OAuthEvent, OAuthInfoEvent, OAuthErrorEvent, OAuthSuccessEvent } from "./events";
 import { OAuthStorage, LoginOptions, ParsedIdToken } from "./types";
+import { b64DecodeUnicode } from "./base64-helper";
 
 /**
  * Service for logging in and logging out with
@@ -978,10 +979,10 @@ export class OAuthService {
             
             let tokenParts = idToken.split(".");
             let headerBase64 = this.padBase64(tokenParts[0]);
-            let headerJson = atob(headerBase64);
+            let headerJson = b64DecodeUnicode(headerBase64);
             let header = JSON.parse(headerJson);
             let claimsBase64 = this.padBase64(tokenParts[1]);
-            let claimsJson = atob(claimsBase64);
+            let claimsJson = b64DecodeUnicode(claimsBase64);
             let claims = JSON.parse(claimsJson);
             let savedNonce = this._storage.getItem("nonce");
             
