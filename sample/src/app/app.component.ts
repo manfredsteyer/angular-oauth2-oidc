@@ -116,18 +116,8 @@ export class AppComponent {
             this.oauthService.tryLogin({
                 onTokenReceived: (info) => {
                     console.debug('state', info.state);
-            
                     
-                    this
-                        .oauthService
-                        .processIdToken(info.idToken, info.accessToken)
-                        .then(r => { 
-                            console.debug('tryLogin result', r); 
-                            console.log('access', this.oauthService.hasValidAccessToken());
-                            console.log('identity', this.oauthService.getIdentityClaims());
-                        });
-                    
-                        
+                    console.debug('id_claims', this.oauthService.getIdentityClaims());
                 }
             })
             /*
