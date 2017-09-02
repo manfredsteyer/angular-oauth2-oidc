@@ -4,7 +4,7 @@
   "scripts": {
     "build": "gulp build",
     "build:watch": "gulp",
-    "docs": "npm run docs:build -- --disableCoverage --disablePrivateOrInternalSupport",
+    "docs": "npm run docs:build",
     "docs:build": "compodoc -p tsconfig.json -n angular-oauth2-oidc -d docs --hideGenerator",
     "docs:serve": "npm run docs:build -- -s",
     "docs:watch": "npm run docs:build -- -s -w",

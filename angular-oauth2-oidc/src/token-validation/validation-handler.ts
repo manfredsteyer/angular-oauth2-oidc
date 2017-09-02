@@ -11,17 +11,17 @@ export interface ValidationParams {
  * Interface for Handlers that are hooked in to 
  * validate tokens.
  */
-export interface ValidationHandler {
+export abstract class ValidationHandler {
 
     /**
      * Validates the signature of an id_token.
      */
-    validateSignature(validationParams: ValidationParams): Promise<any>;    
+    public abstract validateSignature(validationParams: ValidationParams): Promise<any>;    
     
     /**
      * Validates the at_hash in an id_token against the received access_token.
      */
-    validateAtHash(validationParams: ValidationParams): boolean;    
+    public abstract  validateAtHash(validationParams: ValidationParams): boolean;    
 } 
 
 /**

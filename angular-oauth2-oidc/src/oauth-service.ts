@@ -1,5 +1,6 @@
+import { AuthConfig, defaultConfig } from './config';
 import { Http, URLSearchParams, Headers } from '@angular/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { ValidationHandler, ValidationParams } from "./token-validation/validation-handler";
@@ -20,45 +21,69 @@ export class OAuthService {
 
     /**
      * The client's id as registered with the auth server
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
      */
     public clientId = "";
 
     /**
      * The client's redirectUri as registered with the auth server
+     * 
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
      */
     public redirectUri = "";
 
     /**
      * An optional second redirectUri where the auth server
      * redirects the user to after logging out.
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
      */
     public postLogoutRedirectUri = "";
 
     /**
      * The auth server's endpoint that allows to log
      * the user in when using implicit flow.
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * 
      */
     public loginUrl = "";
 
     /**
      * The requested scopes
+     * 
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * 
      */
     public scope = "openid profile";
 
+    /**
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     */
     public resource = "";
+    
+    /**
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     */
     public rngUrl = "";
 
     /**
      * Defines whether to use OpenId Connect during
      * implicit flow.
+     * 
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
      */
     public oidc: boolean = true;
 
     /**
      * Defines whether to request a access token during
      * implicit flow.
+     * 
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
      */
     public requestAccessToken: boolean = true;
+
+    /**
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     */
     public options: any;
     
     /**
@@ -69,53 +94,77 @@ export class OAuthService {
 
     /**
      * The issuer's uri.
+     * 
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
      */
     public issuer = "";
 
     /**
      * The logout url.
+     * 
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
      */
     public logoutUrl = "";
 
     /**
      * Defines whether to clear the hash fragment after logging in.
+     * 
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
      */
     public clearHashAfterLogin: boolean = true;
 
     /**
      * Url of the token endpoint as defined by OpenId Connect and OAuth 2.
+     * 
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
      */
     public tokenEndpoint: string;
 
     /**
      * Url of the userinfo endpoint as defined by OpenId Connect.
+     * 
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * 
      */
     public userinfoEndpoint: string;
 
+    /**
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     */
     public responseType: string = "token";
 
     /**
      * Defines whether additional debug information should 
      * be shown at the console.
+     * 
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
      */
     public showDebugInformation: boolean = false;
 
     /**
      * The redirect uri used when doing silent refresh.
+     * 
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
      */
     public silentRefreshRedirectUri: string = '';
 
+    /**
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+    */
     public silentRefreshMessagePrefix: string = '';
 
     /**
      * Set this to true to display the iframe used for 
      * silent refresh for debugging.
+     * 
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
      */
     public silentRefreshShowIFrame: boolean = false;
     
-
     /**
      * Timeout for silent refresh. 
+     * 
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
      */
     public siletRefreshTimeout: number = 1000 * 20; 
 
@@ -126,6 +175,8 @@ export class OAuthService {
      * here. As this passwort is exposed to the public
      * it does not bring additional security and is therefore
      * as good as using no password.
+     * 
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
      */
     public dummyClientSecret: string;
 
@@ -140,12 +191,16 @@ export class OAuthService {
      * The default value is remoteOnly which only allows
      * http for location, while every other domains need
      * to be used with https.
+     * 
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
      */
     public requireHttps: boolean | 'remoteOnly' = 'remoteOnly';
     
     /**
      * Defines whether every url provided by the discovery 
      * document has to start with the issuer's url.
+     * 
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
      */
     public strictDiscoveryDocumentValidation: boolean = true;
 
@@ -153,12 +208,16 @@ export class OAuthService {
      * JSON Web Key Set (https://tools.ietf.org/html/rfc7517)
      * with keys used to validate received id_tokens.
      * This is taken out of the disovery document. Can be set manually too.
+     * 
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
      */
     public jwks: object;
 
     /**
      * Map with additional query parameter that are appended to
      * the request when initializing implicit flow.
+     * 
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
      */
     public customQueryParams: object;
 
@@ -166,7 +225,6 @@ export class OAuthService {
      * @internal
      * Deprecated:  use property events instead
      */
-    
     public discoveryDocumentLoaded: boolean = false;
   
     /**
@@ -184,7 +242,11 @@ export class OAuthService {
     public events: Observable<OAuthEvent>;
     private eventsSubject: Subject<OAuthEvent> = new Subject<OAuthEvent>();
 
+    /**
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     */
     public silentRefreshIFrameName: string = 'angular-oauth-oidc-silent-refresh-iframe';
+    
     private silentRefreshPostMessageEventListener: EventListener;
 
     private grantTypesSupported: Array<string> = [];
@@ -194,6 +256,8 @@ export class OAuthService {
      * Defines when the token_timeout event should be raised.
      * If you set this to the default value 0.75, the event
      * is triggered after 75% of the token's life time.
+     * 
+     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
      */
     public timeoutFactor: number = 0.75;
 
@@ -204,18 +268,50 @@ export class OAuthService {
 
     constructor(
         private http: Http,
+        @Optional() storage: OAuthStorage,
+        @Optional() tokenValidationHandler: ValidationHandler,
         private urlHelper: UrlHelperService) {
      
         this.discoveryDocumentLoaded$ = this.discoveryDocumentLoadedSubject.asObservable();
         this.events = this.eventsSubject.asObservable();
 
-        if (typeof sessionStorage !== 'undefined') {
-            this._storage = sessionStorage;
+        if (tokenValidationHandler) {
+            this.tokenValidationHandler = tokenValidationHandler;
+        }
+        
+        if (storage) {
+            this.setStorage(storage);
+        }
+        else if (typeof sessionStorage !== 'undefined') {
+            this.setStorage(sessionStorage);
         }
 
         this.setupTimer();
     }
 
+    /**
+     * Use this method to configure the service
+     * @param config the configuration
+     */
+    public configure(config: AuthConfig) {
+        Object.assign(this, defaultConfig, config);
+    }
+
+    public setupAutomaticSiletRefresh() {
+        this
+        .events
+        .filter(e => e.type == 'token_expires')
+        .subscribe(e => {
+          this.silentRefresh();
+        });
+    }
+
+    public loadDiscoveryDocumentAndTryLogin() {
+        this.loadDiscoveryDocument().then((doc) => {
+            this.tryLogin();
+        });
+    }
+    
     private getKeyCount(): number {
         if (!this.jwks) return 0;
         if (!this.jwks['keys']) return 0;

@@ -8,7 +8,8 @@ import {SharedModule} from "./shared/shared.module";
 import {AppRouterModule} from "./app.routes";
 import {HomeComponent} from "./home/home.component";
 import {FlightHistoryComponent} from "./flight-history/flight-history.component";
-import { OAuthModule } from 'angular-oauth2-oidc';
+import { OAuthModule, ValidationHandler, JwksValidationHandler, OAuthStorage } from 'angular-oauth2-oidc';
+import { DemoStorage } from './demo-storage';
 
 @NgModule({
     imports: [
@@ -26,7 +27,9 @@ import { OAuthModule } from 'angular-oauth2-oidc';
         FlightHistoryComponent
     ],
     providers: [
-        { provide: BASE_URL, useValue: "http://www.angular.at"}
+        // { provide: OAuthStorage, useClass: DemoStorage },
+        // { provide: ValidationHandler, useClass: JwksValidationHandler },
+        { provide: BASE_URL, useValue: "http://www.angular.at" }
     ],
     bootstrap: [
         AppComponent
