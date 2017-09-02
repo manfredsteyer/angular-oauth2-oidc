@@ -111,10 +111,16 @@
                                     <a href="../classes/OAuthInfoEvent.html" >OAuthInfoEvent</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../classes/OAuthStorage.html" >OAuthStorage</a>
+                                </li>
+                                <li class="link">
                                     <a href="../classes/OAuthSuccessEvent.html" >OAuthSuccessEvent</a>
                                 </li>
                                 <li class="link">
                                     <a href="../classes/ReceivedTokens.html"  data-type="entity-link" class="active" >ReceivedTokens</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../classes/ValidationHandler.html" >ValidationHandler</a>
                                 </li>
                         </ul>
                     </li>
@@ -154,13 +160,7 @@
                                     <a href="../interfaces/AuthConfig.html" >AuthConfig</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../interfaces/OAuthStorage.html" >OAuthStorage</a>
-                                </li>
-                                <li class="link">
                                     <a href="../interfaces/ParsedIdToken.html" >ParsedIdToken</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../interfaces/ValidationHandler.html" >ValidationHandler</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/ValidationParams.html" >ValidationParams</a>
@@ -296,10 +296,16 @@
                                            <a href="../classes/OAuthInfoEvent.html" >OAuthInfoEvent</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../classes/OAuthStorage.html" >OAuthStorage</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../classes/OAuthSuccessEvent.html" >OAuthSuccessEvent</a>
                                        </li>
                                        <li class="link">
                                            <a href="../classes/ReceivedTokens.html"  data-type="entity-link" class="active" >ReceivedTokens</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../classes/ValidationHandler.html" >ValidationHandler</a>
                                        </li>
                                </ul>
                            </li>
@@ -339,13 +345,7 @@
                                            <a href="../interfaces/AuthConfig.html" >AuthConfig</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../interfaces/OAuthStorage.html" >OAuthStorage</a>
-                                       </li>
-                                       <li class="link">
                                            <a href="../interfaces/ParsedIdToken.html" >ParsedIdToken</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../interfaces/ValidationHandler.html" >ValidationHandler</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/ValidationParams.html" >ValidationParams</a>
@@ -639,10 +639,10 @@ and the parsed claims from the id-token.</p>
  * Is compatible to localStorage and sessionStorage,
  * but you can also create your own implementations.
  */
-export interface OAuthStorage {
-    getItem(key: string): string | null;
-    removeItem(key: string): void;
-    setItem(key: string, data: string): void;
+export abstract class OAuthStorage {
+    abstract getItem(key: string): string | null;
+    abstract removeItem(key: string): void;
+    abstract setItem(key: string, data: string): void;
 }
 
 /**

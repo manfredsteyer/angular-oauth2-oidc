@@ -108,10 +108,10 @@
                                     <a href="../classes/OAuthEvent.html" >OAuthEvent</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../classes/OAuthInfoEvent.html"  data-type="entity-link" class="active" >OAuthInfoEvent</a>
+                                    <a href="../classes/OAuthInfoEvent.html" >OAuthInfoEvent</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../classes/OAuthStorage.html" >OAuthStorage</a>
+                                    <a href="../classes/OAuthStorage.html"  data-type="entity-link" class="active" >OAuthStorage</a>
                                 </li>
                                 <li class="link">
                                     <a href="../classes/OAuthSuccessEvent.html" >OAuthSuccessEvent</a>
@@ -293,10 +293,10 @@
                                            <a href="../classes/OAuthEvent.html" >OAuthEvent</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../classes/OAuthInfoEvent.html"  data-type="entity-link" class="active" >OAuthInfoEvent</a>
+                                           <a href="../classes/OAuthInfoEvent.html" >OAuthInfoEvent</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../classes/OAuthStorage.html" >OAuthStorage</a>
+                                           <a href="../classes/OAuthStorage.html"  data-type="entity-link" class="active" >OAuthStorage</a>
                                        </li>
                                        <li class="link">
                                            <a href="../classes/OAuthSuccessEvent.html" >OAuthSuccessEvent</a>
@@ -396,7 +396,7 @@
 
 <ol class="breadcrumb">
   <li>Classes</li>
-  <li>OAuthInfoEvent</li>
+  <li>OAuthStorage</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -416,93 +416,238 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/events.ts</code>
+            <code>src/types.ts</code>
         </p>
 
-
             <p class="comment">
-                <h3>Extends</h3>
+                <h3>Description</h3>
             </p>
             <p class="comment">
-                    <code><a href="../classes/OAuthEvent.html" target="_self" >OAuthEvent</a></code>
+                <p>Defines a simple storage that can be used for 
+storing the tokens at client side.
+Is compatible to localStorage and sessionStorage,
+but you can also create your own implementations.</p>
+
             </p>
 
 
 
 
             <section>
-                <h3 id="constructor">Constructor</h3>
+                <h3 id="index">Index</h3>
+                <table class="table table-sm table-bordered index-table">
+                    <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <h6><b>Methods</b></h6>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <ul class="index-list">
+                                    <li>
+                                        <span class="modifier"></span> <a href="#getItem">getItem</a>
+                                    </li>
+                                    <li>
+                                        <span class="modifier"></span> <a href="#removeItem">removeItem</a>
+                                    </li>
+                                    <li>
+                                        <span class="modifier"></span> <a href="#setItem">setItem</a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+
+            <section>
+                
+                    <h3 id="methods">
+                        Methods
+                    </h3>
                     <table class="table table-sm table-bordered">
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <code>constructor(type: <a href="../miscellaneouss/EventType.html">EventType</a>, info: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                                    <a name="getItem"></a>
+                                    <b><span class="modifier"></span> getItem</b>
                                 </td>
                             </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon method fa fa-play "></span>
+                                    <code>getItem(key: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                                </td>
+                            </tr>
+            
+            
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/events.ts:30</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/types.ts:53</a></div>
                                         </td>
                                     </tr>
             
+                            <tr>
+                                <td class="col-md-4">
+            
+                                        <div class="io-description">
+                                            <b>Returns : </b>    <code>string|</code>
+            
+                                        </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <a name="removeItem"></a>
+                                    <b><span class="modifier"></span> removeItem</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon method fa fa-play "></span>
+                                    <code>removeItem(key: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                                </td>
+                            </tr>
+            
+            
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/types.ts:54</a></div>
+                                        </td>
+                                    </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            
+                                        <div class="io-description">
+                                            <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+            
+                                        </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <a name="setItem"></a>
+                                    <b><span class="modifier"></span> setItem</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon method fa fa-play "></span>
+                                    <code>setItem(key: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, data: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                                </td>
+                            </tr>
+            
+            
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">src/types.ts:55</a></div>
+                                        </td>
+                                    </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            
+                                        <div class="io-description">
+                                            <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+            
+                                        </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
-
 
 
     </div>
 
 
     <div class="tab-pane fade tab-source-code" id="source">
-        <pre class="line-numbers"><code class="language-typescript">export type EventType &#x3D; 
-&#x27;discovery_document_loaded&#x27;
-| &#x27;received_first_token&#x27;
-| &#x27;jwks_load_error&#x27;
-| &#x27;invalid_nonce_in_state&#x27;
-| &#x27;discovery_document_load_error&#x27;
-| &#x27;discovery_document_validation_error&#x27;
-| &#x27;user_profile_loaded&#x27;
-| &#x27;user_profile_load_error&#x27;
-| &#x27;token_received&#x27;
-| &#x27;token_error&#x27;
-| &#x27;token_refreshed&#x27;
-| &#x27;token_refresh_error&#x27;
-| &#x27;silent_refresh_error&#x27;
-| &#x27;silently_refreshed&#x27;
-| &#x27;silent_refresh_timeout&#x27;
-| &#x27;token_validation_error&#x27;
-| &#x27;token_expires&#x27;;
+        <pre class="line-numbers"><code class="language-typescript">export class LoginOptions {
 
+    /**
+     * Is called, after a token has been received and 
+     * successfully validated.
+     * 
+     * Deprecated:  Use property &#x60;&#x60;events&#x60;&#x60; on OAuthService instead.
+     */
+    onTokenReceived?: (receivedTokens: ReceivedTokens) &#x3D;&gt; void;
+    
+    /**
+     * Hook, to validate the received tokens.
+     * Deprecated:  Use property &#x60;&#x60;tokenValidationHandler&#x60;&#x60; on OAuthService instead.
+     */
+    validationHandler?: (receivedTokens: ReceivedTokens) &#x3D;&gt; Promise&lt;any&gt;;
+    
+    /**
+     * Called when tryLogin detects that the auth server
+     * included an error message into the hash fragment.
+     * 
+     * Deprecated:  Use property &#x60;&#x60;events&#x60;&#x60; on OAuthService instead.
+     */
+    onLoginError?: (params: object) &#x3D;&gt; void;
 
-export abstract class OAuthEvent {
-    constructor(
-        readonly type: EventType) {
-    }
+    /**
+     * A custom hash fragment to be used instead of the
+     * actual one. This is used for silent refreshes, to 
+     * pass the iframes hash fragment to this method.
+    */
+    customHashFragment?: string;
+
+    /**
+     * Set this to true to disable the oauth2 state
+     * check which is a best practice to avoid
+     * security attacks. 
+     * As OIDC defines a nonce check that includes
+     * this, this can be set to true when only doing
+     * OIDC.
+     */
+    disableOAuth2StateCheck?: boolean;
 }
 
-export class OAuthSuccessEvent extends OAuthEvent {
+/**
+ * Defines a simple storage that can be used for 
+ * storing the tokens at client side.
+ * Is compatible to localStorage and sessionStorage,
+ * but you can also create your own implementations.
+ */
+export abstract class OAuthStorage {
+    abstract getItem(key: string): string | null;
+    abstract removeItem(key: string): void;
+    abstract setItem(key: string, data: string): void;
 }
 
-export class OAuthInfoEvent extends OAuthEvent {
-    constructor(
-        type: EventType,
-        readonly info: any &#x3D; null
-    ) {
-        super(type);
-    }
+/**
+ * Represents the received tokens, the received state
+ * and the parsed claims from the id-token.
+ */
+export class ReceivedTokens {
+    idToken: string;
+    accessToken: string;
+    idClaims?: object;
+    state?: string
 }
 
-export class OAuthErrorEvent extends OAuthEvent {
-
-    constructor(
-        type: EventType,
-        readonly reason: object,
-        readonly params: object &#x3D; null
-    ) {
-        super(type);
-    }
-
+/**
+ * Represents the parsed and validated id_token.
+ */
+export interface ParsedIdToken {
+    idToken: string;
+    idTokenClaims: object,
+    idTokenHeader: object,
+    idTokenClaimsJson: string,
+    idTokenHeaderJson: string,
+    idTokenExpiresAt: number;
 }
 </code></pre>
     </div>

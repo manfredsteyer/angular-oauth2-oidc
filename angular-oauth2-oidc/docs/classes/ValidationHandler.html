@@ -108,7 +108,7 @@
                                     <a href="../classes/OAuthEvent.html" >OAuthEvent</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../classes/OAuthInfoEvent.html"  data-type="entity-link" class="active" >OAuthInfoEvent</a>
+                                    <a href="../classes/OAuthInfoEvent.html" >OAuthInfoEvent</a>
                                 </li>
                                 <li class="link">
                                     <a href="../classes/OAuthStorage.html" >OAuthStorage</a>
@@ -120,7 +120,7 @@
                                     <a href="../classes/ReceivedTokens.html" >ReceivedTokens</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../classes/ValidationHandler.html" >ValidationHandler</a>
+                                    <a href="../classes/ValidationHandler.html"  data-type="entity-link" class="active" >ValidationHandler</a>
                                 </li>
                         </ul>
                     </li>
@@ -293,7 +293,7 @@
                                            <a href="../classes/OAuthEvent.html" >OAuthEvent</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../classes/OAuthInfoEvent.html"  data-type="entity-link" class="active" >OAuthInfoEvent</a>
+                                           <a href="../classes/OAuthInfoEvent.html" >OAuthInfoEvent</a>
                                        </li>
                                        <li class="link">
                                            <a href="../classes/OAuthStorage.html" >OAuthStorage</a>
@@ -305,7 +305,7 @@
                                            <a href="../classes/ReceivedTokens.html" >ReceivedTokens</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../classes/ValidationHandler.html" >ValidationHandler</a>
+                                           <a href="../classes/ValidationHandler.html"  data-type="entity-link" class="active" >ValidationHandler</a>
                                        </li>
                                </ul>
                            </li>
@@ -396,7 +396,7 @@
 
 <ol class="breadcrumb">
   <li>Classes</li>
-  <li>OAuthInfoEvent</li>
+  <li>ValidationHandler</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -416,95 +416,220 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/events.ts</code>
+            <code>src/token-validation/validation-handler.ts</code>
         </p>
 
-
             <p class="comment">
-                <h3>Extends</h3>
+                <h3>Description</h3>
             </p>
             <p class="comment">
-                    <code><a href="../classes/OAuthEvent.html" target="_self" >OAuthEvent</a></code>
+                <p>Interface for Handlers that are hooked in to 
+validate tokens.</p>
+
             </p>
 
 
 
 
             <section>
-                <h3 id="constructor">Constructor</h3>
+                <h3 id="index">Index</h3>
+                <table class="table table-sm table-bordered index-table">
+                    <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <h6><b>Methods</b></h6>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <ul class="index-list">
+                                    <li>
+                                        <span class="modifier">Public</span> <a href="#validateAtHash">validateAtHash</a>
+                                    </li>
+                                    <li>
+                                        <span class="modifier">Public</span> <a href="#validateSignature">validateSignature</a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+
+            <section>
+                
+                    <h3 id="methods">
+                        Methods
+                    </h3>
                     <table class="table table-sm table-bordered">
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <code>constructor(type: <a href="../miscellaneouss/EventType.html">EventType</a>, info: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                                    <a name="validateAtHash"></a>
+                                    <b><span class="modifier">Public</span> validateAtHash</b>
                                 </td>
                             </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon method fa fa-play "></span>
+                                    <code>validateAtHash(validationParams: <a href="../interfaces/ValidationParams.html">ValidationParams</a>)</code>
+                                </td>
+                            </tr>
+            
+            
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/events.ts:30</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/token-validation/validation-handler.ts:24</a></div>
                                         </td>
                                     </tr>
             
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description"><p>Validates the at_hash in an id_token against the received access_token.</p>
+            </div>
+            
+                                        <div class="io-description">
+                                            <b>Returns : </b>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+            
+                                        </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <a name="validateSignature"></a>
+                                    <b><span class="modifier">Public</span> validateSignature</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon method fa fa-play "></span>
+                                    <code>validateSignature(validationParams: <a href="../interfaces/ValidationParams.html">ValidationParams</a>)</code>
+                                </td>
+                            </tr>
+            
+            
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/token-validation/validation-handler.ts:19</a></div>
+                                        </td>
+                                    </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description"><p>Validates the signature of an id_token.</p>
+            </div>
+            
+                                        <div class="io-description">
+                                            <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
+            
+                                        </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
-
 
 
     </div>
 
 
     <div class="tab-pane fade tab-source-code" id="source">
-        <pre class="line-numbers"><code class="language-typescript">export type EventType &#x3D; 
-&#x27;discovery_document_loaded&#x27;
-| &#x27;received_first_token&#x27;
-| &#x27;jwks_load_error&#x27;
-| &#x27;invalid_nonce_in_state&#x27;
-| &#x27;discovery_document_load_error&#x27;
-| &#x27;discovery_document_validation_error&#x27;
-| &#x27;user_profile_loaded&#x27;
-| &#x27;user_profile_load_error&#x27;
-| &#x27;token_received&#x27;
-| &#x27;token_error&#x27;
-| &#x27;token_refreshed&#x27;
-| &#x27;token_refresh_error&#x27;
-| &#x27;silent_refresh_error&#x27;
-| &#x27;silently_refreshed&#x27;
-| &#x27;silent_refresh_timeout&#x27;
-| &#x27;token_validation_error&#x27;
-| &#x27;token_expires&#x27;;
+        <pre class="line-numbers"><code class="language-typescript">export interface ValidationParams {
+    idToken: string;
+    accessToken: string;
+    idTokenHeader: object;
+    idTokenClaims: object;
+    jwks: object;
+    loadKeys: () &#x3D;&gt; Promise&lt;object&gt;;
+}
 
+/**
+ * Interface for Handlers that are hooked in to 
+ * validate tokens.
+ */
+export abstract class ValidationHandler {
 
-export abstract class OAuthEvent {
-    constructor(
-        readonly type: EventType) {
+    /**
+     * Validates the signature of an id_token.
+     */
+    public abstract validateSignature(validationParams: ValidationParams): Promise&lt;any&gt;;    
+    
+    /**
+     * Validates the at_hash in an id_token against the received access_token.
+     */
+    public abstract  validateAtHash(validationParams: ValidationParams): boolean;    
+} 
+
+/**
+ * This abstract implementation of ValidationHandler already implements
+ * the method validateAtHash. However, to make use of it,
+ * you have to override the method calcHash.
+*/
+export abstract class AbstractValidationHandler implements ValidationHandler {
+    
+    /**
+     * Validates the signature of an id_token.
+    */
+    abstract validateSignature(validationParams: ValidationParams): Promise&lt;any&gt;;    
+    
+    /**
+     * Validates the at_hash in an id_token against the received access_token.
+     */    
+    validateAtHash(params: ValidationParams): boolean {
+        
+        let hashAlg &#x3D; this.inferHashAlgorithm(params.idTokenHeader);
+
+        var tokenHash &#x3D; this.calcHash(params.accessToken, hashAlg); //sha256(accessToken, { asString: true });
+        
+        var leftMostHalf &#x3D; tokenHash.substr(0, tokenHash.length / 2 );
+        
+        var tokenHashBase64 &#x3D; btoa(leftMostHalf);
+
+        var atHash &#x3D; tokenHashBase64.replace(/\+/g, &quot;-&quot;).replace(/\//g, &quot;_&quot;).replace(/&#x3D;/g, &quot;&quot;);
+        var claimsAtHash &#x3D; params.idTokenClaims[&#x27;at_hash&#x27;].replace(/&#x3D;/g, &quot;&quot;);
+        var atHash &#x3D; tokenHashBase64.replace(/\+/g, &quot;-&quot;).replace(/\//g, &quot;_&quot;).replace(/&#x3D;/g, &quot;&quot;);
+
+        if (atHash !&#x3D; claimsAtHash) {
+            console.error(&quot;exptected at_hash: &quot; + atHash);    
+            console.error(&quot;actual at_hash: &quot; + claimsAtHash);
+        }
+        
+        return (atHash &#x3D;&#x3D; claimsAtHash);
     }
-}
 
-export class OAuthSuccessEvent extends OAuthEvent {
-}
+    /**
+     * Infers the name of the hash algorithm to use
+     * from the alg field of an id_token.
+     * 
+     * @param jwtHeader the id_token&#x27;s parsed header
+     */
+    protected inferHashAlgorithm(jwtHeader: object): string {
+        let alg: string &#x3D; jwtHeader[&#x27;alg&#x27;];
 
-export class OAuthInfoEvent extends OAuthEvent {
-    constructor(
-        type: EventType,
-        readonly info: any &#x3D; null
-    ) {
-        super(type);
-    }
-}
+        if (!alg.match(/^.S[0-9]{3}$/)) {
+            throw new Error(&#x27;Algorithm not supported: &#x27; + alg);
+        }
 
-export class OAuthErrorEvent extends OAuthEvent {
-
-    constructor(
-        type: EventType,
-        readonly reason: object,
-        readonly params: object &#x3D; null
-    ) {
-        super(type);
+        return &#x27;sha&#x27; + alg.substr(2);
     }
 
-}
-</code></pre>
+    /**
+     * Calculates the hash for the passed value by using
+     * the passed hash algorithm.
+     * 
+     * @param valueToHash 
+     * @param algorithm 
+     */
+    protected abstract calcHash(valueToHash: string, algorithm: string): string;
+    
+
+
+}</code></pre>
     </div>
 </div>
 

@@ -111,10 +111,16 @@
                                     <a href="../classes/OAuthInfoEvent.html" >OAuthInfoEvent</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../classes/OAuthStorage.html" >OAuthStorage</a>
+                                </li>
+                                <li class="link">
                                     <a href="../classes/OAuthSuccessEvent.html" >OAuthSuccessEvent</a>
                                 </li>
                                 <li class="link">
                                     <a href="../classes/ReceivedTokens.html" >ReceivedTokens</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../classes/ValidationHandler.html" >ValidationHandler</a>
                                 </li>
                         </ul>
                     </li>
@@ -154,13 +160,7 @@
                                     <a href="../interfaces/AuthConfig.html" >AuthConfig</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../interfaces/OAuthStorage.html" >OAuthStorage</a>
-                                </li>
-                                <li class="link">
                                     <a href="../interfaces/ParsedIdToken.html" >ParsedIdToken</a>
-                                </li>
-                                <li class="link">
-                                    <a href="../interfaces/ValidationHandler.html" >ValidationHandler</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/ValidationParams.html" >ValidationParams</a>
@@ -296,10 +296,16 @@
                                            <a href="../classes/OAuthInfoEvent.html" >OAuthInfoEvent</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../classes/OAuthStorage.html" >OAuthStorage</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../classes/OAuthSuccessEvent.html" >OAuthSuccessEvent</a>
                                        </li>
                                        <li class="link">
                                            <a href="../classes/ReceivedTokens.html" >ReceivedTokens</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../classes/ValidationHandler.html" >ValidationHandler</a>
                                        </li>
                                </ul>
                            </li>
@@ -339,13 +345,7 @@
                                            <a href="../interfaces/AuthConfig.html" >AuthConfig</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../interfaces/OAuthStorage.html" >OAuthStorage</a>
-                                       </li>
-                                       <li class="link">
                                            <a href="../interfaces/ParsedIdToken.html" >ParsedIdToken</a>
-                                       </li>
-                                       <li class="link">
-                                           <a href="../interfaces/ValidationHandler.html" >ValidationHandler</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/ValidationParams.html" >ValidationParams</a>
@@ -548,7 +548,7 @@ password flow.</p>
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <code>constructor(http: <a href="https://angular.io/docs/ts/latest/api/http/index/Http-class.html" target="_blank">Http</a>, urlHelper: <a href="../injectables/UrlHelperService.html">UrlHelperService</a>)</code>
+                                    <code>constructor(http: <a href="https://angular.io/docs/ts/latest/api/http/index/Http-class.html" target="_blank">Http</a>, storage: <a href="../classes/OAuthStorage.html">OAuthStorage</a>, tokenValidationHandler: <a href="../classes/ValidationHandler.html">ValidationHandler</a>, urlHelper: <a href="../injectables/UrlHelperService.html">UrlHelperService</a>)</code>
                                 </td>
                             </tr>
                                     <tr>
@@ -584,7 +584,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1259" class="link-to-prism">src/oauth-service.ts:1259</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1268" class="link-to-prism">src/oauth-service.ts:1268</a></div>
                                         </td>
                                     </tr>
             
@@ -620,7 +620,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="287" class="link-to-prism">src/oauth-service.ts:287</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="296" class="link-to-prism">src/oauth-service.ts:296</a></div>
                                         </td>
                                     </tr>
             
@@ -681,7 +681,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1303" class="link-to-prism">src/oauth-service.ts:1303</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1312" class="link-to-prism">src/oauth-service.ts:1312</a></div>
                                         </td>
                                     </tr>
             
@@ -719,7 +719,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1311" class="link-to-prism">src/oauth-service.ts:1311</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1320" class="link-to-prism">src/oauth-service.ts:1320</a></div>
                                         </td>
                                     </tr>
             
@@ -752,7 +752,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="638" class="link-to-prism">src/oauth-service.ts:638</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="647" class="link-to-prism">src/oauth-service.ts:647</a></div>
                                         </td>
                                     </tr>
             
@@ -825,7 +825,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="580" class="link-to-prism">src/oauth-service.ts:580</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="589" class="link-to-prism">src/oauth-service.ts:589</a></div>
                                         </td>
                                     </tr>
             
@@ -904,7 +904,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1199" class="link-to-prism">src/oauth-service.ts:1199</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1208" class="link-to-prism">src/oauth-service.ts:1208</a></div>
                                         </td>
                                     </tr>
             
@@ -939,7 +939,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1207" class="link-to-prism">src/oauth-service.ts:1207</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1216" class="link-to-prism">src/oauth-service.ts:1216</a></div>
                                         </td>
                                     </tr>
             
@@ -975,7 +975,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1176" class="link-to-prism">src/oauth-service.ts:1176</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1185" class="link-to-prism">src/oauth-service.ts:1185</a></div>
                                         </td>
                                     </tr>
             
@@ -1010,7 +1010,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1185" class="link-to-prism">src/oauth-service.ts:1185</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1194" class="link-to-prism">src/oauth-service.ts:1194</a></div>
                                         </td>
                                     </tr>
             
@@ -1045,7 +1045,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1215" class="link-to-prism">src/oauth-service.ts:1215</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1224" class="link-to-prism">src/oauth-service.ts:1224</a></div>
                                         </td>
                                     </tr>
             
@@ -1081,7 +1081,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1222" class="link-to-prism">src/oauth-service.ts:1222</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1231" class="link-to-prism">src/oauth-service.ts:1231</a></div>
                                         </td>
                                     </tr>
             
@@ -1116,7 +1116,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1240" class="link-to-prism">src/oauth-service.ts:1240</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1249" class="link-to-prism">src/oauth-service.ts:1249</a></div>
                                         </td>
                                     </tr>
             
@@ -1151,7 +1151,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="904" class="link-to-prism">src/oauth-service.ts:904</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="913" class="link-to-prism">src/oauth-service.ts:913</a></div>
                                         </td>
                                     </tr>
             
@@ -1219,7 +1219,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="446" class="link-to-prism">src/oauth-service.ts:446</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="455" class="link-to-prism">src/oauth-service.ts:455</a></div>
                                         </td>
                                     </tr>
             
@@ -1283,7 +1283,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="300" class="link-to-prism">src/oauth-service.ts:300</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="309" class="link-to-prism">src/oauth-service.ts:309</a></div>
                                         </td>
                                     </tr>
             
@@ -1316,7 +1316,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="593" class="link-to-prism">src/oauth-service.ts:593</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="602" class="link-to-prism">src/oauth-service.ts:602</a></div>
                                         </td>
                                     </tr>
             
@@ -1354,7 +1354,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1269" class="link-to-prism">src/oauth-service.ts:1269</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1278" class="link-to-prism">src/oauth-service.ts:1278</a></div>
                                         </td>
                                     </tr>
             
@@ -1416,7 +1416,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1065" class="link-to-prism">src/oauth-service.ts:1065</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1074" class="link-to-prism">src/oauth-service.ts:1074</a></div>
                                         </td>
                                     </tr>
             
@@ -1454,7 +1454,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="683" class="link-to-prism">src/oauth-service.ts:683</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="692" class="link-to-prism">src/oauth-service.ts:692</a></div>
                                         </td>
                                     </tr>
             
@@ -1486,14 +1486,14 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                         <span class="modifier-icon method fa fa-play "></span>
-                                    <code>setStorage(storage: <a href="../interfaces/OAuthStorage.html">OAuthStorage</a>)</code>
+                                    <code>setStorage(storage: <a href="../classes/OAuthStorage.html">OAuthStorage</a>)</code>
                                 </td>
                             </tr>
             
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="433" class="link-to-prism">src/oauth-service.ts:433</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="442" class="link-to-prism">src/oauth-service.ts:442</a></div>
                                         </td>
                                     </tr>
             
@@ -1555,7 +1555,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="291" class="link-to-prism">src/oauth-service.ts:291</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="300" class="link-to-prism">src/oauth-service.ts:300</a></div>
                                         </td>
                                     </tr>
             
@@ -1588,7 +1588,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="767" class="link-to-prism">src/oauth-service.ts:767</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="776" class="link-to-prism">src/oauth-service.ts:776</a></div>
                                         </td>
                                     </tr>
             
@@ -1625,7 +1625,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1049" class="link-to-prism">src/oauth-service.ts:1049</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1058" class="link-to-prism">src/oauth-service.ts:1058</a></div>
                                         </td>
                                     </tr>
             
@@ -1658,7 +1658,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="957" class="link-to-prism">src/oauth-service.ts:957</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="966" class="link-to-prism">src/oauth-service.ts:966</a></div>
                                         </td>
                                     </tr>
             
@@ -1787,13 +1787,13 @@ password flow.</p>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <span class="modifier-icon fa fa-"></span><code>tokenValidationHandler:     <code><a href="../interfaces/ValidationHandler.html" target="_self" >ValidationHandler</a></code>
+                                    <span class="modifier-icon fa fa-"></span><code>tokenValidationHandler:     <code><a href="../classes/ValidationHandler.html" target="_self" >ValidationHandler</a></code>
             </code>
                                 </td>
                             </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <i>Type : </i>    <code><a href="../interfaces/ValidationHandler.html" target="_self" >ValidationHandler</a></code>
+                                        <i>Type : </i>    <code><a href="../classes/ValidationHandler.html" target="_self" >ValidationHandler</a></code>
             
                                     </td>
                                 </tr>
@@ -1820,7 +1820,7 @@ password flow.</p>
     <div class="tab-pane fade tab-source-code" id="source">
         <pre class="line-numbers"><code class="language-typescript">import { AuthConfig, defaultConfig } from &#x27;./config&#x27;;
 import { Http, URLSearchParams, Headers } from &#x27;@angular/http&#x27;;
-import { Injectable } from &#x27;@angular/core&#x27;;
+import { Injectable, Optional } from &#x27;@angular/core&#x27;;
 import { Observable } from &#x27;rxjs/Observable&#x27;;
 import { Subject } from &#x27;rxjs/Subject&#x27;;
 import { ValidationHandler, ValidationParams } from &quot;./token-validation/validation-handler&quot;;
@@ -2088,13 +2088,22 @@ export class OAuthService {
 
     constructor(
         private http: Http,
+        @Optional() storage: OAuthStorage,
+        @Optional() tokenValidationHandler: ValidationHandler,
         private urlHelper: UrlHelperService) {
      
         this.discoveryDocumentLoaded$ &#x3D; this.discoveryDocumentLoadedSubject.asObservable();
         this.events &#x3D; this.eventsSubject.asObservable();
 
-        if (typeof sessionStorage !&#x3D;&#x3D; &#x27;undefined&#x27;) {
-            this._storage &#x3D; sessionStorage;
+        if (tokenValidationHandler) {
+            this.tokenValidationHandler &#x3D; tokenValidationHandler;
+        }
+        
+        if (storage) {
+            this.setStorage(storage);
+        }
+        else if (typeof sessionStorage !&#x3D;&#x3D; &#x27;undefined&#x27;) {
+            this.setStorage(sessionStorage);
         }
 
         this.setupTimer();
