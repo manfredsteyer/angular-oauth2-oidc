@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { JwksValidationHandler } from 'angular-oauth2-oidc';
 import { Router } from "@angular/router";
-import { authConfig } from './implicit-flow.config';
+import { authConfig } from './auth.config';
 
 @Component({
     selector: 'flight-app',

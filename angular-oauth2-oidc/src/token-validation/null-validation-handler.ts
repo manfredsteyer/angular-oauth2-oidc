@@ -1,4 +1,4 @@
-import { ValidationHandler, AbstractValidationHandler, ValidationParams } from "./validation-handler";
+import { ValidationHandler, ValidationParams } from './validation-handler';
 
 /**
  * A validation handler that isn't validating nothing.

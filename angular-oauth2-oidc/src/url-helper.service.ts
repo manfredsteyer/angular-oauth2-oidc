@@ -4,19 +4,19 @@ import { Injectable } from '@angular/core';
 export class UrlHelperService {
 
     public getHashFragmentParams(customHashFragment?: string): object {
-        
+
         let hash = customHashFragment || window.location.hash;
 
         hash = decodeURIComponent(hash);
 
-        if (hash.indexOf("#") !== 0) {
+        if (hash.indexOf('#') !== 0) {
             return {};
         }
 
         let questionMarkPosition = hash.indexOf('?');
-        
+
         if (questionMarkPosition > -1) {
-            hash = hash.substr(questionMarkPosition+1);
+            hash = hash.substr(questionMarkPosition + 1);
         }
         else {
             hash = hash.substr(1);
@@ -27,17 +27,17 @@ export class UrlHelperService {
     };
 
     public parseQueryString(queryString: string): object {
-        var data = {}, pairs, pair, separatorIndex, escapedKey, escapedValue, key, value;
+        let data = {}, pairs, pair, separatorIndex, escapedKey, escapedValue, key, value;
 
         if (queryString === null) {
             return data;
         }
 
-        pairs = queryString.split("&");
+        pairs = queryString.split('&');
 
-        for (var i = 0; i < pairs.length; i++) {
+        for (let i = 0; i < pairs.length; i++) {
             pair = pairs[i];
-            separatorIndex = pair.indexOf("=");
+            separatorIndex = pair.indexOf('=');
 
             if (separatorIndex === -1) {
                 escapedKey = pair;

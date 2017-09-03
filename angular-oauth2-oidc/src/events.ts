@@ -1,4 +1,4 @@
-export type EventType = 
+export type EventType =
 'discovery_document_loaded'
 | 'received_first_token'
 | 'jwks_load_error'
@@ -17,7 +17,6 @@ export type EventType =
 | 'token_validation_error'
 | 'token_expires';
 
-
 export abstract class OAuthEvent {
     constructor(
         readonly type: EventType) {
@@ -25,6 +24,12 @@ export abstract class OAuthEvent {
 }
 
 export class OAuthSuccessEvent extends OAuthEvent {
+    constructor(
+        type: EventType,
+        readonly info: any = null
+    ) {
+        super(type);
+    }
 }
 
 export class OAuthInfoEvent extends OAuthEvent {
