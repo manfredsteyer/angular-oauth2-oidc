@@ -90,7 +90,13 @@
                                 id="xs-classes-links"
                             >
                                 <li class="link">
+                                    <a href="../classes/A.html" >A</a>
+                                </li>
+                                <li class="link">
                                     <a href="../classes/AbstractValidationHandler.html" >AbstractValidationHandler</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../classes/B.html" >B</a>
                                 </li>
                                 <li class="link">
                                     <a href="../classes/JwksValidationHandler.html" >JwksValidationHandler</a>
@@ -275,7 +281,13 @@
                                        id="classes-links"
                    >
                                        <li class="link">
+                                           <a href="../classes/A.html" >A</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../classes/AbstractValidationHandler.html" >AbstractValidationHandler</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../classes/B.html" >B</a>
                                        </li>
                                        <li class="link">
                                            <a href="../classes/JwksValidationHandler.html" >JwksValidationHandler</a>
@@ -428,6 +440,7 @@
         <pre class="line-numbers"><code class="language-typescript">import { NgModule, ModuleWithProviders } from &#x27;@angular/core&#x27;;
 import { CommonModule } from &#x27;@angular/common&#x27;;
 import { OAuthService } from &#x27;./oauth-service&#x27;;
+import { UrlHelperService } from &#x27;./url-helper.service&#x27;;
 
 import &#x27;rxjs/add/operator/map&#x27;;
 import &#x27;rxjs/add/operator/do&#x27;;
@@ -440,15 +453,22 @@ import &#x27;rxjs/add/operator/publish&#x27;;
 import &#x27;rxjs/add/observable/of&#x27;;
 import &#x27;rxjs/add/observable/race&#x27;;
 
-export * from &quot;./oauth-service&quot;;
+export * from &#x27;./oauth-service&#x27;;
 export * from &#x27;./token-validation/jwks-validation-handler&#x27;;
 export * from &#x27;./token-validation/null-validation-handler&#x27;;
 export * from &#x27;./token-validation/validation-handler&#x27;;
-export * from &quot;./url-helper.service&quot;;
-export * from &#x27;./config&#x27;;
+export * from &#x27;./url-helper.service&#x27;;
+export * from &#x27;./auth.config&#x27;;
 export * from &#x27;./types&#x27;;
+export * from &#x27;./tokens&#x27;;
 
-import { UrlHelperService } from &quot;./url-helper.service&quot;;
+export class A {
+  a: string;
+}
+
+export class B extends A {
+  b: string;
+}
 
 @NgModule({
   imports: [
@@ -460,6 +480,7 @@ import { UrlHelperService } from &quot;./url-helper.service&quot;;
   ]
 })
 export class OAuthModule {
+
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: OAuthModule,

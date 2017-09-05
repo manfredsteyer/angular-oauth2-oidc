@@ -15,7 +15,10 @@ export type EventType =
 | 'silently_refreshed'
 | 'silent_refresh_timeout'
 | 'token_validation_error'
-| 'token_expires';
+| 'token_expires'
+| 'session_changed'
+| 'session_error'
+| 'session_terminated';
 
 export abstract class OAuthEvent {
     constructor(

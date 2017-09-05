@@ -90,7 +90,13 @@
                                 id="xs-classes-links"
                             >
                                 <li class="link">
+                                    <a href="../classes/A.html" >A</a>
+                                </li>
+                                <li class="link">
                                     <a href="../classes/AbstractValidationHandler.html" >AbstractValidationHandler</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../classes/B.html" >B</a>
                                 </li>
                                 <li class="link">
                                     <a href="../classes/JwksValidationHandler.html" >JwksValidationHandler</a>
@@ -275,7 +281,13 @@
                                        id="classes-links"
                    >
                                        <li class="link">
+                                           <a href="../classes/A.html" >A</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../classes/AbstractValidationHandler.html" >AbstractValidationHandler</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../classes/B.html" >B</a>
                                        </li>
                                        <li class="link">
                                            <a href="../classes/JwksValidationHandler.html" >JwksValidationHandler</a>
@@ -423,7 +435,7 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Defines a simple storage that can be used for 
+                <p>Defines a simple storage that can be used for
 storing the tokens at client side.
 Is compatible to localStorage and sessionStorage,
 but you can also create your own implementations.</p>
@@ -576,30 +588,30 @@ but you can also create your own implementations.</p>
         <pre class="line-numbers"><code class="language-typescript">export class LoginOptions {
 
     /**
-     * Is called, after a token has been received and 
+     * Is called, after a token has been received and
      * successfully validated.
-     * 
+     *
      * Deprecated:  Use property &#x60;&#x60;events&#x60;&#x60; on OAuthService instead.
      */
     onTokenReceived?: (receivedTokens: ReceivedTokens) &#x3D;&gt; void;
-    
+
     /**
      * Hook, to validate the received tokens.
      * Deprecated:  Use property &#x60;&#x60;tokenValidationHandler&#x60;&#x60; on OAuthService instead.
      */
     validationHandler?: (receivedTokens: ReceivedTokens) &#x3D;&gt; Promise&lt;any&gt;;
-    
+
     /**
      * Called when tryLogin detects that the auth server
      * included an error message into the hash fragment.
-     * 
+     *
      * Deprecated:  Use property &#x60;&#x60;events&#x60;&#x60; on OAuthService instead.
      */
     onLoginError?: (params: object) &#x3D;&gt; void;
 
     /**
      * A custom hash fragment to be used instead of the
-     * actual one. This is used for silent refreshes, to 
+     * actual one. This is used for silent refreshes, to
      * pass the iframes hash fragment to this method.
     */
     customHashFragment?: string;
@@ -607,7 +619,7 @@ but you can also create your own implementations.</p>
     /**
      * Set this to true to disable the oauth2 state
      * check which is a best practice to avoid
-     * security attacks. 
+     * security attacks.
      * As OIDC defines a nonce check that includes
      * this, this can be set to true when only doing
      * OIDC.
@@ -616,7 +628,7 @@ but you can also create your own implementations.</p>
 }
 
 /**
- * Defines a simple storage that can be used for 
+ * Defines a simple storage that can be used for
  * storing the tokens at client side.
  * Is compatible to localStorage and sessionStorage,
  * but you can also create your own implementations.
@@ -635,7 +647,7 @@ export class ReceivedTokens {
     idToken: string;
     accessToken: string;
     idClaims?: object;
-    state?: string
+    state?: string;
 }
 
 /**
@@ -643,10 +655,10 @@ export class ReceivedTokens {
  */
 export interface ParsedIdToken {
     idToken: string;
-    idTokenClaims: object,
-    idTokenHeader: object,
-    idTokenClaimsJson: string,
-    idTokenHeaderJson: string,
+    idTokenClaims: object;
+    idTokenHeader: object;
+    idTokenClaimsJson: string;
+    idTokenHeaderJson: string;
     idTokenExpiresAt: number;
 }
 </code></pre>

@@ -22,7 +22,6 @@ export * from './url-helper.service';
 export * from './auth.config';
 export * from './types';
 export * from './tokens';
-export * from './oauth.module.options';
 
 @NgModule({
   imports: [

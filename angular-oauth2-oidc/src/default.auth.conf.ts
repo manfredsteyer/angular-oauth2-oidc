@@ -1,7 +1,6 @@
 import { AuthConfig } from './auth.config';
 
 export const defaultConfig: AuthConfig = {
-
     clientId: '',
     redirectUri: '',
     postLogoutRedirectUri: '',
@@ -20,6 +19,8 @@ export const defaultConfig: AuthConfig = {
     requireHttps: 'remoteOnly',
     strictDiscoveryDocumentValidation: true,
     silentRefreshIFrameName: 'angular-oauth-oidc-silent-refresh-iframe',
-    timeoutFactor: 0.75
-
+    timeoutFactor: 0.75,
+    checkSessionPeriodic: false,
+    checkSessionIntervall: 3 * 1000,
+    checkSessionIFrameName: 'angular-oauth-oidc-check-session-iframe'
 };

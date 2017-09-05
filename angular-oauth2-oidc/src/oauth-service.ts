@@ -22,28 +22,28 @@ export class OAuthService {
 
     /**
      * The client's id as registered with the auth server
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public clientId = '';
 
     /**
      * The client's redirectUri as registered with the auth server
      *
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public redirectUri = '';
 
     /**
      * An optional second redirectUri where the auth server
      * redirects the user to after logging out.
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public postLogoutRedirectUri = '';
 
     /**
      * The auth server's endpoint that allows to log
      * the user in when using implicit flow.
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      *
      */
     public loginUrl = '';
@@ -51,18 +51,18 @@ export class OAuthService {
     /**
      * The requested scopes
      *
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      *
      */
     public scope = 'openid profile';
 
     /**
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public resource = '';
 
     /**
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public rngUrl = '';
 
@@ -70,7 +70,7 @@ export class OAuthService {
      * Defines whether to use OpenId Connect during
      * implicit flow.
      *
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public oidc = true;
 
@@ -78,12 +78,12 @@ export class OAuthService {
      * Defines whether to request a access token during
      * implicit flow.
      *
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public requestAccessToken = true;
 
     /**
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public options: any;
 
@@ -96,41 +96,41 @@ export class OAuthService {
     /**
      * The issuer's uri.
      *
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public issuer = '';
 
     /**
      * The logout url.
      *
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public logoutUrl = '';
 
     /**
      * Defines whether to clear the hash fragment after logging in.
      *
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public clearHashAfterLogin = true;
 
     /**
      * Url of the token endpoint as defined by OpenId Connect and OAuth 2.
      *
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public tokenEndpoint: string;
 
     /**
      * Url of the userinfo endpoint as defined by OpenId Connect.
      *
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      *
      */
     public userinfoEndpoint: string;
 
     /**
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public responseType = 'token';
 
@@ -138,19 +138,19 @@ export class OAuthService {
      * Defines whether additional debug information should
      * be shown at the console.
      *
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public showDebugInformation = false;
 
     /**
      * The redirect uri used when doing silent refresh.
      *
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public silentRefreshRedirectUri = '';
 
     /**
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
     */
     public silentRefreshMessagePrefix = '';
 
@@ -158,14 +158,14 @@ export class OAuthService {
      * Set this to true to display the iframe used for
      * silent refresh for debugging.
      *
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public silentRefreshShowIFrame = false;
 
     /**
      * Timeout for silent refresh.
      *
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public siletRefreshTimeout: number = 1000 * 20;
 
@@ -177,7 +177,7 @@ export class OAuthService {
      * it does not bring additional security and is therefore
      * as good as using no password.
      *
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public dummyClientSecret: string;
 
@@ -193,7 +193,7 @@ export class OAuthService {
      * http for location, while every other domains need
      * to be used with https.
      *
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public requireHttps: boolean | 'remoteOnly' = 'remoteOnly';
 
@@ -201,7 +201,7 @@ export class OAuthService {
      * Defines whether every url provided by the discovery
      * document has to start with the issuer's url.
      *
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public strictDiscoveryDocumentValidation = true;
 
@@ -210,7 +210,7 @@ export class OAuthService {
      * with keys used to validate received id_tokens.
      * This is taken out of the disovery document. Can be set manually too.
      *
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public jwks: object;
 
@@ -218,7 +218,7 @@ export class OAuthService {
      * Map with additional query parameter that are appended to
      * the request when initializing implicit flow.
      *
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public customQueryParams: object;
 
@@ -244,7 +244,7 @@ export class OAuthService {
     private eventsSubject: Subject<OAuthEvent> = new Subject<OAuthEvent>();
 
     /**
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public silentRefreshIFrameName = 'angular-oauth-oidc-silent-refresh-iframe';
 
@@ -258,14 +258,53 @@ export class OAuthService {
      * If you set this to the default value 0.75, the event
      * is triggered after 75% of the token's life time.
      *
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public timeoutFactor = 0.75;
+
+    /**
+     * If true, the lib will try to check whether the user
+     * is still logged in on a regular basis as described
+     * in http://openid.net/specs/openid-connect-session-1_0.html#ChangeNotification
+     * @type {boolean}
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
+     */
+    public checkSessionPeriodic = false;
+
+    /**
+     * Intervall in msec for checking the session
+     * according to http://openid.net/specs/openid-connect-session-1_0.html#ChangeNotification
+     * @type {number}
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
+     */
+    public checkSessionIntervall = 3 * 1000;
+
+    /**
+     * Url for the iframe used for session checks
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
+     */
+    public checkSessionIFrameUrl: string;
+
+    /**
+     * Name of the iframe to use for session checks
+     * @type {number}
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
+     */
+    public checkSessionIFrameName = 'angular-oauth-oidc-check-session-iframe';
 
     private accessTokenTimeoutSubscription: Subscription;
     private idTokenTimeoutSubscription: Subscription;
 
+    private sessionCheckEventListener: EventListener;
+
     private jwksUri: string;
+
+    private sessionCheckTimer: any;
+
+    private silentRefreshSubject: string;
 
     constructor(
         private http: Http,
@@ -292,6 +331,7 @@ export class OAuthService {
         }
 
         this.setupTimer();
+
     }
 
     /**
@@ -300,9 +340,22 @@ export class OAuthService {
      */
     public configure(config: AuthConfig) {
         Object.assign(this, defaultConfig, config);
+
+        if (this.checkSessionPeriodic) {
+            this.setupSessionCheck();
+        }
     }
 
-    public setupAutomaticSiletRefresh() {
+    private setupSessionCheck() {
+        this
+            .events
+            .filter(e => e.type === 'token_received')
+            .subscribe(e => {
+                this.initSessionCheck();
+            });
+    }
+
+    public setupAutomaticSilentRefresh() {
         this
         .events
         .filter(e => e.type === 'token_expires')
@@ -313,7 +366,7 @@ export class OAuthService {
 
     public loadDiscoveryDocumentAndTryLogin() {
         this.loadDiscoveryDocument().then((doc) => {
-            this.tryLogin();
+            return this.tryLogin();
         });
     }
 
@@ -324,7 +377,6 @@ export class OAuthService {
         return this.jwks['keys'].length;
     }
     */
-
 
     private debug(...args): void {
         if (this.showDebugInformation) {
@@ -487,6 +539,8 @@ export class OAuthService {
                     this.tokenEndpoint = doc.token_endpoint;
                     this.userinfoEndpoint = doc.userinfo_endpoint;
                     this.jwksUri = doc.jwks_uri;
+                    this.checkSessionIFrameUrl = doc.check_session_iframe;
+
                     this.discoveryDocumentLoaded = true;
                     this.discoveryDocumentLoadedSubject.next(doc);
 
@@ -579,6 +633,14 @@ export class OAuthService {
             console.error('error validating jwks_uri in discovery document', errors);
             return false;
         }
+
+        if (this.checkSessionPeriodic &&  !doc['check_session_iframe']) {
+            console.warn(
+                'checkSessionPeriodic is activated but discovery document'
+                + ' does not contain a check_session_iframe field');
+        }
+
+        this.checkSessionPeriodic = doc['check_session_iframe'];
 
         return true;
     }
@@ -798,9 +860,15 @@ export class OAuthService {
      */
     public silentRefresh(): Promise<OAuthEvent> {
 
+        let claims = this.getIdentityClaims();
+
+        if (!claims) {
+            throw new Error('cannot perform a silent refresh as the user is not logged in');
+        }
+
         if (!this.validateUrlForHttps(this.loginUrl)) throw new Error('tokenEndpoint must use Http. Also check property requireHttps.');
 
-        if (!document) {
+        if (typeof document === 'undefined') {
             throw new Error('silent refresh is not supported on this platform');
         }
 
@@ -808,6 +876,9 @@ export class OAuthService {
         if (existingIframe) {
             document.body.removeChild(existingIframe);
         }
+
+
+        this.silentRefreshSubject = claims['sub'];
 
         let iframe = document.createElement('iframe');
         iframe.id = this.silentRefreshIFrameName;
@@ -842,6 +913,155 @@ export class OAuthService {
                     return e;
                 })
                 .toPromise();
+    }
+
+    private canPerformSessionCheck(): boolean {
+        if (!this.checkSessionPeriodic) return false;
+        if (!this.checkSessionIFrameUrl) {
+            console.warn('checkSessionPeriodic is activated but there '
+                            + 'is no checkSessionIFrameUrl');
+            return false;
+        }
+        let sessionState = this.getSessionState();
+        if (!sessionState) {
+            console.warn('checkSessionPeriodic is activated but there '
+                + 'is no session_state');
+            return false;
+        }
+        if (typeof document === 'undefined') {
+            return false;
+        }
+
+        return true;
+    }
+
+    private setupSessionCheckEventListener(): void {
+        this.removeSessionCheckEventListener();
+
+        this.sessionCheckEventListener = (e: MessageEvent) => {
+
+            let origin = e.origin.toLowerCase();
+            let issuer = this.issuer.toLowerCase();
+
+            this.debug('sessionCheckEventListener');
+
+            if (!issuer.startsWith(origin)) {
+                this.debug(
+                    'sessionCheckEventListener',
+                    'wrong origin',
+                    origin,
+                    'expected',
+                    issuer);
+            }
+
+            switch (e.data) {
+                case 'unchanged': this.handleSessionUnchanged(); break;
+                case 'changed': this.handleSessionChange(); break;
+                case 'error': this.handleSessionError(); break;
+            }
+
+            this.debug('got info from session check inframe', e);
+        };
+
+        window.addEventListener('message', this.sessionCheckEventListener);
+    }
+
+    private handleSessionUnchanged(): void {
+        this.debug('session check', 'session unchanged');
+    }
+
+    private handleSessionChange(): void {
+        /* events: session_changed, relogin, stopTimer, logged_out*/
+        this.eventsSubject.next(new OAuthInfoEvent('session_changed'));
+        this.stopSessionCheckTimer();
+        if (this.silentRefreshRedirectUri) {
+            this.silentRefresh();
+            this.waitForSilentRefreshAfterSessionChange();
+        }
+        else {
+            this.eventsSubject.next(new OAuthInfoEvent('session_terminated'));
+            this.logOut();
+        }
+    }
+
+    private waitForSilentRefreshAfterSessionChange() {
+        this
+            .events
+            .filter((e: OAuthEvent) =>
+                e.type === 'silently_refreshed'
+                || e.type === 'silent_refresh_timeout'
+                || e.type === 'silent_refresh_error')
+            .first()
+            .subscribe(e => {
+                if (e.type !== 'silently_refreshed') {
+                    this.debug('silent refresh did not work after session changed');
+                    this.eventsSubject.next(new OAuthInfoEvent('session_terminated'));
+                    this.logOut();
+                }
+            });
+    }
+
+    private handleSessionError(): void {
+        this.stopSessionCheckTimer();
+        this.eventsSubject.next(new OAuthInfoEvent('session_error'));
+    }
+
+    private removeSessionCheckEventListener(): void {
+        if (this.sessionCheckEventListener) {
+            window.removeEventListener('message', this.sessionCheckEventListener);
+            this.sessionCheckEventListener = null;
+        }
+    }
+
+    private initSessionCheck(): void {
+        if (!this.canPerformSessionCheck()) return;
+
+        let existingIframe = document.getElementById(this.checkSessionIFrameName);
+        if (existingIframe) {
+            document.body.removeChild(existingIframe);
+        }
+
+        let iframe = document.createElement('iframe');
+        iframe.id = this.checkSessionIFrameName;
+
+        this.setupSessionCheckEventListener();
+
+        let url = this.checkSessionIFrameUrl;
+        iframe.setAttribute('src', url);
+        iframe.style.visibility = 'hidden';
+        document.body.appendChild(iframe);
+
+        this.startSessionCheckTimer();
+
+    }
+
+    private startSessionCheckTimer(): void {
+        this.stopSessionCheckTimer();
+        this.sessionCheckTimer = setInterval(this.checkSession.bind(this), this.checkSessionIntervall);
+    }
+
+    private stopSessionCheckTimer(): void {
+        if (this.sessionCheckTimer) {
+            clearInterval(this.sessionCheckTimer);
+            this.sessionCheckTimer = null;
+        }
+    }
+
+    private checkSession(): void {
+        let iframe: any = document.getElementById(this.checkSessionIFrameName);
+
+        if (!iframe) {
+            console.warn('checkSession did not find iframe', this.checkSessionIFrameName);
+        }
+
+        let sessionState = this.getSessionState();
+
+        if (!sessionState) {
+            this.stopSessionCheckTimer();
+        }
+
+        let message = this.clientId + ' ' + sessionState;
+        iframe.contentWindow.postMessage(message, this.issuer);
     }
 
     private createLoginUrl(
@@ -1011,6 +1231,7 @@ export class OAuthService {
         let accessToken = parts['access_token'];
         let idToken = parts['id_token'];
         let state = decodeURIComponent(parts['state']);
+        let sessionState = parts['session_state'];
 
         if (!this.requestAccessToken && !this.oidc) {
             return Promise.reject('Either requestAccessToken or oidc or both must be true.');
@@ -1020,12 +1241,18 @@ export class OAuthService {
         if (this.requestAccessToken && !options.disableOAuth2StateCheck && !state) return Promise.resolve();
         if (this.oidc && !idToken) return Promise.resolve();
 
+        if (this.checkSessionPeriodic && !sessionState) {
+            console.warn(
+                'session checks (Session Status Change Notification) '
+                + 'is activated in the configuration but the id_token '
+                + 'does not contain a session_state claim');
+        }
+
         let stateParts = state.split(';');
         if (stateParts.length > 1) {
             this.state = stateParts[1];
         }
         let nonceInState = stateParts[0];
-
 
         if (this.requestAccessToken && !options.disableOAuth2StateCheck) {
             let success = this.validateNonceForAccessToken(accessToken, nonceInState);
@@ -1057,6 +1284,7 @@ export class OAuthService {
                 })
                 .then(result => {
                         this.storeIdToken(result);
+                        this.storeSessionState(sessionState);
                         this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
                         this.callOnTokenReceivedIfExists(options);
                         if (this.clearHashAfterLogin) location.hash = '';
@@ -1083,6 +1311,14 @@ export class OAuthService {
         this._storage.setItem('id_token', idToken.idToken);
         this._storage.setItem('id_token_claims_obj', idToken.idTokenClaimsJson);
         this._storage.setItem('id_token_expires_at', '' + idToken.idTokenExpiresAt);
+    }
+
+    protected storeSessionState(sessionState: string) {
+        this._storage.setItem('session_state', sessionState);
+    }
+
+    protected getSessionState(): string {
+        return this._storage.getItem('session_state');
     }
 
     private handleLoginError(options: LoginOptions, parts: object): void {
@@ -1129,6 +1365,22 @@ export class OAuthService {
 
             if (!claims.sub) {
                 let err = 'No sub claim in id_token';
+                console.warn(err);
+                return Promise.reject(err);
+            }
+
+            /* For now, we only check whether the sub against
+             * silentRefreshSubject when checkSessionPeriodic is on
+             * We will reconsider in a later version to do this
+             * in every other case too.
+             */
+            if (this.checkSessionPeriodic
+                && this.silentRefreshSubject
+                && this.silentRefreshSubject !== claims['sub']) {
+
+                let err = 'After refreshing, we got an id_token for another user (sub). '
+                            + `Expected sub: ${this.silentRefreshSubject}, received sub: ${claims['sub']}`;
+
                 console.warn(err);
                 return Promise.reject(err);
             }
@@ -1307,6 +1559,8 @@ export class OAuthService {
         this._storage.removeItem('expires_at');
         this._storage.removeItem('id_token_claims_obj');
         this._storage.removeItem('id_token_expires_at');
+
+        this.silentRefreshSubject = null;
 
         if (!this.logoutUrl) return;
         if (noRedirectToLogoutUrl) return;

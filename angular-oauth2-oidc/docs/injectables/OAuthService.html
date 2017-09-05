@@ -90,7 +90,13 @@
                                 id="xs-classes-links"
                             >
                                 <li class="link">
+                                    <a href="../classes/A.html" >A</a>
+                                </li>
+                                <li class="link">
                                     <a href="../classes/AbstractValidationHandler.html" >AbstractValidationHandler</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../classes/B.html" >B</a>
                                 </li>
                                 <li class="link">
                                     <a href="../classes/JwksValidationHandler.html" >JwksValidationHandler</a>
@@ -275,7 +281,13 @@
                                        id="classes-links"
                    >
                                        <li class="link">
+                                           <a href="../classes/A.html" >A</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../classes/AbstractValidationHandler.html" >AbstractValidationHandler</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../classes/B.html" >B</a>
                                        </li>
                                        <li class="link">
                                            <a href="../classes/JwksValidationHandler.html" >JwksValidationHandler</a>
@@ -494,6 +506,9 @@ password flow.</p>
                                         <span class="modifier">Public</span> <a href="#getIdTokenExpiration">getIdTokenExpiration</a>
                                     </li>
                                     <li>
+                                        <span class="modifier">Protected</span> <a href="#getSessionState">getSessionState</a>
+                                    </li>
+                                    <li>
                                         <span class="modifier">Public</span> <a href="#hasValidAccessToken">hasValidAccessToken</a>
                                     </li>
                                     <li>
@@ -524,13 +539,16 @@ password flow.</p>
                                         <span class="modifier">Public</span> <a href="#setStorage">setStorage</a>
                                     </li>
                                     <li>
-                                        <span class="modifier">Public</span> <a href="#setupAutomaticSiletRefresh">setupAutomaticSiletRefresh</a>
+                                        <span class="modifier">Public</span> <a href="#setupAutomaticSilentRefresh">setupAutomaticSilentRefresh</a>
                                     </li>
                                     <li>
                                         <span class="modifier">Public</span> <a href="#silentRefresh">silentRefresh</a>
                                     </li>
                                     <li>
                                         <span class="modifier">Protected</span> <a href="#storeIdToken">storeIdToken</a>
+                                    </li>
+                                    <li>
+                                        <span class="modifier">Protected</span> <a href="#storeSessionState">storeSessionState</a>
                                     </li>
                                     <li>
                                         <span class="modifier">Public</span> <a href="#tryLogin">tryLogin</a>
@@ -548,12 +566,12 @@ password flow.</p>
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <code>constructor(http: <a href="https://angular.io/docs/ts/latest/api/http/index/Http-class.html" target="_blank">Http</a>, storage: <a href="../classes/OAuthStorage.html">OAuthStorage</a>, tokenValidationHandler: <a href="../classes/ValidationHandler.html">ValidationHandler</a>, urlHelper: <a href="../injectables/UrlHelperService.html">UrlHelperService</a>)</code>
+                                    <code>constructor(http: <a href="https://angular.io/docs/ts/latest/api/http/index/Http-class.html" target="_blank">Http</a>, storage: <a href="../classes/OAuthStorage.html">OAuthStorage</a>, tokenValidationHandler: <a href="../classes/ValidationHandler.html">ValidationHandler</a>, config: <a href="../interfaces/AuthConfig.html">AuthConfig</a>, urlHelper: <a href="../injectables/UrlHelperService.html">UrlHelperService</a>)</code>
                                 </td>
                             </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="267" class="link-to-prism">src/oauth-service.ts:267</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="305" class="link-to-prism">src/oauth-service.ts:305</a></div>
                                         </td>
                                     </tr>
             
@@ -584,7 +602,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1268" class="link-to-prism">src/oauth-service.ts:1268</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1471" class="link-to-prism">src/oauth-service.ts:1471</a></div>
                                         </td>
                                     </tr>
             
@@ -620,7 +638,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="296" class="link-to-prism">src/oauth-service.ts:296</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="342" class="link-to-prism">src/oauth-service.ts:342</a></div>
                                         </td>
                                     </tr>
             
@@ -681,7 +699,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1312" class="link-to-prism">src/oauth-service.ts:1312</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1515" class="link-to-prism">src/oauth-service.ts:1515</a></div>
                                         </td>
                                     </tr>
             
@@ -719,7 +737,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1320" class="link-to-prism">src/oauth-service.ts:1320</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1523" class="link-to-prism">src/oauth-service.ts:1523</a></div>
                                         </td>
                                     </tr>
             
@@ -752,7 +770,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="647" class="link-to-prism">src/oauth-service.ts:647</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="723" class="link-to-prism">src/oauth-service.ts:723</a></div>
                                         </td>
                                     </tr>
             
@@ -825,7 +843,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="589" class="link-to-prism">src/oauth-service.ts:589</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="657" class="link-to-prism">src/oauth-service.ts:657</a></div>
                                         </td>
                                     </tr>
             
@@ -904,7 +922,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1208" class="link-to-prism">src/oauth-service.ts:1208</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1411" class="link-to-prism">src/oauth-service.ts:1411</a></div>
                                         </td>
                                     </tr>
             
@@ -939,7 +957,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1216" class="link-to-prism">src/oauth-service.ts:1216</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1419" class="link-to-prism">src/oauth-service.ts:1419</a></div>
                                         </td>
                                     </tr>
             
@@ -975,7 +993,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1185" class="link-to-prism">src/oauth-service.ts:1185</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1388" class="link-to-prism">src/oauth-service.ts:1388</a></div>
                                         </td>
                                     </tr>
             
@@ -1010,7 +1028,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1194" class="link-to-prism">src/oauth-service.ts:1194</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1397" class="link-to-prism">src/oauth-service.ts:1397</a></div>
                                         </td>
                                     </tr>
             
@@ -1045,7 +1063,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1224" class="link-to-prism">src/oauth-service.ts:1224</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1427" class="link-to-prism">src/oauth-service.ts:1427</a></div>
                                         </td>
                                     </tr>
             
@@ -1057,6 +1075,39 @@ password flow.</p>
             
                                         <div class="io-description">
                                             <b>Returns : </b>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+            
+                                        </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <a name="getSessionState"></a>
+                                    <b><span class="modifier">Protected</span> getSessionState</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon method fa fa-play circle"></span>
+                                    <code>getSessionState()</code>
+                                </td>
+                            </tr>
+            
+            
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="1264" class="link-to-prism">src/oauth-service.ts:1264</a></div>
+                                        </td>
+                                    </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            
+                                        <div class="io-description">
+                                            <b>Returns : </b>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
             
                                         </div>
                                 </td>
@@ -1081,7 +1132,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1231" class="link-to-prism">src/oauth-service.ts:1231</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1434" class="link-to-prism">src/oauth-service.ts:1434</a></div>
                                         </td>
                                     </tr>
             
@@ -1116,7 +1167,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1249" class="link-to-prism">src/oauth-service.ts:1249</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1452" class="link-to-prism">src/oauth-service.ts:1452</a></div>
                                         </td>
                                     </tr>
             
@@ -1151,14 +1202,14 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="913" class="link-to-prism">src/oauth-service.ts:913</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1101" class="link-to-prism">src/oauth-service.ts:1101</a></div>
                                         </td>
                                     </tr>
             
                             <tr>
                                 <td class="col-md-4">
                                         <div class="io-description"><p>Starts the implicit flow and redirects to user to
-            the auth servers login url. </p>
+            the auth servers login url.</p>
             </div>
             
                                         <div class="io-description">
@@ -1176,7 +1227,8 @@ password flow.</p>
                                                               <td>additionalState</td>
                                                               <td>
                                                               </td>
-                                                              <td><p>Optinal state that is passes around. You find this state in the property <code>state</code> after <code>tryLogin</code> logged in the user.</p>
+                                                              <td><p>Optinal state that is passes around.
+            You find this state in the property <code>state</code> after <code>tryLogin</code> logged in the user.</p>
             </td>
                                                             </tr>
                                                             <tr>
@@ -1219,7 +1271,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="455" class="link-to-prism">src/oauth-service.ts:455</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="510" class="link-to-prism">src/oauth-service.ts:510</a></div>
                                         </td>
                                     </tr>
             
@@ -1283,7 +1335,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="309" class="link-to-prism">src/oauth-service.ts:309</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="364" class="link-to-prism">src/oauth-service.ts:364</a></div>
                                         </td>
                                     </tr>
             
@@ -1316,7 +1368,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="602" class="link-to-prism">src/oauth-service.ts:602</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="673" class="link-to-prism">src/oauth-service.ts:673</a></div>
                                         </td>
                                     </tr>
             
@@ -1347,21 +1399,21 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                         <span class="modifier-icon method fa fa-play "></span>
-                                    <code>logOut(noRedirectToLogoutUrl: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a>)</code>
+                                    <code>logOut(noRedirectToLogoutUrl: )</code>
                                 </td>
                             </tr>
             
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1278" class="link-to-prism">src/oauth-service.ts:1278</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1481" class="link-to-prism">src/oauth-service.ts:1481</a></div>
                                         </td>
                                     </tr>
             
                             <tr>
                                 <td class="col-md-4">
                                         <div class="io-description"><p>Removes all tokens and logs the user out.
-            If a logout url is configured, the user is 
+            If a logout url is configured, the user is
             redirected to it.</p>
             </div>
             
@@ -1416,7 +1468,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1074" class="link-to-prism">src/oauth-service.ts:1074</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1277" class="link-to-prism">src/oauth-service.ts:1277</a></div>
                                         </td>
                                     </tr>
             
@@ -1454,7 +1506,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="692" class="link-to-prism">src/oauth-service.ts:692</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="770" class="link-to-prism">src/oauth-service.ts:770</a></div>
                                         </td>
                                     </tr>
             
@@ -1493,7 +1545,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="442" class="link-to-prism">src/oauth-service.ts:442</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="497" class="link-to-prism">src/oauth-service.ts:497</a></div>
                                         </td>
                                     </tr>
             
@@ -1541,21 +1593,21 @@ password flow.</p>
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <a name="setupAutomaticSiletRefresh"></a>
-                                    <b><span class="modifier">Public</span> setupAutomaticSiletRefresh</b>
+                                    <a name="setupAutomaticSilentRefresh"></a>
+                                    <b><span class="modifier">Public</span> setupAutomaticSilentRefresh</b>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
                                         <span class="modifier-icon method fa fa-play "></span>
-                                    <code>setupAutomaticSiletRefresh()</code>
+                                    <code>setupAutomaticSilentRefresh()</code>
                                 </td>
                             </tr>
             
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="300" class="link-to-prism">src/oauth-service.ts:300</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="355" class="link-to-prism">src/oauth-service.ts:355</a></div>
                                         </td>
                                     </tr>
             
@@ -1588,14 +1640,14 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="776" class="link-to-prism">src/oauth-service.ts:776</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="856" class="link-to-prism">src/oauth-service.ts:856</a></div>
                                         </td>
                                     </tr>
             
                             <tr>
                                 <td class="col-md-4">
                                         <div class="io-description"><p>Performs a silent refresh for implicit flow.
-            Use this method to get a new tokens when/ before 
+            Use this method to get a new tokens when/ before
             the existing tokens expires.</p>
             </div>
             
@@ -1625,7 +1677,40 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1058" class="link-to-prism">src/oauth-service.ts:1058</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1254" class="link-to-prism">src/oauth-service.ts:1254</a></div>
+                                        </td>
+                                    </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            
+                                        <div class="io-description">
+                                            <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+            
+                                        </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <a name="storeSessionState"></a>
+                                    <b><span class="modifier">Protected</span> storeSessionState</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon method fa fa-play circle"></span>
+                                    <code>storeSessionState(sessionState: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                                </td>
+                            </tr>
+            
+            
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="1260" class="link-to-prism">src/oauth-service.ts:1260</a></div>
                                         </td>
                                     </tr>
             
@@ -1658,7 +1743,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="966" class="link-to-prism">src/oauth-service.ts:966</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1152" class="link-to-prism">src/oauth-service.ts:1152</a></div>
                                         </td>
                                     </tr>
             
@@ -1733,7 +1818,7 @@ password flow.</p>
                                 </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="242" class="link-to-prism">src/oauth-service.ts:242</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="243" class="link-to-prism">src/oauth-service.ts:243</a></div>
                                         </td>
                                     </tr>
             
@@ -1763,7 +1848,7 @@ password flow.</p>
                             </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="93" class="link-to-prism">src/oauth-service.ts:93</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="94" class="link-to-prism">src/oauth-service.ts:94</a></div>
                                         </td>
                                     </tr>
             
@@ -1799,7 +1884,7 @@ password flow.</p>
                                 </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="187" class="link-to-prism">src/oauth-service.ts:187</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="188" class="link-to-prism">src/oauth-service.ts:188</a></div>
                                         </td>
                                     </tr>
             
@@ -1818,18 +1903,19 @@ password flow.</p>
 
 
     <div class="tab-pane fade tab-source-code" id="source">
-        <pre class="line-numbers"><code class="language-typescript">import { AuthConfig, defaultConfig } from &#x27;./config&#x27;;
-import { Http, URLSearchParams, Headers } from &#x27;@angular/http&#x27;;
-import { Injectable, Optional } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers"><code class="language-typescript">import { Http, URLSearchParams, Headers } from &#x27;@angular/http&#x27;;
+import { Inject, Injectable, Optional } from &#x27;@angular/core&#x27;;
 import { Observable } from &#x27;rxjs/Observable&#x27;;
 import { Subject } from &#x27;rxjs/Subject&#x27;;
-import { ValidationHandler, ValidationParams } from &quot;./token-validation/validation-handler&quot;;
-import { NullValidationHandler } from &quot;./token-validation/null-validation-handler&quot;;
-import { UrlHelperService } from &quot;./url-helper.service&quot;;
-import { Subscription } from &quot;rxjs/Subscription&quot;;
-import { OAuthEvent, OAuthInfoEvent, OAuthErrorEvent, OAuthSuccessEvent } from &quot;./events&quot;;
-import { OAuthStorage, LoginOptions, ParsedIdToken } from &quot;./types&quot;;
-import { b64DecodeUnicode } from &quot;./base64-helper&quot;;
+import { ValidationHandler, ValidationParams } from &#x27;./token-validation/validation-handler&#x27;;
+import { UrlHelperService } from &#x27;./url-helper.service&#x27;;
+import { Subscription } from &#x27;rxjs/Subscription&#x27;;
+import { OAuthEvent, OAuthInfoEvent, OAuthErrorEvent, OAuthSuccessEvent } from &#x27;./events&#x27;;
+import { OAuthStorage, LoginOptions, ParsedIdToken } from &#x27;./types&#x27;;
+import { b64DecodeUnicode } from &#x27;./base64-helper&#x27;;
+import { AUTH_CONFIG } from &#x27;./tokens&#x27;;
+import { AuthConfig } from &#x27;./auth.config&#x27;;
+import { defaultConfig } from &#x27;./default.auth.conf&#x27;;
 
 /**
  * Service for logging in and logging out with
@@ -1841,152 +1927,152 @@ export class OAuthService {
 
     /**
      * The client&#x27;s id as registered with the auth server
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
-    public clientId &#x3D; &quot;&quot;;
+    public clientId &#x3D; &#x27;&#x27;;
 
     /**
      * The client&#x27;s redirectUri as registered with the auth server
-     * 
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
-    public redirectUri &#x3D; &quot;&quot;;
+    public redirectUri &#x3D; &#x27;&#x27;;
 
     /**
      * An optional second redirectUri where the auth server
      * redirects the user to after logging out.
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
-    public postLogoutRedirectUri &#x3D; &quot;&quot;;
+    public postLogoutRedirectUri &#x3D; &#x27;&#x27;;
 
     /**
      * The auth server&#x27;s endpoint that allows to log
      * the user in when using implicit flow.
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
-     * 
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
+     *
      */
-    public loginUrl &#x3D; &quot;&quot;;
+    public loginUrl &#x3D; &#x27;&#x27;;
 
     /**
      * The requested scopes
-     * 
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
-     * 
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
+     *
      */
-    public scope &#x3D; &quot;openid profile&quot;;
+    public scope &#x3D; &#x27;openid profile&#x27;;
 
     /**
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
-    public resource &#x3D; &quot;&quot;;
-    
+    public resource &#x3D; &#x27;&#x27;;
+
     /**
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
-    public rngUrl &#x3D; &quot;&quot;;
+    public rngUrl &#x3D; &#x27;&#x27;;
 
     /**
      * Defines whether to use OpenId Connect during
      * implicit flow.
-     * 
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
-    public oidc: boolean &#x3D; true;
+    public oidc &#x3D; true;
 
     /**
      * Defines whether to request a access token during
      * implicit flow.
-     * 
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
-    public requestAccessToken: boolean &#x3D; true;
+    public requestAccessToken &#x3D; true;
 
     /**
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public options: any;
-    
+
     /**
      * The received (passed around) state, when logging
      * in with implicit flow.
      */
-    public state &#x3D; &quot;&quot;;
+    public state &#x3D; &#x27;&#x27;;
 
     /**
      * The issuer&#x27;s uri.
-     * 
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
-    public issuer &#x3D; &quot;&quot;;
+    public issuer &#x3D; &#x27;&#x27;;
 
     /**
      * The logout url.
-     * 
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
-    public logoutUrl &#x3D; &quot;&quot;;
+    public logoutUrl &#x3D; &#x27;&#x27;;
 
     /**
      * Defines whether to clear the hash fragment after logging in.
-     * 
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
-    public clearHashAfterLogin: boolean &#x3D; true;
+    public clearHashAfterLogin &#x3D; true;
 
     /**
      * Url of the token endpoint as defined by OpenId Connect and OAuth 2.
-     * 
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public tokenEndpoint: string;
 
     /**
      * Url of the userinfo endpoint as defined by OpenId Connect.
-     * 
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
-     * 
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
+     *
      */
     public userinfoEndpoint: string;
 
     /**
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
-    public responseType: string &#x3D; &quot;token&quot;;
+    public responseType &#x3D; &#x27;token&#x27;;
 
     /**
-     * Defines whether additional debug information should 
+     * Defines whether additional debug information should
      * be shown at the console.
-     * 
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
-    public showDebugInformation: boolean &#x3D; false;
+    public showDebugInformation &#x3D; false;
 
     /**
      * The redirect uri used when doing silent refresh.
-     * 
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
-    public silentRefreshRedirectUri: string &#x3D; &#x27;&#x27;;
+    public silentRefreshRedirectUri &#x3D; &#x27;&#x27;;
 
     /**
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
     */
-    public silentRefreshMessagePrefix: string &#x3D; &#x27;&#x27;;
+    public silentRefreshMessagePrefix &#x3D; &#x27;&#x27;;
 
     /**
-     * Set this to true to display the iframe used for 
+     * Set this to true to display the iframe used for
      * silent refresh for debugging.
-     * 
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
-    public silentRefreshShowIFrame: boolean &#x3D; false;
-    
+    public silentRefreshShowIFrame &#x3D; false;
+
     /**
-     * Timeout for silent refresh. 
-     * 
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * Timeout for silent refresh.
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
-    public siletRefreshTimeout: number &#x3D; 1000 * 20; 
+    public siletRefreshTimeout: number &#x3D; 1000 * 20;
 
     /**
      * Some auth servers don&#x27;t allow using password flow
@@ -1995,8 +2081,8 @@ export class OAuthService {
      * here. As this passwort is exposed to the public
      * it does not bring additional security and is therefore
      * as good as using no password.
-     * 
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public dummyClientSecret: string;
 
@@ -2011,33 +2097,33 @@ export class OAuthService {
      * The default value is remoteOnly which only allows
      * http for location, while every other domains need
      * to be used with https.
-     * 
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public requireHttps: boolean | &#x27;remoteOnly&#x27; &#x3D; &#x27;remoteOnly&#x27;;
-    
+
     /**
-     * Defines whether every url provided by the discovery 
+     * Defines whether every url provided by the discovery
      * document has to start with the issuer&#x27;s url.
-     * 
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
-    public strictDiscoveryDocumentValidation: boolean &#x3D; true;
+    public strictDiscoveryDocumentValidation &#x3D; true;
 
     /**
      * JSON Web Key Set (https://tools.ietf.org/html/rfc7517)
      * with keys used to validate received id_tokens.
      * This is taken out of the disovery document. Can be set manually too.
-     * 
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public jwks: object;
 
     /**
      * Map with additional query parameter that are appended to
      * the request when initializing implicit flow.
-     * 
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
     public customQueryParams: object;
 
@@ -2045,14 +2131,14 @@ export class OAuthService {
      * @internal
      * Deprecated:  use property events instead
      */
-    public discoveryDocumentLoaded: boolean &#x3D; false;
-  
+    public discoveryDocumentLoaded &#x3D; false;
+
     /**
      * @internal
      * Deprecated:  use property events instead
      */
     public discoveryDocumentLoaded$: Observable&lt;object&gt;;
-    
+
     private discoveryDocumentLoadedSubject: Subject&lt;object&gt; &#x3D; new Subject&lt;object&gt;();
 
     /**
@@ -2063,10 +2149,10 @@ export class OAuthService {
     private eventsSubject: Subject&lt;OAuthEvent&gt; &#x3D; new Subject&lt;OAuthEvent&gt;();
 
     /**
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
-    public silentRefreshIFrameName: string &#x3D; &#x27;angular-oauth-oidc-silent-refresh-iframe&#x27;;
-    
+    public silentRefreshIFrameName &#x3D; &#x27;angular-oauth-oidc-silent-refresh-iframe&#x27;;
+
     private silentRefreshPostMessageEventListener: EventListener;
 
     private grantTypesSupported: Array&lt;string&gt; &#x3D; [];
@@ -2076,37 +2162,82 @@ export class OAuthService {
      * Defines when the token_timeout event should be raised.
      * If you set this to the default value 0.75, the event
      * is triggered after 75% of the token&#x27;s life time.
-     * 
-     * @internal Use method configure instead. However, this is still supported to avoid braking existing code.
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
      */
-    public timeoutFactor: number &#x3D; 0.75;
+    public timeoutFactor &#x3D; 0.75;
+
+    /**
+     * If true, the lib will try to check whether the user
+     * is still logged in on a regular basis as described
+     * in http://openid.net/specs/openid-connect-session-1_0.html#ChangeNotification
+     * @type {boolean}
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
+     */
+    public checkSessionPeriodic &#x3D; false;
+
+    /**
+     * Intervall in msec for checking the session
+     * according to http://openid.net/specs/openid-connect-session-1_0.html#ChangeNotification
+     * @type {number}
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
+     */
+    public checkSessionIntervall &#x3D; 3 * 1000;
+
+    /**
+     * Url for the iframe used for session checks
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
+     */
+    public checkSessionIFrameUrl: string;
+
+    /**
+     * Name of the iframe to use for session checks
+     * @type {number}
+     *
+     * @internal DEPREACTED/ LEGACY. Use method configure instead.
+     */
+    public checkSessionIFrameName &#x3D; &#x27;angular-oauth-oidc-check-session-iframe&#x27;;
 
     private accessTokenTimeoutSubscription: Subscription;
     private idTokenTimeoutSubscription: Subscription;
 
+    private sessionCheckEventListener: EventListener;
+
     private jwksUri: string;
+
+    private sessionCheckTimer: any;
 
     constructor(
         private http: Http,
         @Optional() storage: OAuthStorage,
         @Optional() tokenValidationHandler: ValidationHandler,
+        @Optional() @Inject(AUTH_CONFIG) private config: AuthConfig,
         private urlHelper: UrlHelperService) {
-     
+
         this.discoveryDocumentLoaded$ &#x3D; this.discoveryDocumentLoadedSubject.asObservable();
         this.events &#x3D; this.eventsSubject.asObservable();
 
         if (tokenValidationHandler) {
             this.tokenValidationHandler &#x3D; tokenValidationHandler;
         }
-        
+
+        if (config) {
+            this.configure(config);
+        }
+
         if (storage) {
             this.setStorage(storage);
-        }
-        else if (typeof sessionStorage !&#x3D;&#x3D; &#x27;undefined&#x27;) {
+        } else if (typeof sessionStorage !&#x3D;&#x3D; &#x27;undefined&#x27;) {
             this.setStorage(sessionStorage);
         }
 
         this.setupTimer();
+
+        if (this.checkSessionPeriodic) {
+            this.setupSessionCheck();
+        }
     }
 
     /**
@@ -2117,10 +2248,19 @@ export class OAuthService {
         Object.assign(this, defaultConfig, config);
     }
 
-    public setupAutomaticSiletRefresh() {
+    private setupSessionCheck() {
+        this
+            .events
+            .filter(e &#x3D;&gt; e.type &#x3D;&#x3D;&#x3D; &#x27;token_received&#x27;)
+            .subscribe(e &#x3D;&gt; {
+                this.initSessionCheck();
+            });
+    }
+
+    public setupAutomaticSilentRefresh() {
         this
         .events
-        .filter(e &#x3D;&gt; e.type &#x3D;&#x3D; &#x27;token_expires&#x27;)
+        .filter(e &#x3D;&gt; e.type &#x3D;&#x3D;&#x3D; &#x27;token_expires&#x27;)
         .subscribe(e &#x3D;&gt; {
           this.silentRefresh();
         });
@@ -2128,16 +2268,17 @@ export class OAuthService {
 
     public loadDiscoveryDocumentAndTryLogin() {
         this.loadDiscoveryDocument().then((doc) &#x3D;&gt; {
-            this.tryLogin();
+            return this.tryLogin();
         });
     }
-    
+
+    /*
     private getKeyCount(): number {
         if (!this.jwks) return 0;
         if (!this.jwks[&#x27;keys&#x27;]) return 0;
         return this.jwks[&#x27;keys&#x27;].length;
     }
-
+    */
 
     private debug(...args): void {
         if (this.showDebugInformation) {
@@ -2156,23 +2297,24 @@ export class OAuthService {
         }
 
         if (!issuerCheck) {
-            errors.push(&#x27;Every url in discovery document has to start with the issuer url. Also see property strictDiscoveryDocumentValidation.&#x27;);
+            errors.push(&#x27;Every url in discovery document has to start with the issuer url.&#x27;
+                        + &#x27;Also see property strictDiscoveryDocumentValidation.&#x27;);
         }
 
         return errors;
     }
 
     private validateUrlForHttps(url: string): boolean {
-        
-        if (!url) return true;
-        
-        let lcUrl &#x3D; url.toLowerCase();
-        
-        if (this.requireHttps &#x3D;&#x3D; false) return true;
 
-        if ((lcUrl.match(/^http:\/\/localhost($|[:\/])/) 
+        if (!url) return true;
+
+        let lcUrl &#x3D; url.toLowerCase();
+
+        if (this.requireHttps &#x3D;&#x3D;&#x3D; false) return true;
+
+        if ((lcUrl.match(/^http:\/\/localhost($|[:\/])/)
             || lcUrl.match(/^http:\/\/localhost($|[:\/])/))
-            &amp;&amp; this.requireHttps &#x3D;&#x3D; &#x27;remoteOnly&#x27;) {
+            &amp;&amp; this.requireHttps &#x3D;&#x3D;&#x3D; &#x27;remoteOnly&#x27;) {
                 return true;
         }
 
@@ -2186,18 +2328,16 @@ export class OAuthService {
     }
 
     private setupTimer(): void {
-        
-        if (typeof window &#x3D;&#x3D;&#x3D; &#x27;undefined&#x27;) {
-            this.debug(&#x27;timer not supported on this plattform&#x27;)
-            return;
-        } 
 
-        this.events.filter(e &#x3D;&gt; e.type &#x3D;&#x3D; &#x27;token_received&#x27;).subscribe(_ &#x3D;&gt; {
-            
+        if (typeof window &#x3D;&#x3D;&#x3D; &#x27;undefined&#x27;) {
+            this.debug(&#x27;timer not supported on this plattform&#x27;);
+            return;
+        }
+
+        this.events.filter(e &#x3D;&gt; e.type &#x3D;&#x3D;&#x3D; &#x27;token_received&#x27;).subscribe(_ &#x3D;&gt; {
+
             this.clearAccessTokenTimer();
             this.clearIdTokenTimer();
-
-            let now &#x3D; Date.now();
 
             if (this.hasValidAccessToken()) {
                 this.setupAccessTokenTimer();
@@ -2213,8 +2353,8 @@ export class OAuthService {
     private setupAccessTokenTimer(): void {
         let expiration &#x3D; this.getAccessTokenExpiration();
         let timeout &#x3D; this.calcTimeout(expiration);
-        
-        this.accessTokenTimeoutSubscription &#x3D; 
+
+        this.accessTokenTimeoutSubscription &#x3D;
             Observable
                 .of(new OAuthInfoEvent(&#x27;token_expires&#x27;, &#x27;access_token&#x27;))
                 .delay(timeout)
@@ -2225,8 +2365,8 @@ export class OAuthService {
     private setupIdTokenTimer(): void {
         let expiration &#x3D; this.getAccessTokenExpiration();
         let timeout &#x3D; this.calcTimeout(expiration);
-        
-        this.accessTokenTimeoutSubscription &#x3D; 
+
+        this.accessTokenTimeoutSubscription &#x3D;
             Observable
                 .of(new OAuthInfoEvent(&#x27;token_expires&#x27;, &#x27;id_token&#x27;))
                 .delay(timeout)
@@ -2256,8 +2396,8 @@ export class OAuthService {
      * Sets a custom storage used to store the received
      * tokens on client side. By default, the browser&#x27;s
      * sessionStorage is used.
-     * 
-     * @param storage 
+     *
+     * @param storage
      */
     public setStorage(storage: OAuthStorage): void {
         this._storage &#x3D; storage;
@@ -2269,8 +2409,8 @@ export class OAuthService {
      * document is infered from the issuer&#x27;s url according
      * to the OpenId Connect spec. To use another url you
      * can pass it to to optional parameter fullUrl.
-     * 
-     * @param fullUrl 
+     *
+     * @param fullUrl
      */
     public loadDiscoveryDocument(fullUrl: string &#x3D; null): Promise&lt;object&gt; {
 
@@ -2284,7 +2424,7 @@ export class OAuthService {
                 reject(&#x27;loginUrl must use Http. Also check property requireHttps.&#x27;);
                 return;
             }
-    
+
             this.http.get(fullUrl).map(r &#x3D;&gt; r.json()).subscribe(
                 (doc) &#x3D;&gt; {
 
@@ -2301,13 +2441,20 @@ export class OAuthService {
                     this.tokenEndpoint &#x3D; doc.token_endpoint;
                     this.userinfoEndpoint &#x3D; doc.userinfo_endpoint;
                     this.jwksUri &#x3D; doc.jwks_uri;
+                    this.checkSessionIFrameName &#x3D; doc.check_session_iframe;
+
                     this.discoveryDocumentLoaded &#x3D; true;
                     this.discoveryDocumentLoadedSubject.next(doc);
 
-                    this.loadJwks().then(_ &#x3D;&gt; {
-                        let result &#x3D; new OAuthSuccessEvent(&#x27;discovery_document_loaded&#x27;);
-                        this.eventsSubject.next(result);
-                        resolve(result);
+                    this.loadJwks().then(jwks &#x3D;&gt; {
+                        let result: object &#x3D; {
+                            discoveryDocument: doc,
+                            jwks: jwks
+                        };
+
+                        let event &#x3D; new OAuthSuccessEvent(&#x27;discovery_document_loaded&#x27;, result);
+                        this.eventsSubject.next(event);
+                        resolve(event);
                         return;
                     }).catch(err &#x3D;&gt; {
                         this.eventsSubject.next(new OAuthErrorEvent(&#x27;discovery_document_load_error&#x27;, err));
@@ -2338,7 +2485,7 @@ export class OAuthService {
                         this.eventsSubject.next(new OAuthErrorEvent(&#x27;jwks_load_error&#x27;, err));
                         reject(err);
                     }
-                )
+                );
             }
             else {
                 resolve(null);
@@ -2351,7 +2498,7 @@ export class OAuthService {
 
         let errors: string[];
 
-        if (doc[&#x27;issuer&#x27;] !&#x3D; this.issuer) {
+        if (doc[&#x27;issuer&#x27;] !&#x3D;&#x3D; this.issuer) {
             console.error(
                 &#x27;invalid issuer in discovery document&#x27;,
                 &#x27;expected: &#x27; + this.issuer,
@@ -2389,6 +2536,12 @@ export class OAuthService {
             return false;
         }
 
+        if (this.checkSessionPeriodic &amp;&amp;  !doc[&#x27;check_session_iframe&#x27;]) {
+            console.warn(
+                &#x27;checkSessionPeriodic is activated but discovery document&#x27;
+                + &#x27; does not contain a check_session_iframe field&#x27;);
+        }
+
         return true;
     }
 
@@ -2397,16 +2550,19 @@ export class OAuthService {
      * access_token. After receiving the access_token, this method
      * uses it to query the userinfo endpoint in order to get information
      * about the user in question.
-     * 
+     *
      * When using this, make sure that the property oidc is set to false.
      * Otherwise stricter validations take happen that makes this operation
      * fail.
-     * 
-     * @param userName 
-     * @param password 
+     *
+     * @param userName
+     * @param password
      * @param headers Optional additional http-headers.
      */
-    public fetchTokenUsingPasswordFlowAndLoadUserProfile(userName: string, password: string, headers: Headers &#x3D; new Headers()): Promise&lt;object&gt; {
+    public fetchTokenUsingPasswordFlowAndLoadUserProfile(
+        userName: string,
+        password: string,
+        headers: Headers &#x3D; new Headers()): Promise&lt;object&gt; {
         return this
                 .fetchTokenUsingPasswordFlow(userName, password, headers)
                 .then(() &#x3D;&gt; this.loadUserProfile());
@@ -2414,15 +2570,19 @@ export class OAuthService {
 
     /**
      * Loads the user profile by accessing the user info endpoint defined by OpenId Connect.
-     * 
+     *
      * When using this with OAuth2 password flow, make sure that the property oidc is set to false.
      * Otherwise stricter validations take happen that makes this operation
      * fail.
      */
     public loadUserProfile(): Promise&lt;object&gt; {
-        if (!this.hasValidAccessToken()) throw new Error(&quot;Can not load User Profile without access_token&quot;);
-        if (!this.validateUrlForHttps(this.userinfoEndpoint)) throw new Error(&#x27;userinfoEndpoint must use Http. Also check property requireHttps.&#x27;);
-        
+        if (!this.hasValidAccessToken()) {
+            throw new Error(&#x27;Can not load User Profile without access_token&#x27;);
+        }
+        if (!this.validateUrlForHttps(this.userinfoEndpoint)) {
+            throw new Error(&#x27;userinfoEndpoint must use Http. Also check property requireHttps.&#x27;);
+        }
+
         return new Promise((resolve, reject) &#x3D;&gt; {
 
             let headers &#x3D; new Headers();
@@ -2433,8 +2593,9 @@ export class OAuthService {
                     this.debug(&#x27;userinfo received&#x27;, doc);
 
                     let existingClaims &#x3D; this.getIdentityClaims() || {};
-                    if (this.oidc &amp;&amp; (!existingClaims[&#x27;sub&#x27;] || doc.sub !&#x3D; existingClaims[&#x27;sub&#x27;])) {
-                        let err &#x3D; &#x27;if property oidc is true, the received user-id (sub) has to be the user-id of the user that has logged in with oidc.\n&#x27;
+                    if (this.oidc &amp;&amp; (!existingClaims[&#x27;sub&#x27;] || doc.sub !&#x3D;&#x3D; existingClaims[&#x27;sub&#x27;])) {
+                        let err &#x3D; &#x27;if property oidc is true, the received user-id (sub) has to be the user-id &#x27;
+                                    + &#x27;of the user that has logged in with oidc.\n&#x27;
                                     + &#x27;if you are not using oidc but just oauth2 password flow set oidc to false&#x27;;
 
                         reject(err);
@@ -2460,22 +2621,24 @@ export class OAuthService {
 
     /**
      * Uses password flow to exchange userName and password for an access_token.
-     * @param userName 
-     * @param password 
+     * @param userName
+     * @param password
      * @param headers Optional additional http-headers.
      */
     public fetchTokenUsingPasswordFlow(userName: string, password: string, headers: Headers &#x3D; new Headers()): Promise&lt;object&gt; {
 
-        if (!this.validateUrlForHttps(this.tokenEndpoint)) throw new Error(&#x27;tokenEndpoint must use Http. Also check property requireHttps.&#x27;);
+        if (!this.validateUrlForHttps(this.tokenEndpoint)) {
+            throw new Error(&#x27;tokenEndpoint must use Http. Also check property requireHttps.&#x27;);
+        }
 
-        return new Promise((resolve, reject) &#x3D;&gt; { 
+        return new Promise((resolve, reject) &#x3D;&gt; {
             let search &#x3D; new URLSearchParams();
             search.set(&#x27;grant_type&#x27;, &#x27;password&#x27;);
             search.set(&#x27;client_id&#x27;, this.clientId);
             search.set(&#x27;scope&#x27;, this.scope);
             search.set(&#x27;username&#x27;, userName);
             search.set(&#x27;password&#x27;, password);
-            
+
             if (this.dummyClientSecret) {
                 search.set(&#x27;client_secret&#x27;, this.dummyClientSecret);
             }
@@ -2511,15 +2674,17 @@ export class OAuthService {
      */
     public refreshToken(): Promise&lt;object&gt; {
 
-        if (!this.validateUrlForHttps(this.tokenEndpoint)) throw new Error(&#x27;tokenEndpoint must use Http. Also check property requireHttps.&#x27;);
+        if (!this.validateUrlForHttps(this.tokenEndpoint)) {
+            throw new Error(&#x27;tokenEndpoint must use Http. Also check property requireHttps.&#x27;);
+        }
 
-        return new Promise((resolve, reject) &#x3D;&gt; { 
+        return new Promise((resolve, reject) &#x3D;&gt; {
             let search &#x3D; new URLSearchParams();
             search.set(&#x27;grant_type&#x27;, &#x27;refresh_token&#x27;);
             search.set(&#x27;client_id&#x27;, this.clientId);
             search.set(&#x27;scope&#x27;, this.scope);
             search.set(&#x27;refresh_token&#x27;, this._storage.getItem(&#x27;refresh_token&#x27;));
-            
+
             if (this.dummyClientSecret) {
                 search.set(&#x27;client_secret&#x27;, this.dummyClientSecret);
             }
@@ -2533,7 +2698,7 @@ export class OAuthService {
                 (tokenResponse) &#x3D;&gt; {
                     this.debug(&#x27;refresh tokenResponse&#x27;, tokenResponse);
                     this.storeAccessTokenResponse(tokenResponse.access_token, tokenResponse.refresh_token, tokenResponse.expires_in);
-                    
+
                     this.eventsSubject.next(new OAuthSuccessEvent(&#x27;token_received&#x27;));
                     this.eventsSubject.next(new OAuthSuccessEvent(&#x27;token_refreshed&#x27;));
                     resolve(tokenResponse);
@@ -2556,7 +2721,7 @@ export class OAuthService {
 
     private setupSilentRefreshEventListener(): void {
         this.removeSilentRefreshEventListener();
-        
+
         this.silentRefreshPostMessageEventListener &#x3D; (e: MessageEvent) &#x3D;&gt; {
 
             let expectedPrefix &#x3D; &#x27;#&#x27;;
@@ -2565,8 +2730,8 @@ export class OAuthService {
                 expectedPrefix +&#x3D; this.silentRefreshMessagePrefix;
             }
 
-            if (!e || !e.data || typeof e.data !&#x3D; &#x27;string&#x27; ) return;
-            
+            if (!e || !e.data || typeof e.data !&#x3D;&#x3D; &#x27;string&#x27; ) return;
+
             let prefixedMessage: string &#x3D; e.data;
 
             if (!prefixedMessage.startsWith(expectedPrefix)) return;
@@ -2582,24 +2747,24 @@ export class OAuthService {
                     this.eventsSubject.next(new OAuthSuccessEvent(&#x27;silently_refreshed&#x27;));
                 }
             });
-        }
+        };
 
         window.addEventListener(&#x27;message&#x27;, this.silentRefreshPostMessageEventListener);
     }
 
-    
+
     /**
      * Performs a silent refresh for implicit flow.
-     * Use this method to get a new tokens when/ before 
+     * Use this method to get a new tokens when/ before
      * the existing tokens expires.
      */
     public silentRefresh(): Promise&lt;OAuthEvent&gt; {
-        
+
         if (!this.validateUrlForHttps(this.loginUrl)) throw new Error(&#x27;tokenEndpoint must use Http. Also check property requireHttps.&#x27;);
 
-        if (!document) {
+        if (typeof document &#x3D;&#x3D;&#x3D; &#x27;undefined&#x27;) {
             throw new Error(&#x27;silent refresh is not supported on this platform&#x27;);
-        } 
+        }
 
         let existingIframe &#x3D; document.getElementById(this.silentRefreshIFrameName);
         if (existingIframe) {
@@ -2621,14 +2786,14 @@ export class OAuthService {
         });
 
         let errors &#x3D; this.events.filter(e &#x3D;&gt; e instanceof OAuthErrorEvent).first();
-        let success &#x3D; this.events.filter(e &#x3D;&gt; e.type &#x3D;&#x3D; &#x27;silently_refreshed&#x27;).first();
+        let success &#x3D; this.events.filter(e &#x3D;&gt; e.type &#x3D;&#x3D;&#x3D; &#x27;silently_refreshed&#x27;).first();
         let timeout &#x3D; Observable.of(new OAuthErrorEvent(&#x27;silent_refresh_timeout&#x27;, null))
                                 .delay(this.siletRefreshTimeout);
 
         return Observable
                 .race([errors, success, timeout])
                 .do(e &#x3D;&gt; {
-                    if (e.type &#x3D;&#x3D; &#x27;silent_refresh_timeout&#x27;) {
+                    if (e.type &#x3D;&#x3D;&#x3D; &#x27;silent_refresh_timeout&#x27;) {
                         this.eventsSubject.next(e);
                     }
                 })
@@ -2640,13 +2805,120 @@ export class OAuthService {
                 })
                 .toPromise();
     }
-    
+
+    private canPerformSessionCheck(): boolean {
+        if (!this.checkSessionPeriodic) return false;
+        if (!this.checkSessionIFrameUrl) {
+            console.warn(&#x27;checkSessionPeriodic is activated but there &#x27;
+                            + &#x27;is no checkSessionIFrameUrl&#x27;);
+            return false;
+        }
+        let sessionState &#x3D; this.getSessionState();
+        if (!sessionState) {
+            console.warn(&#x27;checkSessionPeriodic is activated but there &#x27;
+                + &#x27;is no session_state claim&#x27;);
+            return false;
+        }
+        if (typeof document &#x3D;&#x3D;&#x3D; &#x27;undefined&#x27;) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private setupSessionCheckEventListener(): void {
+        this.removeSessionCheckEventListener();
+
+        this.sessionCheckEventListener &#x3D; (e: MessageEvent) &#x3D;&gt; {
+
+            let origin &#x3D; e.origin.toLowerCase();
+            let issuer &#x3D; this.issuer.toLowerCase();
+
+            this.debug(&#x27;sessionCheckEventListener&#x27;);
+
+            if (!issuer.startsWith(origin)) {
+                this.debug(
+                    &#x27;sessionCheckEventListener&#x27;,
+                    &#x27;wrong origin&#x27;,
+                    origin,
+                    &#x27;expected&#x27;,
+                    issuer);
+            }
+
+            switch (e.data) {
+                case &#x27;unchanged&#x27;: break;
+                case &#x27;changed&#x27;: /* events: session_changed, relogin, stopTimer, logged_out*/ break;
+                case &#x27;error&#x27;: /* events: session_check_error, stopTimer, logged_out */ break;
+            }
+
+            this.debug(&#x27;got info from session check inframe&#x27;, e);
+        };
+    }
+
+    private removeSessionCheckEventListener(): void {
+        if (this.sessionCheckEventListener) {
+            window.removeEventListener(&#x27;message&#x27;, this.sessionCheckEventListener);
+            this.sessionCheckEventListener &#x3D; null;
+        }
+    }
+
+    private initSessionCheck(): void {
+        if (!this.canPerformSessionCheck()) return;
+
+        let existingIframe &#x3D; document.getElementById(this.checkSessionIFrameName);
+        if (existingIframe) {
+            document.body.removeChild(existingIframe);
+        }
+
+        let iframe &#x3D; document.createElement(&#x27;iframe&#x27;);
+        iframe.id &#x3D; this.checkSessionIFrameName;
+
+        this.setupSessionCheckEventListener();
+
+        let url &#x3D; this.checkSessionIFrameUrl;
+        iframe.setAttribute(&#x27;src&#x27;, url);
+        iframe.style.visibility &#x3D; &#x27;hidden&#x27;;
+        document.body.appendChild(iframe);
+
+        this.startSessionCheckTimer();
+
+    }
+
+    private startSessionCheckTimer(): void {
+        this.stopSessionCheckTimer();
+        this.sessionCheckTimer &#x3D; setInterval(this.checkSession.bind(this), this.checkSessionIntervall);
+    }
+
+    private stopSessionCheckTimer(): void {
+        if (this.sessionCheckTimer) {
+            clearInterval(this.sessionCheckTimer);
+            this.sessionCheckTimer &#x3D; null;
+        }
+    }
+
+    private checkSession(): void {
+        let iframe: any &#x3D; document.getElementById(this.checkSessionIFrameName);
+
+        if (!iframe) {
+            console.warn(&#x27;checkSession did not find iframe&#x27;, this.checkSessionIFrameName);
+        }
+
+        let sessionState &#x3D; this.getSessionState();
+
+        if (!sessionState) {
+            this.stopSessionCheckTimer();
+        }
+
+        let message &#x3D; this.clientId + &#x27; &#x27; + sessionState;
+        iframe.contentWindow.postMessage(message, this.issuer);
+    }
+
     private createLoginUrl(
-        state: string &#x3D; &#x27;&#x27;, 
-        loginHint: string &#x3D; &#x27;&#x27;,
-        customRedirectUri: string &#x3D; &#x27;&#x27;
+        state &#x3D; &#x27;&#x27;,
+        loginHint &#x3D; &#x27;&#x27;,
+        customRedirectUri &#x3D; &#x27;&#x27;
     ) {
-        var that &#x3D; this;
+        let that &#x3D; this;
 
         let redirectUri: string;
 
@@ -2660,10 +2932,10 @@ export class OAuthService {
         return this.createAndSaveNonce().then((nonce: any) &#x3D;&gt; {
 
             if (state) {
-                state &#x3D; nonce + &quot;;&quot; + state;
+                state &#x3D; nonce + &#x27;;&#x27; + state;
             }
             else {
-                state &#x3D; nonce;   
+                state &#x3D; nonce;
             }
 
             if (!this.requestAccessToken &amp;&amp; !this.oidc) {
@@ -2671,10 +2943,10 @@ export class OAuthService {
             }
 
             if (this.oidc &amp;&amp; this.requestAccessToken) {
-                this.responseType &#x3D; &quot;id_token token&quot;;
+                this.responseType &#x3D; &#x27;id_token token&#x27;;
             }
             else if (this.oidc &amp;&amp; !this.requestAccessToken) {
-                this.responseType &#x3D; &#x27;id_token&#x27;
+                this.responseType &#x3D; &#x27;id_token&#x27;;
             }
             else {
                 this.responseType &#x3D; &#x27;token&#x27;;
@@ -2688,50 +2960,51 @@ export class OAuthService {
                 scope &#x3D; &#x27;openid &#x27; + scope;
             }
 
-            var url &#x3D; that.loginUrl 
+            let url &#x3D; that.loginUrl
                         + seperationChar
-                        + &quot;response_type&#x3D;&quot;
+                        + &#x27;response_type&#x3D;&#x27;
                         + encodeURIComponent(that.responseType)
-                        + &quot;&amp;client_id&#x3D;&quot;
+                        + &#x27;&amp;client_id&#x3D;&#x27;
                         + encodeURIComponent(that.clientId)
-                        + &quot;&amp;state&#x3D;&quot; 
+                        + &#x27;&amp;state&#x3D;&#x27;
                         + encodeURIComponent(state)
-                        + &quot;&amp;redirect_uri&#x3D;&quot; 
-                        + encodeURIComponent(redirectUri) 
-                        + &quot;&amp;scope&#x3D;&quot; 
+                        + &#x27;&amp;redirect_uri&#x3D;&#x27;
+                        + encodeURIComponent(redirectUri)
+                        + &#x27;&amp;scope&#x3D;&#x27;
                         + encodeURIComponent(scope);
-            
+
             if (loginHint) {
-                url +&#x3D; &quot;&amp;login_hint&#x3D;&quot; + encodeURIComponent(loginHint);
+                url +&#x3D; &#x27;&amp;login_hint&#x3D;&#x27; + encodeURIComponent(loginHint);
             }
 
             if (that.resource) {
-                url +&#x3D; &quot;&amp;resource&#x3D;&quot; + encodeURIComponent(that.resource);
+                url +&#x3D; &#x27;&amp;resource&#x3D;&#x27; + encodeURIComponent(that.resource);
             }
-            
+
             if (that.oidc) {
-                url +&#x3D; &quot;&amp;nonce&#x3D;&quot; + encodeURIComponent(nonce);
+                url +&#x3D; &#x27;&amp;nonce&#x3D;&#x27; + encodeURIComponent(nonce);
             }
 
             if (this.customQueryParams) {
-                for(let key of Object.getOwnPropertyNames(this.customQueryParams)) {
-                    url +&#x3D; &quot;&amp;&quot; + key + &quot;&#x3D;&quot; + encodeURIComponent(this.customQueryParams[key]);
+                for (let key of Object.getOwnPropertyNames(this.customQueryParams)) {
+                    url +&#x3D; &#x27;&amp;&#x27; + key + &#x27;&#x3D;&#x27; + encodeURIComponent(this.customQueryParams[key]);
                 }
             }
-            
+
             return url;
         });
     };
 
     /**
      * Starts the implicit flow and redirects to user to
-     * the auth servers login url. 
-     * 
-     * @param additionalState Optinal state that is passes around. You find this state in the property &#x60;&#x60;state&#x60;&#x60; after &#x60;&#x60;tryLogin&#x60;&#x60; logged in the user.
-     * @param loginHint 
+     * the auth servers login url.
+     *
+     * @param additionalState Optinal state that is passes around.
+     *  You find this state in the property &#x60;&#x60;state&#x60;&#x60; after &#x60;&#x60;tryLogin&#x60;&#x60; logged in the user.
+     * @param loginHint
      */
-    public initImplicitFlow(additionalState &#x3D; &quot;&quot;, loginHint&#x3D;&quot;&quot;): void {
-        
+    public initImplicitFlow(additionalState &#x3D; &#x27;&#x27;, loginHint&#x3D; &#x27;&#x27;): void {
+
         if (!this.validateUrlForHttps(this.loginUrl)) {
             throw new Error(&#x27;loginUrl must use Http. Also check property requireHttps.&#x27;);
         }
@@ -2740,15 +3013,15 @@ export class OAuthService {
             location.href &#x3D; url;
         })
         .catch(error &#x3D;&gt; {
-            console.error(&quot;Error in initImplicitFlow&quot;);
+            console.error(&#x27;Error in initImplicitFlow&#x27;);
             console.error(error);
         });
     };
-    
+
     private callOnTokenReceivedIfExists(options: LoginOptions): void {
-        var that &#x3D; this;
+        let that &#x3D; this;
         if (options.onTokenReceived) {
-            var tokenParams &#x3D; { 
+            let tokenParams &#x3D; {
                 idClaims: that.getIdentityClaims(),
                 idToken: that.getIdToken(),
                 accessToken: that.getAccessToken(),
@@ -2759,34 +3032,32 @@ export class OAuthService {
     }
 
     private storeAccessTokenResponse(accessToken: string, refreshToken: string, expiresIn: number): void {
-        this._storage.setItem(&quot;access_token&quot;, accessToken);
+        this._storage.setItem(&#x27;access_token&#x27;, accessToken);
 
         if (expiresIn) {
-            var expiresInMilliSeconds &#x3D; expiresIn * 1000;
-            var now &#x3D; new Date();
-            var expiresAt &#x3D; now.getTime() + expiresInMilliSeconds;
-            this._storage.setItem(&quot;expires_at&quot;, &quot;&quot; + expiresAt);
+            let expiresInMilliSeconds &#x3D; expiresIn * 1000;
+            let now &#x3D; new Date();
+            let expiresAt &#x3D; now.getTime() + expiresInMilliSeconds;
+            this._storage.setItem(&#x27;expires_at&#x27;, &#x27;&#x27; + expiresAt);
         }
 
         if (refreshToken) {
-            this._storage.setItem(&quot;refresh_token&quot;, refreshToken);
+            this._storage.setItem(&#x27;refresh_token&#x27;, refreshToken);
         }
     }
-
-    private receivedFirstToken &#x3D; true;
 
     /**
      * Checks whether there are tokens in the hash fragment
      * as a result of the implicit flow. These tokens are
      * parsed, validated and used to sign the user in to the
      * current client.
-     * 
+     *
      * @param options Optinal options.
      */
     public tryLogin(options: LoginOptions &#x3D; null): Promise&lt;void&gt; {
-        
+
         options &#x3D; options || { };
-            
+
         let parts: object;
 
         if (options.customHashFragment) {
@@ -2796,7 +3067,9 @@ export class OAuthService {
             parts &#x3D; this.urlHelper.getHashFragmentParams();
         }
 
-        if (parts[&quot;error&quot;]) {
+        this.debug(&#x27;parsed url&#x27;, parts);
+
+        if (parts[&#x27;error&#x27;]) {
             this.debug(&#x27;error trying to login&#x27;);
             this.handleLoginError(options, parts);
             let err &#x3D; new OAuthErrorEvent(&#x27;token_error&#x27;, {}, parts);
@@ -2804,10 +3077,18 @@ export class OAuthService {
             return Promise.reject(err);
         }
 
-        var accessToken &#x3D; parts[&quot;access_token&quot;];
-        var idToken &#x3D; parts[&quot;id_token&quot;];
-        var state &#x3D; decodeURIComponent(parts[&quot;state&quot;]);
-        
+        let accessToken &#x3D; parts[&#x27;access_token&#x27;];
+        let idToken &#x3D; parts[&#x27;id_token&#x27;];
+        let state &#x3D; decodeURIComponent(parts[&#x27;state&#x27;]);
+        let sessionState &#x3D; parts[&#x27;session_state&#x27;];
+
+        if (this.checkSessionPeriodic &amp;&amp; !sessionState) {
+            console.warn(
+                &#x27;session checks (Session Status Change Notification) &#x27;
+                + &#x27;is activated in the configuration but the id_token &#x27;
+                + &#x27;does not contain a session_state claim&#x27;);
+        }
+
         if (!this.requestAccessToken &amp;&amp; !this.oidc) {
             return Promise.reject(&#x27;Either requestAccessToken or oidc or both must be true.&#x27;);
         }
@@ -2815,13 +3096,12 @@ export class OAuthService {
         if (this.requestAccessToken &amp;&amp; !accessToken) return Promise.resolve();
         if (this.requestAccessToken &amp;&amp; !options.disableOAuth2StateCheck &amp;&amp; !state) return Promise.resolve();
         if (this.oidc &amp;&amp; !idToken) return Promise.resolve();
-        
-        var stateParts &#x3D; state.split(&#x27;;&#x27;);
+
+        let stateParts &#x3D; state.split(&#x27;;&#x27;);
         if (stateParts.length &gt; 1) {
             this.state &#x3D; stateParts[1];
         }
-        var nonceInState &#x3D; stateParts[0];
-
+        let nonceInState &#x3D; stateParts[0];
 
         if (this.requestAccessToken &amp;&amp; !options.disableOAuth2StateCheck) {
             let success &#x3D; this.validateNonceForAccessToken(accessToken, nonceInState);
@@ -2853,6 +3133,7 @@ export class OAuthService {
                 })
                 .then(result &#x3D;&gt; {
                         this.storeIdToken(result);
+                        this.storeSessionState(sessionState);
                         this.eventsSubject.next(new OAuthSuccessEvent(&#x27;token_received&#x27;));
                         this.callOnTokenReceivedIfExists(options);
                         if (this.clearHashAfterLogin) location.hash &#x3D; &#x27;&#x27;;
@@ -2862,11 +3143,11 @@ export class OAuthService {
                     console.error(&#x27;Error validating tokens&#x27;);
                     console.error(reason);
                 });
-        
+
     };
 
     private validateNonceForAccessToken(accessToken: string, nonceInState: string): boolean {
-        var savedNonce &#x3D; this._storage.getItem(&quot;nonce&quot;);
+        let savedNonce &#x3D; this._storage.getItem(&#x27;nonce&#x27;);
         if (savedNonce !&#x3D;&#x3D; nonceInState) {
             let err &#x3D; &#x27;validating access_token failed. wrong state/nonce.&#x27;;
             console.error(err, savedNonce, nonceInState);
@@ -2876,47 +3157,54 @@ export class OAuthService {
     }
 
     protected storeIdToken(idToken: ParsedIdToken) {
-        this._storage.setItem(&quot;id_token&quot;, idToken.idToken);
-        this._storage.setItem(&quot;id_token_claims_obj&quot;, idToken.idTokenClaimsJson);
-        this._storage.setItem(&quot;id_token_expires_at&quot;, &quot;&quot; + idToken.idTokenExpiresAt);
+        this._storage.setItem(&#x27;id_token&#x27;, idToken.idToken);
+        this._storage.setItem(&#x27;id_token_claims_obj&#x27;, idToken.idTokenClaimsJson);
+        this._storage.setItem(&#x27;id_token_expires_at&#x27;, &#x27;&#x27; + idToken.idTokenExpiresAt);
+    }
+
+    protected storeSessionState(sessionState: string) {
+        this._storage.setItem(&#x27;session_state&#x27;, sessionState);
+    }
+
+    protected getSessionState(): string {
+        return this._storage.getItem(&#x27;session_state&#x27;);
     }
 
     private handleLoginError(options: LoginOptions, parts: object): void {
-        var savedNonce &#x3D; this._storage.getItem(&quot;nonce&quot;);
-        if (options.onLoginError) 
-            options.onLoginError(parts)
+        if (options.onLoginError)
+            options.onLoginError(parts);
         if (this.clearHashAfterLogin) location.hash &#x3D; &#x27;&#x27;;
     }
-    
+
     /**
      * @ignore
      */
     public processIdToken(idToken: string, accessToken: string): Promise&lt;ParsedIdToken&gt;  {
-            
-            let tokenParts &#x3D; idToken.split(&quot;.&quot;);
+
+            let tokenParts &#x3D; idToken.split(&#x27;.&#x27;);
             let headerBase64 &#x3D; this.padBase64(tokenParts[0]);
             let headerJson &#x3D; b64DecodeUnicode(headerBase64);
             let header &#x3D; JSON.parse(headerJson);
             let claimsBase64 &#x3D; this.padBase64(tokenParts[1]);
             let claimsJson &#x3D; b64DecodeUnicode(claimsBase64);
             let claims &#x3D; JSON.parse(claimsJson);
-            let savedNonce &#x3D; this._storage.getItem(&quot;nonce&quot;);
-            
+            let savedNonce &#x3D; this._storage.getItem(&#x27;nonce&#x27;);
+
             if (Array.isArray(claims.aud)) {
                 if (claims.aud.every(v &#x3D;&gt; v !&#x3D;&#x3D; this.clientId)) {
-                    let err &#x3D; &quot;Wrong audience: &quot; + claims.aud.join(&quot;,&quot;);
+                    let err &#x3D; &#x27;Wrong audience: &#x27; + claims.aud.join(&#x27;,&#x27;);
                     console.warn(err);
                     return Promise.reject(err);
                 }
             } else {
                 if (claims.aud !&#x3D;&#x3D; this.clientId) {
-                    let err &#x3D; &quot;Wrong audience: &quot; + claims.aud;
+                    let err &#x3D; &#x27;Wrong audience: &#x27; + claims.aud;
                     console.warn(err);
                     return Promise.reject(err);
                 }
             }
 
-            /*            
+            /*
             if (this.getKeyCount() &gt; 1 &amp;&amp; !header.kid) {
                 let err &#x3D; &#x27;There needs to be a kid property in the id_token header when multiple keys are defined via the property jwks&#x27;;
                 console.warn(err);
@@ -2925,31 +3213,31 @@ export class OAuthService {
             */
 
             if (!claims.sub) {
-                let err &#x3D; &quot;No sub claim in id_token&quot;;
+                let err &#x3D; &#x27;No sub claim in id_token&#x27;;
                 console.warn(err);
                 return Promise.reject(err);
             }
 
             if (!claims.iat) {
-                let err &#x3D; &quot;No iat claim in id_token&quot;;
+                let err &#x3D; &#x27;No iat claim in id_token&#x27;;
                 console.warn(err);
                 return Promise.reject(err);
             }
 
             if (claims.iss !&#x3D;&#x3D; this.issuer) {
-                let err &#x3D; &quot;Wrong issuer: &quot; + claims.iss;
+                let err &#x3D; &#x27;Wrong issuer: &#x27; + claims.iss;
                 console.warn(err);
                 return Promise.reject(err);
             }
 
             if (claims.nonce !&#x3D;&#x3D; savedNonce) {
-                let err &#x3D; &quot;Wrong nonce: &quot; + claims.nonce;
+                let err &#x3D; &#x27;Wrong nonce: &#x27; + claims.nonce;
                 console.warn(err);
                 return Promise.reject(err);
             }
 
             if (this.requestAccessToken &amp;&amp; !claims[&#x27;at_hash&#x27;]) {
-                let err &#x3D; &quot;An at_hash is needed!&quot;
+                let err &#x3D; &#x27;An at_hash is needed!&#x27;;
                 console.warn(err);
                 return Promise.reject(err);
             }
@@ -2960,7 +3248,7 @@ export class OAuthService {
             let tenMinutesInMsec &#x3D; 1000 * 60 * 10;
 
             if (issuedAtMSec - tenMinutesInMsec &gt;&#x3D; now  || expiresAtMSec + tenMinutesInMsec &lt;&#x3D; now) {
-                let err &#x3D; &quot;Token has been expired&quot;;
+                let err &#x3D; &#x27;Token has been expired&#x27;;
                 console.error(err);
                 console.error({
                     now: now,
@@ -2980,7 +3268,7 @@ export class OAuthService {
             };
 
             if (this.requestAccessToken &amp;&amp; !this.checkAtHash(validationParams)) {
-                let err &#x3D; &quot;Wrong at_hash&quot;;
+                let err &#x3D; &#x27;Wrong at_hash&#x27;;
                 console.warn(err);
                 return Promise.reject(err);
             }
@@ -2995,29 +3283,29 @@ export class OAuthService {
                     idTokenExpiresAt: expiresAtMSec,
                 };
                 return result;
-            }) 
+            });
 
     }
-    
+
     /**
      * Returns the received claims about the user.
      */
     public getIdentityClaims(): object {
-        var claims &#x3D; this._storage.getItem(&quot;id_token_claims_obj&quot;);
+        let claims &#x3D; this._storage.getItem(&#x27;id_token_claims_obj&#x27;);
         if (!claims) return null;
         return JSON.parse(claims);
     }
-    
+
     /**
      * Returns the current id_token.
      */
     public getIdToken(): string {
-        return this._storage.getItem(&quot;id_token&quot;);
+        return this._storage.getItem(&#x27;id_token&#x27;);
     }
-    
+
     private padBase64(base64data): string {
         while (base64data.length % 4 !&#x3D;&#x3D; 0) {
-            base64data +&#x3D; &quot;&#x3D;&quot;;
+            base64data +&#x3D; &#x27;&#x3D;&#x27;;
         }
         return base64data;
     }
@@ -3026,7 +3314,7 @@ export class OAuthService {
      * Returns the current access_token.
      */
     public getAccessToken(): string {
-        return this._storage.getItem(&quot;access_token&quot;);
+        return this._storage.getItem(&#x27;access_token&#x27;);
     };
 
     /**
@@ -3034,7 +3322,7 @@ export class OAuthService {
      * as milliseconds since 1970.
      */
     public getAccessTokenExpiration(): number {
-        return parseInt(this._storage.getItem(&quot;expires_at&quot;));
+        return parseInt(this._storage.getItem(&#x27;expires_at&#x27;), 10);
     }
 
     /**
@@ -3042,7 +3330,7 @@ export class OAuthService {
      * as milliseconds since 1970.
      */
     public getIdTokenExpiration(): number {
-        return parseInt(this._storage.getItem(&quot;id_token_expires_at&quot;));
+        return parseInt(this._storage.getItem(&#x27;id_token_expires_at&#x27;), 10);
     }
 
     /**
@@ -3051,9 +3339,9 @@ export class OAuthService {
     public hasValidAccessToken(): boolean {
         if (this.getAccessToken()) {
 
-            var expiresAt &#x3D; this._storage.getItem(&quot;expires_at&quot;);
-            var now &#x3D; new Date();
-            if (expiresAt &amp;&amp; parseInt(expiresAt) &lt; now.getTime()) {
+            let expiresAt &#x3D; this._storage.getItem(&#x27;expires_at&#x27;);
+            let now &#x3D; new Date();
+            if (expiresAt &amp;&amp; parseInt(expiresAt, 10) &lt; now.getTime()) {
                 return false;
             }
 
@@ -3062,16 +3350,16 @@ export class OAuthService {
 
         return false;
     };
-    
+
     /**
      * Checkes, whether there is a valid id_token.
     */
     public hasValidIdToken(): boolean {
         if (this.getIdToken()) {
 
-            var expiresAt &#x3D; this._storage.getItem(&quot;id_token_expires_at&quot;);
-            var now &#x3D; new Date();
-            if (expiresAt &amp;&amp; parseInt(expiresAt) &lt; now.getTime()) {
+            let expiresAt &#x3D; this._storage.getItem(&#x27;id_token_expires_at&#x27;);
+            let now &#x3D; new Date();
+            if (expiresAt &amp;&amp; parseInt(expiresAt, 10) &lt; now.getTime()) {
                 return false;
             }
 
@@ -3080,37 +3368,37 @@ export class OAuthService {
 
         return false;
     };
-    
+
     /**
      * Returns the auth-header that can be used
      * to transmit the access_token to a service
     */
     public authorizationHeader(): string {
-        return &quot;Bearer &quot; + this.getAccessToken();
+        return &#x27;Bearer &#x27; + this.getAccessToken();
     }
-    
+
     /**
      * Removes all tokens and logs the user out.
-     * If a logout url is configured, the user is 
+     * If a logout url is configured, the user is
      * redirected to it.
-     * @param noRedirectToLogoutUrl 
+     * @param noRedirectToLogoutUrl
      */
-    public logOut(noRedirectToLogoutUrl: boolean &#x3D; false): void {
-        var id_token &#x3D; this.getIdToken();
-        this._storage.removeItem(&quot;access_token&quot;);
-        this._storage.removeItem(&quot;id_token&quot;);
-        this._storage.removeItem(&quot;refresh_token&quot;);
-        this._storage.removeItem(&quot;nonce&quot;);
-        this._storage.removeItem(&quot;expires_at&quot;);
-        this._storage.removeItem(&quot;id_token_claims_obj&quot;);
-        this._storage.removeItem(&quot;id_token_expires_at&quot;);
-        
+    public logOut(noRedirectToLogoutUrl &#x3D; false): void {
+        let id_token &#x3D; this.getIdToken();
+        this._storage.removeItem(&#x27;access_token&#x27;);
+        this._storage.removeItem(&#x27;id_token&#x27;);
+        this._storage.removeItem(&#x27;refresh_token&#x27;);
+        this._storage.removeItem(&#x27;nonce&#x27;);
+        this._storage.removeItem(&#x27;expires_at&#x27;);
+        this._storage.removeItem(&#x27;id_token_claims_obj&#x27;);
+        this._storage.removeItem(&#x27;id_token_expires_at&#x27;);
+
         if (!this.logoutUrl) return;
         if (noRedirectToLogoutUrl) return;
         if (!id_token) return;
 
         let logoutUrl: string;
-        
+
         if (!this.validateUrlForHttps(this.logoutUrl)) throw new Error(&#x27;logoutUrl must use Http. Also check property requireHttps.&#x27;);
 
         // For backward compatibility
@@ -3118,9 +3406,9 @@ export class OAuthService {
             logoutUrl &#x3D; this.logoutUrl.replace(/\{\{id_token\}\}/, id_token);
         }
         else {
-            logoutUrl &#x3D; this.logoutUrl + &quot;?id_token_hint&#x3D;&quot; 
+            logoutUrl &#x3D; this.logoutUrl + &#x27;?id_token_hint&#x3D;&#x27;
                                 + encodeURIComponent(id_token)
-                                + &quot;&amp;post_logout_redirect_uri&#x3D;&quot;
+                                + &#x27;&amp;post_logout_redirect_uri&#x3D;&#x27;
                                 + encodeURIComponent(this.postLogoutRedirectUri || this.redirectUri);
         }
         location.href &#x3D; logoutUrl;
@@ -3130,35 +3418,35 @@ export class OAuthService {
      * @ignore
      */
     public createAndSaveNonce(): Promise&lt;string&gt; {
-        var that &#x3D; this;
+        let that &#x3D; this;
         return this.createNonce().then(function (nonce: any) {
-            that._storage.setItem(&quot;nonce&quot;, nonce);
+            that._storage.setItem(&#x27;nonce&#x27;, nonce);
             return nonce;
-        })
+        });
     };
 
     protected createNonce(): Promise&lt;string&gt; {
-        
-        return new Promise((resolve, reject) &#x3D;&gt; { 
-        
+
+        return new Promise((resolve, reject) &#x3D;&gt; {
+
             if (this.rngUrl) {
-                throw new Error(&quot;createNonce with rng-web-api has not been implemented so far&quot;);
+                throw new Error(&#x27;createNonce with rng-web-api has not been implemented so far&#x27;);
             }
             else {
-                var text &#x3D; &quot;&quot;;
-                var possible &#x3D; &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789&quot;;
+                let text &#x3D; &#x27;&#x27;;
+                let possible &#x3D; &#x27;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789&#x27;;
 
-                for (var i &#x3D; 0; i &lt; 40; i++)
+                for (let i &#x3D; 0; i &lt; 40; i++)
                     text +&#x3D; possible.charAt(Math.floor(Math.random() * possible.length));
-                
+
                 resolve(text);
             }
-        
+
         });
     };
 
     private checkAtHash(params: ValidationParams): boolean {
-        
+
         if (!this.tokenValidationHandler) {
             console.warn(&#x27;No tokenValidationHandler configured. Cannot check at_hash.&#x27;);
             return true;
