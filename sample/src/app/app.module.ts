@@ -7,7 +7,6 @@ import {AUTH_CONFIG, JwksValidationHandler, OAuthModule, OAuthStorage, Validatio
 import {AppComponent} from './app.component';
 import {AppRouterModule} from './app.routes';
 import {BASE_URL} from './app.tokens';
-import {authConfig} from './auth.config';
 import {DemoStorage} from './demo-storage';
 import {FlightHistoryComponent} from './flight-history/flight-history.component';
 import {HomeComponent} from './home/home.component';
