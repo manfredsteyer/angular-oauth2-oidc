@@ -2,12 +2,11 @@ import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {BrowserModule} from '@angular/platform-browser';
-import {AUTH_CONFIG, JwksValidationHandler, OAuthModule, OAuthStorage, ValidationHandler} from 'angular-oauth2-oidc';
+import {JwksValidationHandler, OAuthModule, ValidationHandler} from 'angular-oauth2-oidc';
 
 import {AppComponent} from './app.component';
 import {AppRouterModule} from './app.routes';
 import {BASE_URL} from './app.tokens';
-import {DemoStorage} from './demo-storage';
 import {FlightHistoryComponent} from './flight-history/flight-history.component';
 import {HomeComponent} from './home/home.component';
 import {SharedModule} from './shared/shared.module';

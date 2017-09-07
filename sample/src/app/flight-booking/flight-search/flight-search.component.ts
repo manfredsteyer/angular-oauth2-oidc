@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
-import {Flight} from "../../entities/flight";
-import {Http, URLSearchParams, Headers } from '@angular/http';
-import {FlightService} from "../services/flight.service";
+import {Component} from '@angular/core';
+import {Headers, Http, URLSearchParams} from '@angular/http';
+
+import {OAuthService} from 'angular-oauth2-oidc';
+import {Flight} from '../../entities/flight';
+import {FlightService} from '../services/flight.service';
 
 @Component({
-    selector: 'flight-search',
-    templateUrl: './flight-search.component.html',
-    styleUrls: ['./flight-search.component.css']
+  selector: 'flight-search',
+  templateUrl: './flight-search.component.html',
+  styleUrls: ['./flight-search.component.css']
 })
 export class FlightSearchComponent {
 
@@ -14,7 +16,11 @@ export class FlightSearchComponent {
     public to: string = "";
     public selectedFlight: Flight;
 
-    constructor(private flightService: FlightService) {
+    constructor(
+        private flightService: FlightService,
+        private oauthService: OAuthService
+    ) {
+        console.debug('access-token', this.oauthService.getAccessToken());
     }
 
     // cmp.flights

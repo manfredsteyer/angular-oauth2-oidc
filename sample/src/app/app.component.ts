@@ -17,9 +17,10 @@ export class AppComponent {
 
       // this.configureWithNewConfigApi();
       this.configureAuth();
-      this.configurePasswordFlow();
+      // this.configurePasswordFlow();
       
     }
+
 
     // This api will come in the next version
     /*
