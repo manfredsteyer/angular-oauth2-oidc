@@ -1,5 +1,5 @@
 // This api will come in the next version
-/*
+
 import { AuthConfig } from 'angular-oauth2-oidc';
 
 export const authConfig: AuthConfig = {
@@ -22,7 +22,6 @@ export const authConfig: AuthConfig = {
 
   showDebugInformation: true,
 
-  checkSessionPeriodic: true
+  sessionChecksEnabled: true
 
 }
-*/

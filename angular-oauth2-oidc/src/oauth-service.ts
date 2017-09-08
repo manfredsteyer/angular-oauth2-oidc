@@ -1,5 +1,5 @@
 import { Http, URLSearchParams, Headers } from '@angular/http';
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { ValidationHandler, ValidationParams } from './token-validation/validation-handler';
@@ -8,9 +8,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { OAuthEvent, OAuthInfoEvent, OAuthErrorEvent, OAuthSuccessEvent } from './events';
 import { OAuthStorage, LoginOptions, ParsedIdToken } from './types';
 import { b64DecodeUnicode } from './base64-helper';
-import { AUTH_CONFIG } from './tokens';
 import { AuthConfig } from './auth.config';
-import { defaultConfig } from './default.auth.conf';
 
 /**
  * Service for logging in and logging out with
@@ -18,209 +16,17 @@ import { defaultConfig } from './default.auth.conf';
  * password flow.
  */
 @Injectable()
-export class OAuthService {
+export class OAuthService
+                extends AuthConfig {
 
-    /**
-     * The client's id as registered with the auth server
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public clientId = '';
-
-    /**
-     * The client's redirectUri as registered with the auth server
-     *
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public redirectUri = '';
-
-    /**
-     * An optional second redirectUri where the auth server
-     * redirects the user to after logging out.
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public postLogoutRedirectUri = '';
-
-    /**
-     * The auth server's endpoint that allows to log
-     * the user in when using implicit flow.
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     *
-     */
-    public loginUrl = '';
-
-    /**
-     * The requested scopes
-     *
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     *
-     */
-    public scope = 'openid profile';
-
-    /**
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public resource = '';
-
-    /**
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public rngUrl = '';
-
-    /**
-     * Defines whether to use OpenId Connect during
-     * implicit flow.
-     *
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public oidc = true;
-
-    /**
-     * Defines whether to request a access token during
-     * implicit flow.
-     *
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public requestAccessToken = true;
-
-    /**
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public options: any;
-
-    /**
-     * The received (passed around) state, when logging
-     * in with implicit flow.
-     */
-    public state = '';
-
-    /**
-     * The issuer's uri.
-     *
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public issuer = '';
-
-    /**
-     * The logout url.
-     *
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public logoutUrl = '';
-
-    /**
-     * Defines whether to clear the hash fragment after logging in.
-     *
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public clearHashAfterLogin = true;
-
-    /**
-     * Url of the token endpoint as defined by OpenId Connect and OAuth 2.
-     *
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public tokenEndpoint: string;
-
-    /**
-     * Url of the userinfo endpoint as defined by OpenId Connect.
-     *
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     *
-     */
-    public userinfoEndpoint: string;
-
-    /**
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public responseType = 'token';
-
-    /**
-     * Defines whether additional debug information should
-     * be shown at the console.
-     *
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public showDebugInformation = false;
-
-    /**
-     * The redirect uri used when doing silent refresh.
-     *
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public silentRefreshRedirectUri = '';
-
-    /**
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-    */
-    public silentRefreshMessagePrefix = '';
-
-    /**
-     * Set this to true to display the iframe used for
-     * silent refresh for debugging.
-     *
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public silentRefreshShowIFrame = false;
-
-    /**
-     * Timeout for silent refresh.
-     *
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public siletRefreshTimeout: number = 1000 * 20;
-
-    /**
-     * Some auth servers don't allow using password flow
-     * w/o a client secreat while the standards do not
-     * demand for it. In this case, you can set a password
-     * here. As this passwort is exposed to the public
-     * it does not bring additional security and is therefore
-     * as good as using no password.
-     *
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public dummyClientSecret: string;
+    // extending AuthConfig ist just for LEGACY reasons
+    // to not break existing code
 
     /**
      * The ValidationHandler used to validate received
      * id_tokens.
      */
     public tokenValidationHandler: ValidationHandler;
-
-    /**
-     * Defines whether https is required.
-     * The default value is remoteOnly which only allows
-     * http for location, while every other domains need
-     * to be used with https.
-     *
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public requireHttps: boolean | 'remoteOnly' = 'remoteOnly';
-
-    /**
-     * Defines whether every url provided by the discovery
-     * document has to start with the issuer's url.
-     *
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public strictDiscoveryDocumentValidation = true;
-
-    /**
-     * JSON Web Key Set (https://tools.ietf.org/html/rfc7517)
-     * with keys used to validate received id_tokens.
-     * This is taken out of the disovery document. Can be set manually too.
-     *
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public jwks: object;
-
-    /**
-     * Map with additional query parameter that are appended to
-     * the request when initializing implicit flow.
-     *
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public customQueryParams: object;
 
     /**
      * @internal
@@ -234,84 +40,38 @@ export class OAuthService {
      */
     public discoveryDocumentLoaded$: Observable<object>;
 
-    private discoveryDocumentLoadedSubject: Subject<object> = new Subject<object>();
-
     /**
      * Informs about events, like token_received or token_expires.
      * See the string enum EventType for a full list of events.
      */
     public events: Observable<OAuthEvent>;
-    private eventsSubject: Subject<OAuthEvent> = new Subject<OAuthEvent>();
 
     /**
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
+     * The received (passed around) state, when logging
+     * in with implicit flow.
      */
-    public silentRefreshIFrameName = 'angular-oauth-oidc-silent-refresh-iframe';
+    public state? = '';
 
+    private eventsSubject: Subject<OAuthEvent> = new Subject<OAuthEvent>();
+    private discoveryDocumentLoadedSubject: Subject<object> = new Subject<object>();
     private silentRefreshPostMessageEventListener: EventListener;
-
     private grantTypesSupported: Array<string> = [];
     private _storage: OAuthStorage;
-
-    /**
-     * Defines when the token_timeout event should be raised.
-     * If you set this to the default value 0.75, the event
-     * is triggered after 75% of the token's life time.
-     *
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public timeoutFactor = 0.75;
-
-    /**
-     * If true, the lib will try to check whether the user
-     * is still logged in on a regular basis as described
-     * in http://openid.net/specs/openid-connect-session-1_0.html#ChangeNotification
-     * @type {boolean}
-     *
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public checkSessionPeriodic = false;
-
-    /**
-     * Intervall in msec for checking the session
-     * according to http://openid.net/specs/openid-connect-session-1_0.html#ChangeNotification
-     * @type {number}
-     *
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public checkSessionIntervall = 3 * 1000;
-
-    /**
-     * Url for the iframe used for session checks
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public checkSessionIFrameUrl: string;
-
-    /**
-     * Name of the iframe to use for session checks
-     * @type {number}
-     *
-     * @internal DEPREACTED/ LEGACY. Use method configure instead.
-     */
-    public checkSessionIFrameName = 'angular-oauth-oidc-check-session-iframe';
-
     private accessTokenTimeoutSubscription: Subscription;
     private idTokenTimeoutSubscription: Subscription;
-
     private sessionCheckEventListener: EventListener;
-
     private jwksUri: string;
-
     private sessionCheckTimer: any;
-
     private silentRefreshSubject: string;
 
     constructor(
         private http: Http,
         @Optional() storage: OAuthStorage,
         @Optional() tokenValidationHandler: ValidationHandler,
-        @Optional() @Inject(AUTH_CONFIG) private config: AuthConfig,
+        @Optional() private config: AuthConfig,
         private urlHelper: UrlHelperService) {
+
+        super();
 
         this.discoveryDocumentLoaded$ = this.discoveryDocumentLoadedSubject.asObservable();
         this.events = this.eventsSubject.asObservable();
@@ -330,8 +90,9 @@ export class OAuthService {
             this.setStorage(sessionStorage);
         }
 
-        this.setupTimer();
+        this.setupRefreshTimer();
 
+        this.restartTimerIfStillLoggedIn();
     }
 
     /**
@@ -339,10 +100,25 @@ export class OAuthService {
      * @param config the configuration
      */
     public configure(config: AuthConfig) {
-        Object.assign(this, defaultConfig, config);
+        // For the sake of downward compatibility with
+        // original configuration API
+        Object.assign(this, new AuthConfig(), config);
 
-        if (this.checkSessionPeriodic) {
+        this.config = config;
+
+        if (this.sessionChecksEnabled) {
             this.setupSessionCheck();
+        }
+    }
+
+    private restartTimerIfStillLoggedIn(): void {
+        if (this.hasValidAccessToken()) {
+            this.setupAccessTokenTimer();
+        }
+
+        if (this.hasValidIdToken()) {
+            this.setupIdTokenTimer();
+            this.initSessionCheck();
         }
     }
 
@@ -425,7 +201,7 @@ export class OAuthService {
         return url.toLowerCase().startsWith(this.issuer.toLowerCase());
     }
 
-    private setupTimer(): void {
+    private setupRefreshTimer(): void {
 
         if (typeof window === 'undefined') {
             this.debug('timer not supported on this plattform');
@@ -539,7 +315,7 @@ export class OAuthService {
                     this.tokenEndpoint = doc.token_endpoint;
                     this.userinfoEndpoint = doc.userinfo_endpoint;
                     this.jwksUri = doc.jwks_uri;
-                    this.checkSessionIFrameUrl = doc.check_session_iframe;
+                    this.sessionCheckIFrameUrl = doc.check_session_iframe;
 
                     this.discoveryDocumentLoaded = true;
                     this.discoveryDocumentLoadedSubject.next(doc);
@@ -634,13 +410,13 @@ export class OAuthService {
             return false;
         }
 
-        if (this.checkSessionPeriodic &&  !doc['check_session_iframe']) {
+        if (this.sessionChecksEnabled &&  !doc['check_session_iframe']) {
             console.warn(
-                'checkSessionPeriodic is activated but discovery document'
+                'sessionChecksEnabled is activated but discovery document'
                 + ' does not contain a check_session_iframe field');
         }
 
-        this.checkSessionPeriodic = doc['check_session_iframe'];
+        this.sessionChecksEnabled = doc['check_session_iframe'];
 
         return true;
     }
@@ -846,7 +622,8 @@ export class OAuthService {
                 onTokenReceived: () => {
                     this.eventsSubject.next(new OAuthSuccessEvent('silently_refreshed'));
                 }
-            });
+            })
+            .catch(err => this.debug('tryLogin during silent refresh failed', err));
         };
 
         window.addEventListener('message', this.silentRefreshPostMessageEventListener);
@@ -877,7 +654,6 @@ export class OAuthService {
             document.body.removeChild(existingIframe);
         }
 
-
         this.silentRefreshSubject = claims['sub'];
 
         let iframe = document.createElement('iframe');
@@ -886,7 +662,7 @@ export class OAuthService {
         this.setupSilentRefreshEventListener();
 
         let redirectUri = this.silentRefreshRedirectUri || this.redirectUri;
-        this.createLoginUrl(null, null, redirectUri).then(url => {
+        this.createLoginUrl(null, null, redirectUri, true).then(url => {
             iframe.setAttribute('src', url);
             if (!this.silentRefreshShowIFrame) {
                iframe.style.visibility = 'hidden';
@@ -916,15 +692,15 @@ export class OAuthService {
     }
 
     private canPerformSessionCheck(): boolean {
-        if (!this.checkSessionPeriodic) return false;
-        if (!this.checkSessionIFrameUrl) {
-            console.warn('checkSessionPeriodic is activated but there '
-                            + 'is no checkSessionIFrameUrl');
+        if (!this.sessionChecksEnabled) return false;
+        if (!this.sessionCheckIFrameUrl) {
+            console.warn('sessionChecksEnabled is activated but there '
+                            + 'is no sessionCheckIFrameUrl');
             return false;
         }
         let sessionState = this.getSessionState();
         if (!sessionState) {
-            console.warn('checkSessionPeriodic is activated but there '
+            console.warn('sessionChecksEnabled is activated but there '
                 + 'is no session_state');
             return false;
         }
@@ -975,12 +751,13 @@ export class OAuthService {
         this.eventsSubject.next(new OAuthInfoEvent('session_changed'));
         this.stopSessionCheckTimer();
         if (this.silentRefreshRedirectUri) {
-            this.silentRefresh();
+            this.silentRefresh()
+                .catch(_ => this.debug('silent refresh failed after session changed'));
             this.waitForSilentRefreshAfterSessionChange();
         }
         else {
             this.eventsSubject.next(new OAuthInfoEvent('session_terminated'));
-            this.logOut();
+            this.logOut(true);
         }
     }
 
@@ -996,7 +773,7 @@ export class OAuthService {
                 if (e.type !== 'silently_refreshed') {
                     this.debug('silent refresh did not work after session changed');
                     this.eventsSubject.next(new OAuthInfoEvent('session_terminated'));
-                    this.logOut();
+                    this.logOut(true);
                 }
             });
     }
@@ -1016,17 +793,17 @@ export class OAuthService {
     private initSessionCheck(): void {
         if (!this.canPerformSessionCheck()) return;
 
-        let existingIframe = document.getElementById(this.checkSessionIFrameName);
+        let existingIframe = document.getElementById(this.sessionCheckIFrameName);
         if (existingIframe) {
             document.body.removeChild(existingIframe);
         }
 
         let iframe = document.createElement('iframe');
-        iframe.id = this.checkSessionIFrameName;
+        iframe.id = this.sessionCheckIFrameName;
 
         this.setupSessionCheckEventListener();
 
-        let url = this.checkSessionIFrameUrl;
+        let url = this.sessionCheckIFrameUrl;
         iframe.setAttribute('src', url);
         iframe.style.visibility = 'hidden';
         document.body.appendChild(iframe);
@@ -1037,7 +814,7 @@ export class OAuthService {
 
     private startSessionCheckTimer(): void {
         this.stopSessionCheckTimer();
-        this.sessionCheckTimer = setInterval(this.checkSession.bind(this), this.checkSessionIntervall);
+        this.sessionCheckTimer = setInterval(this.checkSession.bind(this), this.sessionCheckIntervall);
     }
 
     private stopSessionCheckTimer(): void {
@@ -1048,10 +825,10 @@ export class OAuthService {
     }
 
     private checkSession(): void {
-        let iframe: any = document.getElementById(this.checkSessionIFrameName);
+        let iframe: any = document.getElementById(this.sessionCheckIFrameName);
 
         if (!iframe) {
-            console.warn('checkSession did not find iframe', this.checkSessionIFrameName);
+            console.warn('checkSession did not find iframe', this.sessionCheckIFrameName);
         }
 
         let sessionState = this.getSessionState();
@@ -1067,7 +844,8 @@ export class OAuthService {
     private createLoginUrl(
         state = '',
         loginHint = '',
-        customRedirectUri = ''
+        customRedirectUri = '',
+        noPrompt = false
     ) {
         let that = this;
 
@@ -1134,6 +912,10 @@ export class OAuthService {
 
             if (that.oidc) {
                 url += '&nonce=' + encodeURIComponent(nonce);
+            }
+
+            if (noPrompt) {
+                url += '&prompt=none';
             }
 
             if (this.customQueryParams) {
@@ -1241,7 +1023,7 @@ export class OAuthService {
         if (this.requestAccessToken && !options.disableOAuth2StateCheck && !state) return Promise.resolve();
         if (this.oidc && !idToken) return Promise.resolve();
 
-        if (this.checkSessionPeriodic && !sessionState) {
+        if (this.sessionChecksEnabled && !sessionState) {
             console.warn(
                 'session checks (Session Status Change Notification) '
                 + 'is activated in the configuration but the id_token '
@@ -1370,11 +1152,11 @@ export class OAuthService {
             }
 
             /* For now, we only check whether the sub against
-             * silentRefreshSubject when checkSessionPeriodic is on
+             * silentRefreshSubject when sessionChecksEnabled is on
              * We will reconsider in a later version to do this
              * in every other case too.
              */
-            if (this.checkSessionPeriodic
+            if (this.sessionChecksEnabled
                 && this.silentRefreshSubject
                 && this.silentRefreshSubject !== claims['sub']) {
 
@@ -1403,7 +1185,7 @@ export class OAuthService {
                 return Promise.reject(err);
             }
 
-            if (this.requestAccessToken && !claims['at_hash']) {
+            if (!this.disableAtHashCheck && this.requestAccessToken && !claims['at_hash']) {
                 let err = 'An at_hash is needed!';
                 console.warn(err);
                 return Promise.reject(err);
@@ -1434,7 +1216,7 @@ export class OAuthService {
                 loadKeys: () => this.loadJwks()
             };
 
-            if (this.requestAccessToken && !this.checkAtHash(validationParams)) {
+            if (!this.disableAtHashCheck && this.requestAccessToken && !this.checkAtHash(validationParams)) {
                 let err = 'Wrong at_hash';
                 console.warn(err);
                 return Promise.reject(err);

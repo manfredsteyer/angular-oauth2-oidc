@@ -1,9 +1,9 @@
+import { authConfig } from './auth.config';
 import { FlightHistoryComponent } from './flight-history/flight-history.component';
 import { Component } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { JwksValidationHandler } from 'angular-oauth2-oidc';
 import { Router } from "@angular/router";
-// import { authConfig } from './auth.config';
 
 @Component({
     selector: 'flight-app',
@@ -15,15 +15,14 @@ export class AppComponent {
         private router: Router,
         private oauthService: OAuthService) {
 
-      // this.configureWithNewConfigApi();
-      this.configureAuth();
+      this.configureWithNewConfigApi();
+      // this.configureAuth();
       // this.configurePasswordFlow();
       
     }
 
 
     // This api will come in the next version
-    /*
     private configureWithNewConfigApi() {
 
       this.oauthService.configure(authConfig);
@@ -36,7 +35,6 @@ export class AppComponent {
         console.debug('oauth/oidc event', e);
       });
     }
-    */
 
   private configureAuth() {
     // URL of the SPA to redirect the user to after login

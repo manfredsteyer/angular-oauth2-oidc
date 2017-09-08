@@ -3,6 +3,7 @@ import {OAuthService} from "angular-oauth2-oidc";
 
 @Component({
     template: `
+        <strong>Status: {{ givenName ? 'logged in' : 'logged out' }} </strong>
         <h1 *ngIf="!givenName">Willkommen!</h1>
         <h1 *ngIf="givenName">Willkommen, {{givenName}} {{familyName}}!</h1>
         
