@@ -213,7 +213,7 @@ The following snippet contains the template for the login page:
 </div>
 ```
 
-### Calling a Web API with an OAuth-Token
+### Calling a Web API with an Access Token
 
 Pass this Header to the used method of the ``Http``-Service within an Instance of the class ``Headers``:
 
