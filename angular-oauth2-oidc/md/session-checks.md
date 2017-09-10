@@ -25,7 +25,7 @@ export const authConfig: AuthConfig = {
   scope: 'openid profile email voucher',
 
   // Activate Session Checks:
-  sessionChecksEnabled: true
+  sessionChecksEnabled: true,
 }
 ```
 

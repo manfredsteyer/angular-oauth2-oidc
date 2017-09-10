@@ -673,7 +673,7 @@ export class HomeComponent {
 
 &lt;div&gt;
     Username/Passwort zum Testen: max/geheim
-&lt;/div&gt;</code></pre><h3 id="calling-a-web-api-with-an-oauth-token">Calling a Web API with an OAuth-Token</h3>
+&lt;/div&gt;</code></pre><h3 id="calling-a-web-api-with-an-access-token">Calling a Web API with an Access Token</h3>
 <p>Pass this Header to the used method of the <code>Http</code>-Service within an Instance of the class <code>Headers</code>:</p>
 <pre class="line-numbers"><code class="language-TypeScript">var headers = new Headers({
     &quot;Authorization&quot;: &quot;Bearer &quot; + this.oauthService.getAccessToken()

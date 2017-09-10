@@ -523,7 +523,7 @@ export const authConfig: AuthConfig = {
   scope: &#39;openid profile email voucher&#39;,
 
   // Activate Session Checks:
-  sessionChecksEnabled: true
+  sessionChecksEnabled: true,
 }</code></pre><h2 id="events">Events</h2>
 <p>To get notified, you can hook up for the event <code>session_terminated</code>:</p>
 <pre class="line-numbers"><code class="language-TypeScript">this.oauthService.events.filter(e =&gt; e.type === &#39;session_terminated&#39;).subscribe(e =&gt; {
