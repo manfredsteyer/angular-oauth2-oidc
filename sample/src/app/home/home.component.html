@@ -1,0 +1,51 @@
+<strong>Status: {{ givenName ? 'logged in' : 'logged out' }} </strong>
+<h1 *ngIf="!givenName">Welcome!</h1>
+<h1 *ngIf="givenName">Welcome, {{givenName}} {{familyName}}!</h1>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <p>Login with Authorization Server</p>
+        <div class="checkbox">
+            <label><input type="checkbox" [(ngModel)]="requestAccessToken"> Request AccessToken</label>
+        </div>
+        <button class="btn btn-default" (click)="login()">Login</button>
+        <button class="btn btn-default" (click)="logout()">Logout</button>
+
+        <button class="btn btn-default" *ngIf="access_token" (click)="loadUserProfile()">Load User Profile</button>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <b>Username/Password:</b> max/geheim
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <p>
+            <b>access_token_expiration:</b> {{access_token_expiration}}
+        </p>
+        <p>
+            <b>id_token_expiration:</b> {{id_token_expiration}}
+        </p>
+    </div>
+</div>
+
+<div class="panel panel-default">
+<div class="panel-body">
+    <p>
+        <b>access_token:</b> {{access_token}}
+    </p>
+    <p>
+        <b>id_token:</b> {{id_token}}
+    </p>
+    <div *ngIf="userProfile">
+        <b>user profile:</b>
+        <pre>{{userProfile | json}}</pre>
+    </div>
+
+</div>
+</div>
+
+<button class="btn btn-default" (click)="testSilentRefresh()">Test silent refresh</button>

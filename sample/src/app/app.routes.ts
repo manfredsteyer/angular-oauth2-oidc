@@ -1,3 +1,4 @@
+import { PasswordFlowLoginComponent } from './password-flow-login/password-flow-login.component';
 import {Routes, RouterModule, PreloadAllModules} from "@angular/router";
 import {HomeComponent} from "./home/home.component";
 import {FlightHistoryComponent} from "./flight-history/flight-history.component";
@@ -12,6 +13,10 @@ let APP_ROUTES: Routes = [
     {
         path: 'home',
         component: HomeComponent
+    },
+    {
+        path: 'password-flow-login',
+        component: PasswordFlowLoginComponent
     },
     {
         path: 'flight-booking',

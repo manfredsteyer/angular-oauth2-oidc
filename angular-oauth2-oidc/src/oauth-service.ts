@@ -92,7 +92,11 @@ export class OAuthService
 
         this.setupRefreshTimer();
 
-        this.restartTimerIfStillLoggedIn();
+        if (this.sessionChecksEnabled) {
+            this.restartSessionChecksIfStillLoggedIn();
+        }
+
+        this.restartRefreshTimerIfStillLoggedIn();
     }
 
     /**
@@ -111,14 +115,19 @@ export class OAuthService
         }
     }
 
-    private restartTimerIfStillLoggedIn(): void {
+    private restartSessionChecksIfStillLoggedIn(): void {
+        if (this.hasValidIdToken()) {
+            this.initSessionCheck();
+        }
+    }
+
+    private restartRefreshTimerIfStillLoggedIn(): void {
         if (this.hasValidAccessToken()) {
             this.setupAccessTokenTimer();
         }
 
         if (this.hasValidIdToken()) {
             this.setupIdTokenTimer();
-            this.initSessionCheck();
         }
     }
 
@@ -145,14 +154,6 @@ export class OAuthService
             return this.tryLogin();
         });
     }
-
-    /*
-    private getKeyCount(): number {
-        if (!this.jwks) return 0;
-        if (!this.jwks['keys']) return 0;
-        return this.jwks['keys'].length;
-    }
-    */
 
     private debug(...args): void {
         if (this.showDebugInformation) {
@@ -237,10 +238,10 @@ export class OAuthService
 
 
     private setupIdTokenTimer(): void {
-        let expiration = this.getAccessTokenExpiration();
+        let expiration = this.getIdTokenExpiration();
         let timeout = this.calcTimeout(expiration);
 
-        this.accessTokenTimeoutSubscription =
+        this.idTokenTimeoutSubscription =
             Observable
                 .of(new OAuthInfoEvent('token_expires', 'id_token'))
                 .delay(timeout)
@@ -491,8 +492,6 @@ export class OAuthService
                 }
             );
         });
-
-
     }
 
     /**

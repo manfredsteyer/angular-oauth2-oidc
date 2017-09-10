@@ -10,6 +10,7 @@ import {BASE_URL} from './app.tokens';
 import {FlightHistoryComponent} from './flight-history/flight-history.component';
 import {HomeComponent} from './home/home.component';
 import {SharedModule} from './shared/shared.module';
+import { PasswordFlowLoginComponent } from './password-flow-login/password-flow-login.component';
 
 @NgModule({
     imports: [
@@ -25,8 +26,9 @@ import {SharedModule} from './shared/shared.module';
     declarations: [
         AppComponent,
         HomeComponent,
-        FlightHistoryComponent
-    ],
+        FlightHistoryComponent,
+    PasswordFlowLoginComponent
+],
     providers: [
         // {provide: AUTH_CONFIG, useValue: authConfig },
         // { provide: OAuthStorage, useClass: DemoStorage },

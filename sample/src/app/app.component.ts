@@ -34,6 +34,10 @@ export class AppComponent {
       this.oauthService.events.subscribe(e => {
         console.debug('oauth/oidc event', e);
       });
+
+      this.oauthService.events.filter(e => e.type === 'session_terminated').subscribe(e => {
+        console.debug('Your session has been terminated!');
+      });
     }
 
   private configureAuth() {
