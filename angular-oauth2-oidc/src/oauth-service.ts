@@ -92,11 +92,7 @@ export class OAuthService
 
         this.setupRefreshTimer();
 
-        if (this.sessionChecksEnabled) {
-            this.restartSessionChecksIfStillLoggedIn();
-        }
-
-        this.restartRefreshTimerIfStillLoggedIn();
+        
     }
 
     /**
@@ -113,9 +109,14 @@ export class OAuthService
         if (this.sessionChecksEnabled) {
             this.setupSessionCheck();
         }
+
+        this.configChanged();
     }
 
-    private restartSessionChecksIfStillLoggedIn(): void {
+    private configChanged(): void {
+    }
+
+    public restartSessionChecksIfStillLoggedIn(): void {
         if (this.hasValidIdToken()) {
             this.initSessionCheck();
         }
@@ -145,8 +146,12 @@ export class OAuthService
         .events
         .filter(e => e.type === 'token_expires')
         .subscribe(e => {
-          this.silentRefresh();
+          this.silentRefresh().catch(_ => {
+              this.debug('automatic silent refresh did not work');
+          })
         });
+
+        this.restartRefreshTimerIfStillLoggedIn();
     }
 
     public loadDiscoveryDocumentAndTryLogin() {
@@ -227,7 +232,8 @@ export class OAuthService
 
     private setupAccessTokenTimer(): void {
         let expiration = this.getAccessTokenExpiration();
-        let timeout = this.calcTimeout(expiration);
+        let storedAt = this.getAccessTokenStoredAt();
+        let timeout = this.calcTimeout(storedAt, expiration);
 
         this.accessTokenTimeoutSubscription =
             Observable
@@ -239,7 +245,8 @@ export class OAuthService
 
     private setupIdTokenTimer(): void {
         let expiration = this.getIdTokenExpiration();
-        let timeout = this.calcTimeout(expiration);
+        let storedAt = this.getIdTokenStoredAt();
+        let timeout = this.calcTimeout(storedAt, expiration);
 
         this.idTokenTimeoutSubscription =
             Observable
@@ -260,10 +267,8 @@ export class OAuthService
         }
     }
 
-    private calcTimeout(expiration: number): number {
-        let now = Date.now();
-        let delta = (expiration - now) * this.timeoutFactor;
-        // let timeout = now + delta;
+    private calcTimeout(storedAt: number, expiration: number): number {
+        let delta = (expiration - storedAt) * this.timeoutFactor;
         return delta;
     }
 
@@ -276,6 +281,7 @@ export class OAuthService
      */
     public setStorage(storage: OAuthStorage): void {
         this._storage = storage;
+        this.configChanged();
     }
 
     /**
@@ -292,7 +298,11 @@ export class OAuthService
         return new Promise((resolve, reject) => {
 
             if (!fullUrl) {
-                fullUrl = this.issuer + '/.well-known/openid-configuration';
+                fullUrl = this.issuer || '';
+                if (!fullUrl.endsWith('/')) {
+                    fullUrl += '/';
+                }               
+                fullUrl += '.well-known/openid-configuration';
             }
 
             if (!this.validateUrlForHttps(fullUrl)) {
@@ -320,6 +330,10 @@ export class OAuthService
 
                     this.discoveryDocumentLoaded = true;
                     this.discoveryDocumentLoadedSubject.next(doc);
+
+                    if (this.sessionChecksEnabled) {
+                        this.restartSessionChecksIfStillLoggedIn();
+                    }
 
                     this.loadJwks().then(jwks => {
                         let result: object = {
@@ -965,7 +979,7 @@ export class OAuthService
 
     private storeAccessTokenResponse(accessToken: string, refreshToken: string, expiresIn: number): void {
         this._storage.setItem('access_token', accessToken);
-
+        this._storage.setItem('access_token_stored_at', '' + Date.now());
         if (expiresIn) {
             let expiresInMilliSeconds = expiresIn * 1000;
             let now = new Date();
@@ -1092,9 +1106,10 @@ export class OAuthService
         this._storage.setItem('id_token', idToken.idToken);
         this._storage.setItem('id_token_claims_obj', idToken.idTokenClaimsJson);
         this._storage.setItem('id_token_expires_at', '' + idToken.idTokenExpiresAt);
+        this._storage.setItem('id_token_stored_at', '' + Date.now());
     }
 
-    protected storeSessionState(sessionState: string) {
+    protected storeSessionState(sessionState: string): void {
         this._storage.setItem('session_state', sessionState);
     }
 
@@ -1273,6 +1288,15 @@ export class OAuthService
         return parseInt(this._storage.getItem('expires_at'), 10);
     }
 
+
+    private getAccessTokenStoredAt(): number {
+        return parseInt(this._storage.getItem('access_token_stored_at'), 10);
+    }
+
+    private getIdTokenStoredAt(): number {
+        return parseInt(this._storage.getItem('id_token_stored_at'), 10);
+    }
+
     /**
      * Returns the expiration date of the id_token
      * as milliseconds since 1970.
@@ -1340,7 +1364,9 @@ export class OAuthService
         this._storage.removeItem('expires_at');
         this._storage.removeItem('id_token_claims_obj');
         this._storage.removeItem('id_token_expires_at');
-
+        this._storage.removeItem('id_token_stored_at');
+        this._storage.removeItem('access_token_stored_at');
+        
         this.silentRefreshSubject = null;
 
         if (!this.logoutUrl) return;
@@ -1350,7 +1376,7 @@ export class OAuthService
         let logoutUrl: string;
 
         if (!this.validateUrlForHttps(this.logoutUrl)) throw new Error('logoutUrl must use Http. Also check property requireHttps.');
-
+        
         // For backward compatibility
         if (this.logoutUrl.indexOf('{{') > -1) {
             logoutUrl = this.logoutUrl.replace(/\{\{id_token\}\}/, id_token);
