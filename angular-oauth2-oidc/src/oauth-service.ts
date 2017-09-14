@@ -123,13 +123,7 @@ export class OAuthService
     }
 
     private restartRefreshTimerIfStillLoggedIn(): void {
-        if (this.hasValidAccessToken()) {
-            this.setupAccessTokenTimer();
-        }
-
-        if (this.hasValidIdToken()) {
-            this.setupIdTokenTimer();
-        }
+        this.setupExpirationTimers();
     }
 
     private setupSessionCheck() {
@@ -218,16 +212,23 @@ export class OAuthService
 
             this.clearAccessTokenTimer();
             this.clearIdTokenTimer();
-
-            if (this.hasValidAccessToken()) {
-                this.setupAccessTokenTimer();
-            }
-
-            if (this.hasValidIdToken()) {
-                this.setupIdTokenTimer();
-            }
+            this.setupExpirationTimers();
 
         });
+    }
+
+    private setupExpirationTimers(): void {
+        let idTokenExp = this.getIdTokenExpiration() || Number.MAX_VALUE;
+        let accessTokenExp = this.getAccessTokenExpiration() || Number.MAX_VALUE;
+        let useAccessTokenExp = accessTokenExp <= idTokenExp;
+
+        if (this.hasValidAccessToken() && useAccessTokenExp ) {
+            this.setupAccessTokenTimer();
+        }
+
+        if (this.hasValidIdToken() && !useAccessTokenExp ) {
+            this.setupIdTokenTimer();
+        }
     }
 
     private setupAccessTokenTimer(): void {
@@ -1285,6 +1286,7 @@ export class OAuthService
      * as milliseconds since 1970.
      */
     public getAccessTokenExpiration(): number {
+        if (!this._storage.getItem('expires_at')) return null;
         return parseInt(this._storage.getItem('expires_at'), 10);
     }
 
@@ -1302,6 +1304,9 @@ export class OAuthService
      * as milliseconds since 1970.
      */
     public getIdTokenExpiration(): number {
+
+        if (!this._storage.getItem('id_token_expires_at')) return null;
+
         return parseInt(this._storage.getItem('id_token_expires_at'), 10);
     }
 

@@ -1,6 +1,6 @@
 {
   "name": "angular-oauth2-oidc",
-  "version": "2.1.2",
+  "version": "2.1.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/manfredsteyer/angular-oauth2-oidc"
