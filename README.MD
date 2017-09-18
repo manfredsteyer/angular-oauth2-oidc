@@ -112,6 +112,8 @@ This also allows for single sign on as well as single sign off.
 To configure the library the following sample uses the new configuration API introduced with Version 2.1.
 Hence, The original API is still supported.
 
+Add a file in the root of `app` called `auth.config.ts` and paste in the following code:
+
 ```TypeScript
 import { AuthConfig } from 'angular-oauth2-oidc';
 
