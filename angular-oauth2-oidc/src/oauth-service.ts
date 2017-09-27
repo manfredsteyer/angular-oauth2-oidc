@@ -485,13 +485,16 @@ export class OAuthService
                     this.debug('userinfo received', doc);
 
                     let existingClaims = this.getIdentityClaims() || {};
-                    if (this.oidc && (!existingClaims['sub'] || doc.sub !== existingClaims['sub'])) {
-                        let err = 'if property oidc is true, the received user-id (sub) has to be the user-id '
-                                    + 'of the user that has logged in with oidc.\n'
-                                    + 'if you are not using oidc but just oauth2 password flow set oidc to false';
+                    
+                    if (!this.skipSubjectCheck) {
+                        if (this.oidc && (!existingClaims['sub'] || doc.sub !== existingClaims['sub'])) {
+                            let err = 'if property oidc is true, the received user-id (sub) has to be the user-id '
+                                        + 'of the user that has logged in with oidc.\n'
+                                        + 'if you are not using oidc but just oauth2 password flow set oidc to false';
 
-                        reject(err);
-                        return;
+                            reject(err);
+                            return;
+                        }
                     }
 
                     doc = Object.assign({}, existingClaims, doc);
@@ -687,7 +690,7 @@ export class OAuthService
         let errors = this.events.filter(e => e instanceof OAuthErrorEvent).first();
         let success = this.events.filter(e => e.type === 'silently_refreshed').first();
         let timeout = Observable.of(new OAuthErrorEvent('silent_refresh_timeout', null))
-                                .delay(this.siletRefreshTimeout);
+                                .delay(this.silentRefreshTimeout || this.siletRefreshTimeout);
 
         return Observable
                 .race([errors, success, timeout])
@@ -859,7 +862,8 @@ export class OAuthService
         state = '',
         loginHint = '',
         customRedirectUri = '',
-        noPrompt = false
+        noPrompt = false,
+        params: object = {}
     ) {
         let that = this;
 
@@ -932,6 +936,10 @@ export class OAuthService
                 url += '&prompt=none';
             }
 
+            for(let key of Object.keys(params)) {
+                url += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+            }
+
             if (this.customQueryParams) {
                 for (let key of Object.getOwnPropertyNames(this.customQueryParams)) {
                     url += '&' + key + '=' + encodeURIComponent(this.customQueryParams[key]);
@@ -948,15 +956,26 @@ export class OAuthService
      *
      * @param additionalState Optinal state that is passes around.
      *  You find this state in the property ``state`` after ``tryLogin`` logged in the user.
-     * @param loginHint
+     * @param params Hash with additional parameter. If it is a string, it is used for the 
+     *               parameter loginHint (for the sake of compatibility with former versions)
      */
-    public initImplicitFlow(additionalState = '', loginHint= ''): void {
+    public initImplicitFlow(additionalState = '', params: string | object = ''): void {
 
         if (!this.validateUrlForHttps(this.loginUrl)) {
             throw new Error('loginUrl must use Http. Also check property requireHttps.');
         }
 
-        this.createLoginUrl(additionalState, loginHint).then(function (url) {
+        let addParams: object = {};
+        let loginHint: string = null;
+
+        if (typeof params === 'string') {
+            loginHint = params;
+        }
+        else if (typeof params === 'object') {
+            addParams = params;
+        }
+
+        this.createLoginUrl(additionalState, loginHint, null, false, addParams).then(function (url) {
             location.href = url;
         })
         .catch(error => {

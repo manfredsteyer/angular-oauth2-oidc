@@ -2,6 +2,7 @@
   "name": "angular-oauth2-oidc",
   "version": "0.1.0",
   "scripts": {
+    "tsc": "tsc",
     "build": "gulp build",
     "build:watch": "gulp",
     "docs": "npm run docs:build -- --disableCoverage --disablePrivateOrInternalSupport --includes md",

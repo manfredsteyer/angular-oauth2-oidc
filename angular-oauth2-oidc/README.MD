@@ -21,7 +21,7 @@ https://manfredsteyer.github.io/angular-oauth2-oidc/angular-oauth2-oidc/docs/
 
 ## Tested Environment
 
-Successfully tested with the Angular 2 and 4 and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we've used IdentityServer (.NET/ .NET Core) and Redhat's Keycloak (Java).
+Successfully tested with Angular 4 and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we've used IdentityServer (.NET/ .NET Core) and Redhat's Keycloak (Java).
 
 ## New Features in Version 2.1
 - New Config API (the original one is still supported)

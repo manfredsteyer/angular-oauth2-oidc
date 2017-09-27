@@ -1,3 +1,4 @@
+import { googleAuthConfig } from './auth.google.config';
 import { authConfig } from './auth.config';
 import { FlightHistoryComponent } from './flight-history/flight-history.component';
 import { Component } from '@angular/core';
@@ -25,7 +26,8 @@ export class AppComponent {
     // This api will come in the next version
     private configureWithNewConfigApi() {
 
-      this.oauthService.configure(authConfig);
+      //this.oauthService.configure(authConfig);
+      this.oauthService.configure(googleAuthConfig);
       this.oauthService.tokenValidationHandler = new JwksValidationHandler();
       this.oauthService.loadDiscoveryDocumentAndTryLogin();
 
@@ -38,6 +40,11 @@ export class AppComponent {
       this.oauthService.events.filter(e => e.type === 'session_terminated').subscribe(e => {
         console.debug('Your session has been terminated!');
       });
+      
+      this.oauthService.events.filter(e => e.type === 'token_received').subscribe(e => {
+        // this.oauthService.loadUserProfile();
+      });
+
     }
 
   private configureAuth() {

@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
         // Tweak config for implicit flow.
         // This is just needed b/c this demo uses both,
         // implicit flow as well as password flow
-        this.oauthService.configure(authConfig)
+        // this.oauthService.configure(authConfig)
     }
 
     ngOnInit() { 
@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
 
 
     login() {
-        this.oauthService.initImplicitFlow('http://www.myurl.com/x/y/z');
+        this.oauthService.initImplicitFlow('http://www.myurl.com/x/y/z', { x: 1 });
     }
 
     logout() {

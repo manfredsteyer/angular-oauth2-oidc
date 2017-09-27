@@ -94,8 +94,15 @@ export class AuthConfig {
 
     /**
      * Timeout for silent refresh.
+     * @internal
+     * depreacted b/c of typo, see silentRefreshTimeout
      */
     public siletRefreshTimeout?: number = 1000 * 20;
+
+    /**
+     * Timeout for silent refresh.
+     */
+    public silentRefreshTimeout?: number = 1000 * 20;
 
     /**
      * Some auth servers don't allow using password flow
@@ -178,4 +185,7 @@ export class AuthConfig {
      * a security check which means we are more vulnerable.
      */
     public disableAtHashCheck? = false;
+
+
+    public skipSubjectCheck? = false;
 }
