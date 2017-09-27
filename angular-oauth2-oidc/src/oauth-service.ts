@@ -135,12 +135,16 @@ export class OAuthService
             });
     }
 
-    public setupAutomaticSilentRefresh() {
+    /**
+     * 
+     * @param params Additional parameter to pass
+     */
+    public setupAutomaticSilentRefresh(params: object = {}) {
         this
         .events
         .filter(e => e.type === 'token_expires')
         .subscribe(e => {
-          this.silentRefresh().catch(_ => {
+          this.silentRefresh(params).catch(_ => {
               this.debug('automatic silent refresh did not work');
           })
         });
@@ -652,7 +656,7 @@ export class OAuthService
      * Use this method to get a new tokens when/ before
      * the existing tokens expires.
      */
-    public silentRefresh(): Promise<OAuthEvent> {
+    public silentRefresh(params: object = {}): Promise<OAuthEvent> {
 
         let claims = this.getIdentityClaims();
 
@@ -679,7 +683,7 @@ export class OAuthService
         this.setupSilentRefreshEventListener();
 
         let redirectUri = this.silentRefreshRedirectUri || this.redirectUri;
-        this.createLoginUrl(null, null, redirectUri, true).then(url => {
+        this.createLoginUrl(null, null, redirectUri, true, params).then(url => {
             iframe.setAttribute('src', url);
             if (!this.silentRefreshShowIFrame) {
                iframe.style.visibility = 'hidden';

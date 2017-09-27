@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
 
 
     login() {
-        this.oauthService.initImplicitFlow('http://www.myurl.com/x/y/z', { x: 1 });
+        this.oauthService.initImplicitFlow('some-state', { 'custom-param': 'test' });
     }
 
     logout() {

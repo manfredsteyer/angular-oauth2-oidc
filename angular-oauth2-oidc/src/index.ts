@@ -26,7 +26,7 @@ export * from './tokens';
 @NgModule({
   imports: [
     CommonModule,
-    HttpModule
+    //HttpModule
   ],
   declarations: [
   ],
