@@ -7,7 +7,7 @@ Support for OAuth 2 and OpenId Connect (OIDC) in Angular.
 ## Credits
 
 - [generator-angular2-library](https://github.com/jvandemo/generator-angular2-library) for scaffolding a angular library
-- [jsrasign](https://kjur.github.io/jsrsasign/) for validating token signature and for hashing
+- [jsrsasign](https://kjur.github.io/jsrsasign/) for validating token signature and for hashing
 - [Identity Server](https://github.com/identityserver) (used for Testing with an .NET/.NET Core Backend)
 - [Keycloak (Redhad)](http://www.keycloak.org/) for Testing with Java
 
@@ -111,6 +111,8 @@ This also allows for single sign on as well as single sign off.
 
 To configure the library the following sample uses the new configuration API introduced with Version 2.1.
 Hence, The original API is still supported.
+
+Add a file in the root of `app` called `auth.config.ts` and paste in the following code:
 
 ```TypeScript
 import { AuthConfig } from 'angular-oauth2-oidc';

@@ -118,7 +118,7 @@ export class AuthConfig {
     /**
      * Defines whether https is required.
      * The default value is remoteOnly which only allows
-     * http for location, while every other domains need
+     * http for localhost, while every other domains need
      * to be used with https.
      */
     public requireHttps?: boolean | 'remoteOnly' = 'remoteOnly';
