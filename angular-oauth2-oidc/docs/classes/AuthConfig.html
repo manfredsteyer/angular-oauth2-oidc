@@ -1805,7 +1805,7 @@
      */
     public requestAccessToken? &#x3D; true;
 
-    public options?: any;
+    public options?: any &#x3D; null;
 
     /**
      * The issuer&#x27;s uri.
@@ -1825,13 +1825,13 @@
     /**
      * Url of the token endpoint as defined by OpenId Connect and OAuth 2.
      */
-    public tokenEndpoint?: string;
+    public tokenEndpoint?: string &#x3D; null;
 
     /**
      * Url of the userinfo endpoint as defined by OpenId Connect.
      *
      */
-    public userinfoEndpoint?: string;
+    public userinfoEndpoint?: string &#x3D; null;
 
     public responseType? &#x3D; &#x27;token&#x27;;
 
@@ -1874,7 +1874,7 @@
      * it does not bring additional security and is therefore
      * as good as using no password.
      */
-    public dummyClientSecret?: string;
+    public dummyClientSecret?: string &#x3D; null;;
 
 
     /**
@@ -1896,13 +1896,13 @@
      * with keys used to validate received id_tokens.
      * This is taken out of the disovery document. Can be set manually too.
      */
-    public jwks?: object;
+    public jwks?: object &#x3D; null;
 
     /**
      * Map with additional query parameter that are appended to
      * the request when initializing implicit flow.
      */
-    public customQueryParams?: object;
+    public customQueryParams?: object &#x3D; null;
 
     public silentRefreshIFrameName? &#x3D; &#x27;angular-oauth-oidc-silent-refresh-iframe&#x27;;
 
@@ -1931,7 +1931,7 @@
     /**
      * Url for the iframe used for session checks
      */
-    public sessionCheckIFrameUrl?: string;
+    public sessionCheckIFrameUrl?: string &#x3D; null;
 
     /**
      * Name of the iframe to use for session checks

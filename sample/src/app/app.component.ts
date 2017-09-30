@@ -1,8 +1,9 @@
+import { noDiscoveryAuthConfig } from './auth-no-discovery.config';
 import { googleAuthConfig } from './auth.google.config';
 import { authConfig } from './auth.config';
 import { FlightHistoryComponent } from './flight-history/flight-history.component';
 import { Component } from '@angular/core';
-import { OAuthService } from 'angular-oauth2-oidc';
+import { OAuthService, AuthConfig } from 'angular-oauth2-oidc';
 import { JwksValidationHandler } from 'angular-oauth2-oidc';
 import { Router } from "@angular/router";
 
@@ -16,12 +17,19 @@ export class AppComponent {
         private router: Router,
         private oauthService: OAuthService) {
 
+      // this.configureWithoutDiscovery();
       this.configureWithNewConfigApi();
       // this.configureAuth();
       // this.configurePasswordFlow();
       
     }
 
+
+    private configureWithoutDiscovery() {
+      this.oauthService.configure(noDiscoveryAuthConfig);
+      this.oauthService.tokenValidationHandler = new JwksValidationHandler();
+      this.oauthService.tryLogin();
+    }
 
     // This api will come in the next version
     private configureWithNewConfigApi() {

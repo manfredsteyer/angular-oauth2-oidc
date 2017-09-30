@@ -814,7 +814,7 @@ export class JwksValidationHandler extends AbstractValidationHandler {
         let alg &#x3D; params.idTokenHeader[&#x27;alg&#x27;];
 
         if (kid) {
-            key &#x3D; keys.find(k &#x3D;&gt; k[&#x27;kid&#x27;] &#x3D;&#x3D;&#x3D; kid &amp;&amp; k[&#x27;use&#x27;] &#x3D;&#x3D;&#x3D; &#x27;sig&#x27;);
+            key &#x3D; keys.find(k &#x3D;&gt; k[&#x27;kid&#x27;] &#x3D;&#x3D;&#x3D; kid /* &amp;&amp; k[&#x27;use&#x27;] &#x3D;&#x3D;&#x3D; &#x27;sig&#x27; */);
         }
         else {
             let kty &#x3D; this.alg2kty(alg);

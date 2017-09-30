@@ -43,7 +43,7 @@ export class AuthConfig {
      */
     public requestAccessToken? = true;
 
-    public options?: any;
+    public options?: any = null;
 
     /**
      * The issuer's uri.
@@ -63,13 +63,13 @@ export class AuthConfig {
     /**
      * Url of the token endpoint as defined by OpenId Connect and OAuth 2.
      */
-    public tokenEndpoint?: string;
+    public tokenEndpoint?: string = null;
 
     /**
      * Url of the userinfo endpoint as defined by OpenId Connect.
      *
      */
-    public userinfoEndpoint?: string;
+    public userinfoEndpoint?: string = null;
 
     public responseType? = 'token';
 
@@ -112,7 +112,7 @@ export class AuthConfig {
      * it does not bring additional security and is therefore
      * as good as using no password.
      */
-    public dummyClientSecret?: string;
+    public dummyClientSecret?: string = null;;
 
 
     /**
@@ -134,13 +134,13 @@ export class AuthConfig {
      * with keys used to validate received id_tokens.
      * This is taken out of the disovery document. Can be set manually too.
      */
-    public jwks?: object;
+    public jwks?: object = null;
 
     /**
      * Map with additional query parameter that are appended to
      * the request when initializing implicit flow.
      */
-    public customQueryParams?: object;
+    public customQueryParams?: object = null;
 
     public silentRefreshIFrameName? = 'angular-oauth-oidc-silent-refresh-iframe';
 
@@ -169,7 +169,7 @@ export class AuthConfig {
     /**
      * Url for the iframe used for session checks
      */
-    public sessionCheckIFrameUrl?: string;
+    public sessionCheckIFrameUrl?: string = null;
 
     /**
      * Name of the iframe to use for session checks

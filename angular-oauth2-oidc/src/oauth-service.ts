@@ -153,7 +153,7 @@ export class OAuthService
     }
 
     public loadDiscoveryDocumentAndTryLogin() {
-        this.loadDiscoveryDocument().then((doc) => {
+        return this.loadDiscoveryDocument().then((doc) => {
             return this.tryLogin();
         });
     }

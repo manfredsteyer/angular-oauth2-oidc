@@ -1440,7 +1440,7 @@ password flow.</p>
                                 <td class="col-md-4">
             
                                         <div class="io-description">
-                                            <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                            <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
             
                                         </div>
                                 </td>
@@ -2214,7 +2214,7 @@ export class OAuthService
     }
 
     public loadDiscoveryDocumentAndTryLogin() {
-        this.loadDiscoveryDocument().then((doc) &#x3D;&gt; {
+        return this.loadDiscoveryDocument().then((doc) &#x3D;&gt; {
             return this.tryLogin();
         });
     }
