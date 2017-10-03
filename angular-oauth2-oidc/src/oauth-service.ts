@@ -658,13 +658,15 @@ export class OAuthService
      */
     public silentRefresh(params: object = {}): Promise<OAuthEvent> {
 
-        let claims = this.getIdentityClaims();
+        let claims: object = this.getIdentityClaims() || {};
 
+        /*
         if (!claims) {
             throw new Error('cannot perform a silent refresh as the user is not logged in');
         }
+        */
 
-        if (!this.validateUrlForHttps(this.loginUrl)) throw new Error('tokenEndpoint must use Http. Also check property requireHttps.');
+        if (!this.validateUrlForHttps(this.loginUrl)) throw new Error('tokenEndpoint must use Https. Also check property requireHttps.');
 
         if (typeof document === 'undefined') {
             throw new Error('silent refresh is not supported on this platform');
