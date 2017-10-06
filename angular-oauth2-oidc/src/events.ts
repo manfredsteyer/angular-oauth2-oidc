@@ -18,7 +18,8 @@ export type EventType =
 | 'token_expires'
 | 'session_changed'
 | 'session_error'
-| 'session_terminated';
+| 'session_terminated'
+| 'logout';
 
 export abstract class OAuthEvent {
     constructor(
