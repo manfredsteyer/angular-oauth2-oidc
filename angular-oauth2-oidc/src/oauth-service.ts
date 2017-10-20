@@ -1412,10 +1412,12 @@ export class OAuthService
             logoutUrl = this.logoutUrl.replace(/\{\{id_token\}\}/, id_token);
         }
         else {
-            logoutUrl = this.logoutUrl + '?id_token_hint='
-                                + encodeURIComponent(id_token)
-                                + '&post_logout_redirect_uri='
-                                + encodeURIComponent(this.postLogoutRedirectUri || this.redirectUri);
+            logoutUrl = this.logoutUrl +
+                (this.logoutUrl.indexOf('?') > -1 ? '&' : '?')
+                + 'id_token_hint='
+                + encodeURIComponent(id_token)
+                + '&post_logout_redirect_uri='
+                + encodeURIComponent(this.postLogoutRedirectUri || this.redirectUri);
         }
         location.href = logoutUrl;
     };
