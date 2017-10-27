@@ -36,7 +36,7 @@ Successfully tested with the Angular 2 and 4 and its Router, PathLocationStrateg
 - Token Refresh for Implicit Flow by implementing "silent refresh"
 - Validating the signature of the received id_token
 - Providing Events via the observable ``events``.
-- The event ``token_expires`` can be used togehter with a silent refresh to automatically refresh a token when/ before it expires (see also property ``timeoutFactor``).
+- The event ``token_expires`` can be used together with a silent refresh to automatically refresh a token when/ before it expires (see also property ``timeoutFactor``).
 
 ## Additional Features 
 - Logging in via OAuth2 and OpenId Connect (OIDC) Implicit Flow (where user is redirected to Identity Provider)
@@ -106,7 +106,7 @@ export class AppModule {
 ## Configuring for Implicit Flow
 
 This section shows how to implement login leveraging implicit flow. This is the OAuth2/OIDC flow best suitable for
-Single Page Application. It sends the user to the Identity Provider's login page. After logging in, the SPA gets tokens.
+Single Page Applications (SPAs). It sends the user to the Identity Provider's login page. After logging in, the SPA gets tokens.
 This also allows for single sign on as well as single sign off.
 
 To configure the library the following sample uses the new configuration API introduced with Version 2.1.
@@ -125,7 +125,7 @@ export const authConfig: AuthConfig = {
   // URL of the SPA to redirect the user to after login
   redirectUri: window.location.origin + '/index.html',
 
-  // The SPA's id. The SPA is registerd with this id at the auth-server
+  // The SPA's id. The SPA is registered with this id at the auth-server
   clientId: 'spa-demo',
 
   // set the scope for the permissions the client should request
