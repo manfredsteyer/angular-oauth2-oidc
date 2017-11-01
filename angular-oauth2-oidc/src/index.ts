@@ -1,5 +1,7 @@
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+
 import { OAuthService } from './oauth-service';
 import { UrlHelperService } from './url-helper.service';
 
@@ -26,7 +28,7 @@ export * from './tokens';
 @NgModule({
   imports: [
     CommonModule,
-    //HttpModule
+    HttpClientModule
   ],
   declarations: [
   ],
