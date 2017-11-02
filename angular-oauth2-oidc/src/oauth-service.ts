@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { ValidationHandler, ValidationParams } from './token-validation/validation-handler';
 import { UrlHelperService } from './url-helper.service';
 import { OAuthEvent, OAuthInfoEvent, OAuthErrorEvent, OAuthSuccessEvent } from './events';
-import { OAuthStorage, LoginOptions, ParsedIdToken } from './types';
+import { OAuthStorage, LoginOptions, ParsedIdToken, OidcDiscoveryDoc, TokenResponse, UserInfo } from './types';
 import { b64DecodeUnicode } from './base64-helper';
 import { AuthConfig } from './auth.config';
 
@@ -314,7 +314,7 @@ export class OAuthService
                 return;
             }
 
-            this.http.get<any>(fullUrl).subscribe(
+            this.http.get<OidcDiscoveryDoc>(fullUrl).subscribe(
                 (doc) => {
 
                     if (!this.validateDiscoveryDocument(doc)) {
@@ -387,55 +387,55 @@ export class OAuthService
 
     }
 
-    private validateDiscoveryDocument(doc: object): boolean {
+    private validateDiscoveryDocument(doc: OidcDiscoveryDoc): boolean {
 
         let errors: string[];
 
-        if (doc['issuer'] !== this.issuer) {
+        if (doc.issuer !== this.issuer) {
             console.error(
                 'invalid issuer in discovery document',
                 'expected: ' + this.issuer,
-                'current: ' + doc['issuer']
+                'current: ' + doc.issuer
             );
             return false;
         }
 
-        errors = this.validateUrlFromDiscoveryDocument(doc['authorization_endpoint']);
+        errors = this.validateUrlFromDiscoveryDocument(doc.authorization_endpoint);
         if (errors.length > 0) {
             console.error('error validating authorization_endpoint in discovery document', errors);
             return false;
         }
 
-        errors = this.validateUrlFromDiscoveryDocument(doc['end_session_endpoint']);
+        errors = this.validateUrlFromDiscoveryDocument(doc.end_session_endpoint);
         if (errors.length > 0) {
             console.error('error validating end_session_endpoint in discovery document', errors);
             return false;
         }
 
-        errors = this.validateUrlFromDiscoveryDocument(doc['token_endpoint']);
+        errors = this.validateUrlFromDiscoveryDocument(doc.token_endpoint);
         if (errors.length > 0) {
             console.error('error validating token_endpoint in discovery document', errors);
         }
 
-        errors = this.validateUrlFromDiscoveryDocument(doc['userinfo_endpoint']);
+        errors = this.validateUrlFromDiscoveryDocument(doc.userinfo_endpoint);
         if (errors.length > 0) {
             console.error('error validating userinfo_endpoint in discovery document', errors);
             return false;
         }
 
-        errors = this.validateUrlFromDiscoveryDocument(doc['jwks_uri']);
+        errors = this.validateUrlFromDiscoveryDocument(doc.jwks_uri);
         if (errors.length > 0) {
             console.error('error validating jwks_uri in discovery document', errors);
             return false;
         }
 
-        if (this.sessionChecksEnabled &&  !doc['check_session_iframe']) {
+        if (this.sessionChecksEnabled &&  !doc.check_session_iframe) {
             console.warn(
                 'sessionChecksEnabled is activated but discovery document'
                 + ' does not contain a check_session_iframe field');
         }
 
-        this.sessionChecksEnabled = doc['check_session_iframe'];
+        this.sessionChecksEnabled = !!doc.check_session_iframe;
 
         return true;
     }
@@ -483,14 +483,14 @@ export class OAuthService
             const headers = new HttpHeaders()
                 .set('Authorization', 'Bearer ' + this.getAccessToken());
 
-            this.http.get<any>(this.userinfoEndpoint, { headers }).subscribe(
-                (doc) => {
-                    this.debug('userinfo received', doc);
+            this.http.get<UserInfo>(this.userinfoEndpoint, { headers }).subscribe(
+                (info) => {
+                    this.debug('userinfo received', info);
 
                     let existingClaims = this.getIdentityClaims() || {};
 
                     if (!this.skipSubjectCheck) {
-                        if (this.oidc && (!existingClaims['sub'] || doc.sub !== existingClaims['sub'])) {
+                        if (this.oidc && (!existingClaims['sub'] || info.sub !== existingClaims['sub'])) {
                             let err = 'if property oidc is true, the received user-id (sub) has to be the user-id '
                                         + 'of the user that has logged in with oidc.\n'
                                         + 'if you are not using oidc but just oauth2 password flow set oidc to false';
@@ -500,11 +500,11 @@ export class OAuthService
                         }
                     }
 
-                    doc = Object.assign({}, existingClaims, doc);
+                    info = Object.assign({}, existingClaims, info);
 
-                    this._storage.setItem('id_token_claims_obj', JSON.stringify(doc));
+                    this._storage.setItem('id_token_claims_obj', JSON.stringify(info));
                     this.eventsSubject.next(new OAuthSuccessEvent('user_profile_loaded'));
-                    resolve(doc);
+                    resolve(info);
                 },
                 (err) => {
                     console.error('error loading user info', err);
@@ -543,7 +543,7 @@ export class OAuthService
 
             let params = search.toString();
 
-            this.http.post<any>(this.tokenEndpoint, params, { headers }).subscribe(
+            this.http.post<TokenResponse>(this.tokenEndpoint, params, { headers }).subscribe(
                 (tokenResponse) => {
                     this.debug('tokenResponse', tokenResponse);
                     this.storeAccessTokenResponse(tokenResponse.access_token, tokenResponse.refresh_token, tokenResponse.expires_in);
@@ -590,7 +590,7 @@ export class OAuthService
 
             let params = search.toString();
 
-            this.http.post<any>(this.tokenEndpoint, params, { headers }).subscribe(
+            this.http.post<TokenResponse>(this.tokenEndpoint, params, { headers }).subscribe(
                 (tokenResponse) => {
                     this.debug('refresh tokenResponse', tokenResponse);
                     this.storeAccessTokenResponse(tokenResponse.access_token, tokenResponse.refresh_token, tokenResponse.expires_in);
