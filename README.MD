@@ -148,14 +148,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-    constructor(private oauthService: OAuthService) {
+    constructor(private oAuthService: OAuthService) {
       this.configureWithNewConfigApi();
     }
 
     private configureWithNewConfigApi() {
-      this.oauthService.configure(authConfig);
-      this.oauthService.tokenValidationHandler = new JwksValidationHandler();
-      this.oauthService.loadDiscoveryDocumentAndTryLogin();
+      this.oAuthService.configure(authConfig);
+      this.oAuthService.tokenValidationHandler = new JwksValidationHandler();
+      this.oAuthService.loadDiscoveryDocumentAndTryLogin();
     }
 }
 ```
@@ -173,15 +173,15 @@ import { OAuthService } from 'angular-oauth2-oidc';
 })
 export class HomeComponent {
 
-    constructor(private oauthService: OAuthService) {
+    constructor(private oAuthService: OAuthService) {
     }
 
     public login() {
-        this.oauthService.initImplicitFlow();
+        this.oAuthService.initImplicitFlow();
     }
 
     public logoff() {
-        this.oauthService.logOut();
+        this.oAuthService.logOut();
     }
 
     public get name() {
@@ -221,15 +221,15 @@ Pass this Header to the used method of the ``Http``-Service within an Instance o
 
 ```TypeScript
 var headers = new Headers({
-    "Authorization": "Bearer " + this.oauthService.getAccessToken()
+    "Authorization": "Bearer " + this.oAuthService.getAccessToken()
 });
 ```
 
 If you are using the new HttpClient, use the class HttpHeaders instead:
-
+    
 ```TypeScript
 var headers = new HttpHeaders({
-    "Authorization": "Bearer " + this.oauthService.getAccessToken()
+    "Authorization": "Bearer " + this.oAuthService.getAccessToken()
 });
 ```
 
