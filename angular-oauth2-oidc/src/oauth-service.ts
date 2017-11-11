@@ -1398,6 +1398,8 @@ export class OAuthService
         this._storage.removeItem('access_token_stored_at');
         
         this.silentRefreshSubject = null;
+      
+        this.eventsSubject.next(new OAuthInfoEvent('logout'));
 
         if (!this.logoutUrl) return;
         if (noRedirectToLogoutUrl) return;
