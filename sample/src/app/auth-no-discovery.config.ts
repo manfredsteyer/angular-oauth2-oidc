@@ -21,7 +21,6 @@ export const noDiscoveryAuthConfig: AuthConfig = {
   'silentRefreshRedirectUri': 'http://localhost:4200/silent-refresh.html',
   'silentRefreshMessagePrefix': '',
   'silentRefreshShowIFrame': false,
-  'siletRefreshTimeout': 20000,
   'silentRefreshTimeout': 20000,
   'dummyClientSecret': null,
   'requireHttps': 'remoteOnly',
