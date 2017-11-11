@@ -1,12 +1,13 @@
-import { Http, URLSearchParams, Headers } from '@angular/http';
 import { Injectable, Optional } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import { Subscription } from 'rxjs/Subscription';
+
 import { ValidationHandler, ValidationParams } from './token-validation/validation-handler';
 import { UrlHelperService } from './url-helper.service';
-import { Subscription } from 'rxjs/Subscription';
 import { OAuthEvent, OAuthInfoEvent, OAuthErrorEvent, OAuthSuccessEvent } from './events';
-import { OAuthStorage, LoginOptions, ParsedIdToken } from './types';
+import { OAuthStorage, LoginOptions, ParsedIdToken, OidcDiscoveryDoc, TokenResponse, UserInfo } from './types';
 import { b64DecodeUnicode } from './base64-helper';
 import { AuthConfig } from './auth.config';
 
@@ -65,7 +66,7 @@ export class OAuthService
     private silentRefreshSubject: string;
 
     constructor(
-        private http: Http,
+        private http: HttpClient,
         @Optional() storage: OAuthStorage,
         @Optional() tokenValidationHandler: ValidationHandler,
         @Optional() private config: AuthConfig,
@@ -92,7 +93,6 @@ export class OAuthService
 
         this.setupRefreshTimer();
 
-        
     }
 
     /**
@@ -140,14 +140,13 @@ export class OAuthService
      * @param params Additional parameter to pass
      */
     public setupAutomaticSilentRefresh(params: object = {}) {
-        this
-        .events
-        .filter(e => e.type === 'token_expires')
-        .subscribe(e => {
-          this.silentRefresh(params).catch(_ => {
-              this.debug('automatic silent refresh did not work');
-          })
-        });
+        this.events
+            .filter(e => e.type === 'token_expires')
+            .subscribe(e => {
+                this.silentRefresh(params).catch(_ => {
+                    this.debug('automatic silent refresh did not work');
+                });
+            });
 
         this.restartRefreshTimerIfStillLoggedIn();
     }
@@ -306,7 +305,7 @@ export class OAuthService
                 fullUrl = this.issuer || '';
                 if (!fullUrl.endsWith('/')) {
                     fullUrl += '/';
-                }               
+                }
                 fullUrl += '.well-known/openid-configuration';
             }
 
@@ -315,7 +314,7 @@ export class OAuthService
                 return;
             }
 
-            this.http.get(fullUrl).map(r => r.json()).subscribe(
+            this.http.get<OidcDiscoveryDoc>(fullUrl).subscribe(
                 (doc) => {
 
                     if (!this.validateDiscoveryDocument(doc)) {
@@ -368,7 +367,7 @@ export class OAuthService
     private loadJwks(): Promise<object> {
         return new Promise<object>((resolve, reject) => {
             if (this.jwksUri) {
-                this.http.get(this.jwksUri).map(r => r.json()).subscribe(
+                this.http.get(this.jwksUri).subscribe(
                     jwks => {
                         this.jwks = jwks;
                         this.eventsSubject.next(new OAuthSuccessEvent('discovery_document_loaded'));
@@ -388,55 +387,55 @@ export class OAuthService
 
     }
 
-    private validateDiscoveryDocument(doc: object): boolean {
+    private validateDiscoveryDocument(doc: OidcDiscoveryDoc): boolean {
 
         let errors: string[];
 
-        if (doc['issuer'] !== this.issuer) {
+        if (doc.issuer !== this.issuer) {
             console.error(
                 'invalid issuer in discovery document',
                 'expected: ' + this.issuer,
-                'current: ' + doc['issuer']
+                'current: ' + doc.issuer
             );
             return false;
         }
 
-        errors = this.validateUrlFromDiscoveryDocument(doc['authorization_endpoint']);
+        errors = this.validateUrlFromDiscoveryDocument(doc.authorization_endpoint);
         if (errors.length > 0) {
             console.error('error validating authorization_endpoint in discovery document', errors);
             return false;
         }
 
-        errors = this.validateUrlFromDiscoveryDocument(doc['end_session_endpoint']);
+        errors = this.validateUrlFromDiscoveryDocument(doc.end_session_endpoint);
         if (errors.length > 0) {
             console.error('error validating end_session_endpoint in discovery document', errors);
             return false;
         }
 
-        errors = this.validateUrlFromDiscoveryDocument(doc['token_endpoint']);
+        errors = this.validateUrlFromDiscoveryDocument(doc.token_endpoint);
         if (errors.length > 0) {
             console.error('error validating token_endpoint in discovery document', errors);
         }
 
-        errors = this.validateUrlFromDiscoveryDocument(doc['userinfo_endpoint']);
+        errors = this.validateUrlFromDiscoveryDocument(doc.userinfo_endpoint);
         if (errors.length > 0) {
             console.error('error validating userinfo_endpoint in discovery document', errors);
             return false;
         }
 
-        errors = this.validateUrlFromDiscoveryDocument(doc['jwks_uri']);
+        errors = this.validateUrlFromDiscoveryDocument(doc.jwks_uri);
         if (errors.length > 0) {
             console.error('error validating jwks_uri in discovery document', errors);
             return false;
         }
 
-        if (this.sessionChecksEnabled &&  !doc['check_session_iframe']) {
+        if (this.sessionChecksEnabled &&  !doc.check_session_iframe) {
             console.warn(
                 'sessionChecksEnabled is activated but discovery document'
                 + ' does not contain a check_session_iframe field');
         }
 
-        this.sessionChecksEnabled = doc['check_session_iframe'];
+        this.sessionChecksEnabled = !!doc.check_session_iframe;
 
         return true;
     }
@@ -458,7 +457,7 @@ export class OAuthService
     public fetchTokenUsingPasswordFlowAndLoadUserProfile(
         userName: string,
         password: string,
-        headers: Headers = new Headers()): Promise<object> {
+        headers: HttpHeaders = new HttpHeaders()): Promise<object> {
         return this
                 .fetchTokenUsingPasswordFlow(userName, password, headers)
                 .then(() => this.loadUserProfile());
@@ -481,17 +480,17 @@ export class OAuthService
 
         return new Promise((resolve, reject) => {
 
-            let headers = new Headers();
-            headers.set('Authorization', 'Bearer ' + this.getAccessToken());
+            const headers = new HttpHeaders()
+                .set('Authorization', 'Bearer ' + this.getAccessToken());
 
-            this.http.get(this.userinfoEndpoint, { headers }).map(r => r.json()).subscribe(
-                (doc) => {
-                    this.debug('userinfo received', doc);
+            this.http.get<UserInfo>(this.userinfoEndpoint, { headers }).subscribe(
+                (info) => {
+                    this.debug('userinfo received', info);
 
                     let existingClaims = this.getIdentityClaims() || {};
-                    
+
                     if (!this.skipSubjectCheck) {
-                        if (this.oidc && (!existingClaims['sub'] || doc.sub !== existingClaims['sub'])) {
+                        if (this.oidc && (!existingClaims['sub'] || info.sub !== existingClaims['sub'])) {
                             let err = 'if property oidc is true, the received user-id (sub) has to be the user-id '
                                         + 'of the user that has logged in with oidc.\n'
                                         + 'if you are not using oidc but just oauth2 password flow set oidc to false';
@@ -501,11 +500,11 @@ export class OAuthService
                         }
                     }
 
-                    doc = Object.assign({}, existingClaims, doc);
+                    info = Object.assign({}, existingClaims, info);
 
-                    this._storage.setItem('id_token_claims_obj', JSON.stringify(doc));
+                    this._storage.setItem('id_token_claims_obj', JSON.stringify(info));
                     this.eventsSubject.next(new OAuthSuccessEvent('user_profile_loaded'));
-                    resolve(doc);
+                    resolve(info);
                 },
                 (err) => {
                     console.error('error loading user info', err);
@@ -522,7 +521,7 @@ export class OAuthService
      * @param password
      * @param headers Optional additional http-headers.
      */
-    public fetchTokenUsingPasswordFlow(userName: string, password: string, headers: Headers = new Headers()): Promise<object> {
+    public fetchTokenUsingPasswordFlow(userName: string, password: string, headers: HttpHeaders = new HttpHeaders()): Promise<object> {
 
         if (!this.validateUrlForHttps(this.tokenEndpoint)) {
             throw new Error('tokenEndpoint must use Http. Also check property requireHttps.');
@@ -544,7 +543,7 @@ export class OAuthService
 
             let params = search.toString();
 
-            this.http.post(this.tokenEndpoint, params, { headers }).map(r => r.json()).subscribe(
+            this.http.post<TokenResponse>(this.tokenEndpoint, params, { headers }).subscribe(
                 (tokenResponse) => {
                     this.debug('tokenResponse', tokenResponse);
                     this.storeAccessTokenResponse(tokenResponse.access_token, tokenResponse.refresh_token, tokenResponse.expires_in);
@@ -586,12 +585,12 @@ export class OAuthService
                 search.set('client_secret', this.dummyClientSecret);
             }
 
-            let headers = new Headers();
-            headers.set('Content-Type', 'application/x-www-form-urlencoded');
+            const headers = new HttpHeaders()
+                .set('Content-Type', 'application/x-www-form-urlencoded');
 
             let params = search.toString();
 
-            this.http.post(this.tokenEndpoint, params, { headers }).map(r => r.json()).subscribe(
+            this.http.post<TokenResponse>(this.tokenEndpoint, params, { headers }).subscribe(
                 (tokenResponse) => {
                     this.debug('refresh tokenResponse', tokenResponse);
                     this.storeAccessTokenResponse(tokenResponse.access_token, tokenResponse.refresh_token, tokenResponse.expires_in);
@@ -785,8 +784,7 @@ export class OAuthService
     }
 
     private waitForSilentRefreshAfterSessionChange() {
-        this
-            .events
+        this.events
             .filter((e: OAuthEvent) =>
                 e.type === 'silently_refreshed'
                 || e.type === 'silent_refresh_timeout'
@@ -1396,7 +1394,7 @@ export class OAuthService
         this._storage.removeItem('id_token_expires_at');
         this._storage.removeItem('id_token_stored_at');
         this._storage.removeItem('access_token_stored_at');
-        
+
         this.silentRefreshSubject = null;
       
         this.eventsSubject.next(new OAuthInfoEvent('logout'));
@@ -1408,7 +1406,7 @@ export class OAuthService
         let logoutUrl: string;
 
         if (!this.validateUrlForHttps(this.logoutUrl)) throw new Error('logoutUrl must use Http. Also check property requireHttps.');
-        
+
         // For backward compatibility
         if (this.logoutUrl.indexOf('{{') > -1) {
             logoutUrl = this.logoutUrl.replace(/\{\{id_token\}\}/, id_token);
