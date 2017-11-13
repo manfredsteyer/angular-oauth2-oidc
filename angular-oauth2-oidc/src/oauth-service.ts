@@ -535,6 +535,10 @@ export class OAuthService
             search.set('username', userName);
             search.set('password', password);
 
+            if(this.resource) {
+                search.set('resource', this.resource);
+            }
+
             if (this.dummyClientSecret) {
                 search.set('client_secret', this.dummyClientSecret);
             }
