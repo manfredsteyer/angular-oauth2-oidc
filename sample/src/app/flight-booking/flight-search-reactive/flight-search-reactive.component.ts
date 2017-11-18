@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import {Flight} from "../../entities/flight";
-import {Http, URLSearchParams, Headers } from '@angular/http';
 import {FlightService} from "../services/flight.service";
 import {FormGroup, FormBuilder, Validators, AbstractControl} from "@angular/forms";
 import {CityValidatorDirective} from "../../shared/validation/city.validator";

@@ -48,8 +48,8 @@
                                   <a href="../index.html" ><span class="fa fa-file-text-o"></span>README</a>
                                 </li>
                                 <li class="link">
-                                    <a href="./license.html"
-                                        >
+                                        <a href="../license.html"
+                                    >
                                         <span class="fa fa-file-text-o"></span>LICENSE
                                     </a>
                                 </li>
@@ -200,6 +200,7 @@
                         </ul>
                     </li>
             
+            
                     <li class="chapter">
                         <div class="simple menu-toggler" data-toggle="collapse"
                                 data-target="#xs-interfaces-links"
@@ -212,7 +213,16 @@
                                 id="xs-interfaces-links"
                             >
                                 <li class="link">
+                                    <a href="../interfaces/OidcDiscoveryDoc.html" >OidcDiscoveryDoc</a>
+                                </li>
+                                <li class="link">
                                     <a href="../interfaces/ParsedIdToken.html" >ParsedIdToken</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../interfaces/TokenResponse.html" >TokenResponse</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../interfaces/UserInfo.html" >UserInfo</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/ValidationParams.html" >ValidationParams</a>
@@ -285,8 +295,8 @@
                                          <a href="../index.html" ><span class="fa fa-file-text-o"></span>README</a>
                                        </li>
                                        <li class="link">
-                                           <a href="./license.html"
-                                               >
+                                               <a href="../license.html"
+                                           >
                                                <span class="fa fa-file-text-o"></span>LICENSE
                                            </a>
                                        </li>
@@ -437,6 +447,7 @@
                                </ul>
                            </li>
                    
+                   
                            <li class="chapter">
                                <div class="simple menu-toggler" data-toggle="collapse"
                                        data-target="#interfaces-links"
@@ -449,7 +460,16 @@
                                        id="interfaces-links"
                    >
                                        <li class="link">
+                                           <a href="../interfaces/OidcDiscoveryDoc.html" >OidcDiscoveryDoc</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../interfaces/ParsedIdToken.html" >ParsedIdToken</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../interfaces/TokenResponse.html" >TokenResponse</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../interfaces/UserInfo.html" >UserInfo</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/ValidationParams.html" >ValidationParams</a>
@@ -503,6 +523,7 @@
 
 
 
+
 <h1 id="using-systemjs">Using SystemJS</h1>
 <p>Thanks to <a href="https://github.com/kbeaugrand">Kevin BEAUGRAND</a> for adding this information regarding SystemJS.</p>
 <pre class="line-numbers"><code class="language-TypeScript">System.config({
@@ -513,7 +534,20 @@
             },
         }
 ...
-});</code></pre>
+});</code></pre><p>Also thanks to <a href="https://github.com/ppanthony">ppanthony</a> for sharing his SystemJS config:</p>
+<pre class="line-numbers"><code class="language-none">&#39;angular-oauth2-oidc&#39;: {
+    main: &#39;angular-oauth2-oidc.umd.js&#39;,
+    format: &#39;cjs&#39;,
+    defaultExtension: &#39;js&#39;,
+    map: {
+        &#39;jsrsasign&#39;: &#39;/node_modules/jsrsasign/lib/jsrsasign&#39;,
+    },
+    meta: {
+        &#39;angular-oauth2-oidc&#39;: {
+            deps: [&#39;require&#39;,&#39;jsrsasign&#39;]
+        },
+    }
+}</code></pre>
                    </div><div class="search-results">
     <div class="has-results">
         <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>

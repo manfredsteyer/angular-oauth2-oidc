@@ -48,8 +48,8 @@
                                   <a href="../index.html" ><span class="fa fa-file-text-o"></span>README</a>
                                 </li>
                                 <li class="link">
-                                    <a href="./license.html"
-                                        >
+                                        <a href="../license.html"
+                                    >
                                         <span class="fa fa-file-text-o"></span>LICENSE
                                     </a>
                                 </li>
@@ -200,6 +200,7 @@
                         </ul>
                     </li>
             
+            
                     <li class="chapter">
                         <div class="simple menu-toggler" data-toggle="collapse"
                                 data-target="#xs-interfaces-links"
@@ -212,7 +213,16 @@
                                 id="xs-interfaces-links"
                             >
                                 <li class="link">
+                                    <a href="../interfaces/OidcDiscoveryDoc.html" >OidcDiscoveryDoc</a>
+                                </li>
+                                <li class="link">
                                     <a href="../interfaces/ParsedIdToken.html" >ParsedIdToken</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../interfaces/TokenResponse.html" >TokenResponse</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../interfaces/UserInfo.html" >UserInfo</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/ValidationParams.html" >ValidationParams</a>
@@ -285,8 +295,8 @@
                                          <a href="../index.html" ><span class="fa fa-file-text-o"></span>README</a>
                                        </li>
                                        <li class="link">
-                                           <a href="./license.html"
-                                               >
+                                               <a href="../license.html"
+                                           >
                                                <span class="fa fa-file-text-o"></span>LICENSE
                                            </a>
                                        </li>
@@ -437,6 +447,7 @@
                                </ul>
                            </li>
                    
+                   
                            <li class="chapter">
                                <div class="simple menu-toggler" data-toggle="collapse"
                                        data-target="#interfaces-links"
@@ -449,7 +460,16 @@
                                        id="interfaces-links"
                    >
                                        <li class="link">
+                                           <a href="../interfaces/OidcDiscoveryDoc.html" >OidcDiscoveryDoc</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../interfaces/ParsedIdToken.html" >ParsedIdToken</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../interfaces/TokenResponse.html" >TokenResponse</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../interfaces/UserInfo.html" >UserInfo</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/ValidationParams.html" >ValidationParams</a>
@@ -598,6 +618,9 @@ password flow.</p>
                                         <span class="modifier">Public</span> <a href="#getIdTokenExpiration">getIdTokenExpiration</a>
                                     </li>
                                     <li>
+                                        <span class="modifier">Public</span> <a href="#getRefreshToken">getRefreshToken</a>
+                                    </li>
+                                    <li>
                                         <span class="modifier">Protected</span> <a href="#getSessionState">getSessionState</a>
                                     </li>
                                     <li>
@@ -611,6 +634,9 @@ password flow.</p>
                                     </li>
                                     <li>
                                         <span class="modifier">Public</span> <a href="#loadDiscoveryDocument">loadDiscoveryDocument</a>
+                                    </li>
+                                    <li>
+                                        <span class="modifier">Public</span> <a href="#loadDiscoveryDocumentAndLogin">loadDiscoveryDocumentAndLogin</a>
                                     </li>
                                     <li>
                                         <span class="modifier">Public</span> <a href="#loadDiscoveryDocumentAndTryLogin">loadDiscoveryDocumentAndTryLogin</a>
@@ -661,15 +687,79 @@ password flow.</p>
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <code>constructor(http: <a href="https://angular.io/docs/ts/latest/api/http/index/Http-class.html" target="_blank">Http</a>, storage: <a href="../classes/OAuthStorage.html">OAuthStorage</a>, tokenValidationHandler: <a href="../classes/ValidationHandler.html">ValidationHandler</a>, config: <a href="../classes/AuthConfig.html">AuthConfig</a>, urlHelper: <a href="../injectables/UrlHelperService.html">UrlHelperService</a>)</code>
+                                    <code>constructor(http: <a href="https://angular.io/docs/ts/latest/api/api/common/http/HttpClient" target="_blank">HttpClient</a>, storage: <a href="../classes/OAuthStorage.html">OAuthStorage</a>, tokenValidationHandler: <a href="../classes/ValidationHandler.html">ValidationHandler</a>, config: <a href="../classes/AuthConfig.html">AuthConfig</a>, urlHelper: <a href="../injectables/UrlHelperService.html">UrlHelperService</a>)</code>
                                 </td>
                             </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/oauth-service.ts:65</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">src/oauth-service.ts:66</a></div>
                                         </td>
                                     </tr>
             
+                            <tr>
+                                <td class="col-md-4">
+                                        <div>
+                                                <b>Parameters :</b>
+                                                <table class="params">
+                                                    <thead>
+                                                        <tr>
+                                                            <td>Name</td>
+                                                            <td>Type</td>
+                                                            <td>Optional</td>
+                                                            <td>Description</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                            <tr>
+                                                              <td>http</td>
+                                                              <td>
+                                                                        <code><a href="https://angular.io/docs/ts/latest/api/api/common/http/HttpClient" target="_blank" >HttpClient</a></code>
+                                                              </td>
+                                                              <td>
+                                                              </td>
+                                                              <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>storage</td>
+                                                              <td>
+                                                                        <code><a href="../classes/OAuthStorage.html" target="_self" >OAuthStorage</a></code>
+                                                              </td>
+                                                              <td>
+                                                              </td>
+                                                              <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>tokenValidationHandler</td>
+                                                              <td>
+                                                                        <code><a href="../classes/ValidationHandler.html" target="_self" >ValidationHandler</a></code>
+                                                              </td>
+                                                              <td>
+                                                              </td>
+                                                              <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>config</td>
+                                                              <td>
+                                                                        <code><a href="../classes/AuthConfig.html" target="_self" >AuthConfig</a></code>
+                                                              </td>
+                                                              <td>
+                                                              </td>
+                                                              <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>urlHelper</td>
+                                                              <td>
+                                                                        <code><a href="../injectables/UrlHelperService.html" target="_self" >UrlHelperService</a></code>
+                                                              </td>
+                                                              <td>
+                                                              </td>
+                                                              <td></td>
+                                                            </tr>
+                                                    </tbody>
+                                                </table>
+                                        </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
@@ -684,12 +774,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="authorizationHeader"></a>
-                                    <b><span class="modifier">Public</span> authorizationHeader</b>
+                                    <span class="name"><b><span class="modifier">Public</span> authorizationHeader</b><a href="#authorizationHeader"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play "></span>
+                                        <span class="modifier-icon fa fa-reset"></span>
                                     <code>authorizationHeader()</code>
                                 </td>
                             </tr>
@@ -697,7 +787,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1376" class="link-to-prism">src/oauth-service.ts:1376</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1415" class="link-to-prism">src/oauth-service.ts:1415</a></div>
                                         </td>
                                     </tr>
             
@@ -720,12 +810,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="configure"></a>
-                                    <b><span class="modifier">Public</span> configure</b>
+                                    <span class="name"><b><span class="modifier">Public</span> configure</b><a href="#configure"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play "></span>
+                                        <span class="modifier-icon fa fa-reset"></span>
                                     <code>configure(config: <a href="../classes/AuthConfig.html">AuthConfig</a>)</code>
                                 </td>
                             </tr>
@@ -733,7 +823,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="102" class="link-to-prism">src/oauth-service.ts:102</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="107" class="link-to-prism">src/oauth-service.ts:107</a></div>
                                         </td>
                                     </tr>
             
@@ -749,12 +839,16 @@ password flow.</p>
                                                         <tr>
                                                             <td>Name</td>
                                                             <td>Type</td>
+                                                            <td>Optional</td>
                                                             <td>Description</td>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                             <tr>
                                                               <td>config</td>
+                                                              <td>
+                                                                      <code><a href="../classes/AuthConfig.html" target="_self" >AuthConfig</a></code>
+                                                              </td>
                                                               <td>
                                                               </td>
                                                               <td><p>the configuration</p>
@@ -781,12 +875,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="createAndSaveNonce"></a>
-                                    <b><span class="modifier">Public</span> createAndSaveNonce</b>
+                                    <span class="name"><b><span class="modifier">Public</span> createAndSaveNonce</b><a href="#createAndSaveNonce"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play "></span>
+                                        <span class="modifier-icon fa fa-reset"></span>
                                     <code>createAndSaveNonce()</code>
                                 </td>
                             </tr>
@@ -794,22 +888,17 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1424" class="link-to-prism">src/oauth-service.ts:1424</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1467" class="link-to-prism">src/oauth-service.ts:1467</a></div>
                                         </td>
                                     </tr>
             
                             <tr>
                                 <td class="col-md-4">
             
-                                        <div>
-                                        </div>
                                         <div class="io-description">
                                             <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
             
                                         </div>
-                                            <div class="io-description">
-                                                
-                                            </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -819,12 +908,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="createNonce"></a>
-                                    <b><span class="modifier">Protected</span> createNonce</b>
+                                    <span class="name"><b><span class="modifier">Protected</span> createNonce</b><a href="#createNonce"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play circle"></span>
+                                        <span class="modifier-icon fa fa-lock"></span>
                                     <code>createNonce()</code>
                                 </td>
                             </tr>
@@ -832,7 +921,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1432" class="link-to-prism">src/oauth-service.ts:1432</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1475" class="link-to-prism">src/oauth-service.ts:1475</a></div>
                                         </td>
                                     </tr>
             
@@ -852,20 +941,20 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="fetchTokenUsingPasswordFlow"></a>
-                                    <b><span class="modifier">Public</span> fetchTokenUsingPasswordFlow</b>
+                                    <span class="name"><b><span class="modifier">Public</span> fetchTokenUsingPasswordFlow</b><a href="#fetchTokenUsingPasswordFlow"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play "></span>
-                                    <code>fetchTokenUsingPasswordFlow(userName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, password: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, headers: <a href="../s/rs.html">Headers</a>)</code>
+                                        <span class="modifier-icon fa fa-reset"></span>
+                                    <code>fetchTokenUsingPasswordFlow(userName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, password: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, headers: <a href="../s/rs.html">HttpHeaders</a>)</code>
                                 </td>
                             </tr>
             
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="525" class="link-to-prism">src/oauth-service.ts:525</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="539" class="link-to-prism">src/oauth-service.ts:539</a></div>
                                         </td>
                                     </tr>
             
@@ -881,6 +970,7 @@ password flow.</p>
                                                         <tr>
                                                             <td>Name</td>
                                                             <td>Type</td>
+                                                            <td>Optional</td>
                                                             <td>Description</td>
                                                         </tr>
                                                     </thead>
@@ -888,17 +978,26 @@ password flow.</p>
                                                             <tr>
                                                               <td>userName</td>
                                                               <td>
+                                                                      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                              </td>
+                                                              <td>
                                                               </td>
                                                               <td></td>
                                                             </tr>
                                                             <tr>
                                                               <td>password</td>
                                                               <td>
+                                                                      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                              </td>
+                                                              <td>
                                                               </td>
                                                               <td></td>
                                                             </tr>
                                                             <tr>
                                                               <td>headers</td>
+                                                              <td>
+                                                                      <code><a href="../s/rs.html" target="_self" >HttpHeaders</a></code>
+                                                              </td>
                                                               <td>
                                                               </td>
                                                               <td><p>Optional additional http-headers.</p>
@@ -925,20 +1024,20 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="fetchTokenUsingPasswordFlowAndLoadUserProfile"></a>
-                                    <b><span class="modifier">Public</span> fetchTokenUsingPasswordFlowAndLoadUserProfile</b>
+                                    <span class="name"><b><span class="modifier">Public</span> fetchTokenUsingPasswordFlowAndLoadUserProfile</b><a href="#fetchTokenUsingPasswordFlowAndLoadUserProfile"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play "></span>
-                                    <code>fetchTokenUsingPasswordFlowAndLoadUserProfile(userName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, password: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, headers: <a href="../s/rs.html">Headers</a>)</code>
+                                        <span class="modifier-icon fa fa-reset"></span>
+                                    <code>fetchTokenUsingPasswordFlowAndLoadUserProfile(userName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, password: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, headers: <a href="../s/rs.html">HttpHeaders</a>)</code>
                                 </td>
                             </tr>
             
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="458" class="link-to-prism">src/oauth-service.ts:458</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="472" class="link-to-prism">src/oauth-service.ts:472</a></div>
                                         </td>
                                     </tr>
             
@@ -960,6 +1059,7 @@ password flow.</p>
                                                         <tr>
                                                             <td>Name</td>
                                                             <td>Type</td>
+                                                            <td>Optional</td>
                                                             <td>Description</td>
                                                         </tr>
                                                     </thead>
@@ -967,17 +1067,26 @@ password flow.</p>
                                                             <tr>
                                                               <td>userName</td>
                                                               <td>
+                                                                      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                              </td>
+                                                              <td>
                                                               </td>
                                                               <td></td>
                                                             </tr>
                                                             <tr>
                                                               <td>password</td>
                                                               <td>
+                                                                      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                              </td>
+                                                              <td>
                                                               </td>
                                                               <td></td>
                                                             </tr>
                                                             <tr>
                                                               <td>headers</td>
+                                                              <td>
+                                                                      <code><a href="../s/rs.html" target="_self" >HttpHeaders</a></code>
+                                                              </td>
                                                               <td>
                                                               </td>
                                                               <td><p>Optional additional http-headers.</p>
@@ -1004,12 +1113,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="getAccessToken"></a>
-                                    <b><span class="modifier">Public</span> getAccessToken</b>
+                                    <span class="name"><b><span class="modifier">Public</span> getAccessToken</b><a href="#getAccessToken"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play "></span>
+                                        <span class="modifier-icon fa fa-reset"></span>
                                     <code>getAccessToken()</code>
                                 </td>
                             </tr>
@@ -1017,7 +1126,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1303" class="link-to-prism">src/oauth-service.ts:1303</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1338" class="link-to-prism">src/oauth-service.ts:1338</a></div>
                                         </td>
                                     </tr>
             
@@ -1039,12 +1148,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="getAccessTokenExpiration"></a>
-                                    <b><span class="modifier">Public</span> getAccessTokenExpiration</b>
+                                    <span class="name"><b><span class="modifier">Public</span> getAccessTokenExpiration</b><a href="#getAccessTokenExpiration"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play "></span>
+                                        <span class="modifier-icon fa fa-reset"></span>
                                     <code>getAccessTokenExpiration()</code>
                                 </td>
                             </tr>
@@ -1052,7 +1161,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1311" class="link-to-prism">src/oauth-service.ts:1311</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1350" class="link-to-prism">src/oauth-service.ts:1350</a></div>
                                         </td>
                                     </tr>
             
@@ -1075,12 +1184,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="getIdentityClaims"></a>
-                                    <b><span class="modifier">Public</span> getIdentityClaims</b>
+                                    <span class="name"><b><span class="modifier">Public</span> getIdentityClaims</b><a href="#getIdentityClaims"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play "></span>
+                                        <span class="modifier-icon fa fa-reset"></span>
                                     <code>getIdentityClaims()</code>
                                 </td>
                             </tr>
@@ -1088,7 +1197,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1280" class="link-to-prism">src/oauth-service.ts:1280</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1315" class="link-to-prism">src/oauth-service.ts:1315</a></div>
                                         </td>
                                     </tr>
             
@@ -1110,12 +1219,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="getIdToken"></a>
-                                    <b><span class="modifier">Public</span> getIdToken</b>
+                                    <span class="name"><b><span class="modifier">Public</span> getIdToken</b><a href="#getIdToken"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play "></span>
+                                        <span class="modifier-icon fa fa-reset"></span>
                                     <code>getIdToken()</code>
                                 </td>
                             </tr>
@@ -1123,7 +1232,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1289" class="link-to-prism">src/oauth-service.ts:1289</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1324" class="link-to-prism">src/oauth-service.ts:1324</a></div>
                                         </td>
                                     </tr>
             
@@ -1145,12 +1254,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="getIdTokenExpiration"></a>
-                                    <b><span class="modifier">Public</span> getIdTokenExpiration</b>
+                                    <span class="name"><b><span class="modifier">Public</span> getIdTokenExpiration</b><a href="#getIdTokenExpiration"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play "></span>
+                                        <span class="modifier-icon fa fa-reset"></span>
                                     <code>getIdTokenExpiration()</code>
                                 </td>
                             </tr>
@@ -1158,7 +1267,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1329" class="link-to-prism">src/oauth-service.ts:1329</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1368" class="link-to-prism">src/oauth-service.ts:1368</a></div>
                                         </td>
                                     </tr>
             
@@ -1180,13 +1289,46 @@ password flow.</p>
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <a name="getSessionState"></a>
-                                    <b><span class="modifier">Protected</span> getSessionState</b>
+                                    <a name="getRefreshToken"></a>
+                                    <span class="name"><b><span class="modifier">Public</span> getRefreshToken</b><a href="#getRefreshToken"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play circle"></span>
+                                        <span class="modifier-icon fa fa-reset"></span>
+                                    <code>getRefreshToken()</code>
+                                </td>
+                            </tr>
+            
+            
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="1342" class="link-to-prism">src/oauth-service.ts:1342</a></div>
+                                        </td>
+                                    </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            
+                                        <div class="io-description">
+                                            <b>Returns : </b>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+            
+                                        </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <a name="getSessionState"></a>
+                                    <span class="name"><b><span class="modifier">Protected</span> getSessionState</b><a href="#getSessionState"><span class="fa fa-link"></span></a></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon fa fa-lock"></span>
                                     <code>getSessionState()</code>
                                 </td>
                             </tr>
@@ -1194,7 +1336,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1140" class="link-to-prism">src/oauth-service.ts:1140</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1175" class="link-to-prism">src/oauth-service.ts:1175</a></div>
                                         </td>
                                     </tr>
             
@@ -1214,12 +1356,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="hasValidAccessToken"></a>
-                                    <b><span class="modifier">Public</span> hasValidAccessToken</b>
+                                    <span class="name"><b><span class="modifier">Public</span> hasValidAccessToken</b><a href="#hasValidAccessToken"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play "></span>
+                                        <span class="modifier-icon fa fa-reset"></span>
                                     <code>hasValidAccessToken()</code>
                                 </td>
                             </tr>
@@ -1227,7 +1369,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1339" class="link-to-prism">src/oauth-service.ts:1339</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1378" class="link-to-prism">src/oauth-service.ts:1378</a></div>
                                         </td>
                                     </tr>
             
@@ -1249,12 +1391,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="hasValidIdToken"></a>
-                                    <b><span class="modifier">Public</span> hasValidIdToken</b>
+                                    <span class="name"><b><span class="modifier">Public</span> hasValidIdToken</b><a href="#hasValidIdToken"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play "></span>
+                                        <span class="modifier-icon fa fa-reset"></span>
                                     <code>hasValidIdToken()</code>
                                 </td>
                             </tr>
@@ -1262,7 +1404,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1357" class="link-to-prism">src/oauth-service.ts:1357</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1396" class="link-to-prism">src/oauth-service.ts:1396</a></div>
                                         </td>
                                     </tr>
             
@@ -1284,20 +1426,20 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="initImplicitFlow"></a>
-                                    <b><span class="modifier">Public</span> initImplicitFlow</b>
+                                    <span class="name"><b><span class="modifier">Public</span> initImplicitFlow</b><a href="#initImplicitFlow"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play "></span>
-                                    <code>initImplicitFlow(additionalState: , params: string|object)</code>
+                                        <span class="modifier-icon fa fa-reset"></span>
+                                    <code>initImplicitFlow(additionalState: , params: string | object)</code>
                                 </td>
                             </tr>
             
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="966" class="link-to-prism">src/oauth-service.ts:966</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="998" class="link-to-prism">src/oauth-service.ts:998</a></div>
                                         </td>
                                     </tr>
             
@@ -1314,6 +1456,7 @@ password flow.</p>
                                                         <tr>
                                                             <td>Name</td>
                                                             <td>Type</td>
+                                                            <td>Optional</td>
                                                             <td>Description</td>
                                                         </tr>
                                                     </thead>
@@ -1322,12 +1465,17 @@ password flow.</p>
                                                               <td>additionalState</td>
                                                               <td>
                                                               </td>
+                                                              <td>
+                                                              </td>
                                                               <td><p>Optinal state that is passes around.
             You find this state in the property <code>state</code> after <code>tryLogin</code> logged in the user.</p>
             </td>
                                                             </tr>
                                                             <tr>
                                                               <td>params</td>
+                                                              <td>
+                                                                      <code>string | object</code>
+                                                              </td>
                                                               <td>
                                                               </td>
                                                               <td><p>Hash with additional parameter. If it is a string, it is used for the 
@@ -1355,12 +1503,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="loadDiscoveryDocument"></a>
-                                    <b><span class="modifier">Public</span> loadDiscoveryDocument</b>
+                                    <span class="name"><b><span class="modifier">Public</span> loadDiscoveryDocument</b><a href="#loadDiscoveryDocument"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play "></span>
+                                        <span class="modifier-icon fa fa-reset"></span>
                                     <code>loadDiscoveryDocument(fullUrl: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                                 </td>
                             </tr>
@@ -1368,7 +1516,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="301" class="link-to-prism">src/oauth-service.ts:301</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="314" class="link-to-prism">src/oauth-service.ts:314</a></div>
                                         </td>
                                     </tr>
             
@@ -1388,12 +1536,16 @@ password flow.</p>
                                                         <tr>
                                                             <td>Name</td>
                                                             <td>Type</td>
+                                                            <td>Optional</td>
                                                             <td>Description</td>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                             <tr>
                                                               <td>fullUrl</td>
+                                                              <td>
+                                                                      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                              </td>
                                                               <td>
                                                               </td>
                                                               <td></td>
@@ -1418,13 +1570,46 @@ password flow.</p>
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <a name="loadDiscoveryDocumentAndTryLogin"></a>
-                                    <b><span class="modifier">Public</span> loadDiscoveryDocumentAndTryLogin</b>
+                                    <a name="loadDiscoveryDocumentAndLogin"></a>
+                                    <span class="name"><b><span class="modifier">Public</span> loadDiscoveryDocumentAndLogin</b><a href="#loadDiscoveryDocumentAndLogin"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play "></span>
+                                        <span class="modifier-icon fa fa-reset"></span>
+                                    <code>loadDiscoveryDocumentAndLogin()</code>
+                                </td>
+                            </tr>
+            
+            
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="166" class="link-to-prism">src/oauth-service.ts:166</a></div>
+                                        </td>
+                                    </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            
+                                        <div class="io-description">
+                                            <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+            
+                                        </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <a name="loadDiscoveryDocumentAndTryLogin"></a>
+                                    <span class="name"><b><span class="modifier">Public</span> loadDiscoveryDocumentAndTryLogin</b><a href="#loadDiscoveryDocumentAndTryLogin"><span class="fa fa-link"></span></a></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon fa fa-reset"></span>
                                     <code>loadDiscoveryDocumentAndTryLogin()</code>
                                 </td>
                             </tr>
@@ -1432,7 +1617,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="155" class="link-to-prism">src/oauth-service.ts:155</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="159" class="link-to-prism">src/oauth-service.ts:159</a></div>
                                         </td>
                                     </tr>
             
@@ -1452,12 +1637,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="loadUserProfile"></a>
-                                    <b><span class="modifier">Public</span> loadUserProfile</b>
+                                    <span class="name"><b><span class="modifier">Public</span> loadUserProfile</b><a href="#loadUserProfile"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play "></span>
+                                        <span class="modifier-icon fa fa-reset"></span>
                                     <code>loadUserProfile()</code>
                                 </td>
                             </tr>
@@ -1465,7 +1650,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="474" class="link-to-prism">src/oauth-service.ts:474</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="488" class="link-to-prism">src/oauth-service.ts:488</a></div>
                                         </td>
                                     </tr>
             
@@ -1490,12 +1675,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="logOut"></a>
-                                    <b><span class="modifier">Public</span> logOut</b>
+                                    <span class="name"><b><span class="modifier">Public</span> logOut</b><a href="#logOut"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play "></span>
+                                        <span class="modifier-icon fa fa-reset"></span>
                                     <code>logOut(noRedirectToLogoutUrl: )</code>
                                 </td>
                             </tr>
@@ -1503,7 +1688,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1386" class="link-to-prism">src/oauth-service.ts:1386</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1425" class="link-to-prism">src/oauth-service.ts:1425</a></div>
                                         </td>
                                     </tr>
             
@@ -1521,12 +1706,15 @@ password flow.</p>
                                                         <tr>
                                                             <td>Name</td>
                                                             <td>Type</td>
+                                                            <td>Optional</td>
                                                             <td>Description</td>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                             <tr>
                                                               <td>noRedirectToLogoutUrl</td>
+                                                              <td>
+                                                              </td>
                                                               <td>
                                                               </td>
                                                               <td></td>
@@ -1552,12 +1740,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="processIdToken"></a>
-                                    <b><span class="modifier">Public</span> processIdToken</b>
+                                    <span class="name"><b><span class="modifier">Public</span> processIdToken</b><a href="#processIdToken"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play "></span>
+                                        <span class="modifier-icon fa fa-reset"></span>
                                     <code>processIdToken(idToken: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, accessToken: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                                 </td>
                             </tr>
@@ -1565,17 +1753,50 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1153" class="link-to-prism">src/oauth-service.ts:1153</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1188" class="link-to-prism">src/oauth-service.ts:1188</a></div>
                                         </td>
                                     </tr>
             
                             <tr>
                                 <td class="col-md-4">
             
+                                        <div class="io-description">
+                                                <b>Parameters :</b>
+                                                <table class="params">
+                                                    <thead>
+                                                        <tr>
+                                                            <td>Name</td>
+                                                            <td>Type</td>
+                                                            <td>Optional</td>
+                                                            <td>Description</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                            <tr>
+                                                              <td>idToken</td>
+                                                              <td>
+                                                                      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                              </td>
+                                                              <td>
+                                                              </td>
+                                                              <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>accessToken</td>
+                                                              <td>
+                                                                      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                              </td>
+                                                              <td>
+                                                              </td>
+                                                              <td></td>
+                                                            </tr>
+                                                    </tbody>
+                                                </table>
+                                        </div>
                                         <div>
                                         </div>
                                         <div class="io-description">
-                                            <b>Returns : </b>    <code>Promise&lt;&gt;</code>
+                                            <b>Returns : </b>    <code><a href="../interfaces/ParsedIdToken.html" target="_self" >Promise&lt;ParsedIdToken&gt;</a></code>
             
                                         </div>
                                             <div class="io-description">
@@ -1590,12 +1811,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="refreshToken"></a>
-                                    <b><span class="modifier">Public</span> refreshToken</b>
+                                    <span class="name"><b><span class="modifier">Public</span> refreshToken</b><a href="#refreshToken"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play "></span>
+                                        <span class="modifier-icon fa fa-reset"></span>
                                     <code>refreshToken()</code>
                                 </td>
                             </tr>
@@ -1603,7 +1824,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="572" class="link-to-prism">src/oauth-service.ts:572</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="592" class="link-to-prism">src/oauth-service.ts:592</a></div>
                                         </td>
                                     </tr>
             
@@ -1629,12 +1850,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="restartSessionChecksIfStillLoggedIn"></a>
-                                    <b><span class="modifier">Public</span> restartSessionChecksIfStillLoggedIn</b>
+                                    <span class="name"><b><span class="modifier">Public</span> restartSessionChecksIfStillLoggedIn</b><a href="#restartSessionChecksIfStillLoggedIn"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play "></span>
+                                        <span class="modifier-icon fa fa-reset"></span>
                                     <code>restartSessionChecksIfStillLoggedIn()</code>
                                 </td>
                             </tr>
@@ -1642,7 +1863,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="119" class="link-to-prism">src/oauth-service.ts:119</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="124" class="link-to-prism">src/oauth-service.ts:124</a></div>
                                         </td>
                                     </tr>
             
@@ -1662,12 +1883,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="setStorage"></a>
-                                    <b><span class="modifier">Public</span> setStorage</b>
+                                    <span class="name"><b><span class="modifier">Public</span> setStorage</b><a href="#setStorage"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play "></span>
+                                        <span class="modifier-icon fa fa-reset"></span>
                                     <code>setStorage(storage: <a href="../classes/OAuthStorage.html">OAuthStorage</a>)</code>
                                 </td>
                             </tr>
@@ -1675,7 +1896,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="287" class="link-to-prism">src/oauth-service.ts:287</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="300" class="link-to-prism">src/oauth-service.ts:300</a></div>
                                         </td>
                                     </tr>
             
@@ -1693,12 +1914,16 @@ password flow.</p>
                                                         <tr>
                                                             <td>Name</td>
                                                             <td>Type</td>
+                                                            <td>Optional</td>
                                                             <td>Description</td>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                             <tr>
                                                               <td>storage</td>
+                                                              <td>
+                                                                      <code><a href="../classes/OAuthStorage.html" target="_self" >OAuthStorage</a></code>
+                                                              </td>
                                                               <td>
                                                               </td>
                                                               <td></td>
@@ -1724,12 +1949,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="setupAutomaticSilentRefresh"></a>
-                                    <b><span class="modifier">Public</span> setupAutomaticSilentRefresh</b>
+                                    <span class="name"><b><span class="modifier">Public</span> setupAutomaticSilentRefresh</b><a href="#setupAutomaticSilentRefresh"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play "></span>
+                                        <span class="modifier-icon fa fa-reset"></span>
                                     <code>setupAutomaticSilentRefresh(params: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank">object</a>)</code>
                                 </td>
                             </tr>
@@ -1737,7 +1962,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="142" class="link-to-prism">src/oauth-service.ts:142</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="147" class="link-to-prism">src/oauth-service.ts:147</a></div>
                                         </td>
                                     </tr>
             
@@ -1751,12 +1976,16 @@ password flow.</p>
                                                         <tr>
                                                             <td>Name</td>
                                                             <td>Type</td>
+                                                            <td>Optional</td>
                                                             <td>Description</td>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                             <tr>
                                                               <td>params</td>
+                                                              <td>
+                                                                      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+                                                              </td>
                                                               <td>
                                                               </td>
                                                               <td><p>Additional parameter to pass</p>
@@ -1783,12 +2012,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="silentRefresh"></a>
-                                    <b><span class="modifier">Public</span> silentRefresh</b>
+                                    <span class="name"><b><span class="modifier">Public</span> silentRefresh</b><a href="#silentRefresh"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play "></span>
+                                        <span class="modifier-icon fa fa-reset"></span>
                                     <code>silentRefresh(params: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank">object</a>)</code>
                                 </td>
                             </tr>
@@ -1796,7 +2025,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="659" class="link-to-prism">src/oauth-service.ts:659</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="685" class="link-to-prism">src/oauth-service.ts:685</a></div>
                                         </td>
                                     </tr>
             
@@ -1808,9 +2037,38 @@ password flow.</p>
             </div>
             
                                         <div class="io-description">
-                                            <b>Returns : </b>    <code>Promise&lt;&gt;</code>
+                                                <b>Parameters :</b>
+                                                <table class="params">
+                                                    <thead>
+                                                        <tr>
+                                                            <td>Name</td>
+                                                            <td>Type</td>
+                                                            <td>Optional</td>
+                                                            <td>Description</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                            <tr>
+                                                              <td>params</td>
+                                                              <td>
+                                                                      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank" >object</a></code>
+                                                              </td>
+                                                              <td>
+                                                              </td>
+                                                              <td></td>
+                                                            </tr>
+                                                    </tbody>
+                                                </table>
+                                        </div>
+                                        <div>
+                                        </div>
+                                        <div class="io-description">
+                                            <b>Returns : </b>    <code><a href="../classes/OAuthEvent.html" target="_self" >Promise&lt;OAuthEvent&gt;</a></code>
             
                                         </div>
+                                            <div class="io-description">
+                                                
+                                            </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -1820,12 +2078,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="storeIdToken"></a>
-                                    <b><span class="modifier">Protected</span> storeIdToken</b>
+                                    <span class="name"><b><span class="modifier">Protected</span> storeIdToken</b><a href="#storeIdToken"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play circle"></span>
+                                        <span class="modifier-icon fa fa-lock"></span>
                                     <code>storeIdToken(idToken: <a href="../interfaces/ParsedIdToken.html">ParsedIdToken</a>)</code>
                                 </td>
                             </tr>
@@ -1833,7 +2091,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1129" class="link-to-prism">src/oauth-service.ts:1129</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1164" class="link-to-prism">src/oauth-service.ts:1164</a></div>
                                         </td>
                                     </tr>
             
@@ -1841,9 +2099,38 @@ password flow.</p>
                                 <td class="col-md-4">
             
                                         <div class="io-description">
+                                                <b>Parameters :</b>
+                                                <table class="params">
+                                                    <thead>
+                                                        <tr>
+                                                            <td>Name</td>
+                                                            <td>Type</td>
+                                                            <td>Optional</td>
+                                                            <td>Description</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                            <tr>
+                                                              <td>idToken</td>
+                                                              <td>
+                                                                      <code><a href="../interfaces/ParsedIdToken.html" target="_self" >ParsedIdToken</a></code>
+                                                              </td>
+                                                              <td>
+                                                              </td>
+                                                              <td></td>
+                                                            </tr>
+                                                    </tbody>
+                                                </table>
+                                        </div>
+                                        <div>
+                                        </div>
+                                        <div class="io-description">
                                             <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
             
                                         </div>
+                                            <div class="io-description">
+                                                
+                                            </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -1853,12 +2140,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="storeSessionState"></a>
-                                    <b><span class="modifier">Protected</span> storeSessionState</b>
+                                    <span class="name"><b><span class="modifier">Protected</span> storeSessionState</b><a href="#storeSessionState"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play circle"></span>
+                                        <span class="modifier-icon fa fa-lock"></span>
                                     <code>storeSessionState(sessionState: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                                 </td>
                             </tr>
@@ -1866,7 +2153,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1136" class="link-to-prism">src/oauth-service.ts:1136</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1171" class="link-to-prism">src/oauth-service.ts:1171</a></div>
                                         </td>
                                     </tr>
             
@@ -1874,9 +2161,38 @@ password flow.</p>
                                 <td class="col-md-4">
             
                                         <div class="io-description">
+                                                <b>Parameters :</b>
+                                                <table class="params">
+                                                    <thead>
+                                                        <tr>
+                                                            <td>Name</td>
+                                                            <td>Type</td>
+                                                            <td>Optional</td>
+                                                            <td>Description</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                            <tr>
+                                                              <td>sessionState</td>
+                                                              <td>
+                                                                      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                                              </td>
+                                                              <td>
+                                                              </td>
+                                                              <td></td>
+                                                            </tr>
+                                                    </tbody>
+                                                </table>
+                                        </div>
+                                        <div>
+                                        </div>
+                                        <div class="io-description">
                                             <b>Returns : </b>    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
             
                                         </div>
+                                            <div class="io-description">
+                                                
+                                            </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -1886,12 +2202,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="tryLogin"></a>
-                                    <b><span class="modifier">Public</span> tryLogin</b>
+                                    <span class="name"><b><span class="modifier">Public</span> tryLogin</b><a href="#tryLogin"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                        <span class="modifier-icon method fa fa-play "></span>
+                                        <span class="modifier-icon fa fa-reset"></span>
                                     <code>tryLogin(options: <a href="../classes/LoginOptions.html">LoginOptions</a>)</code>
                                 </td>
                             </tr>
@@ -1899,7 +2215,7 @@ password flow.</p>
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="1027" class="link-to-prism">src/oauth-service.ts:1027</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="1059" class="link-to-prism">src/oauth-service.ts:1059</a></div>
                                         </td>
                                     </tr>
             
@@ -1918,12 +2234,16 @@ password flow.</p>
                                                         <tr>
                                                             <td>Name</td>
                                                             <td>Type</td>
+                                                            <td>Optional</td>
                                                             <td>Description</td>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                             <tr>
                                                               <td>options</td>
+                                                              <td>
+                                                                      <code><a href="../classes/LoginOptions.html" target="_self" >LoginOptions</a></code>
+                                                              </td>
                                                               <td>
                                                               </td>
                                                               <td><p>Optinal options.</p>
@@ -1957,12 +2277,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="events"></a>
-                                    <b><span class="modifier">Public</span> events</b>
+                                    <span class="name"><b><span class="modifier">Public</span> events</b><a href="#events"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <span class="modifier-icon fa fa-"></span><code>events:     <code><a href="../classes/OAuthEvent.html" target="_self" >Observable&lt;OAuthEvent&gt;</a></code>
+                                    <span class="modifier-icon fa fa-reset"></span><code>events:     <code><a href="../classes/OAuthEvent.html" target="_self" >Observable&lt;OAuthEvent&gt;</a></code>
             </code>
                                 </td>
                             </tr>
@@ -1974,7 +2294,7 @@ password flow.</p>
                                 </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/oauth-service.ts:47</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">src/oauth-service.ts:48</a></div>
                                         </td>
                                     </tr>
             
@@ -1993,18 +2313,18 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="state"></a>
-                                    <b><span class="modifier">Public</span> state</b>
+                                    <span class="name"><b><span class="modifier">Public</span> state</b><a href="#state"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <span class="modifier-icon fa fa-"></span><code>state:     <code></code>
+                                    <span class="modifier-icon fa fa-reset"></span><code>state:     <code></code>
             </code>
                                 </td>
                             </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/oauth-service.ts:53</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">src/oauth-service.ts:54</a></div>
                                         </td>
                                     </tr>
             
@@ -2023,12 +2343,12 @@ password flow.</p>
                             <tr>
                                 <td class="col-md-4">
                                     <a name="tokenValidationHandler"></a>
-                                    <b><span class="modifier">Public</span> tokenValidationHandler</b>
+                                    <span class="name"><b><span class="modifier">Public</span> tokenValidationHandler</b><a href="#tokenValidationHandler"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <span class="modifier-icon fa fa-"></span><code>tokenValidationHandler:     <code><a href="../classes/ValidationHandler.html" target="_self" >ValidationHandler</a></code>
+                                    <span class="modifier-icon fa fa-reset"></span><code>tokenValidationHandler:     <code><a href="../classes/ValidationHandler.html" target="_self" >ValidationHandler</a></code>
             </code>
                                 </td>
                             </tr>
@@ -2040,7 +2360,7 @@ password flow.</p>
                                 </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/oauth-service.ts:29</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">src/oauth-service.ts:30</a></div>
                                         </td>
                                     </tr>
             
@@ -2055,19 +2375,21 @@ password flow.</p>
                         </tbody>
                     </table>
             </section>
+
     </div>
 
 
     <div class="tab-pane fade tab-source-code" id="source">
-        <pre class="line-numbers"><code class="language-typescript">import { Http, URLSearchParams, Headers } from &#x27;@angular/http&#x27;;
-import { Injectable, Optional } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers"><code class="language-typescript">import { Injectable, Optional } from &#x27;@angular/core&#x27;;
+import { HttpClient, HttpHeaders } from &#x27;@angular/common/http&#x27;;
 import { Observable } from &#x27;rxjs/Observable&#x27;;
 import { Subject } from &#x27;rxjs/Subject&#x27;;
+import { Subscription } from &#x27;rxjs/Subscription&#x27;;
+
 import { ValidationHandler, ValidationParams } from &#x27;./token-validation/validation-handler&#x27;;
 import { UrlHelperService } from &#x27;./url-helper.service&#x27;;
-import { Subscription } from &#x27;rxjs/Subscription&#x27;;
 import { OAuthEvent, OAuthInfoEvent, OAuthErrorEvent, OAuthSuccessEvent } from &#x27;./events&#x27;;
-import { OAuthStorage, LoginOptions, ParsedIdToken } from &#x27;./types&#x27;;
+import { OAuthStorage, LoginOptions, ParsedIdToken, OidcDiscoveryDoc, TokenResponse, UserInfo } from &#x27;./types&#x27;;
 import { b64DecodeUnicode } from &#x27;./base64-helper&#x27;;
 import { AuthConfig } from &#x27;./auth.config&#x27;;
 
@@ -2126,7 +2448,7 @@ export class OAuthService
     private silentRefreshSubject: string;
 
     constructor(
-        private http: Http,
+        private http: HttpClient,
         @Optional() storage: OAuthStorage,
         @Optional() tokenValidationHandler: ValidationHandler,
         @Optional() private config: AuthConfig,
@@ -2145,15 +2467,19 @@ export class OAuthService
             this.configure(config);
         }
 
-        if (storage) {
-            this.setStorage(storage);
-        } else if (typeof sessionStorage !&#x3D;&#x3D; &#x27;undefined&#x27;) {
-            this.setStorage(sessionStorage);
+        
+        try {
+            if (storage) {
+                this.setStorage(storage);
+            } else if (typeof sessionStorage !&#x3D;&#x3D; &#x27;undefined&#x27;) {
+                this.setStorage(sessionStorage);
+            }
         }
-
+        catch(e) {
+            console.error(&#x27;cannot access sessionStorage. Consider setting an own storage implementation using setStorage&#x27;, e);
+        }
         this.setupRefreshTimer();
 
-        
     }
 
     /**
@@ -2201,14 +2527,13 @@ export class OAuthService
      * @param params Additional parameter to pass
      */
     public setupAutomaticSilentRefresh(params: object &#x3D; {}) {
-        this
-        .events
-        .filter(e &#x3D;&gt; e.type &#x3D;&#x3D;&#x3D; &#x27;token_expires&#x27;)
-        .subscribe(e &#x3D;&gt; {
-          this.silentRefresh(params).catch(_ &#x3D;&gt; {
-              this.debug(&#x27;automatic silent refresh did not work&#x27;);
-          })
-        });
+        this.events
+            .filter(e &#x3D;&gt; e.type &#x3D;&#x3D;&#x3D; &#x27;token_expires&#x27;)
+            .subscribe(e &#x3D;&gt; {
+                this.silentRefresh(params).catch(_ &#x3D;&gt; {
+                    this.debug(&#x27;automatic silent refresh did not work&#x27;);
+                });
+            });
 
         this.restartRefreshTimerIfStillLoggedIn();
     }
@@ -2216,6 +2541,15 @@ export class OAuthService
     public loadDiscoveryDocumentAndTryLogin() {
         return this.loadDiscoveryDocument().then((doc) &#x3D;&gt; {
             return this.tryLogin();
+        });
+    }
+
+
+    public loadDiscoveryDocumentAndLogin() {
+        this.loadDiscoveryDocumentAndTryLogin().then(_ &#x3D;&gt; {
+            if (!this.hasValidIdToken() || !this.hasValidAccessToken()) {
+              this.initImplicitFlow();
+            }
         });
     }
 
@@ -2367,7 +2701,7 @@ export class OAuthService
                 fullUrl &#x3D; this.issuer || &#x27;&#x27;;
                 if (!fullUrl.endsWith(&#x27;/&#x27;)) {
                     fullUrl +&#x3D; &#x27;/&#x27;;
-                }               
+                }
                 fullUrl +&#x3D; &#x27;.well-known/openid-configuration&#x27;;
             }
 
@@ -2376,8 +2710,9 @@ export class OAuthService
                 return;
             }
 
-            this.http.get(fullUrl).map(r &#x3D;&gt; r.json()).subscribe(
+            this.http.get&lt;OidcDiscoveryDoc&gt;(fullUrl).subscribe(
                 (doc) &#x3D;&gt; {
+
 
                     if (!this.validateDiscoveryDocument(doc)) {
                         this.eventsSubject.next(new OAuthErrorEvent(&#x27;discovery_document_validation_error&#x27;, null));
@@ -2429,7 +2764,7 @@ export class OAuthService
     private loadJwks(): Promise&lt;object&gt; {
         return new Promise&lt;object&gt;((resolve, reject) &#x3D;&gt; {
             if (this.jwksUri) {
-                this.http.get(this.jwksUri).map(r &#x3D;&gt; r.json()).subscribe(
+                this.http.get(this.jwksUri).subscribe(
                     jwks &#x3D;&gt; {
                         this.jwks &#x3D; jwks;
                         this.eventsSubject.next(new OAuthSuccessEvent(&#x27;discovery_document_loaded&#x27;));
@@ -2449,55 +2784,55 @@ export class OAuthService
 
     }
 
-    private validateDiscoveryDocument(doc: object): boolean {
+    private validateDiscoveryDocument(doc: OidcDiscoveryDoc): boolean {
 
         let errors: string[];
 
-        if (doc[&#x27;issuer&#x27;] !&#x3D;&#x3D; this.issuer) {
+        if (!this.skipIssuerCheck &amp;&amp; doc.issuer !&#x3D;&#x3D; this.issuer) {
             console.error(
                 &#x27;invalid issuer in discovery document&#x27;,
                 &#x27;expected: &#x27; + this.issuer,
-                &#x27;current: &#x27; + doc[&#x27;issuer&#x27;]
+                &#x27;current: &#x27; + doc.issuer
             );
             return false;
         }
 
-        errors &#x3D; this.validateUrlFromDiscoveryDocument(doc[&#x27;authorization_endpoint&#x27;]);
+        errors &#x3D; this.validateUrlFromDiscoveryDocument(doc.authorization_endpoint);
         if (errors.length &gt; 0) {
             console.error(&#x27;error validating authorization_endpoint in discovery document&#x27;, errors);
             return false;
         }
 
-        errors &#x3D; this.validateUrlFromDiscoveryDocument(doc[&#x27;end_session_endpoint&#x27;]);
+        errors &#x3D; this.validateUrlFromDiscoveryDocument(doc.end_session_endpoint);
         if (errors.length &gt; 0) {
             console.error(&#x27;error validating end_session_endpoint in discovery document&#x27;, errors);
             return false;
         }
 
-        errors &#x3D; this.validateUrlFromDiscoveryDocument(doc[&#x27;token_endpoint&#x27;]);
+        errors &#x3D; this.validateUrlFromDiscoveryDocument(doc.token_endpoint);
         if (errors.length &gt; 0) {
             console.error(&#x27;error validating token_endpoint in discovery document&#x27;, errors);
         }
 
-        errors &#x3D; this.validateUrlFromDiscoveryDocument(doc[&#x27;userinfo_endpoint&#x27;]);
+        errors &#x3D; this.validateUrlFromDiscoveryDocument(doc.userinfo_endpoint);
         if (errors.length &gt; 0) {
             console.error(&#x27;error validating userinfo_endpoint in discovery document&#x27;, errors);
             return false;
         }
 
-        errors &#x3D; this.validateUrlFromDiscoveryDocument(doc[&#x27;jwks_uri&#x27;]);
+        errors &#x3D; this.validateUrlFromDiscoveryDocument(doc.jwks_uri);
         if (errors.length &gt; 0) {
             console.error(&#x27;error validating jwks_uri in discovery document&#x27;, errors);
             return false;
         }
 
-        if (this.sessionChecksEnabled &amp;&amp;  !doc[&#x27;check_session_iframe&#x27;]) {
+        if (this.sessionChecksEnabled &amp;&amp;  !doc.check_session_iframe) {
             console.warn(
                 &#x27;sessionChecksEnabled is activated but discovery document&#x27;
                 + &#x27; does not contain a check_session_iframe field&#x27;);
         }
 
-        this.sessionChecksEnabled &#x3D; doc[&#x27;check_session_iframe&#x27;];
+        // this.sessionChecksEnabled &#x3D; !!doc.check_session_iframe;
 
         return true;
     }
@@ -2519,7 +2854,7 @@ export class OAuthService
     public fetchTokenUsingPasswordFlowAndLoadUserProfile(
         userName: string,
         password: string,
-        headers: Headers &#x3D; new Headers()): Promise&lt;object&gt; {
+        headers: HttpHeaders &#x3D; new HttpHeaders()): Promise&lt;object&gt; {
         return this
                 .fetchTokenUsingPasswordFlow(userName, password, headers)
                 .then(() &#x3D;&gt; this.loadUserProfile());
@@ -2542,17 +2877,17 @@ export class OAuthService
 
         return new Promise((resolve, reject) &#x3D;&gt; {
 
-            let headers &#x3D; new Headers();
-            headers.set(&#x27;Authorization&#x27;, &#x27;Bearer &#x27; + this.getAccessToken());
+            const headers &#x3D; new HttpHeaders()
+                .set(&#x27;Authorization&#x27;, &#x27;Bearer &#x27; + this.getAccessToken());
 
-            this.http.get(this.userinfoEndpoint, { headers }).map(r &#x3D;&gt; r.json()).subscribe(
-                (doc) &#x3D;&gt; {
-                    this.debug(&#x27;userinfo received&#x27;, doc);
+            this.http.get&lt;UserInfo&gt;(this.userinfoEndpoint, { headers }).subscribe(
+                (info) &#x3D;&gt; {
+                    this.debug(&#x27;userinfo received&#x27;, info);
 
                     let existingClaims &#x3D; this.getIdentityClaims() || {};
-                    
+
                     if (!this.skipSubjectCheck) {
-                        if (this.oidc &amp;&amp; (!existingClaims[&#x27;sub&#x27;] || doc.sub !&#x3D;&#x3D; existingClaims[&#x27;sub&#x27;])) {
+                        if (this.oidc &amp;&amp; (!existingClaims[&#x27;sub&#x27;] || info.sub !&#x3D;&#x3D; existingClaims[&#x27;sub&#x27;])) {
                             let err &#x3D; &#x27;if property oidc is true, the received user-id (sub) has to be the user-id &#x27;
                                         + &#x27;of the user that has logged in with oidc.\n&#x27;
                                         + &#x27;if you are not using oidc but just oauth2 password flow set oidc to false&#x27;;
@@ -2562,11 +2897,11 @@ export class OAuthService
                         }
                     }
 
-                    doc &#x3D; Object.assign({}, existingClaims, doc);
+                    info &#x3D; Object.assign({}, existingClaims, info);
 
-                    this._storage.setItem(&#x27;id_token_claims_obj&#x27;, JSON.stringify(doc));
+                    this._storage.setItem(&#x27;id_token_claims_obj&#x27;, JSON.stringify(info));
                     this.eventsSubject.next(new OAuthSuccessEvent(&#x27;user_profile_loaded&#x27;));
-                    resolve(doc);
+                    resolve(info);
                 },
                 (err) &#x3D;&gt; {
                     console.error(&#x27;error loading user info&#x27;, err);
@@ -2583,7 +2918,7 @@ export class OAuthService
      * @param password
      * @param headers Optional additional http-headers.
      */
-    public fetchTokenUsingPasswordFlow(userName: string, password: string, headers: Headers &#x3D; new Headers()): Promise&lt;object&gt; {
+    public fetchTokenUsingPasswordFlow(userName: string, password: string, headers: HttpHeaders &#x3D; new HttpHeaders()): Promise&lt;object&gt; {
 
         if (!this.validateUrlForHttps(this.tokenEndpoint)) {
             throw new Error(&#x27;tokenEndpoint must use Http. Also check property requireHttps.&#x27;);
@@ -2601,11 +2936,17 @@ export class OAuthService
                 search.set(&#x27;client_secret&#x27;, this.dummyClientSecret);
             }
 
-            headers.set(&#x27;Content-Type&#x27;, &#x27;application/x-www-form-urlencoded&#x27;);
+            if (this.customQueryParams) {
+                for (let key of Object.getOwnPropertyNames(this.customQueryParams)) {
+                    search.set(key, this.customQueryParams[key]);
+                }
+            }
+
+            headers &#x3D; headers.set(&#x27;Content-Type&#x27;, &#x27;application/x-www-form-urlencoded&#x27;);
 
             let params &#x3D; search.toString();
 
-            this.http.post(this.tokenEndpoint, params, { headers }).map(r &#x3D;&gt; r.json()).subscribe(
+            this.http.post&lt;TokenResponse&gt;(this.tokenEndpoint, params, { headers }).subscribe(
                 (tokenResponse) &#x3D;&gt; {
                     this.debug(&#x27;tokenResponse&#x27;, tokenResponse);
                     this.storeAccessTokenResponse(tokenResponse.access_token, tokenResponse.refresh_token, tokenResponse.expires_in);
@@ -2647,12 +2988,18 @@ export class OAuthService
                 search.set(&#x27;client_secret&#x27;, this.dummyClientSecret);
             }
 
-            let headers &#x3D; new Headers();
-            headers.set(&#x27;Content-Type&#x27;, &#x27;application/x-www-form-urlencoded&#x27;);
+            if (this.customQueryParams) {
+                for (let key of Object.getOwnPropertyNames(this.customQueryParams)) {
+                    search.set(key, this.customQueryParams[key]);
+                }
+            }
+
+            const headers &#x3D; new HttpHeaders()
+                .set(&#x27;Content-Type&#x27;, &#x27;application/x-www-form-urlencoded&#x27;);
 
             let params &#x3D; search.toString();
 
-            this.http.post(this.tokenEndpoint, params, { headers }).map(r &#x3D;&gt; r.json()).subscribe(
+            this.http.post&lt;TokenResponse&gt;(this.tokenEndpoint, params, { headers }).subscribe(
                 (tokenResponse) &#x3D;&gt; {
                     this.debug(&#x27;refresh tokenResponse&#x27;, tokenResponse);
                     this.storeAccessTokenResponse(tokenResponse.access_token, tokenResponse.refresh_token, tokenResponse.expires_in);
@@ -2719,13 +3066,20 @@ export class OAuthService
      */
     public silentRefresh(params: object &#x3D; {}): Promise&lt;OAuthEvent&gt; {
 
-        let claims &#x3D; this.getIdentityClaims();
+        let claims: object &#x3D; this.getIdentityClaims() || {};
 
+        if (this.useIdTokenHintForSilentRefresh
+            &amp;&amp; this.hasValidIdToken) {
+            params[&#x27;id_token_hint&#x27;] &#x3D; this.getIdToken();
+        }
+
+        /*
         if (!claims) {
             throw new Error(&#x27;cannot perform a silent refresh as the user is not logged in&#x27;);
         }
+        */
 
-        if (!this.validateUrlForHttps(this.loginUrl)) throw new Error(&#x27;tokenEndpoint must use Http. Also check property requireHttps.&#x27;);
+        if (!this.validateUrlForHttps(this.loginUrl)) throw new Error(&#x27;tokenEndpoint must use Https. Also check property requireHttps.&#x27;);
 
         if (typeof document &#x3D;&#x3D;&#x3D; &#x27;undefined&#x27;) {
             throw new Error(&#x27;silent refresh is not supported on this platform&#x27;);
@@ -2747,7 +3101,7 @@ export class OAuthService
         this.createLoginUrl(null, null, redirectUri, true, params).then(url &#x3D;&gt; {
             iframe.setAttribute(&#x27;src&#x27;, url);
             if (!this.silentRefreshShowIFrame) {
-               iframe.style.visibility &#x3D; &#x27;hidden&#x27;;
+               iframe.style[&#x27;display&#x27;] &#x3D; &#x27;none&#x27;;
             }
             document.body.appendChild(iframe);
         });
@@ -2844,8 +3198,7 @@ export class OAuthService
     }
 
     private waitForSilentRefreshAfterSessionChange() {
-        this
-            .events
+        this.events
             .filter((e: OAuthEvent) &#x3D;&gt;
                 e.type &#x3D;&#x3D;&#x3D; &#x27;silently_refreshed&#x27;
                 || e.type &#x3D;&#x3D;&#x3D; &#x27;silent_refresh_timeout&#x27;
@@ -3147,7 +3500,10 @@ export class OAuthService
             this.storeAccessTokenResponse(accessToken, null, parts[&#x27;expires_in&#x27;]);
         }
 
-        if (!this.oidc) return Promise.resolve();
+        if (!this.oidc) {
+            this.eventsSubject.next(new OAuthSuccessEvent(&#x27;token_received&#x27;));
+            return Promise.resolve();  
+        } 
 
         return this
                 .processIdToken(idToken, accessToken)
@@ -3365,6 +3721,10 @@ export class OAuthService
         return this._storage.getItem(&#x27;access_token&#x27;);
     };
 
+    public getRefreshToken(): string {
+        return this._storage.getItem(&#x27;refresh_token&#x27;);
+    }
+
     /**
      * Returns the expiration date of the access_token
      * as milliseconds since 1970.
@@ -3455,8 +3815,10 @@ export class OAuthService
         this._storage.removeItem(&#x27;id_token_expires_at&#x27;);
         this._storage.removeItem(&#x27;id_token_stored_at&#x27;);
         this._storage.removeItem(&#x27;access_token_stored_at&#x27;);
-        
+
         this.silentRefreshSubject &#x3D; null;
+      
+        this.eventsSubject.next(new OAuthInfoEvent(&#x27;logout&#x27;));
 
         if (!this.logoutUrl) return;
         if (noRedirectToLogoutUrl) return;
@@ -3465,16 +3827,18 @@ export class OAuthService
         let logoutUrl: string;
 
         if (!this.validateUrlForHttps(this.logoutUrl)) throw new Error(&#x27;logoutUrl must use Http. Also check property requireHttps.&#x27;);
-        
+
         // For backward compatibility
         if (this.logoutUrl.indexOf(&#x27;{{&#x27;) &gt; -1) {
             logoutUrl &#x3D; this.logoutUrl.replace(/\{\{id_token\}\}/, id_token);
         }
         else {
-            logoutUrl &#x3D; this.logoutUrl + &#x27;?id_token_hint&#x3D;&#x27;
-                                + encodeURIComponent(id_token)
-                                + &#x27;&amp;post_logout_redirect_uri&#x3D;&#x27;
-                                + encodeURIComponent(this.postLogoutRedirectUri || this.redirectUri);
+            logoutUrl &#x3D; this.logoutUrl +
+                (this.logoutUrl.indexOf(&#x27;?&#x27;) &gt; -1 ? &#x27;&amp;&#x27; : &#x27;?&#x27;)
+                + &#x27;id_token_hint&#x3D;&#x27;
+                + encodeURIComponent(id_token)
+                + &#x27;&amp;post_logout_redirect_uri&#x3D;&#x27;
+                + encodeURIComponent(this.postLogoutRedirectUri || this.redirectUri);
         }
         location.href &#x3D; logoutUrl;
     };
@@ -3531,6 +3895,7 @@ export class OAuthService
 </code></pre>
     </div>
 </div>
+
 
 
 

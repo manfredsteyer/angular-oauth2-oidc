@@ -20,7 +20,7 @@ export class PasswordFlowLoginComponent implements OnInit {
     // implicit flow as well as password flow
    
     this.oauthService.configure(authPasswordFlowConfig)
-
+    this.oauthService.loadDiscoveryDocument();
   }
 
   ngOnInit() {

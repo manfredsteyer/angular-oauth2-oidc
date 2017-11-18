@@ -48,8 +48,8 @@
                                   <a href="../index.html" ><span class="fa fa-file-text-o"></span>README</a>
                                 </li>
                                 <li class="link">
-                                    <a href="./license.html"
-                                        >
+                                        <a href="../license.html"
+                                    >
                                         <span class="fa fa-file-text-o"></span>LICENSE
                                     </a>
                                 </li>
@@ -200,6 +200,7 @@
                         </ul>
                     </li>
             
+            
                     <li class="chapter">
                         <div class="simple menu-toggler" data-toggle="collapse"
                                 data-target="#xs-interfaces-links"
@@ -212,7 +213,16 @@
                                 id="xs-interfaces-links"
                             >
                                 <li class="link">
+                                    <a href="../interfaces/OidcDiscoveryDoc.html" >OidcDiscoveryDoc</a>
+                                </li>
+                                <li class="link">
                                     <a href="../interfaces/ParsedIdToken.html" >ParsedIdToken</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../interfaces/TokenResponse.html" >TokenResponse</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../interfaces/UserInfo.html" >UserInfo</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/ValidationParams.html" >ValidationParams</a>
@@ -285,8 +295,8 @@
                                          <a href="../index.html" ><span class="fa fa-file-text-o"></span>README</a>
                                        </li>
                                        <li class="link">
-                                           <a href="./license.html"
-                                               >
+                                               <a href="../license.html"
+                                           >
                                                <span class="fa fa-file-text-o"></span>LICENSE
                                            </a>
                                        </li>
@@ -437,6 +447,7 @@
                                </ul>
                            </li>
                    
+                   
                            <li class="chapter">
                                <div class="simple menu-toggler" data-toggle="collapse"
                                        data-target="#interfaces-links"
@@ -449,7 +460,16 @@
                                        id="interfaces-links"
                    >
                                        <li class="link">
+                                           <a href="../interfaces/OidcDiscoveryDoc.html" >OidcDiscoveryDoc</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../interfaces/ParsedIdToken.html" >ParsedIdToken</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../interfaces/TokenResponse.html" >TokenResponse</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../interfaces/UserInfo.html" >UserInfo</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/ValidationParams.html" >ValidationParams</a>
@@ -490,6 +510,7 @@
                </div>
                <div class="content additional-page">
                    <div class="content-data">
+
 
 
 
@@ -546,7 +567,7 @@ export const authConfig: AuthConfig = {
     .oauthService
     .silentRefresh()
     .then(info =&gt; console.debug(&#39;refresh ok&#39;, info))
-    .catch(err =&gt; console.error(&#39;refresh error&#39;, err));</code></pre><p>When there is an error in the iframe that prevents the communication with the main application, silentRefresh will give you a timeout. To configure the timespan for this, you can set the property <code>silentRefreshTimeout</code> (msec). The default value is 20.000 (20 seconds).</p>
+    .catch(err =&gt; console.error(&#39;refresh error&#39;, err));</code></pre><p>When there is an error in the iframe that prevents the communication with the main application, silentRefresh will give you a timeout. To configure the timespan for this, you can set the property <code>siletRefreshTimeout</code> (msec). The default value is 20.000 (20 seconds).</p>
 <h3 id="automatically-refreshing-a-token-when-before-it-expires">Automatically refreshing a token when/ before it expires</h3>
 <p>To automatically refresh a token when/ some time before it expires, just call the following method after configuring the OAuthService:</p>
 <pre class="line-numbers"><code class="language-TypeScript">this.oauthService.setupAutomaticSilentRefresh();</code></pre><p>By default, this event is fired after 75% of the token&#39;s life time is over. You can adjust this factor by setting the property <code>timeoutFactor</code> to a value between 0 and 1. For instance, 0.5 means, that the event is fired after half of the life time is over and 0.33 triggers the event after a third.</p>

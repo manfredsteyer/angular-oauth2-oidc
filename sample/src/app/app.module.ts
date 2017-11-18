@@ -1,7 +1,7 @@
 import { authConfig } from './auth.config';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpModule} from '@angular/http';
+import {HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {AuthConfig, JwksValidationHandler, OAuthModule, ValidationHandler} from 'angular-oauth2-oidc';
 
@@ -16,21 +16,19 @@ import {SharedModule} from './shared/shared.module';
 @NgModule({
     imports: [
         BrowserModule,
-        HttpModule,
         FormsModule,
         ReactiveFormsModule,
         SharedModule.forRoot(),
         AppRouterModule,
-
+        HttpClientModule,
         OAuthModule.forRoot()
     ],
     declarations: [
         AppComponent,
         HomeComponent,
-        FlightHistoryComponent
-,
-    PasswordFlowLoginComponent
-],
+        FlightHistoryComponent,
+        PasswordFlowLoginComponent
+    ],
     providers: [
         // {provide: AuthConfig, useValue: authConfig },
         // { provide: OAuthStorage, useClass: DemoStorage },

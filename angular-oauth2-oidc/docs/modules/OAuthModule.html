@@ -48,8 +48,8 @@
                                   <a href="../index.html" ><span class="fa fa-file-text-o"></span>README</a>
                                 </li>
                                 <li class="link">
-                                    <a href="./license.html"
-                                        >
+                                        <a href="../license.html"
+                                    >
                                         <span class="fa fa-file-text-o"></span>LICENSE
                                     </a>
                                 </li>
@@ -200,6 +200,7 @@
                         </ul>
                     </li>
             
+            
                     <li class="chapter">
                         <div class="simple menu-toggler" data-toggle="collapse"
                                 data-target="#xs-interfaces-links"
@@ -212,7 +213,16 @@
                                 id="xs-interfaces-links"
                             >
                                 <li class="link">
+                                    <a href="../interfaces/OidcDiscoveryDoc.html" >OidcDiscoveryDoc</a>
+                                </li>
+                                <li class="link">
                                     <a href="../interfaces/ParsedIdToken.html" >ParsedIdToken</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../interfaces/TokenResponse.html" >TokenResponse</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../interfaces/UserInfo.html" >UserInfo</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/ValidationParams.html" >ValidationParams</a>
@@ -285,8 +295,8 @@
                                          <a href="../index.html" ><span class="fa fa-file-text-o"></span>README</a>
                                        </li>
                                        <li class="link">
-                                           <a href="./license.html"
-                                               >
+                                               <a href="../license.html"
+                                           >
                                                <span class="fa fa-file-text-o"></span>LICENSE
                                            </a>
                                        </li>
@@ -437,6 +447,7 @@
                                </ul>
                            </li>
                    
+                   
                            <li class="chapter">
                                <div class="simple menu-toggler" data-toggle="collapse"
                                        data-target="#interfaces-links"
@@ -449,7 +460,16 @@
                                        id="interfaces-links"
                    >
                                        <li class="link">
+                                           <a href="../interfaces/OidcDiscoveryDoc.html" >OidcDiscoveryDoc</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../interfaces/ParsedIdToken.html" >ParsedIdToken</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../interfaces/TokenResponse.html" >TokenResponse</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../interfaces/UserInfo.html" >UserInfo</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/ValidationParams.html" >ValidationParams</a>
@@ -531,6 +551,8 @@
     <div class="tab-pane fade tab-source-code" id="source">
         <pre class="line-numbers"><code class="language-typescript">import { NgModule, ModuleWithProviders } from &#x27;@angular/core&#x27;;
 import { CommonModule } from &#x27;@angular/common&#x27;;
+import { HttpClientModule } from &#x27;@angular/common/http&#x27;;
+
 import { OAuthService } from &#x27;./oauth-service&#x27;;
 import { UrlHelperService } from &#x27;./url-helper.service&#x27;;
 
@@ -553,11 +575,12 @@ export * from &#x27;./url-helper.service&#x27;;
 export * from &#x27;./auth.config&#x27;;
 export * from &#x27;./types&#x27;;
 export * from &#x27;./tokens&#x27;;
+export * from &#x27;./events&#x27;;
 
 @NgModule({
   imports: [
     CommonModule,
-    //HttpModule
+    HttpClientModule
   ],
   declarations: [
   ],
@@ -579,6 +602,7 @@ export class OAuthModule {
 </code></pre>
     </div>
 </div>
+
 
 
 

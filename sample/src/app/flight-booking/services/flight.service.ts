@@ -1,5 +1,5 @@
 import { Injectable, Inject} from '@angular/core';
-import {Http, Headers, URLSearchParams} from '@angular/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {BASE_URL} from "../../app.tokens";
 import {Observable} from "rxjs";
 import {Flight} from "../../entities/flight";
@@ -10,7 +10,7 @@ export class FlightService {
 
      constructor(
          private oauthService: OAuthService,
-         private http: Http,
+         private http: HttpClient,
          @Inject(BASE_URL) private baseUrl: string
      ) {
      }
@@ -19,18 +19,17 @@ export class FlightService {
 
      find(from: string, to: string): void {
          let url = this.baseUrl + "/api/flight";
-         let headers = new Headers();
-         headers.set('Accept', 'application/json');
-         headers.set('Authorization', 'Bearer ' + this.oauthService.getAccessToken());
+         let headers = new HttpHeaders()
+                            .set('Accept', 'application/json')
+                            .set('Authorization', 'Bearer ' + this.oauthService.getAccessToken());
 
-         let search = new URLSearchParams();
-         search.set('from', from);
-         search.set('to', to);
+         let params = new HttpParams()
+                            .set('from', from)
+                            .set('to', to);
 
          this
              .http
-             .get(url, {headers, search})
-             .map(resp => resp.json())
+             .get<Flight[]>(url, {headers, params})
              .subscribe(
                  (flights) => { 
                      this.flights = flights; 

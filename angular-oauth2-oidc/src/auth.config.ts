@@ -187,5 +187,18 @@ export class AuthConfig {
     public disableAtHashCheck? = false;
 
 
+    /*
+     * Defines wether to check the subject of a refreshed token after silent refresh.
+     * Normally, it should be the same as before.
+    */ 
     public skipSubjectCheck? = false;
+
+    public useIdTokenHintForSilentRefresh? = false;
+
+    /*
+     * Defined whether to skip the validation of the issuer in the discovery document.
+     * Normally, the discovey document's url starts with the url of the issuer.
+     */
+    public skipIssuerCheck? = false;
+    
 }

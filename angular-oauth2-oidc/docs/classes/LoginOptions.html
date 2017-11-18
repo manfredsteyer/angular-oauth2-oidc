@@ -48,8 +48,8 @@
                                   <a href="../index.html" ><span class="fa fa-file-text-o"></span>README</a>
                                 </li>
                                 <li class="link">
-                                    <a href="./license.html"
-                                        >
+                                        <a href="../license.html"
+                                    >
                                         <span class="fa fa-file-text-o"></span>LICENSE
                                     </a>
                                 </li>
@@ -200,6 +200,7 @@
                         </ul>
                     </li>
             
+            
                     <li class="chapter">
                         <div class="simple menu-toggler" data-toggle="collapse"
                                 data-target="#xs-interfaces-links"
@@ -212,7 +213,16 @@
                                 id="xs-interfaces-links"
                             >
                                 <li class="link">
+                                    <a href="../interfaces/OidcDiscoveryDoc.html" >OidcDiscoveryDoc</a>
+                                </li>
+                                <li class="link">
                                     <a href="../interfaces/ParsedIdToken.html" >ParsedIdToken</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../interfaces/TokenResponse.html" >TokenResponse</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../interfaces/UserInfo.html" >UserInfo</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/ValidationParams.html" >ValidationParams</a>
@@ -285,8 +295,8 @@
                                          <a href="../index.html" ><span class="fa fa-file-text-o"></span>README</a>
                                        </li>
                                        <li class="link">
-                                           <a href="./license.html"
-                                               >
+                                               <a href="../license.html"
+                                           >
                                                <span class="fa fa-file-text-o"></span>LICENSE
                                            </a>
                                        </li>
@@ -437,6 +447,7 @@
                                </ul>
                            </li>
                    
+                   
                            <li class="chapter">
                                <div class="simple menu-toggler" data-toggle="collapse"
                                        data-target="#interfaces-links"
@@ -449,7 +460,16 @@
                                        id="interfaces-links"
                    >
                                        <li class="link">
+                                           <a href="../interfaces/OidcDiscoveryDoc.html" >OidcDiscoveryDoc</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../interfaces/ParsedIdToken.html" >ParsedIdToken</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../interfaces/TokenResponse.html" >TokenResponse</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../interfaces/UserInfo.html" >UserInfo</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/ValidationParams.html" >ValidationParams</a>
@@ -490,6 +510,7 @@
                </div>
                <div class="content class">
                    <div class="content-data">
+
 
 
 
@@ -581,7 +602,7 @@
                             <tr>
                                 <td class="col-md-4">
                                     <a name="customHashFragment"></a>
-                                    <b> customHashFragment</b>
+                                    <span class="name"><b> customHashFragment</b><a href="#customHashFragment"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
@@ -618,7 +639,7 @@
                             <tr>
                                 <td class="col-md-4">
                                     <a name="disableOAuth2StateCheck"></a>
-                                    <b> disableOAuth2StateCheck</b>
+                                    <span class="name"><b> disableOAuth2StateCheck</b><a href="#disableOAuth2StateCheck"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
@@ -658,7 +679,7 @@
                             <tr>
                                 <td class="col-md-4">
                                     <a name="onLoginError"></a>
-                                    <b> onLoginError</b>
+                                    <span class="name"><b> onLoginError</b><a href="#onLoginError"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
@@ -695,7 +716,7 @@
                             <tr>
                                 <td class="col-md-4">
                                     <a name="onTokenReceived"></a>
-                                    <b> onTokenReceived</b>
+                                    <span class="name"><b> onTokenReceived</b><a href="#onTokenReceived"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
@@ -732,7 +753,7 @@
                             <tr>
                                 <td class="col-md-4">
                                     <a name="validationHandler"></a>
-                                    <b> validationHandler</b>
+                                    <span class="name"><b> validationHandler</b><a href="#validationHandler"><span class="fa fa-link"></span></a></span>
                                 </td>
                             </tr>
                             <tr>
@@ -764,6 +785,7 @@
                         </tbody>
                     </table>
             </section>
+
     </div>
 
 
@@ -844,6 +866,64 @@ export interface ParsedIdToken {
     idTokenHeaderJson: string;
     idTokenExpiresAt: number;
 }
+
+/**
+ * Represents the response from the token endpoint
+ * http://openid.net/specs/openid-connect-core-1_0.html#TokenEndpoint
+ */
+export interface TokenResponse {
+    access_token: string;
+    token_type: string;
+    expires_in: number;
+    refresh_token: string;
+    scope: string;
+    state?: string;
+}
+
+/**
+ * Represents the response from the user info endpoint
+ * http://openid.net/specs/openid-connect-core-1_0.html#UserInfo
+ */
+export interface UserInfo {
+    sub: string;
+    [key: string]: any;
+}
+
+/**
+ * Represents an OpenID Connect discovery document
+ */
+export interface OidcDiscoveryDoc {
+    issuer: string;
+    authorization_endpoint: string;
+    token_endpoint: string;
+    token_endpoint_auth_methods_supported: string[];
+    token_endpoint_auth_signing_alg_values_supported: string[];
+    userinfo_endpoint: string;
+    check_session_iframe: string;
+    end_session_endpoint: string;
+    jwks_uri: string;
+    registration_endpoint: string;
+    scopes_supported: string[];
+    response_types_supported: string[];
+    acr_values_supported: string[];
+    response_modes_supported: string[];
+    grant_types_supported: string[];
+    subject_types_supported: string[];
+    userinfo_signing_alg_values_supported: string[];
+    userinfo_encryption_alg_values_supported: string[];
+    userinfo_encryption_enc_values_supported: string[];
+    id_token_signing_alg_values_supported: string[];
+    id_token_encryption_alg_values_supported: string[];
+    id_token_encryption_enc_values_supported: string[];
+    request_object_signing_alg_values_supported: string[];
+    display_values_supported: string[];
+    claim_types_supported: string[];
+    claims_supported: string[];
+    claims_parameter_supported: boolean;
+    service_documentation: string;
+    ui_locales_supported: string[];
+}
+
 </code></pre>
     </div>
 </div>

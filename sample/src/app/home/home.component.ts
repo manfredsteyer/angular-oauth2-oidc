@@ -14,15 +14,25 @@ export class HomeComponent implements OnInit {
         // Tweak config for implicit flow.
         // This is just needed b/c this demo uses both,
         // implicit flow as well as password flow
-        // this.oauthService.configure(authConfig)
+        this.oauthService.configure(authConfig);
+        this.oauthService.loadDiscoveryDocument();
     }
 
     ngOnInit() { 
+        
+            /*
+            this.oauthService.loadDiscoveryDocumentAndTryLogin().then(_ => {
+                if (!this.oauthService.hasValidIdToken() || !this.oauthService.hasValidAccessToken()) {
+                  this.oauthService.initImplicitFlow('some-state');
+                }
+            });
+            */
+        
     }
 
 
     login() {
-        this.oauthService.initImplicitFlow('some-state', { 'custom-param': 'test' });
+        this.oauthService.initImplicitFlow('some-state');
     }
 
     logout() {

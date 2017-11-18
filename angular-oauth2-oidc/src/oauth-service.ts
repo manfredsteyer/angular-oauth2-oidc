@@ -85,12 +85,17 @@ export class OAuthService
             this.configure(config);
         }
 
-        if (storage) {
-            this.setStorage(storage);
-        } else if (typeof sessionStorage !== 'undefined') {
-            this.setStorage(sessionStorage);
+        
+        try {
+            if (storage) {
+                this.setStorage(storage);
+            } else if (typeof sessionStorage !== 'undefined') {
+                this.setStorage(sessionStorage);
+            }
         }
-
+        catch(e) {
+            console.error('cannot access sessionStorage. Consider setting an own storage implementation using setStorage', e);
+        }
         this.setupRefreshTimer();
 
     }
@@ -154,6 +159,15 @@ export class OAuthService
     public loadDiscoveryDocumentAndTryLogin() {
         return this.loadDiscoveryDocument().then((doc) => {
             return this.tryLogin();
+        });
+    }
+
+
+    public loadDiscoveryDocumentAndLogin() {
+        this.loadDiscoveryDocumentAndTryLogin().then(_ => {
+            if (!this.hasValidIdToken() || !this.hasValidAccessToken()) {
+              this.initImplicitFlow();
+            }
         });
     }
 
@@ -317,6 +331,7 @@ export class OAuthService
             this.http.get<OidcDiscoveryDoc>(fullUrl).subscribe(
                 (doc) => {
 
+
                     if (!this.validateDiscoveryDocument(doc)) {
                         this.eventsSubject.next(new OAuthErrorEvent('discovery_document_validation_error', null));
                         reject('discovery_document_validation_error');
@@ -391,7 +406,7 @@ export class OAuthService
 
         let errors: string[];
 
-        if (doc.issuer !== this.issuer) {
+        if (!this.skipIssuerCheck && doc.issuer !== this.issuer) {
             console.error(
                 'invalid issuer in discovery document',
                 'expected: ' + this.issuer,
@@ -435,7 +450,7 @@ export class OAuthService
                 + ' does not contain a check_session_iframe field');
         }
 
-        this.sessionChecksEnabled = !!doc.check_session_iframe;
+        // this.sessionChecksEnabled = !!doc.check_session_iframe;
 
         return true;
     }
@@ -539,7 +554,13 @@ export class OAuthService
                 search.set('client_secret', this.dummyClientSecret);
             }
 
-            headers.set('Content-Type', 'application/x-www-form-urlencoded');
+            if (this.customQueryParams) {
+                for (let key of Object.getOwnPropertyNames(this.customQueryParams)) {
+                    search.set(key, this.customQueryParams[key]);
+                }
+            }
+
+            headers = headers.set('Content-Type', 'application/x-www-form-urlencoded');
 
             let params = search.toString();
 
@@ -583,6 +604,12 @@ export class OAuthService
 
             if (this.dummyClientSecret) {
                 search.set('client_secret', this.dummyClientSecret);
+            }
+
+            if (this.customQueryParams) {
+                for (let key of Object.getOwnPropertyNames(this.customQueryParams)) {
+                    search.set(key, this.customQueryParams[key]);
+                }
             }
 
             const headers = new HttpHeaders()
@@ -659,6 +686,11 @@ export class OAuthService
 
         let claims: object = this.getIdentityClaims() || {};
 
+        if (this.useIdTokenHintForSilentRefresh
+            && this.hasValidIdToken) {
+            params['id_token_hint'] = this.getIdToken();
+        }
+
         /*
         if (!claims) {
             throw new Error('cannot perform a silent refresh as the user is not logged in');
@@ -687,7 +719,7 @@ export class OAuthService
         this.createLoginUrl(null, null, redirectUri, true, params).then(url => {
             iframe.setAttribute('src', url);
             if (!this.silentRefreshShowIFrame) {
-               iframe.style.visibility = 'hidden';
+               iframe.style['display'] = 'none';
             }
             document.body.appendChild(iframe);
         });
@@ -1086,7 +1118,10 @@ export class OAuthService
             this.storeAccessTokenResponse(accessToken, null, parts['expires_in']);
         }
 
-        if (!this.oidc) return Promise.resolve();
+        if (!this.oidc) {
+            this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
+            return Promise.resolve();  
+        } 
 
         return this
                 .processIdToken(idToken, accessToken)
@@ -1303,6 +1338,10 @@ export class OAuthService
     public getAccessToken(): string {
         return this._storage.getItem('access_token');
     };
+
+    public getRefreshToken(): string {
+        return this._storage.getItem('refresh_token');
+    }
 
     /**
      * Returns the expiration date of the access_token

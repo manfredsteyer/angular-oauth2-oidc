@@ -7,6 +7,7 @@ import { OAuthService, AuthConfig } from 'angular-oauth2-oidc';
 import { JwksValidationHandler } from 'angular-oauth2-oidc';
 import { Router } from "@angular/router";
 
+
 @Component({
     selector: 'flight-app',
     templateUrl: './app.component.html'
@@ -34,13 +35,13 @@ export class AppComponent {
     // This api will come in the next version
     private configureWithNewConfigApi() {
 
-      //this.oauthService.configure(authConfig);
-      this.oauthService.configure(googleAuthConfig);
+      this.oauthService.configure(authConfig);
       this.oauthService.tokenValidationHandler = new JwksValidationHandler();
       this.oauthService.loadDiscoveryDocumentAndTryLogin();
 
       // Optional
       this.oauthService.setupAutomaticSilentRefresh();
+
       this.oauthService.events.subscribe(e => {
         console.debug('oauth/oidc event', e);
       });
@@ -56,6 +57,11 @@ export class AppComponent {
     }
 
   private configureAuth() {
+    
+    //
+    // This method demonstrated the old API; see configureWithNewConfigApi for new one
+    //
+
     // URL of the SPA to redirect the user to after login
     this.oauthService.redirectUri = window.location.origin + "/index.html";
 

@@ -48,8 +48,8 @@
                                   <a href="../index.html" ><span class="fa fa-file-text-o"></span>README</a>
                                 </li>
                                 <li class="link">
-                                    <a href="./license.html"
-                                        >
+                                        <a href="../license.html"
+                                    >
                                         <span class="fa fa-file-text-o"></span>LICENSE
                                     </a>
                                 </li>
@@ -200,6 +200,7 @@
                         </ul>
                     </li>
             
+            
                     <li class="chapter">
                         <div class="simple menu-toggler" data-toggle="collapse"
                                 data-target="#xs-interfaces-links"
@@ -212,7 +213,16 @@
                                 id="xs-interfaces-links"
                             >
                                 <li class="link">
+                                    <a href="../interfaces/OidcDiscoveryDoc.html" >OidcDiscoveryDoc</a>
+                                </li>
+                                <li class="link">
                                     <a href="../interfaces/ParsedIdToken.html"  data-type="entity-link" class="active" >ParsedIdToken</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../interfaces/TokenResponse.html" >TokenResponse</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../interfaces/UserInfo.html" >UserInfo</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/ValidationParams.html" >ValidationParams</a>
@@ -285,8 +295,8 @@
                                          <a href="../index.html" ><span class="fa fa-file-text-o"></span>README</a>
                                        </li>
                                        <li class="link">
-                                           <a href="./license.html"
-                                               >
+                                               <a href="../license.html"
+                                           >
                                                <span class="fa fa-file-text-o"></span>LICENSE
                                            </a>
                                        </li>
@@ -437,6 +447,7 @@
                                </ul>
                            </li>
                    
+                   
                            <li class="chapter">
                                <div class="simple menu-toggler" data-toggle="collapse"
                                        data-target="#interfaces-links"
@@ -449,7 +460,16 @@
                                        id="interfaces-links"
                    >
                                        <li class="link">
+                                           <a href="../interfaces/OidcDiscoveryDoc.html" >OidcDiscoveryDoc</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../interfaces/ParsedIdToken.html"  data-type="entity-link" class="active" >ParsedIdToken</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../interfaces/TokenResponse.html" >TokenResponse</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../interfaces/UserInfo.html" >UserInfo</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/ValidationParams.html" >ValidationParams</a>
@@ -499,6 +519,7 @@
 
 
 
+
 <ol class="breadcrumb">
   <li>Interfaces</li>
   <li>ParsedIdToken</li>
@@ -531,6 +552,7 @@
                 <p>Represents the parsed and validated id_token.</p>
 
             </p>
+
 
         <section>
             <h3 id="index">Index</h3>
@@ -578,7 +600,7 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="idToken"></a>
-                                        <b>idToken</b>
+                                        <span class="name"><b>idToken</b><a href="#idToken"><span class="fa fa-link"></span></a></span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -611,7 +633,7 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="idTokenClaims"></a>
-                                        <b>idTokenClaims</b>
+                                        <span class="name"><b>idTokenClaims</b><a href="#idTokenClaims"><span class="fa fa-link"></span></a></span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -644,7 +666,7 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="idTokenClaimsJson"></a>
-                                        <b>idTokenClaimsJson</b>
+                                        <span class="name"><b>idTokenClaimsJson</b><a href="#idTokenClaimsJson"><span class="fa fa-link"></span></a></span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -677,7 +699,7 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="idTokenExpiresAt"></a>
-                                        <b>idTokenExpiresAt</b>
+                                        <span class="name"><b>idTokenExpiresAt</b><a href="#idTokenExpiresAt"><span class="fa fa-link"></span></a></span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -710,7 +732,7 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="idTokenHeader"></a>
-                                        <b>idTokenHeader</b>
+                                        <span class="name"><b>idTokenHeader</b><a href="#idTokenHeader"><span class="fa fa-link"></span></a></span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -743,7 +765,7 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="idTokenHeaderJson"></a>
-                                        <b>idTokenHeaderJson</b>
+                                        <span class="name"><b>idTokenHeaderJson</b><a href="#idTokenHeaderJson"><span class="fa fa-link"></span></a></span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -852,6 +874,64 @@ export interface ParsedIdToken {
     idTokenHeaderJson: string;
     idTokenExpiresAt: number;
 }
+
+/**
+ * Represents the response from the token endpoint
+ * http://openid.net/specs/openid-connect-core-1_0.html#TokenEndpoint
+ */
+export interface TokenResponse {
+    access_token: string;
+    token_type: string;
+    expires_in: number;
+    refresh_token: string;
+    scope: string;
+    state?: string;
+}
+
+/**
+ * Represents the response from the user info endpoint
+ * http://openid.net/specs/openid-connect-core-1_0.html#UserInfo
+ */
+export interface UserInfo {
+    sub: string;
+    [key: string]: any;
+}
+
+/**
+ * Represents an OpenID Connect discovery document
+ */
+export interface OidcDiscoveryDoc {
+    issuer: string;
+    authorization_endpoint: string;
+    token_endpoint: string;
+    token_endpoint_auth_methods_supported: string[];
+    token_endpoint_auth_signing_alg_values_supported: string[];
+    userinfo_endpoint: string;
+    check_session_iframe: string;
+    end_session_endpoint: string;
+    jwks_uri: string;
+    registration_endpoint: string;
+    scopes_supported: string[];
+    response_types_supported: string[];
+    acr_values_supported: string[];
+    response_modes_supported: string[];
+    grant_types_supported: string[];
+    subject_types_supported: string[];
+    userinfo_signing_alg_values_supported: string[];
+    userinfo_encryption_alg_values_supported: string[];
+    userinfo_encryption_enc_values_supported: string[];
+    id_token_signing_alg_values_supported: string[];
+    id_token_encryption_alg_values_supported: string[];
+    id_token_encryption_enc_values_supported: string[];
+    request_object_signing_alg_values_supported: string[];
+    display_values_supported: string[];
+    claim_types_supported: string[];
+    claims_supported: string[];
+    claims_parameter_supported: boolean;
+    service_documentation: string;
+    ui_locales_supported: string[];
+}
+
 </code></pre>
     </div>
 </div>

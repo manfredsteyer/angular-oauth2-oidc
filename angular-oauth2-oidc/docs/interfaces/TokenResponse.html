@@ -219,7 +219,7 @@
                                     <a href="../interfaces/ParsedIdToken.html" >ParsedIdToken</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../interfaces/TokenResponse.html" >TokenResponse</a>
+                                    <a href="../interfaces/TokenResponse.html"  data-type="entity-link" class="active" >TokenResponse</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/UserInfo.html" >UserInfo</a>
@@ -243,7 +243,7 @@
                                 id="xs-miscellaneous-links"
                             >
                                 <li class="link">
-                                  <a href="../miscellaneous/functions.html" data-type="entity-link"  class="active" >Functions</a>
+                                  <a href="../miscellaneous/functions.html" data-type="entity-link" >Functions</a>
                                 </li>
                                 <li class="link">
                                   <a href="../miscellaneous/typealiases.html" data-type="entity-link" >Type aliases</a>
@@ -466,7 +466,7 @@
                                            <a href="../interfaces/ParsedIdToken.html" >ParsedIdToken</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../interfaces/TokenResponse.html" >TokenResponse</a>
+                                           <a href="../interfaces/TokenResponse.html"  data-type="entity-link" class="active" >TokenResponse</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/UserInfo.html" >UserInfo</a>
@@ -490,7 +490,7 @@
                                        id="miscellaneous-links"
                    >
                                        <li class="link">
-                                         <a href="../miscellaneous/functions.html" data-type="entity-link"  class="active" >Functions</a>
+                                         <a href="../miscellaneous/functions.html" data-type="entity-link" >Functions</a>
                                        </li>
                                        <li class="link">
                                          <a href="../miscellaneous/typealiases.html" data-type="entity-link" >Type aliases</a>
@@ -508,7 +508,7 @@
                    
                    </nav>
                </div>
-               <div class="content miscellaneous-functions">
+               <div class="content interface">
                    <div class="content-data">
 
 
@@ -520,50 +520,424 @@
 
 
 
-
-
 <ol class="breadcrumb">
-  <li>Miscellaneous - Functions</li>
+  <li>Interfaces</li>
+  <li>TokenResponse</li>
 </ol>
 
-<section>
-    <h3 id="index">Index</h3>
-    <table class="table table-sm table-bordered index-table">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <ul class="index-list">
-                        <li>
-                            <a href="#b64DecodeUnicode">b64DecodeUnicode</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</section>
+<ul class="nav nav-tabs" role="tablist">
+    <li class="active">
+        <a href="#info" id="info-tab" role="tab" data-toggle="tab" data-link="info">Info</a>
+    </li>
 
-    <h3>src/base64-helper.ts</h3>
-    <section>
-        <h3></h3>        <table class="table table-sm table-bordered">
+
+    <li>
+        <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+    </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>src/types.ts</code>
+        </p>
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Represents the response from the token endpoint
+<a href="http://openid.net/specs/openid-connect-core-1_0.html#TokenEndpoint">http://openid.net/specs/openid-connect-core-1_0.html#TokenEndpoint</a></p>
+
+            </p>
+
+
+        <section>
+            <h3 id="index">Index</h3>
+            <table class="table table-sm table-bordered index-table">
                 <tbody>
                     <tr>
                         <td class="col-md-4">
-                            <a name="b64DecodeUnicode"></a>
-                            <span class="name"><b> b64DecodeUnicode</b><a href="#b64DecodeUnicode"><span class="fa fa-link"></span></a></span>
+                            <h6><b>Properties</b></h6>
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-    <code>b64DecodeUnicode(str: undefined)</code>
+                            <ul class="index-list">
+                                <li>
+                                        <a href="#access_token">access_token</a>
+                                </li>
+                                <li>
+                                        <a href="#expires_in">expires_in</a>
+                                </li>
+                                <li>
+                                        <a href="#refresh_token">refresh_token</a>
+                                </li>
+                                <li>
+                                        <a href="#scope">scope</a>
+                                </li>
+                                <li>
+                                        <a href="#state">state</a>
+                                </li>
+                                <li>
+                                        <a href="#token_type">token_type</a>
+                                </li>
+                            </ul>
                         </td>
                     </tr>
-    
-    
-    
                 </tbody>
             </table>
-    </section>
+        </section>
+
+
+
+            <section>
+                <h3 id="inputs">Properties</h3>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="access_token"></a>
+                                        <span class="name"><b>access_token</b><a href="#access_token"><span class="fa fa-link"></span></a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>access_token:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="86" class="link-to-prism">src/types.ts:86</a></div>
+                                        </td>
+                                    </tr>
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="expires_in"></a>
+                                        <span class="name"><b>expires_in</b><a href="#expires_in"><span class="fa fa-link"></span></a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>expires_in:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="88" class="link-to-prism">src/types.ts:88</a></div>
+                                        </td>
+                                    </tr>
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="refresh_token"></a>
+                                        <span class="name"><b>refresh_token</b><a href="#refresh_token"><span class="fa fa-link"></span></a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>refresh_token:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="89" class="link-to-prism">src/types.ts:89</a></div>
+                                        </td>
+                                    </tr>
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="scope"></a>
+                                        <span class="name"><b>scope</b><a href="#scope"><span class="fa fa-link"></span></a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>scope:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="90" class="link-to-prism">src/types.ts:90</a></div>
+                                        </td>
+                                    </tr>
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="state"></a>
+                                        <span class="name"><b>state</b><a href="#state"><span class="fa fa-link"></span></a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>state:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="91" class="link-to-prism">src/types.ts:91</a></div>
+                                        </td>
+                                    </tr>
+
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <a name="token_type"></a>
+                                        <span class="name"><b>token_type</b><a href="#token_type"><span class="fa fa-link"></span></a></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-4">
+                                        <code>token_type:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+</code>
+                                    </td>
+                                </tr>
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                                        </td>
+                                    </tr>
+
+
+
+                                    <tr>
+                                        <td class="col-md-4">
+                                            <div class="io-line">Defined in <a href="" data-line="87" class="link-to-prism">src/types.ts:87</a></div>
+                                        </td>
+                                    </tr>
+
+                        </tbody>
+                    </table>
+            </section>
+    </div>
+
+
+    <div class="tab-pane fade tab-source-code" id="source">
+        <pre class="line-numbers"><code class="language-typescript">export class LoginOptions {
+
+    /**
+     * Is called, after a token has been received and
+     * successfully validated.
+     *
+     * Deprecated:  Use property &#x60;&#x60;events&#x60;&#x60; on OAuthService instead.
+     */
+    onTokenReceived?: (receivedTokens: ReceivedTokens) &#x3D;&gt; void;
+
+    /**
+     * Hook, to validate the received tokens.
+     * Deprecated:  Use property &#x60;&#x60;tokenValidationHandler&#x60;&#x60; on OAuthService instead.
+     */
+    validationHandler?: (receivedTokens: ReceivedTokens) &#x3D;&gt; Promise&lt;any&gt;;
+
+    /**
+     * Called when tryLogin detects that the auth server
+     * included an error message into the hash fragment.
+     *
+     * Deprecated:  Use property &#x60;&#x60;events&#x60;&#x60; on OAuthService instead.
+     */
+    onLoginError?: (params: object) &#x3D;&gt; void;
+
+    /**
+     * A custom hash fragment to be used instead of the
+     * actual one. This is used for silent refreshes, to
+     * pass the iframes hash fragment to this method.
+    */
+    customHashFragment?: string;
+
+    /**
+     * Set this to true to disable the oauth2 state
+     * check which is a best practice to avoid
+     * security attacks.
+     * As OIDC defines a nonce check that includes
+     * this, this can be set to true when only doing
+     * OIDC.
+     */
+    disableOAuth2StateCheck?: boolean;
+}
+
+/**
+ * Defines a simple storage that can be used for
+ * storing the tokens at client side.
+ * Is compatible to localStorage and sessionStorage,
+ * but you can also create your own implementations.
+ */
+export abstract class OAuthStorage {
+    abstract getItem(key: string): string | null;
+    abstract removeItem(key: string): void;
+    abstract setItem(key: string, data: string): void;
+}
+
+/**
+ * Represents the received tokens, the received state
+ * and the parsed claims from the id-token.
+ */
+export class ReceivedTokens {
+    idToken: string;
+    accessToken: string;
+    idClaims?: object;
+    state?: string;
+}
+
+/**
+ * Represents the parsed and validated id_token.
+ */
+export interface ParsedIdToken {
+    idToken: string;
+    idTokenClaims: object;
+    idTokenHeader: object;
+    idTokenClaimsJson: string;
+    idTokenHeaderJson: string;
+    idTokenExpiresAt: number;
+}
+
+/**
+ * Represents the response from the token endpoint
+ * http://openid.net/specs/openid-connect-core-1_0.html#TokenEndpoint
+ */
+export interface TokenResponse {
+    access_token: string;
+    token_type: string;
+    expires_in: number;
+    refresh_token: string;
+    scope: string;
+    state?: string;
+}
+
+/**
+ * Represents the response from the user info endpoint
+ * http://openid.net/specs/openid-connect-core-1_0.html#UserInfo
+ */
+export interface UserInfo {
+    sub: string;
+    [key: string]: any;
+}
+
+/**
+ * Represents an OpenID Connect discovery document
+ */
+export interface OidcDiscoveryDoc {
+    issuer: string;
+    authorization_endpoint: string;
+    token_endpoint: string;
+    token_endpoint_auth_methods_supported: string[];
+    token_endpoint_auth_signing_alg_values_supported: string[];
+    userinfo_endpoint: string;
+    check_session_iframe: string;
+    end_session_endpoint: string;
+    jwks_uri: string;
+    registration_endpoint: string;
+    scopes_supported: string[];
+    response_types_supported: string[];
+    acr_values_supported: string[];
+    response_modes_supported: string[];
+    grant_types_supported: string[];
+    subject_types_supported: string[];
+    userinfo_signing_alg_values_supported: string[];
+    userinfo_encryption_alg_values_supported: string[];
+    userinfo_encryption_enc_values_supported: string[];
+    id_token_signing_alg_values_supported: string[];
+    id_token_encryption_alg_values_supported: string[];
+    id_token_encryption_enc_values_supported: string[];
+    request_object_signing_alg_values_supported: string[];
+    display_values_supported: string[];
+    claim_types_supported: string[];
+    claims_supported: string[];
+    claims_parameter_supported: boolean;
+    service_documentation: string;
+    ui_locales_supported: string[];
+}
+
+</code></pre>
+    </div>
+</div>
+
+
 
 
                    </div><div class="search-results">

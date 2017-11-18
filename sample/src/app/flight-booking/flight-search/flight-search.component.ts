@@ -1,6 +1,4 @@
 import {Component} from '@angular/core';
-import {Headers, Http, URLSearchParams} from '@angular/http';
-
 import {OAuthService} from 'angular-oauth2-oidc';
 import {Flight} from '../../entities/flight';
 import {FlightService} from '../services/flight.service';
