@@ -188,7 +188,7 @@ export class HomeComponent {
     }
 
     public get name() {
-        let claims = this.oAuthService.getIdentityClaims();
+        let claims = this.oauthService.getIdentityClaims();
         if (!claims) return null;
         return claims.given_name;
     }
