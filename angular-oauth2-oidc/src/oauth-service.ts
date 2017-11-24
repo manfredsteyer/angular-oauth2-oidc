@@ -1,5 +1,5 @@
 import { Injectable, Optional } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
@@ -543,26 +543,24 @@ export class OAuthService
         }
 
         return new Promise((resolve, reject) => {
-            let search = new URLSearchParams();
-            search.set('grant_type', 'password');
-            search.set('client_id', this.clientId);
-            search.set('scope', this.scope);
-            search.set('username', userName);
-            search.set('password', password);
+            let params = new HttpParams()
+                .set('grant_type', 'password')
+                .set('client_id', this.clientId)
+                .set('scope', this.scope)
+                .set('username', userName)
+                .set('password', password);
 
             if (this.dummyClientSecret) {
-                search.set('client_secret', this.dummyClientSecret);
+                params = params.set('client_secret', this.dummyClientSecret);
             }
 
             if (this.customQueryParams) {
                 for (let key of Object.getOwnPropertyNames(this.customQueryParams)) {
-                    search.set(key, this.customQueryParams[key]);
+                    params = params.set(key, this.customQueryParams[key]);
                 }
             }
 
             headers = headers.set('Content-Type', 'application/x-www-form-urlencoded');
-
-            let params = search.toString();
 
             this.http.post<TokenResponse>(this.tokenEndpoint, params, { headers }).subscribe(
                 (tokenResponse) => {
@@ -596,26 +594,24 @@ export class OAuthService
         }
 
         return new Promise((resolve, reject) => {
-            let search = new URLSearchParams();
-            search.set('grant_type', 'refresh_token');
-            search.set('client_id', this.clientId);
-            search.set('scope', this.scope);
-            search.set('refresh_token', this._storage.getItem('refresh_token'));
+            let params = new HttpParams()
+                .set('grant_type', 'refresh_token')
+                .set('client_id', this.clientId)
+                .set('scope', this.scope)
+                .set('refresh_token', this._storage.getItem('refresh_token'));
 
             if (this.dummyClientSecret) {
-                search.set('client_secret', this.dummyClientSecret);
+                params = params.set('client_secret', this.dummyClientSecret);
             }
 
             if (this.customQueryParams) {
                 for (let key of Object.getOwnPropertyNames(this.customQueryParams)) {
-                    search.set(key, this.customQueryParams[key]);
+                    params = params.set(key, this.customQueryParams[key]);
                 }
             }
 
             const headers = new HttpHeaders()
                 .set('Content-Type', 'application/x-www-form-urlencoded');
-
-            let params = search.toString();
 
             this.http.post<TokenResponse>(this.tokenEndpoint, params, { headers }).subscribe(
                 (tokenResponse) => {
