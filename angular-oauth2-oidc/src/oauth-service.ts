@@ -225,6 +225,12 @@ export class OAuthService
             return;
         }
 
+        if (this.hasValidIdToken) {
+            this.clearAccessTokenTimer();
+            this.clearIdTokenTimer();
+            this.setupExpirationTimers();
+        }
+
         this.events.filter(e => e.type === 'token_received').subscribe(_ => {
 
             this.clearAccessTokenTimer();
