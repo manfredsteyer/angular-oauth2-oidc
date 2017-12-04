@@ -371,7 +371,7 @@ export class OAuthService
                     });
                 },
                 (err) => {
-                    console.error('error loading dicovery document', err);
+                    console.error('error loading discovery document', err);
                     this.eventsSubject.next(new OAuthErrorEvent('discovery_document_load_error', err));
                     reject(err);
                 }
