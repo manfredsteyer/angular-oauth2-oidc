@@ -988,20 +988,20 @@ export class OAuthService
     };
 
     initImplicitFlowInternal(additionalState = '', params: string | object = ''): void {
-        
+
         if (this.inImplicitFlow) {
             return;
         }
 
         this.inImplicitFlow = true;
-        
+
         if (!this.validateUrlForHttps(this.loginUrl)) {
             throw new Error('loginUrl must use Http. Also check property requireHttps.');
         }
-        
+
         let addParams: object = {};
         let loginHint: string = null;
-        
+
         if (typeof params === 'string') {
             loginHint = params;
         }
@@ -1018,7 +1018,7 @@ export class OAuthService
             this.inImplicitFlow = false;
         });
     };
-    
+
     /**
      * Starts the implicit flow and redirects to user to
      * the auth servers login url.
@@ -1139,7 +1139,7 @@ export class OAuthService
         if (!this.oidc) {
             this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
             return Promise.resolve();  
-        } 
+        }
 
         return this
                 .processIdToken(idToken, accessToken)
