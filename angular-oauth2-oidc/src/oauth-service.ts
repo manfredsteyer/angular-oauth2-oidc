@@ -64,6 +64,7 @@ export class OAuthService
     private jwksUri: string;
     private sessionCheckTimer: any;
     private silentRefreshSubject: string;
+    private inImplicitFlow = false;
 
     constructor(
         private http: HttpClient,
@@ -986,24 +987,21 @@ export class OAuthService
         });
     };
 
-    /**
-     * Starts the implicit flow and redirects to user to
-     * the auth servers login url.
-     *
-     * @param additionalState Optinal state that is passes around.
-     *  You find this state in the property ``state`` after ``tryLogin`` logged in the user.
-     * @param params Hash with additional parameter. If it is a string, it is used for the 
-     *               parameter loginHint (for the sake of compatibility with former versions)
-     */
-    public initImplicitFlow(additionalState = '', params: string | object = ''): void {
+    initImplicitFlowInternal(additionalState = '', params: string | object = ''): void {
+        
+        if (this.inImplicitFlow) {
+            return;
+        }
 
+        this.inImplicitFlow = true;
+        
         if (!this.validateUrlForHttps(this.loginUrl)) {
             throw new Error('loginUrl must use Http. Also check property requireHttps.');
         }
-
+        
         let addParams: object = {};
         let loginHint: string = null;
-
+        
         if (typeof params === 'string') {
             loginHint = params;
         }
@@ -1017,8 +1015,28 @@ export class OAuthService
         .catch(error => {
             console.error('Error in initImplicitFlow');
             console.error(error);
+            this.inImplicitFlow = false;
         });
     };
+    
+    /**
+     * Starts the implicit flow and redirects to user to
+     * the auth servers login url.
+     *
+     * @param additionalState Optinal state that is passes around.
+     *  You find this state in the property ``state`` after ``tryLogin`` logged in the user.
+     * @param params Hash with additional parameter. If it is a string, it is used for the 
+     *               parameter loginHint (for the sake of compatibility with former versions)
+     */
+    public initImplicitFlow(additionalState = '', params: string | object = ''): void {
+
+        if (this.loginUrl !== '') {
+            this.initImplicitFlowInternal(additionalState, params);
+        } else {
+            this.events.filter(e => e.type === 'discovery_document_loaded')
+                .subscribe(_ => this.initImplicitFlowInternal(additionalState, params));
+        }
+    }
 
     private callOnTokenReceivedIfExists(options: LoginOptions): void {
         let that = this;
@@ -1141,6 +1159,7 @@ export class OAuthService
                         this.storeSessionState(sessionState);
                         this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
                         this.callOnTokenReceivedIfExists(options);
+                        this.inImplicitFlow = false;
                         if (this.clearHashAfterLogin) location.hash = '';
                     })
                 .catch(reason => {
