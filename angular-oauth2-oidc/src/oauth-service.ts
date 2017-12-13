@@ -157,15 +157,15 @@ export class OAuthService
         this.restartRefreshTimerIfStillLoggedIn();
     }
 
-    public loadDiscoveryDocumentAndTryLogin() {
+    public loadDiscoveryDocumentAndTryLogin(options: LoginOptions = null) {
         return this.loadDiscoveryDocument().then((doc) => {
-            return this.tryLogin();
+            return this.tryLogin(options);
         });
     }
 
 
-    public loadDiscoveryDocumentAndLogin() {
-        this.loadDiscoveryDocumentAndTryLogin().then(_ => {
+    public loadDiscoveryDocumentAndLogin(options: LoginOptions = null) {
+        this.loadDiscoveryDocumentAndTryLogin(options).then(_ => {
             if (!this.hasValidIdToken() || !this.hasValidAccessToken()) {
               this.initImplicitFlow();
             }
