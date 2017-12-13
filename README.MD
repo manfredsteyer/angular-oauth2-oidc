@@ -6,10 +6,10 @@ Support for OAuth 2 and OpenId Connect (OIDC) in Angular.
 
 ## Credits
 
-- [generator-angular2-library](https://github.com/jvandemo/generator-angular2-library) for scaffolding a angular library
+- [generator-angular2-library](https://github.com/jvandemo/generator-angular2-library) for scaffolding an Angular library
 - [jsrasign](https://kjur.github.io/jsrsasign/) for validating token signature and for hashing
-- [Identity Server](https://github.com/identityserver) (used for Testing with an .NET/.NET Core Backend)
-- [Keycloak (Redhat)](http://www.keycloak.org/) for Testing with Java
+- [Identity Server](https://github.com/identityserver) (used for testing with an .NET/.NET Core Backend)
+- [Keycloak (Redhat)](http://www.keycloak.org/) for testing with Java
 
 ## Resources
 
@@ -19,10 +19,15 @@ https://github.com/manfredsteyer/angular-oauth2-oidc
 - Source Code Documentation
 https://manfredsteyer.github.io/angular-oauth2-oidc/angular-oauth2-oidc/docs/
 
+## Tutorials
+
+* [Angular Authentication with OpenID Connect and Okta in 20 Minutes](https://developer.okta.com/blog/2017/04/17/angular-authentication-with-oidc)
+* [Add Authentication to Your Angular PWA](https://developer.okta.com/blog/2017/06/13/add-authentication-angular-pwa)
+* [Build an Ionic App with User Authentication](https://developer.okta.com/blog/2017/08/22/build-an-ionic-app-with-user-authentication)
+
 ## Tested Environment
 
 Successfully tested with Angular 4.3+, Angular 5 and its Router,PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we've used IdentityServer (.NET/ .NET Core) and Redhat's Keycloak (Java).
-
 
 ## New Features in Version 3.0
 
@@ -41,7 +46,7 @@ See [Release Notes](https://github.com/manfredsteyer/angular-oauth2-oidc/release
 - Token Refresh for Implicit Flow by implementing "silent refresh"
 - Validating the signature of the received id_token
 - Providing Events via the observable ``events``.
-- The event ``token_expires`` can be used togehter with a silent refresh to automatically refresh a token when/ before it expires (see also property ``timeoutFactor``).
+- The event ``token_expires`` can be used together with a silent refresh to automatically refresh a token when/ before it expires (see also property ``timeoutFactor``).
 
 ## Additional Features 
 - Logging in via OAuth2 and OpenId Connect (OIDC) Implicit Flow (where user is redirected to Identity Provider)
