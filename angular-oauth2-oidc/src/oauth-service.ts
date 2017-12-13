@@ -53,6 +53,8 @@ export class OAuthService
      */
     public state? = '';
 
+    public disableNonceCheck: boolean = false;
+
     private eventsSubject: Subject<OAuthEvent> = new Subject<OAuthEvent>();
     private discoveryDocumentLoadedSubject: Subject<object> = new Subject<object>();
     private silentRefreshPostMessageEventListener: EventListener;
@@ -596,20 +598,35 @@ export class OAuthService
      */
     public refreshToken(): Promise<object> {
 
+        let params = new HttpParams()
+            .set('grant_type', 'refresh_token')
+            .set('refresh_token', this._storage.getItem('refresh_token'))
+            .set('scope', this.scope);
+        if (this.dummyClientSecret) {
+            params = params.set('client_secret', this.dummyClientSecret);
+        }
+        return this.fetchToken(params);
+    }
+
+    /**
+     * Get token using an intermediate code. Works for the Authorization Code flow.
+     */
+    public getTokenFromCode(code: string): Promise<object> {
+        let params = new HttpParams()
+            .set('grant_type', 'authorization_code')
+            .set('code', code)
+            .set('redirect_uri', window.location.origin);
+        return this.fetchToken(params);
+    }
+
+    private fetchToken(params: HttpParams): Promise<object> {    
+
         if (!this.validateUrlForHttps(this.tokenEndpoint)) {
             throw new Error('tokenEndpoint must use Http. Also check property requireHttps.');
         }
 
         return new Promise((resolve, reject) => {
-            let params = new HttpParams()
-                .set('grant_type', 'refresh_token')
-                .set('client_id', this.clientId)
-                .set('scope', this.scope)
-                .set('refresh_token', this._storage.getItem('refresh_token'));
-
-            if (this.dummyClientSecret) {
-                params = params.set('client_secret', this.dummyClientSecret);
-            }
+            params = params.set('client_id', this.clientId);
 
             if (this.customQueryParams) {
                 for (let key of Object.getOwnPropertyNames(this.customQueryParams)) {
@@ -625,12 +642,24 @@ export class OAuthService
                     this.debug('refresh tokenResponse', tokenResponse);
                     this.storeAccessTokenResponse(tokenResponse.access_token, tokenResponse.refresh_token, tokenResponse.expires_in);
 
+                    if (this.oidc && tokenResponse.id_token) {
+                        this.processIdToken(tokenResponse.id_token, tokenResponse.access_token).  
+                        then(result => {
+                            this.storeIdToken(result);
+                        })
+                        .catch(reason => {
+                            this.eventsSubject.next(new OAuthErrorEvent('token_validation_error', reason));
+                            console.error('Error validating tokens');
+                            console.error(reason);
+                        });
+                    }
+
                     this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
                     this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
                     resolve(tokenResponse);
                 },
                 (err) => {
-                    console.error('Error performing password flow', err);
+                    console.error('Error getting token', err);
                     this.eventsSubject.next(new OAuthErrorEvent('token_refresh_error', err));
                     reject(err);
                 }
@@ -928,15 +957,7 @@ export class OAuthService
                 throw new Error('Either requestAccessToken or oidc or both must be true');
             }
 
-            if (this.oidc && this.requestAccessToken) {
-                this.responseType = 'id_token token';
-            }
-            else if (this.oidc && !this.requestAccessToken) {
-                this.responseType = 'id_token';
-            }
-            else {
-                this.responseType = 'token';
-            }
+            this.responseType = this.getResponseType(this.inImplicitFlow);
 
             let seperationChar = (that.loginUrl.indexOf('?') > -1) ? '&' : '?';
 
@@ -989,8 +1010,8 @@ export class OAuthService
         });
     };
 
-    initImplicitFlowInternal(additionalState = '', params: string | object = ''): void {
-
+    private initImplicitFlowInternal(additionalState = '', params: string | object = ''): void {
+        
         if (this.inImplicitFlow) {
             return;
         }
@@ -1040,6 +1061,42 @@ export class OAuthService
         }
     }
 
+    /**
+     * Starts the authorization code flow and redirects to user to
+     * the auth servers login url.
+     */
+    public initAuthorizationCodeFlow(): void {
+        
+        if (!this.validateUrlForHttps(this.loginUrl)) {
+            throw new Error('loginUrl must use Http. Also check property requireHttps.');
+        }
+
+        this.createLoginUrl('', '', null, false, {}).then(function (url) {
+            location.href = url;
+        })
+        .catch(error => {
+            console.error('Error in initAuthorizationCodeFlow');
+            console.error(error);
+        });
+    };
+    
+    private getResponseType(implicit: boolean): string {
+        
+        if (implicit) {
+            if (this.oidc && this.requestAccessToken) {
+                return 'id_token token';
+            }
+            else if (this.oidc && !this.requestAccessToken) {
+                return 'id_token';
+            }
+            else {
+                return 'token';
+            }
+        } else {
+            return 'code';
+        }
+    }
+    
     private callOnTokenReceivedIfExists(options: LoginOptions): void {
         let that = this;
         if (options.onTokenReceived) {
@@ -1080,8 +1137,31 @@ export class OAuthService
 
         options = options || { };
 
-        let parts: object;
+        if (!this.requestAccessToken && !this.oidc) {
+            return Promise.reject('Either requestAccessToken or oidc or both must be true.');
+        }
 
+        if (!window.location.hash && window.location.search) {
+            return this.tryLoginAuthorizationCode();
+        } else {
+            return this.tryLoginImplicit(options);
+        }
+    };
+
+    private tryLoginAuthorizationCode(): Promise<void> {
+
+        var parameter = window.location.search.split("&")[0].replace("?","").split("=");
+        if (parameter[0] == 'code') {
+            var code = parameter[1];
+            this.getTokenFromCode(code);
+        }
+
+        return Promise.resolve();  
+    }
+
+    private tryLoginImplicit(options: LoginOptions = null): Promise<void> {
+        let parts: object;
+        
         if (options.customHashFragment) {
             parts = this.urlHelper.getHashFragmentParams(options.customHashFragment);
         }
@@ -1098,15 +1178,11 @@ export class OAuthService
             this.eventsSubject.next(err);
             return Promise.reject(err);
         }
-
+        
         let accessToken = parts['access_token'];
         let idToken = parts['id_token'];
         let state = decodeURIComponent(parts['state']);
         let sessionState = parts['session_state'];
-
-        if (!this.requestAccessToken && !this.oidc) {
-            return Promise.reject('Either requestAccessToken or oidc or both must be true.');
-        }
 
         if (this.requestAccessToken && !accessToken) return Promise.resolve();
         if (this.requestAccessToken && !options.disableOAuth2StateCheck && !state) return Promise.resolve();
@@ -1169,8 +1245,7 @@ export class OAuthService
                     console.error('Error validating tokens');
                     console.error(reason);
                 });
-
-    };
+    }
 
     private validateNonceForAccessToken(accessToken: string, nonceInState: string): boolean {
         let savedNonce = this._storage.getItem('nonce');
@@ -1273,7 +1348,7 @@ export class OAuthService
                 return Promise.reject(err);
             }
 
-            if (claims.nonce !== savedNonce) {
+            if (!this.disableNonceCheck && claims.nonce !== savedNonce) {
                 let err = 'Wrong nonce: ' + claims.nonce;
                 console.warn(err);
                 return Promise.reject(err);
