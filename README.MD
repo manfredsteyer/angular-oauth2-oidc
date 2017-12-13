@@ -31,7 +31,7 @@ Successfully tested with Angular 4.3+, Angular 5 and its Router,PathLocationStra
 
 ## New Features in Version 3.1
 
-
+See [Release Notes](https://github.com/manfredsteyer/angular-oauth2-oidc/releases/tag/3.1)
 
 ## New Features in Version 3.0
 
