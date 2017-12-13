@@ -218,6 +218,13 @@ The following snippet contains the template for the login page:
 </div>
 ```
 
+### Skipping the login form
+
+If you don't want to display a login form that tells the user that they are redirected to the identity server, you can use the convenince function ``this.oauthService.loadDiscoveryDocumentAndLogin();`` instead of ``this.oauthService.loadDiscoveryDocumentAndTryLogin();`` when setting up the library. 
+
+This directly redirects the user to the identity server if there are no valid tokens. 
+
+
 ### Calling a Web API with an Access Token
 
 Pass this Header to the used method of the ``Http``-Service within an Instance of the class ``Headers``:
@@ -235,6 +242,12 @@ var headers = new HttpHeaders({
     "Authorization": "Bearer " + this.oauthService.getAccessToken()
 });
 ```
+
+
+## Some infos about Routing
+
+
+
 
 ## More Documentation
 

@@ -21,7 +21,14 @@ import {SharedModule} from './shared/shared.module';
         SharedModule.forRoot(),
         AppRouterModule,
         HttpClientModule,
-        OAuthModule.forRoot()
+        OAuthModule.forRoot(
+        //     {
+        //     resourceServer: {
+        //         allowedUrls: ['http://www.angular.at/api'],
+        //         sendAccessToken: true
+        //     }
+        // }
+    )
     ],
     declarations: [
         AppComponent,

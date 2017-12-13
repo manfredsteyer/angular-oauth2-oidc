@@ -32,7 +32,8 @@ export class HomeComponent implements OnInit {
 
 
     login() {
-        this.oauthService.initImplicitFlow('some-state');
+        this.oauthService.initImplicitFlow('/some-state;p1=1;p2=2');
+        // the parameter here is optional. It's passed around and can be used after logging in
     }
 
     logout() {

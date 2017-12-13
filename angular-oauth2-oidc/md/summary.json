@@ -12,6 +12,10 @@
         "file": "silent-refresh.md"
     },
     {
+        "title": "Working with HttpInterceptors",
+        "file": "interceptors.md"
+    },
+    {
         "title": "Callback after login",
         "file": "callback-after-login.md"
     },
