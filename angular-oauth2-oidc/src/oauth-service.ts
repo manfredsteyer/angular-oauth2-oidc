@@ -1,5 +1,5 @@
 import { Injectable, Optional } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
@@ -64,6 +64,7 @@ export class OAuthService
     private jwksUri: string;
     private sessionCheckTimer: any;
     private silentRefreshSubject: string;
+    private inImplicitFlow = false;
 
     constructor(
         private http: HttpClient,
@@ -156,15 +157,15 @@ export class OAuthService
         this.restartRefreshTimerIfStillLoggedIn();
     }
 
-    public loadDiscoveryDocumentAndTryLogin() {
+    public loadDiscoveryDocumentAndTryLogin(options: LoginOptions = null) {
         return this.loadDiscoveryDocument().then((doc) => {
-            return this.tryLogin();
+            return this.tryLogin(options);
         });
     }
 
 
-    public loadDiscoveryDocumentAndLogin() {
-        this.loadDiscoveryDocumentAndTryLogin().then(_ => {
+    public loadDiscoveryDocumentAndLogin(options: LoginOptions = null) {
+        this.loadDiscoveryDocumentAndTryLogin(options).then(_ => {
             if (!this.hasValidIdToken() || !this.hasValidAccessToken()) {
               this.initImplicitFlow();
             }
@@ -223,6 +224,12 @@ export class OAuthService
         if (typeof window === 'undefined') {
             this.debug('timer not supported on this plattform');
             return;
+        }
+
+        if (this.hasValidIdToken) {
+            this.clearAccessTokenTimer();
+            this.clearIdTokenTimer();
+            this.setupExpirationTimers();
         }
 
         this.events.filter(e => e.type === 'token_received').subscribe(_ => {
@@ -371,7 +378,7 @@ export class OAuthService
                     });
                 },
                 (err) => {
-                    console.error('error loading dicovery document', err);
+                    console.error('error loading discovery document', err);
                     this.eventsSubject.next(new OAuthErrorEvent('discovery_document_load_error', err));
                     reject(err);
                 }
@@ -543,26 +550,24 @@ export class OAuthService
         }
 
         return new Promise((resolve, reject) => {
-            let search = new URLSearchParams();
-            search.set('grant_type', 'password');
-            search.set('client_id', this.clientId);
-            search.set('scope', this.scope);
-            search.set('username', userName);
-            search.set('password', password);
+            let params = new HttpParams()
+                .set('grant_type', 'password')
+                .set('client_id', this.clientId)
+                .set('scope', this.scope)
+                .set('username', userName)
+                .set('password', password);
 
             if (this.dummyClientSecret) {
-                search.set('client_secret', this.dummyClientSecret);
+                params = params.set('client_secret', this.dummyClientSecret);
             }
 
             if (this.customQueryParams) {
                 for (let key of Object.getOwnPropertyNames(this.customQueryParams)) {
-                    search.set(key, this.customQueryParams[key]);
+                    params = params.set(key, this.customQueryParams[key]);
                 }
             }
 
             headers = headers.set('Content-Type', 'application/x-www-form-urlencoded');
-
-            let params = search.toString();
 
             this.http.post<TokenResponse>(this.tokenEndpoint, params, { headers }).subscribe(
                 (tokenResponse) => {
@@ -596,26 +601,24 @@ export class OAuthService
         }
 
         return new Promise((resolve, reject) => {
-            let search = new URLSearchParams();
-            search.set('grant_type', 'refresh_token');
-            search.set('client_id', this.clientId);
-            search.set('scope', this.scope);
-            search.set('refresh_token', this._storage.getItem('refresh_token'));
+            let params = new HttpParams()
+                .set('grant_type', 'refresh_token')
+                .set('client_id', this.clientId)
+                .set('scope', this.scope)
+                .set('refresh_token', this._storage.getItem('refresh_token'));
 
             if (this.dummyClientSecret) {
-                search.set('client_secret', this.dummyClientSecret);
+                params = params.set('client_secret', this.dummyClientSecret);
             }
 
             if (this.customQueryParams) {
                 for (let key of Object.getOwnPropertyNames(this.customQueryParams)) {
-                    search.set(key, this.customQueryParams[key]);
+                    params = params.set(key, this.customQueryParams[key]);
                 }
             }
 
             const headers = new HttpHeaders()
                 .set('Content-Type', 'application/x-www-form-urlencoded');
-
-            let params = search.toString();
 
             this.http.post<TokenResponse>(this.tokenEndpoint, params, { headers }).subscribe(
                 (tokenResponse) => {
@@ -986,16 +989,13 @@ export class OAuthService
         });
     };
 
-    /**
-     * Starts the implicit flow and redirects to user to
-     * the auth servers login url.
-     *
-     * @param additionalState Optinal state that is passes around.
-     *  You find this state in the property ``state`` after ``tryLogin`` logged in the user.
-     * @param params Hash with additional parameter. If it is a string, it is used for the 
-     *               parameter loginHint (for the sake of compatibility with former versions)
-     */
-    public initImplicitFlow(additionalState = '', params: string | object = ''): void {
+    initImplicitFlowInternal(additionalState = '', params: string | object = ''): void {
+
+        if (this.inImplicitFlow) {
+            return;
+        }
+
+        this.inImplicitFlow = true;
 
         if (!this.validateUrlForHttps(this.loginUrl)) {
             throw new Error('loginUrl must use Http. Also check property requireHttps.');
@@ -1017,8 +1017,28 @@ export class OAuthService
         .catch(error => {
             console.error('Error in initImplicitFlow');
             console.error(error);
+            this.inImplicitFlow = false;
         });
     };
+
+    /**
+     * Starts the implicit flow and redirects to user to
+     * the auth servers login url.
+     *
+     * @param additionalState Optinal state that is passes around.
+     *  You find this state in the property ``state`` after ``tryLogin`` logged in the user.
+     * @param params Hash with additional parameter. If it is a string, it is used for the 
+     *               parameter loginHint (for the sake of compatibility with former versions)
+     */
+    public initImplicitFlow(additionalState = '', params: string | object = ''): void {
+
+        if (this.loginUrl !== '') {
+            this.initImplicitFlowInternal(additionalState, params);
+        } else {
+            this.events.filter(e => e.type === 'discovery_document_loaded')
+                .subscribe(_ => this.initImplicitFlowInternal(additionalState, params));
+        }
+    }
 
     private callOnTokenReceivedIfExists(options: LoginOptions): void {
         let that = this;
@@ -1121,7 +1141,7 @@ export class OAuthService
         if (!this.oidc) {
             this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
             return Promise.resolve();  
-        } 
+        }
 
         return this
                 .processIdToken(idToken, accessToken)
@@ -1141,6 +1161,7 @@ export class OAuthService
                         this.storeSessionState(sessionState);
                         this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
                         this.callOnTokenReceivedIfExists(options);
+                        this.inImplicitFlow = false;
                         if (this.clearHashAfterLogin) location.hash = '';
                     })
                 .catch(reason => {
