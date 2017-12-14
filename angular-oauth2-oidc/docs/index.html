@@ -77,6 +77,9 @@
                                     <a href="./additional-documentation/refreshing-a-token-(silent-refresh).html" >Refreshing a Token (Silent Refresh)</a>
                                 </li>
                                 <li class="link ">
+                                    <a href="./additional-documentation/working-with-httpinterceptors.html" >Working with HttpInterceptors</a>
+                                </li>
+                                <li class="link ">
                                     <a href="./additional-documentation/callback-after-login.html" >Callback after login</a>
                                 </li>
                                 <li class="link ">
@@ -166,6 +169,18 @@
                                     <a href="./classes/OAuthInfoEvent.html" >OAuthInfoEvent</a>
                                 </li>
                                 <li class="link">
+                                    <a href="./classes/OAuthModuleConfig.html" >OAuthModuleConfig</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./classes/OAuthNoopResourceServerErrorHandler.html" >OAuthNoopResourceServerErrorHandler</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./classes/OAuthResourceServerConfig.html" >OAuthResourceServerConfig</a>
+                                </li>
+                                <li class="link">
+                                    <a href="./classes/OAuthResourceServerErrorHandler.html" >OAuthResourceServerErrorHandler</a>
+                                </li>
+                                <li class="link">
                                     <a href="./classes/OAuthStorage.html" >OAuthStorage</a>
                                 </li>
                                 <li class="link">
@@ -200,6 +215,22 @@
                         </ul>
                     </li>
             
+                    <li class="chapter">
+                        <div class="simple menu-toggler" data-toggle="collapse"
+                                data-target="#xs-interceptors-links"
+                            >
+                            <span class="fa fa-exchange"></span>
+                            <span>Interceptors</span>
+                            <span class="fa fa-angle-down"></span>
+                        </div>
+                        <ul class="links collapse "
+                                id="xs-interceptors-links"
+                            >
+                                <li class="link">
+                                    <a href="./interceptors/DefaultOAuthInterceptor.html" >DefaultOAuthInterceptor</a>
+                                </li>
+                        </ul>
+                    </li>
             
                     <li class="chapter">
                         <div class="simple menu-toggler" data-toggle="collapse"
@@ -324,6 +355,9 @@
                                            <a href="./additional-documentation/refreshing-a-token-(silent-refresh).html" >Refreshing a Token (Silent Refresh)</a>
                                        </li>
                                        <li class="link ">
+                                           <a href="./additional-documentation/working-with-httpinterceptors.html" >Working with HttpInterceptors</a>
+                                       </li>
+                                       <li class="link ">
                                            <a href="./additional-documentation/callback-after-login.html" >Callback after login</a>
                                        </li>
                                        <li class="link ">
@@ -413,6 +447,18 @@
                                            <a href="./classes/OAuthInfoEvent.html" >OAuthInfoEvent</a>
                                        </li>
                                        <li class="link">
+                                           <a href="./classes/OAuthModuleConfig.html" >OAuthModuleConfig</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./classes/OAuthNoopResourceServerErrorHandler.html" >OAuthNoopResourceServerErrorHandler</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./classes/OAuthResourceServerConfig.html" >OAuthResourceServerConfig</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="./classes/OAuthResourceServerErrorHandler.html" >OAuthResourceServerErrorHandler</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="./classes/OAuthStorage.html" >OAuthStorage</a>
                                        </li>
                                        <li class="link">
@@ -447,6 +493,22 @@
                                </ul>
                            </li>
                    
+                           <li class="chapter">
+                               <div class="simple menu-toggler" data-toggle="collapse"
+                                       data-target="#interceptors-links"
+                   >
+                                   <span class="fa fa-exchange"></span>
+                                   <span>Interceptors</span>
+                                   <span class="fa fa-angle-down"></span>
+                               </div>
+                               <ul class="links collapse "
+                                       id="interceptors-links"
+                   >
+                                       <li class="link">
+                                           <a href="./interceptors/DefaultOAuthInterceptor.html" >DefaultOAuthInterceptor</a>
+                                       </li>
+                               </ul>
+                           </li>
                    
                            <li class="chapter">
                                <div class="simple menu-toggler" data-toggle="collapse"
@@ -531,7 +593,9 @@
 </li>
 </ul>
 <h2 id="tested-environment">Tested Environment</h2>
-<p>Successfully tested with Angular 4 and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we&#39;ve used IdentityServer (.NET/ .NET Core) and Redhat&#39;s Keycloak (Java).</p>
+<p>Successfully tested with Angular 4.3+, Angular 5 and its Router,PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we&#39;ve used IdentityServer (.NET/ .NET Core) and Redhat&#39;s Keycloak (Java).</p>
+<h2 id="new-features-in-version-3-0">New Features in Version 3.0</h2>
+<p>See <a href="https://github.com/manfredsteyer/angular-oauth2-oidc/releases/tag/3.0.1">Release Notes</a></p>
 <h2 id="new-features-in-version-2-1">New Features in Version 2.1</h2>
 <ul>
 <li>New Config API (the original one is still supported)</li>
@@ -693,14 +757,18 @@ export class HomeComponent {
 
 &lt;div&gt;
     Username/Passwort zum Testen: max/geheim
-&lt;/div&gt;</code></pre><h3 id="calling-a-web-api-with-an-access-token">Calling a Web API with an Access Token</h3>
+&lt;/div&gt;</code></pre><h3 id="skipping-the-login-form">Skipping the login form</h3>
+<p>If you don&#39;t want to display a login form that tells the user that they are redirected to the identity server, you can use the convenince function <code>this.oauthService.loadDiscoveryDocumentAndLogin();</code> instead of <code>this.oauthService.loadDiscoveryDocumentAndTryLogin();</code> when setting up the library. </p>
+<p>This directly redirects the user to the identity server if there are no valid tokens. </p>
+<h3 id="calling-a-web-api-with-an-access-token">Calling a Web API with an Access Token</h3>
 <p>Pass this Header to the used method of the <code>Http</code>-Service within an Instance of the class <code>Headers</code>:</p>
 <pre class="line-numbers"><code class="language-TypeScript">var headers = new Headers({
     &quot;Authorization&quot;: &quot;Bearer &quot; + this.oauthService.getAccessToken()
 });</code></pre><p>If you are using the new HttpClient, use the class HttpHeaders instead:</p>
 <pre class="line-numbers"><code class="language-TypeScript">var headers = new HttpHeaders({
     &quot;Authorization&quot;: &quot;Bearer &quot; + this.oauthService.getAccessToken()
-});</code></pre><h2 id="more-documentation">More Documentation</h2>
+});</code></pre><h2 id="some-infos-about-routing">Some infos about Routing</h2>
+<h2 id="more-documentation">More Documentation</h2>
 <p>See the <a href="https://manfredsteyer.github.io/angular-oauth2-oidc/angular-oauth2-oidc/docs/">documentation</a> for more information about this library.</p>
 
 

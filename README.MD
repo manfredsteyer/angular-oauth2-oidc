@@ -29,6 +29,10 @@ https://manfredsteyer.github.io/angular-oauth2-oidc/angular-oauth2-oidc/docs/
 
 Successfully tested with Angular 4.3+, Angular 5 and its Router,PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we've used IdentityServer (.NET/ .NET Core) and Redhat's Keycloak (Java).
 
+## New Features in Version 3.1
+
+See [Release Notes](https://github.com/manfredsteyer/angular-oauth2-oidc/releases/tag/3.1)
+
 ## New Features in Version 3.0
 
 See [Release Notes](https://github.com/manfredsteyer/angular-oauth2-oidc/releases/tag/3.0.1)
@@ -223,6 +227,13 @@ The following snippet contains the template for the login page:
 </div>
 ```
 
+### Skipping the Login Form
+
+If you don't want to display a login form that tells the user that they are redirected to the identity server, you can use the convenince function ``this.oauthService.loadDiscoveryDocumentAndLogin();`` instead of ``this.oauthService.loadDiscoveryDocumentAndTryLogin();`` when setting up the library. 
+
+This directly redirects the user to the identity server if there are no valid tokens. 
+
+
 ### Calling a Web API with an Access Token
 
 Pass this Header to the used method of the ``Http``-Service within an Instance of the class ``Headers``:
@@ -233,13 +244,29 @@ var headers = new Headers({
 });
 ```
 
-If you are using the new HttpClient, use the class HttpHeaders instead:
+If you are using the new ``HttpClient``, use the class ``HttpHeaders`` instead:
 
 ```TypeScript
 var headers = new HttpHeaders({
     "Authorization": "Bearer " + this.oauthService.getAccessToken()
 });
 ```
+
+Since 3.1 you can also automate this task by switching ``sendAccessToken`` on and by setting ``allowedUrls`` to an array with prefixes for the respective urls. Use lower case for the prefixes.
+
+```TypeScript
+OAuthModule.forRoot({
+    resourceServer: {
+        allowedUrls: ['http://www.angular.at/api'],
+        sendAccessToken: true
+    }
+})
+```
+
+## Routing
+
+If you use the ``PathLocationStragegy`` (which is on by default) and have a general catch-all-route (``path: '**'``) you should be fine. Otherwise look up the section ``Routing with the HashStrategy`` in the [documation](https://manfredsteyer.github.io/angular-oauth2-oidc/angular-oauth2-oidc/docs/).
+
 
 ## More Documentation
 

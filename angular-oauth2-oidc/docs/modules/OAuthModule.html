@@ -77,6 +77,9 @@
                                     <a href="../additional-documentation/refreshing-a-token-(silent-refresh).html" >Refreshing a Token (Silent Refresh)</a>
                                 </li>
                                 <li class="link ">
+                                    <a href="../additional-documentation/working-with-httpinterceptors.html" >Working with HttpInterceptors</a>
+                                </li>
+                                <li class="link ">
                                     <a href="../additional-documentation/callback-after-login.html" >Callback after login</a>
                                 </li>
                                 <li class="link ">
@@ -166,6 +169,18 @@
                                     <a href="../classes/OAuthInfoEvent.html" >OAuthInfoEvent</a>
                                 </li>
                                 <li class="link">
+                                    <a href="../classes/OAuthModuleConfig.html" >OAuthModuleConfig</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../classes/OAuthNoopResourceServerErrorHandler.html" >OAuthNoopResourceServerErrorHandler</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../classes/OAuthResourceServerConfig.html" >OAuthResourceServerConfig</a>
+                                </li>
+                                <li class="link">
+                                    <a href="../classes/OAuthResourceServerErrorHandler.html" >OAuthResourceServerErrorHandler</a>
+                                </li>
+                                <li class="link">
                                     <a href="../classes/OAuthStorage.html" >OAuthStorage</a>
                                 </li>
                                 <li class="link">
@@ -200,6 +215,22 @@
                         </ul>
                     </li>
             
+                    <li class="chapter">
+                        <div class="simple menu-toggler" data-toggle="collapse"
+                                data-target="#xs-interceptors-links"
+                            >
+                            <span class="fa fa-exchange"></span>
+                            <span>Interceptors</span>
+                            <span class="fa fa-angle-down"></span>
+                        </div>
+                        <ul class="links collapse "
+                                id="xs-interceptors-links"
+                            >
+                                <li class="link">
+                                    <a href="../interceptors/DefaultOAuthInterceptor.html" >DefaultOAuthInterceptor</a>
+                                </li>
+                        </ul>
+                    </li>
             
                     <li class="chapter">
                         <div class="simple menu-toggler" data-toggle="collapse"
@@ -324,6 +355,9 @@
                                            <a href="../additional-documentation/refreshing-a-token-(silent-refresh).html" >Refreshing a Token (Silent Refresh)</a>
                                        </li>
                                        <li class="link ">
+                                           <a href="../additional-documentation/working-with-httpinterceptors.html" >Working with HttpInterceptors</a>
+                                       </li>
+                                       <li class="link ">
                                            <a href="../additional-documentation/callback-after-login.html" >Callback after login</a>
                                        </li>
                                        <li class="link ">
@@ -413,6 +447,18 @@
                                            <a href="../classes/OAuthInfoEvent.html" >OAuthInfoEvent</a>
                                        </li>
                                        <li class="link">
+                                           <a href="../classes/OAuthModuleConfig.html" >OAuthModuleConfig</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../classes/OAuthNoopResourceServerErrorHandler.html" >OAuthNoopResourceServerErrorHandler</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../classes/OAuthResourceServerConfig.html" >OAuthResourceServerConfig</a>
+                                       </li>
+                                       <li class="link">
+                                           <a href="../classes/OAuthResourceServerErrorHandler.html" >OAuthResourceServerErrorHandler</a>
+                                       </li>
+                                       <li class="link">
                                            <a href="../classes/OAuthStorage.html" >OAuthStorage</a>
                                        </li>
                                        <li class="link">
@@ -447,6 +493,22 @@
                                </ul>
                            </li>
                    
+                           <li class="chapter">
+                               <div class="simple menu-toggler" data-toggle="collapse"
+                                       data-target="#interceptors-links"
+                   >
+                                   <span class="fa fa-exchange"></span>
+                                   <span>Interceptors</span>
+                                   <span class="fa fa-angle-down"></span>
+                               </div>
+                               <ul class="links collapse "
+                                       id="interceptors-links"
+                   >
+                                       <li class="link">
+                                           <a href="../interceptors/DefaultOAuthInterceptor.html" >DefaultOAuthInterceptor</a>
+                                       </li>
+                               </ul>
+                           </li>
                    
                            <li class="chapter">
                                <div class="simple menu-toggler" data-toggle="collapse"
@@ -549,9 +611,10 @@
 
 
     <div class="tab-pane fade tab-source-code" id="source">
-        <pre class="line-numbers"><code class="language-typescript">import { NgModule, ModuleWithProviders } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers"><code class="language-typescript">import {OAuthStorage} from &#x27;./types&#x27;;
+import { NgModule, ModuleWithProviders } from &#x27;@angular/core&#x27;;
 import { CommonModule } from &#x27;@angular/common&#x27;;
-import { HttpClientModule } from &#x27;@angular/common/http&#x27;;
+import {HTTP_INTERCEPTORS, HttpClientModule} from &#x27;@angular/common/http&#x27;;
 
 import { OAuthService } from &#x27;./oauth-service&#x27;;
 import { UrlHelperService } from &#x27;./url-helper.service&#x27;;
@@ -577,10 +640,17 @@ export * from &#x27;./types&#x27;;
 export * from &#x27;./tokens&#x27;;
 export * from &#x27;./events&#x27;;
 
+import { OAuthModuleConfig } from &quot;./oauth-module.config&quot;;
+import { OAuthResourceServerErrorHandler, OAuthNoopResourceServerErrorHandler } from &quot;./interceptors/resource-server-error-handler&quot;;
+import { DefaultOAuthInterceptor } from &quot;./interceptors/default-oauth.interceptor&quot;;
+
+export function createDefaultStorage() { 
+  return (typeof sessionStorage !&#x3D;&#x3D; &#x27;undefined&#x27;) ? sessionStorage : null;
+}
+
 @NgModule({
   imports: [
-    CommonModule,
-    HttpClientModule
+    CommonModule
   ],
   declarations: [
   ],
@@ -589,16 +659,26 @@ export * from &#x27;./events&#x27;;
 })
 export class OAuthModule {
 
-  static forRoot(): ModuleWithProviders {
+  static forRoot(config: OAuthModuleConfig &#x3D; null): ModuleWithProviders {
+
+    //const setupInterceptor &#x3D; config &amp;&amp; config.resourceServer &amp;&amp; config.resourceServer.allowedUrls;
+    
     return {
       ngModule: OAuthModule,
       providers: [
         OAuthService,
-        UrlHelperService
+        UrlHelperService,
+        { provide: OAuthStorage, useFactory: createDefaultStorage  },
+        { provide: OAuthResourceServerErrorHandler, useClass: OAuthNoopResourceServerErrorHandler},
+        { provide: OAuthModuleConfig, useValue: config},
+        { provide: HTTP_INTERCEPTORS, useClass: DefaultOAuthInterceptor, multi: true}
       ]
+
     };
   }
 }
+
+
 </code></pre>
     </div>
 </div>

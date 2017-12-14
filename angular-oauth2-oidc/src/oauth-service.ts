@@ -167,9 +167,13 @@ export class OAuthService
 
 
     public loadDiscoveryDocumentAndLogin(options: LoginOptions = null) {
-        this.loadDiscoveryDocumentAndTryLogin(options).then(_ => {
+        return this.loadDiscoveryDocumentAndTryLogin(options).then(_ => {
             if (!this.hasValidIdToken() || !this.hasValidAccessToken()) {
               this.initImplicitFlow();
+              return false;
+            }
+            else {
+              return true;
             }
         });
     }
@@ -333,7 +337,7 @@ export class OAuthService
             }
 
             if (!this.validateUrlForHttps(fullUrl)) {
-                reject('loginUrl must use Http. Also check property requireHttps.');
+                reject('issuer must use Https. Also check property requireHttps.');
                 return;
             }
 
@@ -890,7 +894,8 @@ export class OAuthService
 
         let url = this.sessionCheckIFrameUrl;
         iframe.setAttribute('src', url);
-        iframe.style.visibility = 'hidden';
+        //iframe.style.visibility = 'hidden';
+        iframe.style.display = 'none';
         document.body.appendChild(iframe);
 
         this.startSessionCheckTimer();
@@ -1195,11 +1200,20 @@ export class OAuthService
                 + 'does not contain a session_state claim');
         }
 
+        let nonceInState = state;
+        let idx = state.indexOf(';');
+
+        if ( idx > -1) {
+            nonceInState = state.substr(0, idx);
+            this.state = state.substr(idx+1);
+        }
+        /*
         let stateParts = state.split(';');
         if (stateParts.length > 1) {
             this.state = stateParts[1];
         }
-        let nonceInState = stateParts[0];
+        */
+        // let nonceInState = stateParts[0];
 
         if (this.requestAccessToken && !options.disableOAuth2StateCheck) {
             let success = this.validateNonceForAccessToken(accessToken, nonceInState);
@@ -1216,6 +1230,7 @@ export class OAuthService
 
         if (!this.oidc) {
             this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
+            if (this.clearHashAfterLogin) location.hash = '';
             return Promise.resolve();  
         }
 
@@ -1244,6 +1259,7 @@ export class OAuthService
                     this.eventsSubject.next(new OAuthErrorEvent('token_validation_error', reason));
                     console.error('Error validating tokens');
                     console.error(reason);
+                    return Promise.reject(reason);
                 });
     }
 

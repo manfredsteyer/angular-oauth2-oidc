@@ -20,8 +20,8 @@ export class FlightService {
      find(from: string, to: string): void {
          let url = this.baseUrl + "/api/flight";
          let headers = new HttpHeaders()
-                            .set('Accept', 'application/json')
-                            .set('Authorization', 'Bearer ' + this.oauthService.getAccessToken());
+                            .set('Accept', 'application/json');
+                            //.set('Authorization', 'Bearer ' + this.oauthService.getAccessToken());
 
          let params = new HttpParams()
                             .set('from', from)

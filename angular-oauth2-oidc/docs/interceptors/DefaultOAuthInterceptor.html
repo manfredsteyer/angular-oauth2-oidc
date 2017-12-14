@@ -227,7 +227,7 @@
                                 id="xs-interceptors-links"
                             >
                                 <li class="link">
-                                    <a href="../interceptors/DefaultOAuthInterceptor.html" >DefaultOAuthInterceptor</a>
+                                    <a href="../interceptors/DefaultOAuthInterceptor.html"  data-type="entity-link" class="active" >DefaultOAuthInterceptor</a>
                                 </li>
                         </ul>
                     </li>
@@ -253,7 +253,7 @@
                                     <a href="../interfaces/TokenResponse.html" >TokenResponse</a>
                                 </li>
                                 <li class="link">
-                                    <a href="../interfaces/UserInfo.html"  data-type="entity-link" class="active" >UserInfo</a>
+                                    <a href="../interfaces/UserInfo.html" >UserInfo</a>
                                 </li>
                                 <li class="link">
                                     <a href="../interfaces/ValidationParams.html" >ValidationParams</a>
@@ -505,7 +505,7 @@
                                        id="interceptors-links"
                    >
                                        <li class="link">
-                                           <a href="../interceptors/DefaultOAuthInterceptor.html" >DefaultOAuthInterceptor</a>
+                                           <a href="../interceptors/DefaultOAuthInterceptor.html"  data-type="entity-link" class="active" >DefaultOAuthInterceptor</a>
                                        </li>
                                </ul>
                            </li>
@@ -531,7 +531,7 @@
                                            <a href="../interfaces/TokenResponse.html" >TokenResponse</a>
                                        </li>
                                        <li class="link">
-                                           <a href="../interfaces/UserInfo.html"  data-type="entity-link" class="active" >UserInfo</a>
+                                           <a href="../interfaces/UserInfo.html" >UserInfo</a>
                                        </li>
                                        <li class="link">
                                            <a href="../interfaces/ValidationParams.html" >ValidationParams</a>
@@ -570,7 +570,7 @@
                    
                    </nav>
                </div>
-               <div class="content interface">
+               <div class="content interceptor">
                    <div class="content-data">
 
 
@@ -579,12 +579,9 @@
 
 
 
-
-
-
 <ol class="breadcrumb">
-  <li>Interfaces</li>
-  <li>UserInfo</li>
+  <li>Interceptors</li>
+  <li>DefaultOAuthInterceptor</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -604,238 +601,239 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>src/types.ts</code>
+            <code>src/interceptors/default-oauth.interceptor.ts</code>
         </p>
 
-            <p class="comment">
-                <h3>Description</h3>
-            </p>
-            <p class="comment">
-                <p>Represents the response from the user info endpoint
-<a href="http://openid.net/specs/openid-connect-core-1_0.html#UserInfo">http://openid.net/specs/openid-connect-core-1_0.html#UserInfo</a></p>
-
-            </p>
-
-
-        <section>
-            <h3 id="index">Index</h3>
-            <table class="table table-sm table-bordered index-table">
-                <tbody>
-                    <tr>
-                        <td class="col-md-4">
-                            <h6><b>Properties</b></h6>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <ul class="index-list">
-                                <li>
-                                        <a href="#sub">sub</a>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
 
 
             <section>
-                <h3 id="inputs">Indexable</h3>
+                <h3 id="index">Index</h3>
+                <table class="table table-sm table-bordered index-table">
+                    <tbody>
+                        <tr>
+                            <td class="col-md-4">
+                                <h6><b>Methods</b></h6>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <ul class="index-list">
+                                    <li>
+                                        <span class="modifier">Public</span> <a href="#intercept">intercept</a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h3 id="constructor">Constructor</h3>
                     <table class="table table-sm table-bordered">
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <code>[key: string]:    <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-            </code>
+                                    <code>constructor(authStorage: <a href="../classes/OAuthStorage.html">OAuthStorage</a>, errorHandler: <a href="../classes/OAuthResourceServerErrorHandler.html">OAuthResourceServerErrorHandler</a>, moduleConfig: <a href="../classes/OAuthModuleConfig.html">OAuthModuleConfig</a>)</code>
                                 </td>
                             </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="99" class="link-to-prism">src/types.ts:99</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/interceptors/default-oauth.interceptor.ts:11</a></div>
                                         </td>
                                     </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div>
+                                                <b>Parameters :</b>
+                                                <table class="params">
+                                                    <thead>
+                                                        <tr>
+                                                            <td>Name</td>
+                                                            <td>Type</td>
+                                                            <td>Optional</td>
+                                                            <td>Description</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                            <tr>
+                                                              <td>authStorage</td>
+                                                              <td>
+                                                                        <code><a href="../classes/OAuthStorage.html" target="_self" >OAuthStorage</a></code>
+                                                              </td>
+                                                              <td>
+                                                              </td>
+                                                              <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>errorHandler</td>
+                                                              <td>
+                                                                        <code><a href="../classes/OAuthResourceServerErrorHandler.html" target="_self" >OAuthResourceServerErrorHandler</a></code>
+                                                              </td>
+                                                              <td>
+                                                              </td>
+                                                              <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>moduleConfig</td>
+                                                              <td>
+                                                                        <code><a href="../classes/OAuthModuleConfig.html" target="_self" >OAuthModuleConfig</a></code>
+                                                              </td>
+                                                              <td>
+                                                              </td>
+                                                              <td></td>
+                                                            </tr>
+                                                    </tbody>
+                                                </table>
+                                        </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
 
             <section>
-                <h3 id="inputs">Properties</h3>
+                
+                    <h3 id="methods">
+                        Methods
+                    </h3>
                     <table class="table table-sm table-bordered">
                         <tbody>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <a name="sub"></a>
-                                        <span class="name"><b>sub</b><a href="#sub"><span class="fa fa-link"></span></a></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="col-md-4">
-                                        <code>sub:     <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-</code>
-                                    </td>
-                                </tr>
-
-
+                            <tr>
+                                <td class="col-md-4">
+                                    <a name="intercept"></a>
+                                    <span class="name"><b><span class="modifier">Public</span> intercept</b><a href="#intercept"><span class="fa fa-link"></span></a></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon fa fa-reset"></span>
+                                    <code>intercept(req: HttpRequest<any>, next: <a href="https://angular.io/docs/ts/latest/api/api/common/http/HttpHandler" target="_blank">HttpHandler</a>)</code>
+                                </td>
+                            </tr>
+            
+            
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>    <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
+                                            <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/interceptors/default-oauth.interceptor.ts:25</a></div>
                                         </td>
                                     </tr>
-
-
-
-                                    <tr>
-                                        <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="99" class="link-to-prism">src/types.ts:99</a></div>
-                                        </td>
-                                    </tr>
-
+            
+                            <tr>
+                                <td class="col-md-4">
+            
+                                        <div class="io-description">
+                                                <b>Parameters :</b>
+                                                <table class="params">
+                                                    <thead>
+                                                        <tr>
+                                                            <td>Name</td>
+                                                            <td>Type</td>
+                                                            <td>Optional</td>
+                                                            <td>Description</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                            <tr>
+                                                              <td>req</td>
+                                                              <td>
+                                                                      <code>HttpRequest&lt;any&gt;</code>
+                                                              </td>
+                                                              <td>
+                                                              </td>
+                                                              <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>next</td>
+                                                              <td>
+                                                                      <code><a href="https://angular.io/docs/ts/latest/api/api/common/http/HttpHandler" target="_blank" >HttpHandler</a></code>
+                                                              </td>
+                                                              <td>
+                                                              </td>
+                                                              <td></td>
+                                                            </tr>
+                                                    </tbody>
+                                                </table>
+                                        </div>
+                                        <div>
+                                        </div>
+                                        <div class="io-description">
+                                            <b>Returns : </b>    <code>Observable&lt;HttpEvent&lt;any&gt;&gt;</code>
+            
+                                        </div>
+                                            <div class="io-description">
+                                                
+                                            </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
+
+
     </div>
 
 
     <div class="tab-pane fade tab-source-code" id="source">
-        <pre class="line-numbers"><code class="language-typescript">export class LoginOptions {
+        <pre class="line-numbers"><code class="language-typescript">import { Injectable, Inject, Optional } from &#x27;@angular/core&#x27;;
+import { OAuthService, OAuthStorage } from &#x27;angular-oauth2-oidc&#x27;;
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpErrorResponse } from &#x27;@angular/common/http&#x27;;
+import {Observable} from &#x27;rxjs/Observable&#x27;;
+import { map, catchError } from &#x27;rxjs/operators&#x27;;
+import { of } from &#x27;rxjs/observable/of&#x27;;
+import { OAuthResourceServerErrorHandler } from &quot;./resource-server-error-handler&quot;;
+import { OAuthModuleConfig } from &quot;../oauth-module.config&quot;;
 
-    /**
-     * Is called, after a token has been received and
-     * successfully validated.
-     *
-     * Deprecated:  Use property &#x60;&#x60;events&#x60;&#x60; on OAuthService instead.
-     */
-    onTokenReceived?: (receivedTokens: ReceivedTokens) &#x3D;&gt; void;
+@Injectable()
+export class DefaultOAuthInterceptor implements HttpInterceptor {
+    
+    constructor(
+        private authStorage: OAuthStorage,
+        private errorHandler: OAuthResourceServerErrorHandler,
+        @Optional() private moduleConfig: OAuthModuleConfig
+    ) {
+    }
 
-    /**
-     * Hook, to validate the received tokens.
-     * Deprecated:  Use property &#x60;&#x60;tokenValidationHandler&#x60;&#x60; on OAuthService instead.
-     */
-    validationHandler?: (receivedTokens: ReceivedTokens) &#x3D;&gt; Promise&lt;any&gt;;
+    private checkUrl(url: string): boolean {
+        let found &#x3D; this.moduleConfig.resourceServer.allowedUrls.find(u &#x3D;&gt; url.startsWith(u));
+        return !!found;
+    }
 
-    /**
-     * Called when tryLogin detects that the auth server
-     * included an error message into the hash fragment.
-     *
-     * Deprecated:  Use property &#x60;&#x60;events&#x60;&#x60; on OAuthService instead.
-     */
-    onLoginError?: (params: object) &#x3D;&gt; void;
+    public intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt; {
+        
+        let url &#x3D; req.url.toLowerCase();
 
-    /**
-     * A custom hash fragment to be used instead of the
-     * actual one. This is used for silent refreshes, to
-     * pass the iframes hash fragment to this method.
-    */
-    customHashFragment?: string;
+        if (!this.moduleConfig) return next.handle(req);
+        if (!this.moduleConfig.resourceServer) return next.handle(req);
+        if (!this.moduleConfig.resourceServer.allowedUrls) return next.handle(req);
+        if (!this.checkUrl(url)) return next.handle(req);
 
-    /**
-     * Set this to true to disable the oauth2 state
-     * check which is a best practice to avoid
-     * security attacks.
-     * As OIDC defines a nonce check that includes
-     * this, this can be set to true when only doing
-     * OIDC.
-     */
-    disableOAuth2StateCheck?: boolean;
-}
+        let sendAccessToken &#x3D; this.moduleConfig.resourceServer.sendAccessToken;
+        
+        if (sendAccessToken) {
 
-/**
- * Defines a simple storage that can be used for
- * storing the tokens at client side.
- * Is compatible to localStorage and sessionStorage,
- * but you can also create your own implementations.
- */
-export abstract class OAuthStorage {
-    abstract getItem(key: string): string | null;
-    abstract removeItem(key: string): void;
-    abstract setItem(key: string, data: string): void;
-}
+            let token &#x3D; this.authStorage.getItem(&#x27;access_token&#x27;);
+            let header &#x3D; &#x27;Bearer &#x27; + token;
 
-/**
- * Represents the received tokens, the received state
- * and the parsed claims from the id-token.
- */
-export class ReceivedTokens {
-    idToken: string;
-    accessToken: string;
-    idClaims?: object;
-    state?: string;
-}
+            let headers &#x3D; req.headers
+                                .set(&#x27;Authorization&#x27;, header);
 
-/**
- * Represents the parsed and validated id_token.
- */
-export interface ParsedIdToken {
-    idToken: string;
-    idTokenClaims: object;
-    idTokenHeader: object;
-    idTokenClaimsJson: string;
-    idTokenHeaderJson: string;
-    idTokenExpiresAt: number;
-}
+            req &#x3D; req.clone({ headers });
+        }
 
-/**
- * Represents the response from the token endpoint
- * http://openid.net/specs/openid-connect-core-1_0.html#TokenEndpoint
- */
-export interface TokenResponse {
-    access_token: string;
-    token_type: string;
-    expires_in: number;
-    refresh_token: string;
-    scope: string;
-    state?: string;
-}
+        return next.handle(req).pipe(
+            catchError(err &#x3D;&gt; this.errorHandler.handleError(err))
+        );
 
-/**
- * Represents the response from the user info endpoint
- * http://openid.net/specs/openid-connect-core-1_0.html#UserInfo
- */
-export interface UserInfo {
-    sub: string;
-    [key: string]: any;
-}
+    }
 
-/**
- * Represents an OpenID Connect discovery document
- */
-export interface OidcDiscoveryDoc {
-    issuer: string;
-    authorization_endpoint: string;
-    token_endpoint: string;
-    token_endpoint_auth_methods_supported: string[];
-    token_endpoint_auth_signing_alg_values_supported: string[];
-    userinfo_endpoint: string;
-    check_session_iframe: string;
-    end_session_endpoint: string;
-    jwks_uri: string;
-    registration_endpoint: string;
-    scopes_supported: string[];
-    response_types_supported: string[];
-    acr_values_supported: string[];
-    response_modes_supported: string[];
-    grant_types_supported: string[];
-    subject_types_supported: string[];
-    userinfo_signing_alg_values_supported: string[];
-    userinfo_encryption_alg_values_supported: string[];
-    userinfo_encryption_enc_values_supported: string[];
-    id_token_signing_alg_values_supported: string[];
-    id_token_encryption_alg_values_supported: string[];
-    id_token_encryption_enc_values_supported: string[];
-    request_object_signing_alg_values_supported: string[];
-    display_values_supported: string[];
-    claim_types_supported: string[];
-    claims_supported: string[];
-    claims_parameter_supported: boolean;
-    service_documentation: string;
-    ui_locales_supported: string[];
-}
-
-</code></pre>
+}</code></pre>
     </div>
 </div>
+
+
+
 
 
 
