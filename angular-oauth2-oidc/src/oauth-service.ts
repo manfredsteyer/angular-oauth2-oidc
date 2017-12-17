@@ -87,8 +87,7 @@ export class OAuthService
         if (config) {
             this.configure(config);
         }
-
-        
+  
         try {
             if (storage) {
                 this.setStorage(storage);
@@ -164,7 +163,6 @@ export class OAuthService
             return this.tryLogin(options);
         });
     }
-
 
     public loadDiscoveryDocumentAndLogin(options: LoginOptions = null) {
         return this.loadDiscoveryDocumentAndTryLogin(options).then(_ => {
@@ -949,70 +947,72 @@ export class OAuthService
             redirectUri = this.redirectUri;
         }
 
-        return this.createAndSaveNonce().then((nonce: any) => {
-
+        let nonce = null;
+        if (!this.disableNonceCheck) {
+            let nonce = this.createAndSaveNonce();
             if (state) {
                 state = nonce + ';' + state;
             }
             else {
                 state = nonce;
             }
+        }
 
-            if (!this.requestAccessToken && !this.oidc) {
-                throw new Error('Either requestAccessToken or oidc or both must be true');
+        if (!this.requestAccessToken && !this.oidc) {
+            throw new Error('Either requestAccessToken or oidc or both must be true');
+        }
+
+        this.responseType = this.getResponseType(this.inImplicitFlow);
+
+        let seperationChar = (that.loginUrl.indexOf('?') > -1) ? '&' : '?';
+
+        let scope = that.scope;
+
+        if (this.oidc && !scope.match(/(^|\s)openid($|\s)/)) {
+            scope = 'openid ' + scope;
+        }
+
+        let url = that.loginUrl
+                    + seperationChar
+                    + 'response_type='
+                    + encodeURIComponent(that.responseType)
+                    + '&client_id='
+                    + encodeURIComponent(that.clientId)
+                    + '&state='
+                    + encodeURIComponent(state)
+                    + '&redirect_uri='
+                    + encodeURIComponent(redirectUri)
+                    + '&scope='
+                    + encodeURIComponent(scope);
+
+        if (loginHint) {
+            url += '&login_hint=' + encodeURIComponent(loginHint);
+        }
+
+        if (that.resource) {
+            url += '&resource=' + encodeURIComponent(that.resource);
+        }
+
+        if (nonce && this.oidc) {
+            url += '&nonce=' + encodeURIComponent(nonce);
+        }
+
+        if (noPrompt) {
+            url += '&prompt=none';
+        }
+
+        for(let key of Object.keys(params)) {
+            url += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+        }
+
+        if (this.customQueryParams) {
+            for (let key of Object.getOwnPropertyNames(this.customQueryParams)) {
+                url += '&' + key + '=' + encodeURIComponent(this.customQueryParams[key]);
             }
+        }
 
-            this.responseType = this.getResponseType(this.inImplicitFlow);
+        return Promise.resolve(url);  
 
-            let seperationChar = (that.loginUrl.indexOf('?') > -1) ? '&' : '?';
-
-            let scope = that.scope;
-
-            if (this.oidc && !scope.match(/(^|\s)openid($|\s)/)) {
-                scope = 'openid ' + scope;
-            }
-
-            let url = that.loginUrl
-                        + seperationChar
-                        + 'response_type='
-                        + encodeURIComponent(that.responseType)
-                        + '&client_id='
-                        + encodeURIComponent(that.clientId)
-                        + '&state='
-                        + encodeURIComponent(state)
-                        + '&redirect_uri='
-                        + encodeURIComponent(redirectUri)
-                        + '&scope='
-                        + encodeURIComponent(scope);
-
-            if (loginHint) {
-                url += '&login_hint=' + encodeURIComponent(loginHint);
-            }
-
-            if (that.resource) {
-                url += '&resource=' + encodeURIComponent(that.resource);
-            }
-
-            if (that.oidc) {
-                url += '&nonce=' + encodeURIComponent(nonce);
-            }
-
-            if (noPrompt) {
-                url += '&prompt=none';
-            }
-
-            for(let key of Object.keys(params)) {
-                url += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
-            }
-
-            if (this.customQueryParams) {
-                for (let key of Object.getOwnPropertyNames(this.customQueryParams)) {
-                    url += '&' + key + '=' + encodeURIComponent(this.customQueryParams[key]);
-                }
-            }
-
-            return url;
-        });
     };
 
     private initImplicitFlowInternal(additionalState = '', params: string | object = ''): void {
@@ -1576,32 +1576,26 @@ export class OAuthService
     /**
      * @ignore
      */
-    public createAndSaveNonce(): Promise<string> {
-        let that = this;
-        return this.createNonce().then(function (nonce: any) {
-            that._storage.setItem('nonce', nonce);
-            return nonce;
-        });
+    public createAndSaveNonce(): string {
+        let nonce = this.createNonce();
+        this._storage.setItem('nonce', nonce);
+        return nonce; 
     };
 
-    protected createNonce(): Promise<string> {
+    protected createNonce(): string {
 
-        return new Promise((resolve, reject) => {
+        if (this.rngUrl) {
+            throw new Error('createNonce with rng-web-api has not been implemented so far');
+        }
+        else {
+            let text = '';
+            let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-            if (this.rngUrl) {
-                throw new Error('createNonce with rng-web-api has not been implemented so far');
-            }
-            else {
-                let text = '';
-                let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            for (let i = 0; i < 40; i++)
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
 
-                for (let i = 0; i < 40; i++)
-                    text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-                resolve(text);
-            }
-
-        });
+            return text;
+        }
     };
 
     private checkAtHash(params: ValidationParams): boolean {
