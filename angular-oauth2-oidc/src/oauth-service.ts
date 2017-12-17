@@ -613,7 +613,7 @@ export class OAuthService
     /**
      * Get token using an intermediate code. Works for the Authorization Code flow.
      */
-    public getTokenFromCode(code: string): Promise<object> {
+    private getTokenFromCode(code: string): Promise<object> {
         let params = new HttpParams()
             .set('grant_type', 'authorization_code')
             .set('code', code)
