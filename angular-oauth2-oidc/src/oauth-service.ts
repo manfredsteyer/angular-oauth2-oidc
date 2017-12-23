@@ -1158,10 +1158,15 @@ export class OAuthService
         var parameter = window.location.search.split("&")[0].replace("?","").split("=");
         if (parameter[0] == 'code') {
             var code = parameter[1];
-            this.getTokenFromCode(code);
-        }
 
-        return Promise.resolve();  
+            return new Promise((resolve, reject) => {
+                this.getTokenFromCode(code).then(result => {        
+                  resolve();
+                });
+            });
+        } else {
+            return Promise.resolve();
+        }  
     }
 
     private tryLoginImplicit(options: LoginOptions = null): Promise<void> {
