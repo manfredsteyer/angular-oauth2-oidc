@@ -262,7 +262,7 @@ export class OAuthService
     private setupAccessTokenTimer(): void {
         let expiration = this.getAccessTokenExpiration();
         let storedAt = this.getAccessTokenStoredAt();
-        let timeout = this.calcTimeout(storedAt, expiration);
+        let timeout = this.calcTimeout(expiration);
 
         this.accessTokenTimeoutSubscription =
             Observable
@@ -275,7 +275,7 @@ export class OAuthService
     private setupIdTokenTimer(): void {
         let expiration = this.getIdTokenExpiration();
         let storedAt = this.getIdTokenStoredAt();
-        let timeout = this.calcTimeout(storedAt, expiration);
+        let timeout = this.calcTimeout(expiration);
 
         this.idTokenTimeoutSubscription =
             Observable
@@ -296,8 +296,13 @@ export class OAuthService
         }
     }
 
-    private calcTimeout(storedAt: number, expiration: number): number {
-        let delta = (expiration - storedAt) * this.timeoutFactor;
+    /**
+     * Calculates the timeout to refresh tokens
+     * 
+     * @param expiration the timestamp when the token expires
+     */
+    private calcTimeout(expiration: number): number {
+        let delta = (expiration - Date.now()) * this.timeoutFactor;
         return delta;
     }
 
