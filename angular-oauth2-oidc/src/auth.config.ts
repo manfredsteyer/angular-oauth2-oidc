@@ -38,6 +38,17 @@ export class AuthConfig {
     public oidc? = true;
 
     /**
+     * Temporary implementation to cover gaps from PingFederate while it has not OpenID Connect
+     * Session Management implemented yet
+     *
+     * Defines which cases PingFederate mismatches to OpenID should be considered.
+     * Refers to:
+     * * https://ping.force.com/Support/Group-Detail/PingFederate-Q&A/Feed-Detail/feedId_0D54000003BOpaaCAD
+     * * https://stackoverflow.com/questions/24669039/pingfederate-idp-initiated-logout-redirect-to-targetresource
+     */
+    public usePingFederate? = false;
+
+    /**
      * Defines whether to request a access token during
      * implicit flow.
      */

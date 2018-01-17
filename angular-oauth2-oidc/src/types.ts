@@ -133,5 +133,8 @@ export interface OidcDiscoveryDoc {
     claims_parameter_supported: boolean;
     service_documentation: string;
     ui_locales_supported: string[];
+
+    // See: https://ping.force.com/Support/Group-Detail/PingFederate-Q&A/Feed-Detail/feedId_0D54000003BOpaaCAD
+    ping_end_session_endpoint?: string;
 }
 
