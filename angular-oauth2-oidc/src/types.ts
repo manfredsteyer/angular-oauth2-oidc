@@ -112,7 +112,6 @@ export interface OidcDiscoveryDoc {
     userinfo_endpoint: string;
     check_session_iframe: string;
     end_session_endpoint: string;
-    ping_end_session_endpoint?: string;
     jwks_uri: string;
     registration_endpoint: string;
     scopes_supported: string[];
@@ -134,5 +133,8 @@ export interface OidcDiscoveryDoc {
     claims_parameter_supported: boolean;
     service_documentation: string;
     ui_locales_supported: string[];
+
+    // See: https://ping.force.com/Support/Group-Detail/PingFederate-Q&A/Feed-Detail/feedId_0D54000003BOpaaCAD
+    ping_end_session_endpoint?: string;
 }
 
