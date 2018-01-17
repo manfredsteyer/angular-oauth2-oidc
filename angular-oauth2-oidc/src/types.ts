@@ -112,6 +112,7 @@ export interface OidcDiscoveryDoc {
     userinfo_endpoint: string;
     check_session_iframe: string;
     end_session_endpoint: string;
+    ping_end_session_endpoint?: string;
     jwks_uri: string;
     registration_endpoint: string;
     scopes_supported: string[];
