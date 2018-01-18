@@ -302,8 +302,7 @@ export class OAuthService
      * @param expiration the timestamp when the token expires
      */
     private calcTimeout(expiration: number): number {
-        let delta = (expiration - Date.now()) * this.timeoutFactor;
-        return delta;
+        return (expiration - Date.now()) * this.timeoutFactor;
     }
 
     /**
