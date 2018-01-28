@@ -1096,6 +1096,16 @@ export class OAuthService
 
         this.debug('parsed url', parts);
 
+        let state = decodeURIComponent(parts['state']);
+        let nonceInState = state;
+        let idx = state.indexOf(this.config.nonceStateSeparator);
+
+        if ( idx > -1) {
+            nonceInState = state.substr(0, idx);
+            this.state = state.substr(idx + this.config.nonceStateSeparator.length);
+        }
+        
+
         if (parts['error']) {
             this.debug('error trying to login');
             this.handleLoginError(options, parts);
@@ -1105,8 +1115,7 @@ export class OAuthService
         }
 
         let accessToken = parts['access_token'];
-        let idToken = parts['id_token'];
-        let state = decodeURIComponent(parts['state']);
+        let idToken = parts['id_token'];        
         let sessionState = parts['session_state'];
 
         if (!this.requestAccessToken && !this.oidc) {
@@ -1124,13 +1133,6 @@ export class OAuthService
                 + 'does not contain a session_state claim');
         }
 
-        let nonceInState = state;
-        let idx = state.indexOf(this.config.nonceStateSeparator);
-
-        if ( idx > -1) {
-            nonceInState = state.substr(0, idx);
-            this.state = state.substr(idx + this.config.nonceStateSeparator.length);
-        }
 
         if (this.requestAccessToken && !options.disableOAuth2StateCheck) {
             let success = this.validateNonceForAccessToken(accessToken, nonceInState);
