@@ -923,7 +923,7 @@ export class OAuthService
         return this.createAndSaveNonce().then((nonce: any) => {
 
             if (state) {
-                state = nonce + ';' + state;
+                state = nonce + this.config.nonceStateSeparator + state;
             }
             else {
                 state = nonce;
@@ -1125,19 +1125,12 @@ export class OAuthService
         }
 
         let nonceInState = state;
-        let idx = state.indexOf(';');
+        let idx = state.indexOf(this.config.nonceStateSeparator);
 
         if ( idx > -1) {
             nonceInState = state.substr(0, idx);
-            this.state = state.substr(idx+1);
+            this.state = state.substr(idx + this.config.nonceStateSeparator.length);
         }
-        /*
-        let stateParts = state.split(';');
-        if (stateParts.length > 1) {
-            this.state = stateParts[1];
-        }
-        */
-        // let nonceInState = stateParts[0];
 
         if (this.requestAccessToken && !options.disableOAuth2StateCheck) {
             let success = this.validateNonceForAccessToken(accessToken, nonceInState);
