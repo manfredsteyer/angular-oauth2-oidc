@@ -207,5 +207,5 @@ export class AuthConfig {
      * Default separator is ';' (encoded %3B).
      * In rare cases, this character might be forbidden or inconvenient to use by the issuer so it can be customized.
      */
-    public nonceStateSeparator = ';';    
+    public nonceStateSeparator? = ';';    
 }
