@@ -11,6 +11,8 @@ import { OAuthStorage, LoginOptions, ParsedIdToken, OidcDiscoveryDoc, TokenRespo
 import { b64DecodeUnicode } from './base64-helper';
 import { AuthConfig } from './auth.config';
 
+import { UriEncoder } from './uri-encoder';
+
 /**
  * Service for logging in and logging out with
  * OIDC and OAuth2. Supports implicit flow and
@@ -554,7 +556,7 @@ export class OAuthService
         }
 
         return new Promise((resolve, reject) => {
-            let params = new HttpParams()
+            let params = new HttpParams({ encoder: new UriEncoder() })
                 .set('grant_type', 'password')
                 .set('client_id', this.clientId)
                 .set('scope', this.scope)
@@ -605,7 +607,7 @@ export class OAuthService
         }
 
         return new Promise((resolve, reject) => {
-            let params = new HttpParams()
+            let params = new HttpParams({ encoder: new UriEncoder() })
                 .set('grant_type', 'refresh_token')
                 .set('client_id', this.clientId)
                 .set('scope', this.scope)
