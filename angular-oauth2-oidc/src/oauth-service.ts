@@ -272,7 +272,6 @@ export class OAuthService
                     .delay(timeout)
                     .subscribe(e => {
                         this.ngZone.run(() => {
-                            console.log('setupAccessTokenTimer')
                             this.eventsSubject.next(e);
                         })
                     });
@@ -292,7 +291,6 @@ export class OAuthService
                     .delay(timeout)
                     .subscribe(e => {
                         this.ngZone.run(() => {
-                            console.log('setupIdTokenTimer')
                             this.eventsSubject.next(e);
                         })
                     });
