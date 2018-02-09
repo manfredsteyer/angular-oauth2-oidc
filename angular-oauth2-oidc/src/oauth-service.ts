@@ -110,7 +110,7 @@ export class OAuthService
         // original configuration API
         Object.assign(this, new AuthConfig(), config);
 
-        this.config = config;
+        this.config = Object.assign({} as AuthConfig, new AuthConfig(), config);
 
         if (this.sessionChecksEnabled) {
             this.setupSessionCheck();
