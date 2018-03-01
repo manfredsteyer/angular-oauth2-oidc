@@ -5,12 +5,10 @@
   "scripts": {
     "build": "ng-packagr -p package.json",
     "docs": "npm run docs:build",
-    "docs:build":
-      "compodoc -p ./angular-oauth2-oidc/tsconfig.json -n angular-oauth2-oidc -d ././angular-oauth2-oidc/docs --hideGenerator",
+    "docs:build": "compodoc -p ./angular-oauth2-oidc/tsconfig.json -n angular-oauth2-oidc -d ././angular-oauth2-oidc/docs --hideGenerator",
     "docs:serve": "npm run docs:build -- -s",
     "docs:watch": "npm run docs:build -- -s -w",
-    "lint":
-      "tslint --project ./angular-oauth2-oidc/tsconfig.json angular-oauth2-oidc/src/**/*.ts"
+    "lint": "tslint --project ./angular-oauth2-oidc/tsconfig.json angular-oauth2-oidc/src/**/*.ts"
   },
   "repository": {
     "type": "git",
@@ -20,7 +18,9 @@
     "name": "ManfredSteyer",
     "email": "manfred.steyer@gmx.net"
   },
-  "keywords": ["angular"],
+  "keywords": [
+    "angular"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/username/repo/issues"
