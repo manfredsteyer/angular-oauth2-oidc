@@ -1,15 +1,14 @@
 {
+  "$schema": "./node_modules/ng-packagr/package.schema.json",
   "name": "angular-oauth2-oidc",
   "version": "0.1.0",
   "scripts": {
-    "build": "gulp build",
-    "build:watch": "gulp",
+    "build": "ng-packagr -p package.json",
     "docs": "npm run docs:build",
-    "docs:build": "compodoc -p tsconfig.json -n angular-oauth2-oidc -d docs --hideGenerator",
+    "docs:build": "compodoc -p ./angular-oauth2-oidc/tsconfig.json -n angular-oauth2-oidc -d ././angular-oauth2-oidc/docs --hideGenerator",
     "docs:serve": "npm run docs:build -- -s",
     "docs:watch": "npm run docs:build -- -s -w",
-    "lint": "tslint --type-check --project tsconfig.json src/**/*.ts",
-    "test": "tsc && karma start"
+    "lint": "tslint --project ./angular-oauth2-oidc/tsconfig.json angular-oauth2-oidc/src/**/*.ts"
   },
   "repository": {
     "type": "git",
@@ -26,40 +25,34 @@
   "bugs": {
     "url": "https://github.com/username/repo/issues"
   },
+  "peerDependencies": {
+    "@angular/core": "^5.0.0",
+    "@angular/common": "^5.0.0",
+    "rxjs": "^5.5.2",
+    "jsrsasign": "^8.0.3"
+  },
   "devDependencies": {
-    "@angular/common": "^4.0.0",
-    "@angular/compiler": "^4.0.0",
-    "@angular/compiler-cli": "^4.0.0",
-    "@angular/core": "^4.0.0",
-    "@angular/platform-browser": "^4.0.0",
-    "@angular/platform-browser-dynamic": "^4.0.0",
+    "@angular/common": "^5.2.0",
+    "@angular/compiler": "^5.2.0",
+    "@angular/compiler-cli": "^5.2.0",
+    "@angular/core": "^5.2.0",
+    "@angular/platform-browser": "^5.2.0",
+    "@angular/platform-browser-dynamic": "^5.2.0",
     "@compodoc/compodoc": "^1.0.0-beta.10",
-    "@types/jasmine": "2.5.38",
-    "@types/node": "~6.0.60",
-    "codelyzer": "~2.0.0",
-    "core-js": "^2.4.1",
-    "del": "^2.2.2",
-    "gulp": "^3.9.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-rollup": "^2.15.0",
-    "jasmine-core": "~2.5.2",
-    "jasmine-spec-reporter": "~3.2.0",
-    "karma": "~1.4.1",
-    "karma-chrome-launcher": "~2.0.0",
+    "codelyzer": "^4.1.0",
+    "jasmine-core": "~3.1.0",
+    "jasmine-spec-reporter": "~4.2.1",
+    "karma": "~2.0.0",
+    "karma-chrome-launcher": "~2.2.0",
     "karma-cli": "~1.0.1",
-    "karma-coverage-istanbul-reporter": "^0.2.0",
+    "karma-coverage-istanbul-reporter": "^1.4.1",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
-    "node-sass": "^4.5.2",
-    "node-sass-tilde-importer": "^1.0.0",
-    "node-watch": "^0.5.2",
-    "protractor": "~5.1.0",
-    "rollup": "^0.50.0",
-    "run-sequence": "^1.2.2",
+    "ng-packagr": "^2.1.0",
     "rxjs": "^5.1.0",
-    "ts-node": "~2.0.0",
-    "tslint": "~4.5.0",
-    "typescript": "~2.2.0",
+    "ts-node": "~5.0.1",
+    "tslint": "~5.9.1",
+    "typescript": "^2.5.0",
     "zone.js": "^0.8.4"
   },
   "engines": {
@@ -67,5 +60,10 @@
   },
   "dependencies": {
     "jsrsasign": "^8.0.3"
+  },
+  "ngPackage": {
+    "lib": {
+      "entryFile": "angular-oauth2-oidc/src/index.ts"
+    }
   }
 }

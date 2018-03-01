@@ -45,7 +45,7 @@
                                     </a>
                                 </li>
                                 <li class="link">
-                                  <a href="./index.html"  class="active" ><span class="fa fa-file-text-o"></span>README</a>
+                                  <a href="./index.html" ><span class="fa fa-file-text-o"></span>README</a>
                                 </li>
                                 <li class="link">
                                     <a href="./dependencies.html"
@@ -233,7 +233,7 @@
             
             
                     <li class="chapter">
-                        <a data-type="chapter-link" href="./coverage.html" ><span class="fa fa-fw fa-tasks"></span>Documentation coverage</a>
+                        <a data-type="chapter-link" href="./coverage.html"  class="active" ><span class="fa fa-fw fa-tasks"></span>Documentation coverage</a>
                     </li>
             
             
@@ -272,7 +272,7 @@
                                            </a>
                                        </li>
                                        <li class="link">
-                                         <a href="./index.html"  class="active" ><span class="fa fa-file-text-o"></span>README</a>
+                                         <a href="./index.html" ><span class="fa fa-file-text-o"></span>README</a>
                                        </li>
                                        <li class="link">
                                            <a href="./dependencies.html"
@@ -460,7 +460,7 @@
                    
                    
                            <li class="chapter">
-                               <a data-type="chapter-link" href="./coverage.html" ><span class="fa fa-fw fa-tasks"></span>Documentation coverage</a>
+                               <a data-type="chapter-link" href="./coverage.html"  class="active" ><span class="fa fa-fw fa-tasks"></span>Documentation coverage</a>
                            </li>
                    
                    
@@ -468,222 +468,9 @@
                    
                    </nav>
                </div>
-               <div class="content getting-started">
+               <div class="content coverage">
                    <div class="content-data">
 
-<h1 id="angular-oauth2-oidc">angular-oauth2-oidc</h1>
-<p>Support for OAuth 2 and OpenId Connect (OIDC) in Angular.</p>
-<p><img src="https://raw.githubusercontent.com/manfredsteyer/angular-oauth2-oidc/master/oidc.png" alt="OIDC Certified Logo" class="img-responsive"></p>
-<h2 id="credits">Credits</h2>
-<ul>
-<li><a href="https://github.com/jvandemo/generator-angular2-library">generator-angular2-library</a> for scaffolding an Angular library</li>
-<li><a href="https://kjur.github.io/jsrsasign/">jsrasign</a> for validating token signature and for hashing</li>
-<li><a href="https://github.com/identityserver">Identity Server</a> (used for testing with an .NET/.NET Core Backend)</li>
-<li><a href="http://www.keycloak.org/">Keycloak (Redhat)</a> for testing with Java</li>
-</ul>
-<h2 id="resources">Resources</h2>
-<ul>
-<li><p>Sources and Sample:
-<a href="https://github.com/manfredsteyer/angular-oauth2-oidc">https://github.com/manfredsteyer/angular-oauth2-oidc</a></p>
-</li>
-<li><p>Source Code Documentation
-<a href="https://manfredsteyer.github.io/angular-oauth2-oidc/angular-oauth2-oidc/docs/">https://manfredsteyer.github.io/angular-oauth2-oidc/angular-oauth2-oidc/docs/</a></p>
-</li>
-</ul>
-<h2 id="tutorials">Tutorials</h2>
-<ul>
-<li><a href="https://developer.okta.com/blog/2017/04/17/angular-authentication-with-oidc">Angular Authentication with OpenID Connect and Okta in 20 Minutes</a></li>
-<li><a href="https://developer.okta.com/blog/2017/06/13/add-authentication-angular-pwa">Add Authentication to Your Angular PWA</a></li>
-<li><a href="https://developer.okta.com/blog/2017/08/22/build-an-ionic-app-with-user-authentication">Build an Ionic App with User Authentication</a></li>
-</ul>
-<h2 id="tested-environment">Tested Environment</h2>
-<p>Successfully tested with Angular 4.3+, Angular 5 and its Router,PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we&#39;ve used IdentityServer (.NET/ .NET Core) and Redhat&#39;s Keycloak (Java).</p>
-<h2 id="new-features-in-version-3-1">New Features in Version 3.1</h2>
-<p>See <a href="https://github.com/manfredsteyer/angular-oauth2-oidc/releases/tag/3.1">Release Notes</a></p>
-<h2 id="new-features-in-version-3-0">New Features in Version 3.0</h2>
-<p>See <a href="https://github.com/manfredsteyer/angular-oauth2-oidc/releases/tag/3.0.1">Release Notes</a></p>
-<h2 id="new-features-in-version-2-1">New Features in Version 2.1</h2>
-<ul>
-<li>New Config API (the original one is still supported)</li>
-<li>New convenience methods in OAuthService to streamline default tasks:<ul>
-<li><code>setupAutomaticSilentRefresh()</code></li>
-<li><code>loadDiscoveryDocumentAndTryLogin()</code></li>
-</ul>
-</li>
-<li>Single Sign out through Session Status Change Notification according to the OpenID Connect Session Management specs. This means, you can be notified when the user logs out using at the login provider.</li>
-<li>Possibility to define the ValidationHandler, the Config as well as the OAuthStorage via DI</li>
-<li>Better structured documentation</li>
-</ul>
-<h2 id="new-features-in-version-2">New Features in Version 2</h2>
-<ul>
-<li>Token Refresh for Implicit Flow by implementing &quot;silent refresh&quot;</li>
-<li>Validating the signature of the received id_token</li>
-<li>Providing Events via the observable <code>events</code>.</li>
-<li>The event <code>token_expires</code> can be used together with a silent refresh to automatically refresh a token when/ before it expires (see also property <code>timeoutFactor</code>).</li>
-</ul>
-<h2 id="additional-features">Additional Features</h2>
-<ul>
-<li>Logging in via OAuth2 and OpenId Connect (OIDC) Implicit Flow (where user is redirected to Identity Provider)</li>
-<li>&quot;Logging in&quot; via Password Flow (where user enters his/her password into the client)</li>
-<li>Token Refresh for Password Flow by using a Refresh Token</li>
-<li>Automatically refreshing a token when/ some time before it expires</li>
-<li>Querying Userinfo Endpoint</li>
-<li>Querying Discovery Document to ease configuration</li>
-<li>Validating claims of the id_token regarding the specs</li>
-<li>Hook for further custom validations</li>
-<li>Single-Sign-Out by redirecting to the auth-server&#39;s logout-endpoint</li>
-</ul>
-<h2 id="breaking-changes-in-version-2">Breaking Changes in Version 2</h2>
-<ul>
-<li>The property <code>oidc</code> defaults to <code>true</code>.</li>
-<li>If you are just using oauth2, you have to set <code>oidc</code> to <code>false</code>. Otherwise, the validation of the user profile will fail!</li>
-<li>By default, <code>sessionStorage</code> is used. To use <code>localStorage</code> call method setStorage</li>
-<li>Demands using https as OIDC and OAuth2 relay on it. This rule can be relaxed using the property <code>requireHttps</code>, e. g. for local testing.</li>
-<li>Demands that every url provided by the discovery document starts with the issuer&#39;s url. This can be relaxed by using the property <code>strictDiscoveryDocumentValidation</code>.</li>
-</ul>
-<h2 id="sample-auth-server">Sample-Auth-Server</h2>
-<p>You can use the OIDC-Sample-Server mentioned in the samples for Testing. It assumes, that your Web-App runns on <a href="http://localhost:8080">http://localhost:8080</a>.</p>
-<p>Username/Password: max/geheim</p>
-<p><em>clientIds:</em> </p>
-<ul>
-<li>spa-demo (implicit flow)</li>
-<li>demo-resource-owner (resource owner password flow)</li>
-</ul>
-<p><em>redirectUris:</em></p>
-<ul>
-<li>localhost:[8080-8089|4200-4202]</li>
-<li>localhost:[8080-8089|4200-4202]/index.html</li>
-<li>localhost:[8080-8089|4200-4202]/silent-refresh.html</li>
-</ul>
-<h2 id="installing">Installing</h2>
-<pre class="line-numbers"><code class="language-none">npm i angular-oauth2-oidc --save</code></pre><h2 id="importing-the-ngmodule">Importing the NgModule</h2>
-<pre class="line-numbers"><code class="language-TypeScript">import { OAuthModule } from &#39;angular-oauth2-oidc&#39;;
-[...]
-
-&#64;NgModule({
-  imports: [ 
-    [...]
-    HttpModule,
-    OAuthModule.forRoot()
-  ],
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    [...]
-  ],
-  bootstrap: [
-    AppComponent 
-  ]
-})
-export class AppModule {
-}
-</code></pre><h2 id="configuring-for-implicit-flow">Configuring for Implicit Flow</h2>
-<p>This section shows how to implement login leveraging implicit flow. This is the OAuth2/OIDC flow best suitable for
-Single Page Application. It sends the user to the Identity Provider&#39;s login page. After logging in, the SPA gets tokens.
-This also allows for single sign on as well as single sign off.</p>
-<p>To configure the library the following sample uses the new configuration API introduced with Version 2.1.
-Hence, The original API is still supported.</p>
-<pre class="line-numbers"><code class="language-TypeScript">import { AuthConfig } from &#39;angular-oauth2-oidc&#39;;
-
-export const authConfig: AuthConfig = {
-
-  // Url of the Identity Provider
-  issuer: &#39;https://steyer-identity-server.azurewebsites.net/identity&#39;,
-
-  // URL of the SPA to redirect the user to after login
-  redirectUri: window.location.origin + &#39;/index.html&#39;,
-
-  // The SPA&#39;s id. The SPA is registerd with this id at the auth-server
-  clientId: &#39;spa-demo&#39;,
-
-  // set the scope for the permissions the client should request
-  // The first three are defined by OIDC. The 4th is a usecase-specific one
-  scope: &#39;openid profile email voucher&#39;,
-}</code></pre><p>Configure the OAuthService with this config object when the application starts up:</p>
-<pre class="line-numbers"><code class="language-TypeScript">import { OAuthService } from &#39;angular-oauth2-oidc&#39;;
-import { JwksValidationHandler } from &#39;angular-oauth2-oidc&#39;;
-import { authConfig } from &#39;./auth.config&#39;;
-import { Component } from &#39;&#64;angular/core&#39;;
-
-&#64;Component({
-    selector: &#39;flight-app&#39;,
-    templateUrl: &#39;./app.component.html&#39;
-})
-export class AppComponent {
-
-    constructor(private oauthService: OAuthService) {
-      this.configureWithNewConfigApi();
-    }
-
-    private configureWithNewConfigApi() {
-      this.oauthService.configure(authConfig);
-      this.oauthService.tokenValidationHandler = new JwksValidationHandler();
-      this.oauthService.loadDiscoveryDocumentAndTryLogin();
-    }
-}</code></pre><h3 id="implementing-a-login-form">Implementing a Login Form</h3>
-<p>After you&#39;ve configured the library, you just have to call <code>initImplicitFlow</code> to login using OAuth2/ OIDC.</p>
-<pre class="line-numbers"><code class="language-TypeScript">import { Component } from &#39;&#64;angular/core&#39;;
-import { OAuthService } from &#39;angular-oauth2-oidc&#39;;
-
-&#64;Component({
-    templateUrl: &quot;app/home.html&quot;
-})
-export class HomeComponent {
-
-    constructor(private oauthService: OAuthService) {
-    }
-
-    public login() {
-        this.oauthService.initImplicitFlow();
-    }
-
-    public logoff() {
-        this.oauthService.logOut();
-    }
-
-    public get name() {
-        let claims = this.oauthService.getIdentityClaims();
-        if (!claims) return null;
-        return claims.given_name;
-    }
-
-}</code></pre><p>The following snippet contains the template for the login page:</p>
-<pre class="line-numbers"><code class="language-HTML">&lt;h1 *ngIf=&quot;!name&quot;&gt;
-    Hallo
-&lt;/h1&gt;
-&lt;h1 *ngIf=&quot;name&quot;&gt;
-    Hallo, {{name}}
-&lt;/h1&gt;
-
-&lt;button class=&quot;btn btn-default&quot; (click)=&quot;login()&quot;&gt;
-    Login
-&lt;/button&gt;
-&lt;button class=&quot;btn btn-default&quot; (click)=&quot;logoff()&quot;&gt;
-    Logout
-&lt;/button&gt;
-
-&lt;div&gt;
-    Username/Passwort zum Testen: max/geheim
-&lt;/div&gt;</code></pre><h3 id="skipping-the-login-form">Skipping the Login Form</h3>
-<p>If you don&#39;t want to display a login form that tells the user that they are redirected to the identity server, you can use the convenince function <code>this.oauthService.loadDiscoveryDocumentAndLogin();</code> instead of <code>this.oauthService.loadDiscoveryDocumentAndTryLogin();</code> when setting up the library. </p>
-<p>This directly redirects the user to the identity server if there are no valid tokens. </p>
-<h3 id="calling-a-web-api-with-an-access-token">Calling a Web API with an Access Token</h3>
-<p>Pass this Header to the used method of the <code>Http</code>-Service within an Instance of the class <code>Headers</code>:</p>
-<pre class="line-numbers"><code class="language-TypeScript">var headers = new Headers({
-    &quot;Authorization&quot;: &quot;Bearer &quot; + this.oauthService.getAccessToken()
-});</code></pre><p>If you are using the new <code>HttpClient</code>, use the class <code>HttpHeaders</code> instead:</p>
-<pre class="line-numbers"><code class="language-TypeScript">var headers = new HttpHeaders({
-    &quot;Authorization&quot;: &quot;Bearer &quot; + this.oauthService.getAccessToken()
-});</code></pre><p>Since 3.1 you can also automate this task by switching <code>sendAccessToken</code> on and by setting <code>allowedUrls</code> to an array with prefixes for the respective urls. Use lower case for the prefixes.</p>
-<pre class="line-numbers"><code class="language-TypeScript">OAuthModule.forRoot({
-    resourceServer: {
-        allowedUrls: [&#39;http://www.angular.at/api&#39;],
-        sendAccessToken: true
-    }
-})</code></pre><h2 id="routing">Routing</h2>
-<p>If you use the <code>PathLocationStragegy</code> (which is on by default) and have a general catch-all-route (<code>path: &#39;**&#39;</code>) you should be fine. Otherwise look up the section <code>Routing with the HashStrategy</code> in the <a href="https://manfredsteyer.github.io/angular-oauth2-oidc/angular-oauth2-oidc/docs/">documation</a>.</p>
-<h2 id="more-documentation">More Documentation</h2>
-<p>See the <a href="https://manfredsteyer.github.io/angular-oauth2-oidc/angular-oauth2-oidc/docs/">documentation</a> for more information about this library.</p>
 
 
 
@@ -697,7 +484,478 @@ export class HomeComponent {
 
 
 
+<ol class="breadcrumb">
+  <li>Documentation coverage</li>
+</ol>
 
+<img src="./images/coverage-badge.svg">
+
+<table class="table table-bordered coverage" id="coverage-table">
+    <thead class="coverage-header">
+        <tr>
+            <th>File</th>
+            <th>Type</th>
+            <th>Identifier</th>
+            <th style="text-align:right" class="statements" data-sort-default>Statements</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="good">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./classes/AuthConfig.html">angular-oauth2-oidc/src/auth.config.ts</a>
+            </td>
+            <td>
+                class
+            </td>
+            <td>
+                AuthConfig
+            </td>
+            <td align="right" data-sort="73">
+                <span class="coverage-percent">73 %</span>
+                <span class="coverage-count">(28/38)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                    <a href=".//functions.html#b64DecodeUnicode">angular-oauth2-oidc/src/base64-helper.ts</a>
+            </td>
+            <td>
+                function
+            </td>
+            <td>
+                b64DecodeUnicode
+            </td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./classes/OAuthErrorEvent.html">angular-oauth2-oidc/src/events.ts</a>
+            </td>
+            <td>
+                class
+            </td>
+            <td>
+                OAuthErrorEvent
+            </td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./classes/OAuthEvent.html">angular-oauth2-oidc/src/events.ts</a>
+            </td>
+            <td>
+                class
+            </td>
+            <td>
+                OAuthEvent
+            </td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./classes/OAuthInfoEvent.html">angular-oauth2-oidc/src/events.ts</a>
+            </td>
+            <td>
+                class
+            </td>
+            <td>
+                OAuthInfoEvent
+            </td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./classes/OAuthSuccessEvent.html">angular-oauth2-oidc/src/events.ts</a>
+            </td>
+            <td>
+                class
+            </td>
+            <td>
+                OAuthSuccessEvent
+            </td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                    <a href=".//functions.html#createDefaultStorage">angular-oauth2-oidc/src/index.ts</a>
+            </td>
+            <td>
+                function
+            </td>
+            <td>
+                createDefaultStorage
+            </td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./classes/OAuthNoopResourceServerErrorHandler.html">angular-oauth2-oidc/src/interceptors/resource-server-error-handler.ts</a>
+            </td>
+            <td>
+                class
+            </td>
+            <td>
+                OAuthNoopResourceServerErrorHandler
+            </td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./classes/OAuthResourceServerErrorHandler.html">angular-oauth2-oidc/src/interceptors/resource-server-error-handler.ts</a>
+            </td>
+            <td>
+                class
+            </td>
+            <td>
+                OAuthResourceServerErrorHandler
+            </td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./classes/OAuthModuleConfig.html">angular-oauth2-oidc/src/oauth-module.config.ts</a>
+            </td>
+            <td>
+                class
+            </td>
+            <td>
+                OAuthModuleConfig
+            </td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/2)</span>
+            </td>
+        </tr>
+        <tr class="medium">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./classes/OAuthResourceServerConfig.html">angular-oauth2-oidc/src/oauth-module.config.ts</a>
+            </td>
+            <td>
+                class
+            </td>
+            <td>
+                OAuthResourceServerConfig
+            </td>
+            <td align="right" data-sort="33">
+                <span class="coverage-percent">33 %</span>
+                <span class="coverage-count">(1/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./injectables/OAuthService.html">angular-oauth2-oidc/src/oauth-service.ts</a>
+            </td>
+            <td>
+                injectable
+            </td>
+            <td>
+                OAuthService
+            </td>
+            <td align="right" data-sort="25">
+                <span class="coverage-percent">25 %</span>
+                <span class="coverage-count">(23/89)</span>
+            </td>
+        </tr>
+        <tr class="medium">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./classes/JwksValidationHandler.html">angular-oauth2-oidc/src/token-validation/jwks-validation-handler.ts</a>
+            </td>
+            <td>
+                class
+            </td>
+            <td>
+                JwksValidationHandler
+            </td>
+            <td align="right" data-sort="42">
+                <span class="coverage-percent">42 %</span>
+                <span class="coverage-count">(3/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./miscellaneous/variables.html#require">angular-oauth2-oidc/src/token-validation/jwks-validation-handler.ts</a>
+            </td>
+            <td>
+                variable
+            </td>
+            <td>
+                require
+            </td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./miscellaneous/variables.html#rs">angular-oauth2-oidc/src/token-validation/jwks-validation-handler.ts</a>
+            </td>
+            <td>
+                variable
+            </td>
+            <td>
+                rs
+            </td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="medium">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./classes/NullValidationHandler.html">angular-oauth2-oidc/src/token-validation/null-validation-handler.ts</a>
+            </td>
+            <td>
+                class
+            </td>
+            <td>
+                NullValidationHandler
+            </td>
+            <td align="right" data-sort="33">
+                <span class="coverage-percent">33 %</span>
+                <span class="coverage-count">(1/3)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./classes/AbstractValidationHandler.html">angular-oauth2-oidc/src/token-validation/validation-handler.ts</a>
+            </td>
+            <td>
+                class
+            </td>
+            <td>
+                AbstractValidationHandler
+            </td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(5/5)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./classes/ValidationHandler.html">angular-oauth2-oidc/src/token-validation/validation-handler.ts</a>
+            </td>
+            <td>
+                class
+            </td>
+            <td>
+                ValidationHandler
+            </td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(3/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./interfaces/ValidationParams.html">angular-oauth2-oidc/src/token-validation/validation-handler.ts</a>
+            </td>
+            <td>
+                interface
+            </td>
+            <td>
+                ValidationParams
+            </td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./miscellaneous/variables.html#AUTH_CONFIG">angular-oauth2-oidc/src/tokens.ts</a>
+            </td>
+            <td>
+                variable
+            </td>
+            <td>
+                AUTH_CONFIG
+            </td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="very-good">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./classes/LoginOptions.html">angular-oauth2-oidc/src/types.ts</a>
+            </td>
+            <td>
+                class
+            </td>
+            <td>
+                LoginOptions
+            </td>
+            <td align="right" data-sort="100">
+                <span class="coverage-percent">100 %</span>
+                <span class="coverage-count">(6/6)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./classes/OAuthStorage.html">angular-oauth2-oidc/src/types.ts</a>
+            </td>
+            <td>
+                class
+            </td>
+            <td>
+                OAuthStorage
+            </td>
+            <td align="right" data-sort="25">
+                <span class="coverage-percent">25 %</span>
+                <span class="coverage-count">(1/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./classes/ReceivedTokens.html">angular-oauth2-oidc/src/types.ts</a>
+            </td>
+            <td>
+                class
+            </td>
+            <td>
+                ReceivedTokens
+            </td>
+            <td align="right" data-sort="20">
+                <span class="coverage-percent">20 %</span>
+                <span class="coverage-count">(1/5)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./interfaces/OidcDiscoveryDoc.html">angular-oauth2-oidc/src/types.ts</a>
+            </td>
+            <td>
+                interface
+            </td>
+            <td>
+                OidcDiscoveryDoc
+            </td>
+            <td align="right" data-sort="3">
+                <span class="coverage-percent">3 %</span>
+                <span class="coverage-count">(1/30)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./interfaces/ParsedIdToken.html">angular-oauth2-oidc/src/types.ts</a>
+            </td>
+            <td>
+                interface
+            </td>
+            <td>
+                ParsedIdToken
+            </td>
+            <td align="right" data-sort="14">
+                <span class="coverage-percent">14 %</span>
+                <span class="coverage-count">(1/7)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./interfaces/TokenResponse.html">angular-oauth2-oidc/src/types.ts</a>
+            </td>
+            <td>
+                interface
+            </td>
+            <td>
+                TokenResponse
+            </td>
+            <td align="right" data-sort="14">
+                <span class="coverage-percent">14 %</span>
+                <span class="coverage-count">(1/7)</span>
+            </td>
+        </tr>
+        <tr class="medium">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./interfaces/UserInfo.html">angular-oauth2-oidc/src/types.ts</a>
+            </td>
+            <td>
+                interface
+            </td>
+            <td>
+                UserInfo
+            </td>
+            <td align="right" data-sort="50">
+                <span class="coverage-percent">50 %</span>
+                <span class="coverage-count">(1/2)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                    <a href="./injectables/UrlHelperService.html">angular-oauth2-oidc/src/url-helper.service.ts</a>
+            </td>
+            <td>
+                injectable
+            </td>
+            <td>
+                UrlHelperService
+            </td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<script src="js/libs/tablesort.min.js"></script>
+<script src="js/libs/tablesort.number.min.js"></script>
+<script>
+    new Tablesort(document.getElementById('coverage-table'));
+</script>
 
                    </div><div class="search-results">
     <div class="has-results">
