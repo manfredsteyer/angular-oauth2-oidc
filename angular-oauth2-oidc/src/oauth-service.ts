@@ -25,6 +25,7 @@ import {
 } from './types';
 import { b64DecodeUnicode } from './base64-helper';
 import { AuthConfig } from './auth.config';
+import { filter, first, race, tap, map, delay } from 'rxjs/operators';
 
 /**
  * Service for logging in and logging out with
@@ -64,7 +65,8 @@ export class OAuthService extends AuthConfig {
    * The received (passed around) state, when logging
    * in with implicit flow.
    */
-  public state ? = '';
+  // tslint:disable-next-line:no-inferrable-types
+  public state?: string = '';
 
   private eventsSubject: Subject<OAuthEvent> = new Subject<OAuthEvent>();
   private discoveryDocumentLoadedSubject: Subject<object> = new Subject<
@@ -147,7 +149,7 @@ export class OAuthService extends AuthConfig {
   }
 
   private setupSessionCheck() {
-    this.events.filter(e => e.type === 'token_received').subscribe(e => {
+    this.events.pipe(filter(e => e.type === 'token_received')).subscribe(e => {
       this.initSessionCheck();
     });
   }
@@ -157,7 +159,7 @@ export class OAuthService extends AuthConfig {
    * @param params Additional parameter to pass
    */
   public setupAutomaticSilentRefresh(params: object = {}) {
-    this.events.filter(e => e.type === 'token_expires').subscribe(e => {
+    this.events.pipe(filter(e => e.type === 'token_expires')).subscribe(e => {
       this.silentRefresh(params).catch(_ => {
         this.debug('automatic silent refresh did not work');
       });
@@ -246,7 +248,7 @@ export class OAuthService extends AuthConfig {
       this.setupExpirationTimers();
     }
 
-    this.events.filter(e => e.type === 'token_received').subscribe(_ => {
+    this.events.pipe(filter(e => e.type === 'token_received')).subscribe(_ => {
       this.clearAccessTokenTimer();
       this.clearIdTokenTimer();
       this.setupExpirationTimers();
@@ -272,10 +274,9 @@ export class OAuthService extends AuthConfig {
     let storedAt = this.getAccessTokenStoredAt();
     let timeout = this.calcTimeout(storedAt, expiration);
 
-    this.accessTokenTimeoutSubscription = Observable.of(
-      new OAuthInfoEvent('token_expires', 'access_token')
-    )
-      .delay(timeout)
+    this.accessTokenTimeoutSubscription = Observable.create()
+      .of(new OAuthInfoEvent('token_expires', 'access_token'))
+      .pipe(delay(timeout))
       .subscribe(e => this.eventsSubject.next(e));
   }
 
@@ -284,10 +285,9 @@ export class OAuthService extends AuthConfig {
     let storedAt = this.getIdTokenStoredAt();
     let timeout = this.calcTimeout(storedAt, expiration);
 
-    this.idTokenTimeoutSubscription = Observable.of(
-      new OAuthInfoEvent('token_expires', 'id_token')
-    )
-      .delay(timeout)
+    this.idTokenTimeoutSubscription = Observable.create()
+      .of(new OAuthInfoEvent('token_expires', 'id_token'))
+      .pipe(delay(timeout))
       .subscribe(e => this.eventsSubject.next(e));
   }
 
@@ -799,26 +799,33 @@ export class OAuthService extends AuthConfig {
       document.body.appendChild(iframe);
     });
 
-    let errors = this.events.filter(e => e instanceof OAuthErrorEvent).first();
-    let success = this.events
-      .filter(e => e.type === 'silently_refreshed')
-      .first();
-    let timeout = Observable.of(
-      new OAuthErrorEvent('silent_refresh_timeout', null)
-    ).delay(this.silentRefreshTimeout || this.siletRefreshTimeout);
+    let errors = this.events.pipe(
+      filter(e => e instanceof OAuthErrorEvent),
+      first()
+    );
+    let success = this.events.pipe(
+      filter(e => e.type === 'silently_refreshed'),
+      first()
+    );
+    let timeout = Observable.create()
+      .of(new OAuthErrorEvent('silent_refresh_timeout', null))
+      .pipe(delay(this.silentRefreshTimeout || this.siletRefreshTimeout));
 
-    return Observable.race([errors, success, timeout])
-      .do(e => {
-        if (e.type === 'silent_refresh_timeout') {
-          this.eventsSubject.next(e);
-        }
-      })
-      .map(e => {
-        if (e instanceof OAuthErrorEvent) {
-          throw e;
-        }
-        return e;
-      })
+    return Observable.create()
+      .race([errors, success, timeout])
+      .pipe(
+        tap((e: OAuthEvent) => {
+          if (e.type === 'silent_refresh_timeout') {
+            this.eventsSubject.next(e);
+          }
+        }),
+        map(e => {
+          if (e instanceof OAuthErrorEvent) {
+            throw e;
+          }
+          return e;
+        })
+      )
       .toPromise();
   }
 
@@ -903,13 +910,15 @@ export class OAuthService extends AuthConfig {
 
   private waitForSilentRefreshAfterSessionChange() {
     this.events
-      .filter(
-        (e: OAuthEvent) =>
-          e.type === 'silently_refreshed' ||
-          e.type === 'silent_refresh_timeout' ||
-          e.type === 'silent_refresh_error'
+      .pipe(
+        filter(
+          (e: OAuthEvent) =>
+            e.type === 'silently_refreshed' ||
+            e.type === 'silent_refresh_timeout' ||
+            e.type === 'silent_refresh_error'
+        ),
+        first()
       )
-      .first()
       .subscribe(e => {
         if (e.type !== 'silently_refreshed') {
           this.debug('silent refresh did not work after session changed');
@@ -1132,7 +1141,7 @@ export class OAuthService extends AuthConfig {
       this.initImplicitFlowInternal(additionalState, params);
     } else {
       this.events
-        .filter(e => e.type === 'discovery_document_loaded')
+        .pipe(filter(e => e.type === 'discovery_document_loaded'))
         .subscribe(_ => this.initImplicitFlowInternal(additionalState, params));
     }
   }
