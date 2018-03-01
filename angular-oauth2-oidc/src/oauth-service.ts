@@ -25,7 +25,7 @@ import {
 } from './types';
 import { b64DecodeUnicode } from './base64-helper';
 import { AuthConfig } from './auth.config';
-import { filter, first, race, tap, map, delay } from 'rxjs/operators';
+import { filter, first, tap, map, delay } from 'rxjs/operators';
 
 /**
  * Service for logging in and logging out with
