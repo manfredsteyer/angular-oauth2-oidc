@@ -1160,8 +1160,10 @@ export class OAuthService
             var code = parameter[1];
 
             return new Promise((resolve, reject) => {
-                this.getTokenFromCode(code).then(result => {        
-                  resolve();
+                this.getTokenFromCode(code).then(result => {
+                    resolve();
+                }).catch(err => {
+                    reject(err);
                 });
             });
         } else {
