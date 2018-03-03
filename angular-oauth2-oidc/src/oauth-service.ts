@@ -17,8 +17,7 @@ import { AuthConfig } from './auth.config';
  * password flow.
  */
 @Injectable()
-export class OAuthService
-                extends AuthConfig {
+export class OAuthService extends AuthConfig {
 
     // extending AuthConfig ist just for LEGACY reasons
     // to not break existing code
@@ -1146,7 +1145,7 @@ export class OAuthService
             return Promise.reject('Either requestAccessToken or oidc or both must be true.');
         }
 
-        if (!window.location.hash && window.location.search) {
+        if (window.location.search && window.location.search.startsWith('?code')) {
             return this.tryLoginAuthorizationCode();
         } else {
             return this.tryLoginImplicit(options);
