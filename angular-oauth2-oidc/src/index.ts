@@ -1,7 +1,8 @@
 import {OAuthStorage} from './types';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {HttpClientModule} from 'ngx-http-client';
 
 import { OAuthService } from './oauth-service';
 import { UrlHelperService } from './url-helper.service';
