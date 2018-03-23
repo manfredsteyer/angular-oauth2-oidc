@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
+import {HttpParameterCodec} from '@angular/common/http';
 
 import { ValidationHandler, ValidationParams } from './token-validation/validation-handler';
 import { UrlHelperService } from './url-helper.service';
@@ -554,7 +555,22 @@ export class OAuthService
         }
 
         return new Promise((resolve, reject) => {
-            let params = new HttpParams()
+            /**
+             * A `HttpParameterCodec` that uses `encodeURIComponent` and `decodeURIComponent` to
+             * serialize and parse URL parameter keys and values.
+             *
+             * @stable
+             */
+            class WebHttpUrlEncodingCodec implements HttpParameterCodec {
+            encodeKey(k: string): string { return encodeURIComponent(k); }
+
+            encodeValue(v: string): string { return encodeURIComponent(v); }
+
+            decodeKey(k: string): string { return decodeURIComponent(k); }
+
+            decodeValue(v: string) { return decodeURIComponent(v); }
+            }
+            let params = new HttpParams({encoder: new WebHttpUrlEncodingCodec() })
                 .set('grant_type', 'password')
                 .set('client_id', this.clientId)
                 .set('scope', this.scope)
