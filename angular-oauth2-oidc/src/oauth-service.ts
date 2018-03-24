@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
-import {HttpParameterCodec} from '@angular/common/http';
 
 import { ValidationHandler, ValidationParams } from './token-validation/validation-handler';
 import { UrlHelperService } from './url-helper.service';
@@ -11,6 +10,7 @@ import { OAuthEvent, OAuthInfoEvent, OAuthErrorEvent, OAuthSuccessEvent } from '
 import { OAuthStorage, LoginOptions, ParsedIdToken, OidcDiscoveryDoc, TokenResponse, UserInfo } from './types';
 import { b64DecodeUnicode } from './base64-helper';
 import { AuthConfig } from './auth.config';
+import { WebHttpUrlEncodingCodec } from './encoder';
 
 /**
  * Service for logging in and logging out with
@@ -561,15 +561,6 @@ export class OAuthService
              *
              * @stable
              */
-            class WebHttpUrlEncodingCodec implements HttpParameterCodec {
-            encodeKey(k: string): string { return encodeURIComponent(k); }
-
-            encodeValue(v: string): string { return encodeURIComponent(v); }
-
-            decodeKey(k: string): string { return decodeURIComponent(k); }
-
-            decodeValue(v: string) { return decodeURIComponent(v); }
-            }
             let params = new HttpParams({encoder: new WebHttpUrlEncodingCodec() })
                 .set('grant_type', 'password')
                 .set('client_id', this.clientId)
