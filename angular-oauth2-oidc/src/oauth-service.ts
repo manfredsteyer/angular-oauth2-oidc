@@ -1145,7 +1145,7 @@ export class OAuthService extends AuthConfig {
             return Promise.reject('Either requestAccessToken or oidc or both must be true.');
         }
 
-        if (window.location.search && (window.location.search.startsWith('?code=') || window.location.search.includes('&code=')) {
+        if (window.location.search && (window.location.search.startsWith('?code=') || window.location.search.includes('&code='))) {
             return this.tryLoginAuthorizationCode();
         } else {
             return this.tryLoginImplicit(options);
