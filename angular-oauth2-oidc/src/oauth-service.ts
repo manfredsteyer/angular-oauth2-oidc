@@ -1145,7 +1145,7 @@ export class OAuthService extends AuthConfig {
             return Promise.reject('Either requestAccessToken or oidc or both must be true.');
         }
 
-        if (window.location.search && window.location.search.startsWith('?code')) {
+        if (window.location.search && (window.location.search.startsWith('?code=') || window.location.search.includes('&code=')) {
             return this.tryLoginAuthorizationCode();
         } else {
             return this.tryLoginImplicit(options);
@@ -1154,10 +1154,11 @@ export class OAuthService extends AuthConfig {
 
     private tryLoginAuthorizationCode(): Promise<void> {
 
-        var parameter = window.location.search.split("&")[0].replace("?","").split("=");
-        if (parameter[0] == 'code') {
-            var code = parameter[1];
+        let parameter = window.location.search.split("?")[1].split("&");
+        let codeParam = parameter.filter(param => param.includes('code='));
+        let code = codeParam.length ? codeParam[0].split('code=')[1] : undefined;
 
+        if (code) {
             return new Promise((resolve, reject) => {
                 this.getTokenFromCode(code).then(result => {
                     resolve();
@@ -1167,7 +1168,7 @@ export class OAuthService extends AuthConfig {
             });
         } else {
             return Promise.resolve();
-        }  
+        }
     }
 
     private tryLoginImplicit(options: LoginOptions = null): Promise<void> {
