@@ -10,12 +10,14 @@ import { OAuthModuleConfig } from "../oauth-module.config";
 
 @Injectable()
 export class DefaultOAuthInterceptor implements HttpInterceptor {
-    
+    private authStorage: OAuthStorage;
+
     constructor(
-        private authStorage: OAuthStorage,
+        authService: OAuthService,
         private errorHandler: OAuthResourceServerErrorHandler,
         @Optional() private moduleConfig: OAuthModuleConfig
     ) {
+        this.authStorage = authService.getStorage();
     }
 
     private checkUrl(url: string): boolean {
@@ -24,7 +26,7 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
     }
 
     public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        
+
         let url = req.url.toLowerCase();
 
         if (!this.moduleConfig) return next.handle(req);
@@ -33,7 +35,7 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
         if (!this.checkUrl(url)) return next.handle(req);
 
         let sendAccessToken = this.moduleConfig.resourceServer.sendAccessToken;
-        
+
         if (sendAccessToken) {
 
             let token = this.authStorage.getItem('access_token');

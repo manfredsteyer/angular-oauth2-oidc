@@ -86,7 +86,7 @@ export class OAuthService
             this.configure(config);
         }
 
-        
+
         try {
             if (storage) {
                 this.setStorage(storage);
@@ -142,7 +142,7 @@ export class OAuthService
     }
 
     /**
-     * 
+     *
      * @param params Additional parameter to pass
      */
     public setupAutomaticSilentRefresh(params: object = {}) {
@@ -311,6 +311,10 @@ export class OAuthService
     public setStorage(storage: OAuthStorage): void {
         this._storage = storage;
         this.configChanged();
+    }
+
+    public getStorage(): OAuthStorage {
+        return this._storage;
     }
 
     /**
@@ -1032,7 +1036,7 @@ export class OAuthService
      *
      * @param additionalState Optinal state that is passes around.
      *  You find this state in the property ``state`` after ``tryLogin`` logged in the user.
-     * @param params Hash with additional parameter. If it is a string, it is used for the 
+     * @param params Hash with additional parameter. If it is a string, it is used for the
      *               parameter loginHint (for the sake of compatibility with former versions)
      */
     public initImplicitFlow(additionalState = '', params: string | object = ''): void {
@@ -1155,7 +1159,7 @@ export class OAuthService
         if (!this.oidc) {
             this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
             if (this.clearHashAfterLogin) location.hash = '';
-            return Promise.resolve();  
+            return Promise.resolve();
         }
 
         return this
@@ -1472,7 +1476,7 @@ export class OAuthService
         this._storage.removeItem('access_token_stored_at');
 
         this.silentRefreshSubject = null;
-      
+
         this.eventsSubject.next(new OAuthInfoEvent('logout'));
 
         if (!this.logoutUrl) return;
