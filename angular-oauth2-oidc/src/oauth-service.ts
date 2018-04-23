@@ -22,7 +22,6 @@ export class OAuthService
 
     // extending AuthConfig ist just for LEGACY reasons
     // to not break existing code
-
     /**
      * The ValidationHandler used to validate received
      * id_tokens.
@@ -312,6 +311,10 @@ export class OAuthService
         this._storage = storage;
         this.configChanged();
     }
+	
+	public getStorage(): OAuthStorage {
+		return this._storage;
+	}
 
     /**
      * Loads the discovery document to configure most
@@ -462,7 +465,6 @@ export class OAuthService
         }
 
         // this.sessionChecksEnabled = !!doc.check_session_iframe;
-
         return true;
     }
 
@@ -1138,7 +1140,6 @@ export class OAuthService
         }
         */
         // let nonceInState = stateParts[0];
-
         if (this.requestAccessToken && !options.disableOAuth2StateCheck) {
             let success = this.validateNonceForAccessToken(accessToken, nonceInState);
             if (!success) {

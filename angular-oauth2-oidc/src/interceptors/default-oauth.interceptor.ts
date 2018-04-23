@@ -10,12 +10,14 @@ import { OAuthModuleConfig } from "../oauth-module.config";
 
 @Injectable()
 export class DefaultOAuthInterceptor implements HttpInterceptor {
-    
+    private authStorage: OAuthStorage;
+	
     constructor(
-        private authStorage: OAuthStorage,
+        authService: OAuthService,
         private errorHandler: OAuthResourceServerErrorHandler,
         @Optional() private moduleConfig: OAuthModuleConfig
     ) {
+		this.authStorage = authService.getStorage();
     }
 
     private checkUrl(url: string): boolean {
