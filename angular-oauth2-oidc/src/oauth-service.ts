@@ -22,7 +22,6 @@ export class OAuthService
 
     // extending AuthConfig ist just for LEGACY reasons
     // to not break existing code
-
     /**
      * The ValidationHandler used to validate received
      * id_tokens.
@@ -86,7 +85,7 @@ export class OAuthService
             this.configure(config);
         }
 
-
+        
         try {
             if (storage) {
                 this.setStorage(storage);
@@ -142,7 +141,7 @@ export class OAuthService
     }
 
     /**
-     *
+     * 
      * @param params Additional parameter to pass
      */
     public setupAutomaticSilentRefresh(params: object = {}) {
@@ -312,10 +311,10 @@ export class OAuthService
         this._storage = storage;
         this.configChanged();
     }
-
-    public getStorage(): OAuthStorage {
-        return this._storage;
-    }
+	
+	public getStorage(): OAuthStorage {
+		return this._storage;
+	}
 
     /**
      * Loads the discovery document to configure most
@@ -466,7 +465,6 @@ export class OAuthService
         }
 
         // this.sessionChecksEnabled = !!doc.check_session_iframe;
-
         return true;
     }
 
@@ -1036,7 +1034,7 @@ export class OAuthService
      *
      * @param additionalState Optinal state that is passes around.
      *  You find this state in the property ``state`` after ``tryLogin`` logged in the user.
-     * @param params Hash with additional parameter. If it is a string, it is used for the
+     * @param params Hash with additional parameter. If it is a string, it is used for the 
      *               parameter loginHint (for the sake of compatibility with former versions)
      */
     public initImplicitFlow(additionalState = '', params: string | object = ''): void {
@@ -1142,7 +1140,6 @@ export class OAuthService
         }
         */
         // let nonceInState = stateParts[0];
-
         if (this.requestAccessToken && !options.disableOAuth2StateCheck) {
             let success = this.validateNonceForAccessToken(accessToken, nonceInState);
             if (!success) {
@@ -1159,7 +1156,7 @@ export class OAuthService
         if (!this.oidc) {
             this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
             if (this.clearHashAfterLogin) location.hash = '';
-            return Promise.resolve();
+            return Promise.resolve();  
         }
 
         return this
@@ -1476,7 +1473,7 @@ export class OAuthService
         this._storage.removeItem('access_token_stored_at');
 
         this.silentRefreshSubject = null;
-
+      
         this.eventsSubject.next(new OAuthInfoEvent('logout'));
 
         if (!this.logoutUrl) return;
