@@ -48,18 +48,28 @@ return Promise.resolve()
 * 4. Run the Angular compiler, ngc, on the /.tmp folder. This will output all
 *    compiled modules to the /build folder.
 */
+
 gulp.task('ngc', function () {
-return ngc({
-  project: `${tmpFolder}/tsconfig.es5.json`
-})
-  .then((exitCode) => {
-    if (exitCode === 1) {
-      // This error is caught in the 'compile' task by the runSequence method callback
-      // so that when ngc fails to compile, the whole compile process stops running
-      throw new Error('ngc compilation failed');
+  return ngc(['-p', `${tmpFolder}/tsconfig.es5.json`], (error) => {
+    if (error) {
+      throw new Error('ngc compilation failed: ' + error);
     }
   });
 });
+
+// gulp.task('ngc', function () {
+// return ngc({
+//   // project: `${tmpFolder}/tsconfig.es5.json`,
+//   '--project': `${tmpFolder}/tsconfig.es5.json`
+// })
+//   .then((exitCode) => {
+//     if (exitCode === 1) {
+//       // This error is caught in the 'compile' task by the runSequence method callback
+//       // so that when ngc fails to compile, the whole compile process stops running
+//       throw new Error('ngc compilation failed');
+//     }
+//   });
+// });
 
 /**
 * 5. Run rollup inside the /build folder to generate our Flat ES module and place the
@@ -84,12 +94,17 @@ return gulp.src(`${buildFolder}/**/*.js`)
     // See "external" in https://rollupjs.org/#core-functionality
     external: [
       '@angular/core',
-      '@angular/common'
+      '@angular/common',
+      '@angular/common/http',
+      'rxjs',
+      'rxjs/operators'
     ],
 
     // Format of generated bundle
     // See "format" in https://rollupjs.org/#core-functionality
-    format: 'es'
+    output: {
+      format:'es'
+    },
   }))
   .pipe(gulp.dest(distFolder));
 });
@@ -117,26 +132,30 @@ return gulp.src(`${buildFolder}/**/*.js`)
     // See "external" in https://rollupjs.org/#core-functionality
     external: [
       '@angular/core',
-      '@angular/common'
+      '@angular/common',
+      '@angular/common/http',
+      'rxjs',
+      'rxjs/operators'
     ],
 
     // Format of generated bundle
     // See "format" in https://rollupjs.org/#core-functionality
-    format: 'umd',
+    output: {
+      format:'umd',
+      // Export mode to use
+      // See "exports" in https://rollupjs.org/#danger-zone
+      exports: 'named',
 
-    // Export mode to use
-    // See "exports" in https://rollupjs.org/#danger-zone
-    exports: 'named',
+      // The name to use for the module for UMD/IIFE bundles
+      // (required for bundles with exports)
+      // See "name" in https://rollupjs.org/#core-functionality
+      name: 'angular-oauth2-oidc',
 
-    // The name to use for the module for UMD/IIFE bundles
-    // (required for bundles with exports)
-    // See "name" in https://rollupjs.org/#core-functionality
-    name: 'angular-oauth2-oidc',
-
-    // See "globals" in https://rollupjs.org/#core-functionality
-    globals: {
-      typescript: 'ts'
-    }
+      // See "globals" in https://rollupjs.org/#core-functionality
+      globals: {
+        typescript: 'ts'
+      }
+    },   
 
   }))
   .pipe(rename('angular-oauth2-oidc.umd.js'))
@@ -190,7 +209,7 @@ runSequence(
   'inline-resources',
   'ngc',
   'rollup:fesm',
-  'rollup:umd',
+  // 'rollup:umd',
   'copy:build',
   'copy:manifest',
   'copy:readme',
