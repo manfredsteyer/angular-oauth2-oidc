@@ -155,14 +155,12 @@ export class AuthConfig {
      * If true, the lib will try to check whether the user
      * is still logged in on a regular basis as described
      * in http://openid.net/specs/openid-connect-session-1_0.html#ChangeNotification
-     * @type {boolean}
      */
     public sessionChecksEnabled? = false;
 
     /**
      * Intervall in msec for checking the session
      * according to http://openid.net/specs/openid-connect-session-1_0.html#ChangeNotification
-     * @type {number}
      */
     public sessionCheckIntervall? = 3 * 1000;
 
@@ -173,7 +171,6 @@ export class AuthConfig {
 
     /**
      * Name of the iframe to use for session checks
-     * @type {number}
      */
     public sessionCheckIFrameName? = 'angular-oauth-oidc-check-session-iframe';
 
