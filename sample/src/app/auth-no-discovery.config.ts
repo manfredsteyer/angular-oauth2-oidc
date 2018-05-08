@@ -1,5 +1,6 @@
 import { AuthConfig } from 'angular-oauth2-oidc';
 
+// tslint:disable max-line-length
 export const noDiscoveryAuthConfig: AuthConfig = {
   'clientId':
       '1004270452653-m396kcs7jc3970turlp7ffh6bv4t1b86.apps.googleusercontent.com',
@@ -63,4 +64,4 @@ export const noDiscoveryAuthConfig: AuthConfig = {
   'sessionCheckIFrameName': 'angular-oauth-oidc-check-session-iframe',
   'disableAtHashCheck': false,
   'skipSubjectCheck': false
-}
+};

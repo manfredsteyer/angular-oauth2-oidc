@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
     template: `
         <h1>Flight Edit!</h1>
         <p>Hier könnte auch der Datensatz mit der Id {{id}} stehen!</p>
-        
+
         <div *ngIf="exitWarning.show" class="alert alert-warning">
         <div>
         Daten wurden nicht gespeichert! Trotzdem Maske verlassen?
@@ -18,12 +18,17 @@ import {ActivatedRoute} from "@angular/router";
 
 
 
-        
+
     `
 })
 export class FlightEditComponent implements OnInit {
 
     public id: string;
+
+    exitWarning = {
+      show: false,
+      resolve: null
+    };
 
     constructor(private route: ActivatedRoute) {
 
@@ -33,11 +38,6 @@ export class FlightEditComponent implements OnInit {
     }
 
     ngOnInit() { }
-
-    exitWarning = {
-        show: false,
-        resolve: null
-    }
 
     decide(decision: boolean) {
         this.exitWarning.show = false;

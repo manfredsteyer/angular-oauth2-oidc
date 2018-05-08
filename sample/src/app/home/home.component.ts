@@ -1,13 +1,13 @@
 import { authConfig } from '../auth.config';
 import { Component, OnInit } from '@angular/core';
-import {OAuthService} from "angular-oauth2-oidc";
+import {OAuthService} from 'angular-oauth2-oidc';
 
 @Component({
     templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
 
-    loginFailed: boolean = false;
+    loginFailed = false;
     userProfile: object;
 
     constructor(private oauthService: OAuthService) {
@@ -18,8 +18,8 @@ export class HomeComponent implements OnInit {
         this.oauthService.loadDiscoveryDocument();
     }
 
-    ngOnInit() { 
-        
+    ngOnInit() {
+
             /*
             this.oauthService.loadDiscoveryDocumentAndTryLogin().then(_ => {
                 if (!this.oauthService.hasValidIdToken() || !this.oauthService.hasValidAccessToken()) {
@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
                 }
             });
             */
-        
+
     }
 
 
@@ -49,14 +49,14 @@ export class HomeComponent implements OnInit {
     }
 
     get givenName() {
-        var claims = this.oauthService.getIdentityClaims();
-        if (!claims) return null;
+        const claims = this.oauthService.getIdentityClaims();
+        if (!claims) { return null; }
         return claims['given_name'];
     }
 
     get familyName() {
-        var claims = this.oauthService.getIdentityClaims();
-        if (!claims) return null;
+        const claims = this.oauthService.getIdentityClaims();
+        if (!claims) { return null; }
         return claims['family_name'];
     }
 
@@ -65,14 +65,14 @@ export class HomeComponent implements OnInit {
          * Tweak config for implicit flow.
          * This is needed b/c this sample uses both flows
         */
-        //this.oauthService.clientId = "spa-demo";
+        // this.oauthService.clientId = "spa-demo";
         this.oauthService.oidc = true;
 
         this
             .oauthService
             .silentRefresh()
-            .then(info => console.debug('refresh ok', info))
-            .catch(err => console.error('refresh error', err));
+            .then(info => console.debug('refresh ok', info)) // tslint:disable-line no-console
+            .catch(err => console.error('refresh error', err)); // tslint:disable-line no-console
     }
 
     set requestAccessToken(value: boolean) {

@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, Output} from "@angular/core";
-import {Flight} from "../../entities/flight";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Flight} from '../../entities/flight';
 
 @Component({
-    selector: 'alt-flight-card',
+    selector: 'app-alt-flight-card',
     templateUrl: 'alt-flight-card.component.html'
 })
 export class AltFlightCardComponent {

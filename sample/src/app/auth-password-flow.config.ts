@@ -26,4 +26,4 @@ export const authPasswordFlowConfig: AuthConfig = {
 
   oidc: false
 
-}
+};
