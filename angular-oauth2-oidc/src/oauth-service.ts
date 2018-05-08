@@ -647,17 +647,25 @@ export class OAuthService extends AuthConfig {
                         this.processIdToken(tokenResponse.id_token, tokenResponse.access_token).  
                         then(result => {
                             this.storeIdToken(result);
+            
+                            this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
+                            this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
+            
+                            resolve(tokenResponse);
                         })
                         .catch(reason => {
                             this.eventsSubject.next(new OAuthErrorEvent('token_validation_error', reason));
                             console.error('Error validating tokens');
                             console.error(reason);
+            
+                            reject(reason);
                         });
+                    } else {
+                        this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
+                        this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
+            
+                        resolve(tokenResponse);
                     }
-
-                    this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
-                    this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
-                    resolve(tokenResponse);
                 },
                 (err) => {
                     console.error('Error getting token', err);
@@ -1070,6 +1078,15 @@ export class OAuthService extends AuthConfig {
      * the auth servers login url.
      */
     public initAuthorizationCodeFlow(): void {
+        if (this.loginUrl !== '') {
+            this.initAuthorizationCodeFlowInternal();
+        } else {
+            this.events.filter(e => e.type === 'discovery_document_loaded')
+            .subscribe(_ => this.initAuthorizationCodeFlowInternal());
+        }
+    }
+    
+    private initAuthorizationCodeFlowInternal(): void {
         
         if (!this.validateUrlForHttps(this.loginUrl)) {
             throw new Error('loginUrl must use Http. Also check property requireHttps.');
