@@ -19,8 +19,8 @@ import {SharedModule} from './shared/shared.module';
         FormsModule,
         ReactiveFormsModule,
         SharedModule.forRoot(),
-        AppRouterModule,
         HttpClientModule,
+        AppRouterModule,
         OAuthModule.forRoot(
         //     {
         //     resourceServer: {
@@ -37,10 +37,11 @@ import {SharedModule} from './shared/shared.module';
         PasswordFlowLoginComponent
     ],
     providers: [
+        HttpClientModule,
         // {provide: AuthConfig, useValue: authConfig },
         // { provide: OAuthStorage, useClass: DemoStorage },
         // { provide: ValidationHandler, useClass: JwksValidationHandler },
-        { provide: BASE_URL, useValue: "http://www.angular.at" }
+        { provide: BASE_URL, useValue: 'http://www.angular.at' },
     ],
     bootstrap: [
         AppComponent

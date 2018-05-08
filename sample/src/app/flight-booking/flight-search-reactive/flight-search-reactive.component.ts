@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import {Flight} from "../../entities/flight";
-import {FlightService} from "../services/flight.service";
-import {FormGroup, FormBuilder, Validators, AbstractControl} from "@angular/forms";
-import {CityValidatorDirective} from "../../shared/validation/city.validator";
+import {Flight} from '../../entities/flight';
+import {FlightService} from '../services/flight.service';
+import {FormGroup, FormBuilder, Validators, AbstractControl} from '@angular/forms';
+import {CityValidatorDirective} from '../../shared/validation/city.validator';
 
 @Component({
-    selector: 'flight-search-reactive',
+    selector: 'app-flight-search-reactive',
     templateUrl: 'flight-search-reactive.component.html',
     providers: [FlightService],
     styleUrls: ['flight-search-reactive.component.css']
@@ -33,19 +33,19 @@ export class FlightSearchReactiveComponent {
             name: 'to'
         });
 
-        this.filter= fb.group({
+        this.filter = fb.group({
             'from': [
                 'Graz',
                 [
                     Validators.required,
                     Validators.minLength(3),
                     (c: AbstractControl): any => {
-                        if (c.value != 'Graz' && c.value != 'Hamburg') {
+                        if (c.value !== 'Graz' && c.value !== 'Hamburg') {
                             return {
                                 city: true
                             };
                         }
-                        return {}
+                        return {};
                     }
                 ]
             ],
@@ -53,11 +53,11 @@ export class FlightSearchReactiveComponent {
         });
 
         this.filter.valueChanges.subscribe((e) => {
-            console.debug('formular geändert', e)
+            console.debug('formular geändert', e); // tslint:disable-line no-console
         });
 
         this.filter.controls['from'].valueChanges.subscribe((e) => {
-            console.debug('from geändert', e)
+            console.debug('from geändert', e); // tslint:disable-line no-console
         });
 
 
@@ -69,7 +69,7 @@ export class FlightSearchReactiveComponent {
 
     public search(): void {
 
-        var value = this.filter.value;
+        const value = this.filter.value;
 
         this.flightService
             .find(value.from, value.to);

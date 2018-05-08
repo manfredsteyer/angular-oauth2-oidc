@@ -3,62 +3,62 @@ export class AuthConfig {
     /**
      * The client's id as registered with the auth server
      */
-    public clientId? = '';
+    public clientId ? = '';
 
     /**
      * The client's redirectUri as registered with the auth server
      */
-    public redirectUri? = '';
+    public redirectUri ? = '';
 
     /**
      * An optional second redirectUri where the auth server
      * redirects the user to after logging out.
      */
-    public postLogoutRedirectUri? = '';
+    public postLogoutRedirectUri ? = '';
 
     /**
      * The auth server's endpoint that allows to log
      * the user in when using implicit flow.
      */
-    public loginUrl? = '';
+    public loginUrl ? = '';
 
     /**
      * The requested scopes
      */
-    public scope? = 'openid profile';
+    public scope ? = 'openid profile';
 
-    public resource? = '';
+    public resource ? = '';
 
-    public rngUrl? = '';
+    public rngUrl ? = '';
 
     /**
      * Defines whether to use OpenId Connect during
      * implicit flow.
      */
-    public oidc? = true;
+    public oidc ? = true;
 
     /**
      * Defines whether to request a access token during
      * implicit flow.
      */
-    public requestAccessToken? = true;
+    public requestAccessToken ? = true;
 
     public options?: any = null;
 
     /**
      * The issuer's uri.
      */
-    public issuer? = '';
+    public issuer ? = '';
 
     /**
      * The logout url.
      */
-    public logoutUrl? = '';
+    public logoutUrl ? = '';
 
     /**
      * Defines whether to clear the hash fragment after logging in.
      */
-    public clearHashAfterLogin? = true;
+    public clearHashAfterLogin ? = true;
 
     /**
      * Url of the token endpoint as defined by OpenId Connect and OAuth 2.
@@ -71,26 +71,26 @@ export class AuthConfig {
      */
     public userinfoEndpoint?: string = null;
 
-    public responseType? = 'token';
+    public responseType ? = 'token';
 
     /**
      * Defines whether additional debug information should
      * be shown at the console.
      */
-    public showDebugInformation? = false;
+    public showDebugInformation ? = false;
 
     /**
      * The redirect uri used when doing silent refresh.
      */
-    public silentRefreshRedirectUri? = '';
+    public silentRefreshRedirectUri ? = '';
 
-    public silentRefreshMessagePrefix? = '';
+    public silentRefreshMessagePrefix ? = '';
 
     /**
      * Set this to true to display the iframe used for
      * silent refresh for debugging.
      */
-    public silentRefreshShowIFrame? = false;
+    public silentRefreshShowIFrame ? = false;
 
     /**
      * Timeout for silent refresh.
@@ -112,7 +112,7 @@ export class AuthConfig {
      * it does not bring additional security and is therefore
      * as good as using no password.
      */
-    public dummyClientSecret?: string = null;;
+    public dummyClientSecret?: string = null; ;
 
 
     /**
@@ -127,7 +127,7 @@ export class AuthConfig {
      * Defines whether every url provided by the discovery
      * document has to start with the issuer's url.
      */
-    public strictDiscoveryDocumentValidation? = true;
+    public strictDiscoveryDocumentValidation ? = true;
 
     /**
      * JSON Web Key Set (https://tools.ietf.org/html/rfc7517)
@@ -142,14 +142,14 @@ export class AuthConfig {
      */
     public customQueryParams?: object = null;
 
-    public silentRefreshIFrameName? = 'angular-oauth-oidc-silent-refresh-iframe';
+    public silentRefreshIFrameName ? = 'angular-oauth-oidc-silent-refresh-iframe';
 
     /**
      * Defines when the token_timeout event should be raised.
      * If you set this to the default value 0.75, the event
      * is triggered after 75% of the token's life time.
      */
-    public timeoutFactor? = 0.75;
+    public timeoutFactor ? = 0.75;
 
     /**
      * If true, the lib will try to check whether the user
@@ -157,14 +157,14 @@ export class AuthConfig {
      * in http://openid.net/specs/openid-connect-session-1_0.html#ChangeNotification
      * @type {boolean}
      */
-    public sessionChecksEnabled? = false;
+    public sessionChecksEnabled ? = false;
 
     /**
      * Intervall in msec for checking the session
      * according to http://openid.net/specs/openid-connect-session-1_0.html#ChangeNotification
      * @type {number}
      */
-    public sessionCheckIntervall? = 3 * 1000;
+    public sessionCheckIntervall ? = 3 * 1000;
 
     /**
      * Url for the iframe used for session checks
@@ -175,7 +175,7 @@ export class AuthConfig {
      * Name of the iframe to use for session checks
      * @type {number}
      */
-    public sessionCheckIFrameName? = 'angular-oauth-oidc-check-session-iframe';
+    public sessionCheckIFrameName ? = 'angular-oauth-oidc-check-session-iframe';
 
     /**
      * This property has been introduced to disable at_hash checks
@@ -184,21 +184,21 @@ export class AuthConfig {
      * Of course, when disabling these checks the we are bypassing
      * a security check which means we are more vulnerable.
      */
-    public disableAtHashCheck? = false;
+    public disableAtHashCheck ? = false;
 
 
     /*
      * Defines wether to check the subject of a refreshed token after silent refresh.
      * Normally, it should be the same as before.
-    */ 
-    public skipSubjectCheck? = false;
+    */
+    public skipSubjectCheck ? = false;
 
-    public useIdTokenHintForSilentRefresh? = false;
+    public useIdTokenHintForSilentRefresh ? = false;
 
     /*
      * Defined whether to skip the validation of the issuer in the discovery document.
      * Normally, the discovey document's url starts with the url of the issuer.
      */
-    public skipIssuerCheck? = false;
-    
+    public skipIssuerCheck ? = false;
+
 }

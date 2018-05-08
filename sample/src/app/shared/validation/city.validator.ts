@@ -1,9 +1,9 @@
 
-import {Directive, Input, Attribute} from "@angular/core";
-import {NG_VALIDATORS, Validator, AbstractControl, FormGroup} from "@angular/forms";
+import {Directive, Input, Attribute} from '@angular/core';
+import {NG_VALIDATORS, Validator, AbstractControl, FormGroup} from '@angular/forms';
 
 @Directive({
-    selector: 'input[city]', // <input city>
+    selector: 'input[city]', // tslint:disable-line directive-selector
     providers: [
         {
             provide: NG_VALIDATORS,
@@ -22,27 +22,27 @@ export class CityValidatorDirective implements Validator {
     validate(c: AbstractControl): any {
 
 
-        let formGroup = <FormGroup>c.root;
-        let otherValueCtrl = formGroup.controls['to'];
+        const formGroup = <FormGroup>c.root;
+        const otherValueCtrl = formGroup.controls['to'];
 
-        if (!otherValueCtrl) return { };
+        if (!otherValueCtrl) { return { }; }
 
-        let otherValue = otherValueCtrl.value;
+        const otherValue = otherValueCtrl.value;
 
-        if(otherValue == c.value) {
+        if (otherValue === c.value) {
             return {
                 city: 'rundflug'
-            }
+            };
         }
 
-        if (!this.city) return { }
+        if (!this.city) { return { }; }
 
-        let allowed = this.city.split(','); //['Graz', 'Hamburg', 'Wien', 'Frankfurt'];
+        const allowed = this.city.split(','); // ['Graz', 'Hamburg', 'Wien', 'Frankfurt'];
 
-        if (allowed.indexOf(c.value) == -1) {
+        if (allowed.indexOf(c.value) === -1) {
             return {
                 city: true
-            }
+            };
         }
 
         return {};

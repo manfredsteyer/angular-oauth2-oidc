@@ -49,9 +49,10 @@ return Promise.resolve()
 *    compiled modules to the /build folder.
 */
 gulp.task('ngc', function () {
-return ngc({
-  project: `${tmpFolder}/tsconfig.es5.json`
-})
+return Promise.resolve().then(
+    () => {ngc([
+      "--project", `${tmpFolder}/tsconfig.es5.json`,
+  ])})
   .then((exitCode) => {
     if (exitCode === 1) {
       // This error is caught in the 'compile' task by the runSequence method callback
@@ -87,9 +88,11 @@ return gulp.src(`${buildFolder}/**/*.js`)
       '@angular/common'
     ],
 
-    // Format of generated bundle
-    // See "format" in https://rollupjs.org/#core-functionality
-    format: 'es'
+    output: {
+        // Format of generated bundle
+        // See "format" in https://rollupjs.org/#core-functionality
+        format: 'es'
+    }
   }))
   .pipe(gulp.dest(distFolder));
 });
@@ -120,22 +123,25 @@ return gulp.src(`${buildFolder}/**/*.js`)
       '@angular/common'
     ],
 
-    // Format of generated bundle
-    // See "format" in https://rollupjs.org/#core-functionality
-    format: 'umd',
+    output: {
+        // Format of generated bundle
+        // See "format" in https://rollupjs.org/#core-functionality
+        format: 'umd',
 
-    // Export mode to use
-    // See "exports" in https://rollupjs.org/#danger-zone
-    exports: 'named',
+        // Export mode to use
+        // See "exports" in https://rollupjs.org/#danger-zone
+        exports: 'named',
 
-    // The name to use for the module for UMD/IIFE bundles
-    // (required for bundles with exports)
-    // See "name" in https://rollupjs.org/#core-functionality
-    name: 'angular-oauth2-oidc',
+        // The name to use for the module for UMD/IIFE bundles
+        // (required for bundles with exports)
+        // See "name" in https://rollupjs.org/#core-functionality
+        name: 'angular-oauth2-oidc',
 
-    // See "globals" in https://rollupjs.org/#core-functionality
-    globals: {
-      typescript: 'ts'
+
+        // See "globals" in https://rollupjs.org/#core-functionality
+        globals: {
+            typescript: 'ts'
+        }
     }
 
   }))

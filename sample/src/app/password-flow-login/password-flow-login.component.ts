@@ -10,16 +10,16 @@ export class PasswordFlowLoginComponent implements OnInit {
 
   userName: string;
   password: string;
-  loginFailed: boolean = false;
+  loginFailed = false;
   userProfile: object;
 
-  constructor(private oauthService: OAuthService) { 
+  constructor(private oauthService: OAuthService) {
 
     // Tweak config for password flow
     // This is just needed b/c this demo uses both,
     // implicit flow as well as password flow
-   
-    this.oauthService.configure(authPasswordFlowConfig)
+
+    this.oauthService.configure(authPasswordFlowConfig);
     this.oauthService.loadDiscoveryDocument();
   }
 
@@ -43,24 +43,24 @@ export class PasswordFlowLoginComponent implements OnInit {
 }
 
   get givenName() {
-      var claims = this.oauthService.getIdentityClaims();
-      if (!claims) return null;
+      const claims = this.oauthService.getIdentityClaims();
+      if (!claims) { return null; }
       return claims['given_name'];
   }
 
   get familyName() {
-      var claims = this.oauthService.getIdentityClaims();
-      if (!claims) return null;
+      const claims = this.oauthService.getIdentityClaims();
+      if (!claims) { return null; }
       return claims['family_name'];
   }
 
   loginWithPassword() {
-    
+
     this
         .oauthService
         .fetchTokenUsingPasswordFlowAndLoadUserProfile(this.userName, this.password)
         .then(() => {
-            console.debug('successfully logged in');
+            console.debug('successfully logged in'); // tslint:disable-line no-console
             this.loginFailed = false;
         })
         .catch((err) => {

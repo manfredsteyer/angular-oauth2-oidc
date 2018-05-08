@@ -1,4 +1,4 @@
-import {CanDeactivate, ActivatedRouteSnapshot, RouterStateSnapshot} from "@angular/router";
+import {CanDeactivate, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 
 export class LeaveComponentGuard implements CanDeactivate<any> {
 

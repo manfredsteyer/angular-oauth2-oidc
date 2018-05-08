@@ -1,9 +1,9 @@
 
-import {Directive} from "@angular/core";
-import {NG_ASYNC_VALIDATORS, AbstractControl} from "@angular/forms";
+import {Directive} from '@angular/core';
+import {NG_ASYNC_VALIDATORS, AbstractControl} from '@angular/forms';
 
 @Directive({
-    selector: 'input[async-city]',
+    selector: 'input[async-city]', // tslint:disable-line directive-selector
     providers: [
         {
             provide: NG_ASYNC_VALIDATORS,
@@ -18,7 +18,7 @@ export class AsyncCityValidatorDirective {
         return new Promise((resolve: Function) => {
             setTimeout(() => {
 
-                if (ctrl.value == "Graz" || ctrl.value == "Hamburg") {
+                if (ctrl.value === 'Graz' || ctrl.value === 'Hamburg') {
                     resolve({});
                     return;
                 }
@@ -26,7 +26,7 @@ export class AsyncCityValidatorDirective {
                 resolve({ 'async-city': false});
 
             }, 100);
-        })
+        });
 
     }
 

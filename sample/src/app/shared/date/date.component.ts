@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, OnChanges} from '@angular/core';
 
 @Component({
-    selector: 'date-component',
+    selector: 'app-date-component',
     template: `
         <div>
             {{day}}.{{month}}.{{year}} {{hour}}:{{minute}}
@@ -20,7 +20,7 @@ export class DateComponent implements OnInit, OnChanges {
     minute;
 
     constructor() {
-        console.debug('ctrl')
+        console.debug('ctrl'); // tslint:disable-line no-console
     }
 
     ngOnInit() {
@@ -31,9 +31,9 @@ export class DateComponent implements OnInit, OnChanges {
 
         // if(change.date) { ... }
 
-        console.debug('change', change);
+        console.debug('change', change); // tslint:disable-line no-console
 
-        let date = new Date(this.date);
+        const date = new Date(this.date);
 
 
 
@@ -44,7 +44,7 @@ export class DateComponent implements OnInit, OnChanges {
         this.hour = date.getHours();
         this.minute = date.getMinutes();
     }
-    
+
 
 
 }

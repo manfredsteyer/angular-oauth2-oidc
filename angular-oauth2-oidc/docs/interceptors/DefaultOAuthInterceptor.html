@@ -779,9 +779,7 @@
         <pre class="line-numbers"><code class="language-typescript">import { Injectable, Inject, Optional } from &#x27;@angular/core&#x27;;
 import { OAuthService, OAuthStorage } from &#x27;angular-oauth2-oidc&#x27;;
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpErrorResponse } from &#x27;@angular/common/http&#x27;;
-import {Observable} from &#x27;rxjs/Observable&#x27;;
-import { map, catchError } from &#x27;rxjs/operators&#x27;;
-import { of } from &#x27;rxjs/observable/of&#x27;;
+import { Observable, map, catchError, of  } from &#39;rxjs&#39;;
 import { OAuthResourceServerErrorHandler } from &quot;./resource-server-error-handler&quot;;
 import { OAuthModuleConfig } from &quot;../oauth-module.config&quot;;
 

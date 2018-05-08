@@ -5,11 +5,11 @@ import { FlightHistoryComponent } from './flight-history/flight-history.componen
 import { Component } from '@angular/core';
 import { OAuthService, AuthConfig } from 'angular-oauth2-oidc';
 import { JwksValidationHandler } from 'angular-oauth2-oidc';
-import { Router } from "@angular/router";
-
+import { Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
-    selector: 'flight-app',
+    selector: 'app-flight',
     templateUrl: './app.component.html'
 })
 export class AppComponent {
@@ -22,7 +22,7 @@ export class AppComponent {
       this.configureWithNewConfigApi();
       // this.configureAuth();
       // this.configurePasswordFlow();
-      
+
     }
 
 
@@ -43,37 +43,41 @@ export class AppComponent {
       this.oauthService.setupAutomaticSilentRefresh();
 
       this.oauthService.events.subscribe(e => {
-        console.debug('oauth/oidc event', e);
+        console.debug('oauth/oidc event', e); // tslint:disable-line no-console
       });
 
-      this.oauthService.events.filter(e => e.type === 'session_terminated').subscribe(e => {
-        console.debug('Your session has been terminated!');
+      this.oauthService.events.pipe(
+        filter(e => e.type === 'session_terminated'),
+      ).subscribe(e => {
+        console.debug('Your session has been terminated!'); // tslint:disable-line no-console
       });
-      
-      this.oauthService.events.filter(e => e.type === 'token_received').subscribe(e => {
+
+      this.oauthService.events.pipe(
+        filter(e => e.type === 'token_received'),
+      ).subscribe(e => {
         // this.oauthService.loadUserProfile();
       });
 
     }
 
   private configureAuth() {
-    
+
     //
     // This method demonstrated the old API; see configureWithNewConfigApi for new one
     //
 
     // URL of the SPA to redirect the user to after login
-    this.oauthService.redirectUri = window.location.origin + "/index.html";
+    this.oauthService.redirectUri = window.location.origin + '/index.html';
 
     // URL of the SPA to redirect the user after silent refresh
-    this.oauthService.silentRefreshRedirectUri = window.location.origin + "/silent-refresh.html";
+    this.oauthService.silentRefreshRedirectUri = window.location.origin + '/silent-refresh.html';
 
     // The SPA's id. The SPA is registerd with this id at the auth-server
-    this.oauthService.clientId = "spa-demo";
+    this.oauthService.clientId = 'spa-demo';
 
     // set the scope for the permissions the client should request
     // The first three are defined by OIDC. The 4th is a usecase-specific one
-    this.oauthService.scope = "openid profile email voucher";
+    this.oauthService.scope = 'openid profile email voucher';
 
     // Url of the Identity Provider
     this.oauthService.issuer = 'https://steyer-identity-server.azurewebsites.net/identity';
@@ -81,7 +85,7 @@ export class AppComponent {
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
 
     this.oauthService.events.subscribe(e => {
-      console.debug('oauth/oidc event', e);
+      console.debug('oauth/oidc event', e); // tslint:disable-line no-console
     });
 
     // Load Discovery Document and then try to login the user
@@ -92,9 +96,11 @@ export class AppComponent {
     this
       .oauthService
       .events
-      .filter(e => e.type == 'token_expires')
+      .pipe(
+        filter(e => e.type === 'token_expires'),
+      )
       .subscribe(e => {
-        console.debug('received token_expires event', e);
+        console.debug('received token_expires event', e); // tslint:disable-line no-console
         this.oauthService.silentRefresh();
       });
   }
@@ -106,7 +112,7 @@ export class AppComponent {
       // the standard explicitly cites that the password flow can also be used without it. Using a client secret
       // does not make sense for a SPA that runs in the browser. That's why the property is called dummyClientSecret
       // Using such a dummy secreat is as safe as using no secret.
-      this.oauthService.dummyClientSecret = "geheim";
+      this.oauthService.dummyClientSecret = 'geheim';
 
   }
 
