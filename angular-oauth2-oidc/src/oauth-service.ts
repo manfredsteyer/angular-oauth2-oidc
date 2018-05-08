@@ -17,8 +17,7 @@ import { AuthConfig } from './auth.config';
  * password flow.
  */
 @Injectable()
-export class OAuthService
-                extends AuthConfig {
+export class OAuthService extends AuthConfig {
 
     // extending AuthConfig ist just for LEGACY reasons
     // to not break existing code
@@ -53,6 +52,8 @@ export class OAuthService
      */
     public state? = '';
 
+    public disableNonceCheck: boolean = false;
+
     private eventsSubject: Subject<OAuthEvent> = new Subject<OAuthEvent>();
     private discoveryDocumentLoadedSubject: Subject<object> = new Subject<object>();
     private silentRefreshPostMessageEventListener: EventListener;
@@ -85,8 +86,7 @@ export class OAuthService
         if (config) {
             this.configure(config);
         }
-
-        
+  
         try {
             if (storage) {
                 this.setStorage(storage);
@@ -162,7 +162,6 @@ export class OAuthService
             return this.tryLogin(options);
         });
     }
-
 
     public loadDiscoveryDocumentAndLogin(options: LoginOptions = null) {
         return this.loadDiscoveryDocumentAndTryLogin(options).then(_ => {
@@ -600,20 +599,35 @@ export class OAuthService
      */
     public refreshToken(): Promise<object> {
 
+        let params = new HttpParams()
+            .set('grant_type', 'refresh_token')
+            .set('refresh_token', this._storage.getItem('refresh_token'))
+            .set('scope', this.scope);
+        if (this.dummyClientSecret) {
+            params = params.set('client_secret', this.dummyClientSecret);
+        }
+        return this.fetchToken(params);
+    }
+
+    /**
+     * Get token using an intermediate code. Works for the Authorization Code flow.
+     */
+    private getTokenFromCode(code: string): Promise<object> {
+        let params = new HttpParams()
+            .set('grant_type', 'authorization_code')
+            .set('code', code)
+            .set('redirect_uri', this.redirectUri);
+        return this.fetchToken(params);
+    }
+
+    private fetchToken(params: HttpParams): Promise<object> {    
+
         if (!this.validateUrlForHttps(this.tokenEndpoint)) {
             throw new Error('tokenEndpoint must use Http. Also check property requireHttps.');
         }
 
         return new Promise((resolve, reject) => {
-            let params = new HttpParams()
-                .set('grant_type', 'refresh_token')
-                .set('client_id', this.clientId)
-                .set('scope', this.scope)
-                .set('refresh_token', this._storage.getItem('refresh_token'));
-
-            if (this.dummyClientSecret) {
-                params = params.set('client_secret', this.dummyClientSecret);
-            }
+            params = params.set('client_id', this.clientId);
 
             if (this.customQueryParams) {
                 for (let key of Object.getOwnPropertyNames(this.customQueryParams)) {
@@ -629,12 +643,32 @@ export class OAuthService
                     this.debug('refresh tokenResponse', tokenResponse);
                     this.storeAccessTokenResponse(tokenResponse.access_token, tokenResponse.refresh_token, tokenResponse.expires_in);
 
-                    this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
-                    this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
-                    resolve(tokenResponse);
+                    if (this.oidc && tokenResponse.id_token) {
+                        this.processIdToken(tokenResponse.id_token, tokenResponse.access_token).  
+                        then(result => {
+                            this.storeIdToken(result);
+            
+                            this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
+                            this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
+            
+                            resolve(tokenResponse);
+                        })
+                        .catch(reason => {
+                            this.eventsSubject.next(new OAuthErrorEvent('token_validation_error', reason));
+                            console.error('Error validating tokens');
+                            console.error(reason);
+            
+                            reject(reason);
+                        });
+                    } else {
+                        this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
+                        this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
+            
+                        resolve(tokenResponse);
+                    }
                 },
                 (err) => {
-                    console.error('Error performing password flow', err);
+                    console.error('Error getting token', err);
                     this.eventsSubject.next(new OAuthErrorEvent('token_refresh_error', err));
                     reject(err);
                 }
@@ -920,82 +954,76 @@ export class OAuthService
             redirectUri = this.redirectUri;
         }
 
-        return this.createAndSaveNonce().then((nonce: any) => {
-
+        let nonce = null;
+        if (!this.disableNonceCheck) {
+            let nonce = this.createAndSaveNonce();
             if (state) {
                 state = nonce + ';' + state;
             }
             else {
                 state = nonce;
             }
+        }
 
-            if (!this.requestAccessToken && !this.oidc) {
-                throw new Error('Either requestAccessToken or oidc or both must be true');
+        if (!this.requestAccessToken && !this.oidc) {
+            throw new Error('Either requestAccessToken or oidc or both must be true');
+        }
+
+        this.responseType = this.getResponseType(this.inImplicitFlow);
+
+        let seperationChar = (that.loginUrl.indexOf('?') > -1) ? '&' : '?';
+
+        let scope = that.scope;
+
+        if (this.oidc && !scope.match(/(^|\s)openid($|\s)/)) {
+            scope = 'openid ' + scope;
+        }
+
+        let url = that.loginUrl
+                    + seperationChar
+                    + 'response_type='
+                    + encodeURIComponent(that.responseType)
+                    + '&client_id='
+                    + encodeURIComponent(that.clientId)
+                    + '&state='
+                    + encodeURIComponent(state)
+                    + '&redirect_uri='
+                    + encodeURIComponent(redirectUri)
+                    + '&scope='
+                    + encodeURIComponent(scope);
+
+        if (loginHint) {
+            url += '&login_hint=' + encodeURIComponent(loginHint);
+        }
+
+        if (that.resource) {
+            url += '&resource=' + encodeURIComponent(that.resource);
+        }
+
+        if (nonce && this.oidc) {
+            url += '&nonce=' + encodeURIComponent(nonce);
+        }
+
+        if (noPrompt) {
+            url += '&prompt=none';
+        }
+
+        for(let key of Object.keys(params)) {
+            url += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+        }
+
+        if (this.customQueryParams) {
+            for (let key of Object.getOwnPropertyNames(this.customQueryParams)) {
+                url += '&' + key + '=' + encodeURIComponent(this.customQueryParams[key]);
             }
+        }
 
-            if (this.oidc && this.requestAccessToken) {
-                this.responseType = 'id_token token';
-            }
-            else if (this.oidc && !this.requestAccessToken) {
-                this.responseType = 'id_token';
-            }
-            else {
-                this.responseType = 'token';
-            }
+        return Promise.resolve(url);  
 
-            let seperationChar = (that.loginUrl.indexOf('?') > -1) ? '&' : '?';
-
-            let scope = that.scope;
-
-            if (this.oidc && !scope.match(/(^|\s)openid($|\s)/)) {
-                scope = 'openid ' + scope;
-            }
-
-            let url = that.loginUrl
-                        + seperationChar
-                        + 'response_type='
-                        + encodeURIComponent(that.responseType)
-                        + '&client_id='
-                        + encodeURIComponent(that.clientId)
-                        + '&state='
-                        + encodeURIComponent(state)
-                        + '&redirect_uri='
-                        + encodeURIComponent(redirectUri)
-                        + '&scope='
-                        + encodeURIComponent(scope);
-
-            if (loginHint) {
-                url += '&login_hint=' + encodeURIComponent(loginHint);
-            }
-
-            if (that.resource) {
-                url += '&resource=' + encodeURIComponent(that.resource);
-            }
-
-            if (that.oidc) {
-                url += '&nonce=' + encodeURIComponent(nonce);
-            }
-
-            if (noPrompt) {
-                url += '&prompt=none';
-            }
-
-            for(let key of Object.keys(params)) {
-                url += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
-            }
-
-            if (this.customQueryParams) {
-                for (let key of Object.getOwnPropertyNames(this.customQueryParams)) {
-                    url += '&' + key + '=' + encodeURIComponent(this.customQueryParams[key]);
-                }
-            }
-
-            return url;
-        });
     };
 
-    initImplicitFlowInternal(additionalState = '', params: string | object = ''): void {
-
+    private initImplicitFlowInternal(additionalState = '', params: string | object = ''): void {
+        
         if (this.inImplicitFlow) {
             return;
         }
@@ -1045,6 +1073,51 @@ export class OAuthService
         }
     }
 
+    /**
+     * Starts the authorization code flow and redirects to user to
+     * the auth servers login url.
+     */
+    public initAuthorizationCodeFlow(): void {
+        if (this.loginUrl !== '') {
+            this.initAuthorizationCodeFlowInternal();
+        } else {
+            this.events.filter(e => e.type === 'discovery_document_loaded')
+            .subscribe(_ => this.initAuthorizationCodeFlowInternal());
+        }
+    }
+    
+    private initAuthorizationCodeFlowInternal(): void {
+        
+        if (!this.validateUrlForHttps(this.loginUrl)) {
+            throw new Error('loginUrl must use Http. Also check property requireHttps.');
+        }
+
+        this.createLoginUrl('', '', null, false, {}).then(function (url) {
+            location.href = url;
+        })
+        .catch(error => {
+            console.error('Error in initAuthorizationCodeFlow');
+            console.error(error);
+        });
+    };
+    
+    private getResponseType(implicit: boolean): string {
+        
+        if (implicit) {
+            if (this.oidc && this.requestAccessToken) {
+                return 'id_token token';
+            }
+            else if (this.oidc && !this.requestAccessToken) {
+                return 'id_token';
+            }
+            else {
+                return 'token';
+            }
+        } else {
+            return 'code';
+        }
+    }
+    
     private callOnTokenReceivedIfExists(options: LoginOptions): void {
         let that = this;
         if (options.onTokenReceived) {
@@ -1085,8 +1158,39 @@ export class OAuthService
 
         options = options || { };
 
-        let parts: object;
+        if (!this.requestAccessToken && !this.oidc) {
+            return Promise.reject('Either requestAccessToken or oidc or both must be true.');
+        }
 
+        if (window.location.search && (window.location.search.startsWith('?code=') || window.location.search.includes('&code='))) {
+            return this.tryLoginAuthorizationCode();
+        } else {
+            return this.tryLoginImplicit(options);
+        }
+    };
+
+    private tryLoginAuthorizationCode(): Promise<void> {
+
+        let parameter = window.location.search.split("?")[1].split("&");
+        let codeParam = parameter.filter(param => param.includes('code='));
+        let code = codeParam.length ? codeParam[0].split('code=')[1] : undefined;
+
+        if (code) {
+            return new Promise((resolve, reject) => {
+                this.getTokenFromCode(code).then(result => {
+                    resolve();
+                }).catch(err => {
+                    reject(err);
+                });
+            });
+        } else {
+            return Promise.resolve();
+        }
+    }
+
+    private tryLoginImplicit(options: LoginOptions = null): Promise<void> {
+        let parts: object;
+        
         if (options.customHashFragment) {
             parts = this.urlHelper.getHashFragmentParams(options.customHashFragment);
         }
@@ -1103,15 +1207,11 @@ export class OAuthService
             this.eventsSubject.next(err);
             return Promise.reject(err);
         }
-
+        
         let accessToken = parts['access_token'];
         let idToken = parts['id_token'];
         let state = decodeURIComponent(parts['state']);
         let sessionState = parts['session_state'];
-
-        if (!this.requestAccessToken && !this.oidc) {
-            return Promise.reject('Either requestAccessToken or oidc or both must be true.');
-        }
 
         if (this.requestAccessToken && !accessToken) return Promise.resolve();
         if (this.requestAccessToken && !options.disableOAuth2StateCheck && !state) return Promise.resolve();
@@ -1185,8 +1285,7 @@ export class OAuthService
                     console.error(reason);
                     return Promise.reject(reason);
                 });
-
-    };
+    }
 
     private validateNonceForAccessToken(accessToken: string, nonceInState: string): boolean {
         let savedNonce = this._storage.getItem('nonce');
@@ -1289,7 +1388,7 @@ export class OAuthService
                 return Promise.reject(err);
             }
 
-            if (claims.nonce !== savedNonce) {
+            if (!this.disableNonceCheck && claims.nonce !== savedNonce) {
                 let err = 'Wrong nonce: ' + claims.nonce;
                 console.warn(err);
                 return Promise.reject(err);
@@ -1501,32 +1600,26 @@ export class OAuthService
     /**
      * @ignore
      */
-    public createAndSaveNonce(): Promise<string> {
-        let that = this;
-        return this.createNonce().then(function (nonce: any) {
-            that._storage.setItem('nonce', nonce);
-            return nonce;
-        });
+    public createAndSaveNonce(): string {
+        let nonce = this.createNonce();
+        this._storage.setItem('nonce', nonce);
+        return nonce; 
     };
 
-    protected createNonce(): Promise<string> {
+    protected createNonce(): string {
 
-        return new Promise((resolve, reject) => {
+        if (this.rngUrl) {
+            throw new Error('createNonce with rng-web-api has not been implemented so far');
+        }
+        else {
+            let text = '';
+            let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-            if (this.rngUrl) {
-                throw new Error('createNonce with rng-web-api has not been implemented so far');
-            }
-            else {
-                let text = '';
-                let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            for (let i = 0; i < 40; i++)
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
 
-                for (let i = 0; i < 40; i++)
-                    text += possible.charAt(Math.floor(Math.random() * possible.length));
-
-                resolve(text);
-            }
-
-        });
+            return text;
+        }
     };
 
     private checkAtHash(params: ValidationParams): boolean {
