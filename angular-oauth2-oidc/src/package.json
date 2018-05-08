@@ -16,10 +16,8 @@
   "bugs": {
     "url": "https://github.com/manfredsteyer/angular-oauth2-oidc/issues"
   },
-  "main": "angular-oauth2-oidc.umd.js",
-  "module": "angular-oauth2-oidc.js",
-  "jsnext:main": "angular-oauth2-oidc.js",
-  "typings": "angular-oauth2-oidc.d.ts",
+  "main": "bundles/angular-oauth2-oidc.umd.js",
+  "module": "index.js",
   "peerDependencies": {
     "@angular/core": ">= 4.3.0 < 6",
     "@angular/common": ">= 4.3.0 < 6",
