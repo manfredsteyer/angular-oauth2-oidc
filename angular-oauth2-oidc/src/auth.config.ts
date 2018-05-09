@@ -186,6 +186,13 @@ export class AuthConfig {
      */
     public disableAtHashCheck? = false;
 
+    /**
+     * This property allows you to override the method that is used to open the login url,
+     * allowing a way for implementations to specify their own method of routing to new
+     * urls.
+     */
+    public openUri?: ((uri: string) => void) = (uri) => { location.href = uri; }
+
 
     /*
      * Defines wether to check the subject of a refreshed token after silent refresh.
@@ -200,5 +207,11 @@ export class AuthConfig {
      * Normally, the discovey document's url starts with the url of the issuer.
      */
     public skipIssuerCheck? = false;
+    
+    constructor(json?: Partial<AuthConfig>) {
+    if (json) {
+      Object.assign(this, json);
+    }
+  }
     
 }
