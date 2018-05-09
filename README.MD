@@ -265,8 +265,7 @@ OAuthModule.forRoot({
 
 ## Routing
 
-If you use the ``PathLocationStrategy`` (which is on by default) and have a general catch-all-route (``path: '**'``) you should be fine. Otherwise look up the section ``Routing with the HashStrategy`` in the [documation](https://manfredsteyer.github.io/angular-oauth2-oidc/angular-oauth2-oidc/docs/).
-
+If you use the ``PathLocationStrategy`` (which is on by default) and have a general catch-all-route (``path: '**'``) you should be fine. Otherwise look up the section ``Routing with the HashStrategy`` in the [documentation](https://manfredsteyer.github.io/angular-oauth2-oidc/angular-oauth2-oidc/docs/).
 
 ## More Documentation
 
