@@ -18,11 +18,10 @@
     "types": []
   },
   "angularCompilerOptions": {
-    "annotateForClosureCompiler": true,
-    "strictMetadataEmit": true,
-    "skipTemplateCodegen": true,
+    "annotationsAs": "decorators",
     "flatModuleOutFile": "angular-oauth2-oidc.js",
-    "flatModuleId": "angular-oauth2-oidc"
+    "flatModuleId": "angular-oauth2-oidc",
+    "genDir": "../build"
   },
   "files": [
     "./index.ts"

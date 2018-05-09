@@ -1,8 +1,7 @@
 import { Injectable, Optional } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable, Subject, Subscription, of, race } from 'rxjs';
+import { filter, take, delay, first, tap, map } from 'rxjs/operators';
 
 import { ValidationHandler, ValidationParams } from './token-validation/validation-handler';
 import { UrlHelperService } from './url-helper.service';
@@ -135,19 +134,19 @@ export class OAuthService
     private setupSessionCheck() {
         this
             .events
-            .filter(e => e.type === 'token_received')
+            .pipe(filter(e => e.type === 'token_received'))
             .subscribe(e => {
                 this.initSessionCheck();
             });
     }
 
     /**
-     * 
+     *
      * @param params Additional parameter to pass
      */
     public setupAutomaticSilentRefresh(params: object = {}) {
         this.events
-            .filter(e => e.type === 'token_expires')
+            .pipe(filter(e => e.type === 'token_expires'))
             .subscribe(e => {
                 this.silentRefresh(params).catch(_ => {
                     this.debug('automatic silent refresh did not work');
@@ -236,13 +235,12 @@ export class OAuthService
             this.setupExpirationTimers();
         }
 
-        this.events.filter(e => e.type === 'token_received').subscribe(_ => {
-
-            this.clearAccessTokenTimer();
-            this.clearIdTokenTimer();
-            this.setupExpirationTimers();
-
-        });
+        this.events.pipe(filter(e => e.type === 'token_received'))
+            .subscribe(_ => {
+                this.clearAccessTokenTimer();
+                this.clearIdTokenTimer();
+                this.setupExpirationTimers();
+            });
     }
 
     private setupExpirationTimers(): void {
@@ -265,9 +263,8 @@ export class OAuthService
         let timeout = this.calcTimeout(storedAt, expiration);
 
         this.accessTokenTimeoutSubscription =
-            Observable
-                .of(new OAuthInfoEvent('token_expires', 'access_token'))
-                .delay(timeout)
+            of(new OAuthInfoEvent('token_expires', 'access_token'))
+                .pipe(delay(timeout))
                 .subscribe(e => this.eventsSubject.next(e));
     }
 
@@ -278,9 +275,8 @@ export class OAuthService
         let timeout = this.calcTimeout(storedAt, expiration);
 
         this.idTokenTimeoutSubscription =
-            Observable
-                .of(new OAuthInfoEvent('token_expires', 'id_token'))
-                .delay(timeout)
+            of(new OAuthInfoEvent('token_expires', 'id_token'))
+                .pipe(delay(timeout))
                 .subscribe(e => this.eventsSubject.next(e));
     }
 
@@ -731,24 +727,25 @@ export class OAuthService
             document.body.appendChild(iframe);
         });
 
-        let errors = this.events.filter(e => e instanceof OAuthErrorEvent).first();
-        let success = this.events.filter(e => e.type === 'silently_refreshed').first();
-        let timeout = Observable.of(new OAuthErrorEvent('silent_refresh_timeout', null))
-            .delay(this.silentRefreshTimeout || this.siletRefreshTimeout);
 
-        return Observable
-            .race([errors, success, timeout])
-            .do(e => {
-                if (e.type === 'silent_refresh_timeout') {
-                    this.eventsSubject.next(e);
-                }
-            })
-            .map(e => {
-                if (e instanceof OAuthErrorEvent) {
-                    throw e;
-                }
-                return e;
-            })
+        let errors = this.events.pipe(filter(e => e instanceof OAuthErrorEvent), first());
+        let success = this.events.pipe(filter(e => e.type === 'silently_refreshed'), first());
+        let timeout = of(new OAuthErrorEvent('silent_refresh_timeout', null))
+            .pipe(delay(this.silentRefreshTimeout || this.siletRefreshTimeout));
+
+        return race([errors, success, timeout])
+            .pipe(
+                tap(e => {
+                    if (e.type === 'silent_refresh_timeout') {
+                        this.eventsSubject.next(e);
+                    }
+                }),
+                map(e => {
+                    if (e instanceof OAuthErrorEvent) {
+                        throw e;
+                    }
+                    return e;
+                }))
             .toPromise();
     }
 
@@ -824,11 +821,13 @@ export class OAuthService
 
     private waitForSilentRefreshAfterSessionChange() {
         this.events
-            .filter((e: OAuthEvent) =>
-                e.type === 'silently_refreshed'
-                || e.type === 'silent_refresh_timeout'
-                || e.type === 'silent_refresh_error')
-            .first()
+            .pipe(
+                filter((e: OAuthEvent) =>
+                    e.type === 'silently_refreshed'
+                    || e.type === 'silent_refresh_timeout'
+                    || e.type === 'silent_refresh_error'),
+                first()
+            )
             .subscribe(e => {
                 if (e.type !== 'silently_refreshed') {
                     this.debug('silent refresh did not work after session changed');
@@ -865,7 +864,7 @@ export class OAuthService
 
         let url = this.sessionCheckIFrameUrl;
         iframe.setAttribute('src', url);
-        //iframe.style.visibility = 'hidden';
+        // iframe.style.visibility = 'hidden';
         iframe.style.display = 'none';
         document.body.appendChild(iframe);
 
@@ -1032,7 +1031,7 @@ export class OAuthService
      *
      * @param additionalState Optinal state that is passes around.
      *  You find this state in the property ``state`` after ``tryLogin`` logged in the user.
-     * @param params Hash with additional parameter. If it is a string, it is used for the 
+     * @param params Hash with additional parameter. If it is a string, it is used for the
      *               parameter loginHint (for the sake of compatibility with former versions)
      */
     public initImplicitFlow(additionalState = '', params: string | object = ''): void {
@@ -1040,7 +1039,7 @@ export class OAuthService
         if (this.loginUrl !== '') {
             this.initImplicitFlowInternal(additionalState, params);
         } else {
-            this.events.filter(e => e.type === 'discovery_document_loaded')
+            this.events.pipe(filter(e => e.type === 'discovery_document_loaded'))
                 .subscribe(_ => this.initImplicitFlowInternal(additionalState, params));
         }
     }
@@ -1296,6 +1295,7 @@ export class OAuthService
             console.warn(err);
             return Promise.reject(err);
         }
+
 
         if (!this.disableAtHashCheck && this.requestAccessToken && !claims['at_hash']) {
             let err = 'An at_hash is needed!';
