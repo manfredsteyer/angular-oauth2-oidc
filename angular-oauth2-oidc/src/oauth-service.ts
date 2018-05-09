@@ -262,7 +262,7 @@ export class OAuthService
     private setupAccessTokenTimer(): void {
         let expiration = this.getAccessTokenExpiration();
         let storedAt = this.getAccessTokenStoredAt();
-        let timeout = this.calcTimeout(storedAt, expiration);
+        let timeout = this.calcTimeout(expiration);
 
         this.ngZone.runOutsideAngular(() => {
             this.accessTokenTimeoutSubscription =
@@ -280,7 +280,7 @@ export class OAuthService
     private setupIdTokenTimer(): void {
         let expiration = this.getIdTokenExpiration();
         let storedAt = this.getIdTokenStoredAt();
-        let timeout = this.calcTimeout(storedAt, expiration);
+        let timeout = this.calcTimeout(expiration);
 
         this.ngZone.runOutsideAngular(() => {
             this.idTokenTimeoutSubscription =
@@ -306,9 +306,13 @@ export class OAuthService
         }
     }
 
-    private calcTimeout(storedAt: number, expiration: number): number {
-        let delta = (expiration - storedAt) * this.timeoutFactor;
-        return delta;
+    /**
+     * Calculates the timeout to refresh tokens
+     * 
+     * @param expiration the timestamp when the token expires
+     */
+    private calcTimeout(expiration: number): number {
+        return (expiration - Date.now()) * this.timeoutFactor;
     }
 
     /**
