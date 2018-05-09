@@ -42,7 +42,7 @@ See [Release Notes](https://github.com/manfredsteyer/angular-oauth2-oidc/release
 - New convenience methods in OAuthService to streamline default tasks:
     - ``setupAutomaticSilentRefresh()``
     - ``loadDiscoveryDocumentAndTryLogin()``
-- Single Sign out through Session Status Change Notification according to the OpenID Connect Session Management specs. This means, you can be notified when the user logs out using at the login provider.
+- Single Sign out through Session Status Change Notification according to the OpenID Connect Session Management specs. This means you can be notified when the user logs out using the login provider.
 - Possibility to define the ValidationHandler, the Config as well as the OAuthStorage via DI
 - Better structured documentation
 
@@ -54,9 +54,9 @@ See [Release Notes](https://github.com/manfredsteyer/angular-oauth2-oidc/release
 
 ## Additional Features 
 - Logging in via OAuth2 and OpenId Connect (OIDC) Implicit Flow (where user is redirected to Identity Provider)
-- "Logging in" via Password Flow (where user enters his/her password into the client)
+- "Logging in" via Password Flow (where user enters their password into the client)
 - Token Refresh for Password Flow by using a Refresh Token
-- Automatically refreshing a token when/ some time before it expires
+- Automatically refreshing a token when/some time before it expires
 - Querying Userinfo Endpoint
 - Querying Discovery Document to ease configuration
 - Validating claims of the id_token regarding the specs
@@ -72,7 +72,7 @@ See [Release Notes](https://github.com/manfredsteyer/angular-oauth2-oidc/release
 
 ## Sample-Auth-Server
 
-You can use the OIDC-Sample-Server mentioned in the samples for Testing. It assumes, that your Web-App runns on http://localhost:8080.
+You can use the OIDC-Sample-Server mentioned in the samples for Testing. It assumes, that your Web-App runs on http://localhost:8080.
 
 Username/Password: max/geheim
 
@@ -124,7 +124,7 @@ Single Page Application. It sends the user to the Identity Provider's login page
 This also allows for single sign on as well as single sign off.
 
 To configure the library the following sample uses the new configuration API introduced with Version 2.1.
-Hence, The original API is still supported.
+Hence, the original API is still supported.
 
 ```TypeScript
 import { AuthConfig } from 'angular-oauth2-oidc';
@@ -229,7 +229,7 @@ The following snippet contains the template for the login page:
 
 ### Skipping the Login Form
 
-If you don't want to display a login form that tells the user that they are redirected to the identity server, you can use the convenince function ``this.oauthService.loadDiscoveryDocumentAndLogin();`` instead of ``this.oauthService.loadDiscoveryDocumentAndTryLogin();`` when setting up the library. 
+If you don't want to display a login form that tells the user that they are redirected to the identity server, you can use the convenience function ``this.oauthService.loadDiscoveryDocumentAndLogin();`` instead of ``this.oauthService.loadDiscoveryDocumentAndTryLogin();`` when setting up the library. 
 
 This directly redirects the user to the identity server if there are no valid tokens. 
 
