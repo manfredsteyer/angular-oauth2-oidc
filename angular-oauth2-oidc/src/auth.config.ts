@@ -207,6 +207,15 @@ export class AuthConfig {
      * Normally, the discovey document's url starts with the url of the issuer.
      */
     public skipIssuerCheck? = false;
+
+    /*
+     * final state sent to issuer is built as follows:
+     * state = nonce + nonceStateSeparator + additional state
+     * Default separator is ';' (encoded %3B).
+     * In rare cases, this character might be forbidden or inconvenient to use by the issuer so it can be customized.
+     */
+    public nonceStateSeparator? = ';';    
+
     
     constructor(json?: Partial<AuthConfig>) {
     if (json) {

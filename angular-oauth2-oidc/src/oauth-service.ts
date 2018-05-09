@@ -942,7 +942,7 @@ export class OAuthService
         return this.createAndSaveNonce().then((nonce: any) => {
 
             if (state) {
-                state = nonce + ';' + state;
+                state = nonce + this.config.nonceStateSeparator + state;
             }
             else {
                 state = nonce;
@@ -1116,6 +1116,16 @@ export class OAuthService
 
         this.debug('parsed url', parts);
 
+        let state = decodeURIComponent(parts['state']);
+        let nonceInState = state;
+        let idx = state.indexOf(this.config.nonceStateSeparator);
+
+        if ( idx > -1) {
+            nonceInState = state.substr(0, idx);
+            this.state = state.substr(idx + this.config.nonceStateSeparator.length);
+        }
+        
+
         if (parts['error']) {
             this.debug('error trying to login');
             this.handleLoginError(options, parts);
@@ -1125,8 +1135,7 @@ export class OAuthService
         }
 
         let accessToken = parts['access_token'];
-        let idToken = parts['id_token'];
-        let state = decodeURIComponent(parts['state']);
+        let idToken = parts['id_token'];        
         let sessionState = parts['session_state'];
         let grantedScopes = parts['scope'];
 
@@ -1145,20 +1154,6 @@ export class OAuthService
                 + 'does not contain a session_state claim');
         }
 
-        let nonceInState = state;
-        let idx = state.indexOf(';');
-
-        if (idx > -1) {
-            nonceInState = state.substr(0, idx);
-            this.state = state.substr(idx + 1);
-        }
-        /*
-        let stateParts = state.split(';');
-        if (stateParts.length > 1) {
-            this.state = stateParts[1];
-        }
-        */
-        // let nonceInState = stateParts[0];
 
         if (this.requestAccessToken && !options.disableOAuth2StateCheck) {
             let success = this.validateNonceForAccessToken(accessToken, nonceInState);
