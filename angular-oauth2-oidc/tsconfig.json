@@ -1,14 +1,27 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "declaration": true,
+    "module": "es2015",
+    "target": "es5",
+    "baseUrl": ".",
+    "stripInternal": true,
+    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
-    "rootDir": "./src",
+    "outDir": "./build",
+    "rootDir": ".",
     "lib": [
       "es2015",
       "dom"
     ],
     "skipLibCheck": true,
     "types": []
-  }
+  },
+  "angularCompilerOptions": {
+    "annotationsAs": "decorators",
+    "genDir": "./build"
+  },
+  "files": [
+    "./index.ts"
+  ]
 }
