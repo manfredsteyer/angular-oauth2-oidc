@@ -228,7 +228,7 @@ export class OAuthService
             return;
         }
 
-        if (this.hasValidIdToken) {
+        if (this.hasValidIdToken()) {
             this.clearAccessTokenTimer();
             this.clearIdTokenTimer();
             this.setupExpirationTimers();
@@ -689,7 +689,7 @@ export class OAuthService
         let claims: object = this.getIdentityClaims() || {};
 
         if (this.useIdTokenHintForSilentRefresh
-            && this.hasValidIdToken) {
+            && this.hasValidIdToken()) {
             params['id_token_hint'] = this.getIdToken();
         }
 
@@ -1356,7 +1356,9 @@ export class OAuthService
      * Returns the current id_token.
      */
     public getIdToken(): string {
-        return this._storage.getItem('id_token');
+        return this._storage
+            ? this._storage.getItem('id_token')
+            : null;
     }
 
     private padBase64(base64data): string {
