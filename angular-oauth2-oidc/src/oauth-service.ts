@@ -9,6 +9,7 @@ import { OAuthEvent, OAuthInfoEvent, OAuthErrorEvent, OAuthSuccessEvent } from '
 import { OAuthStorage, LoginOptions, ParsedIdToken, OidcDiscoveryDoc, TokenResponse, UserInfo } from './types';
 import { b64DecodeUnicode } from './base64-helper';
 import { AuthConfig } from './auth.config';
+import { WebHttpUrlEncodingCodec } from './encoder';
 
 /**
  * Service for logging in and logging out with
@@ -550,7 +551,13 @@ export class OAuthService
         }
 
         return new Promise((resolve, reject) => {
-            let params = new HttpParams()
+            /**
+             * A `HttpParameterCodec` that uses `encodeURIComponent` and `decodeURIComponent` to
+             * serialize and parse URL parameter keys and values.
+             *
+             * @stable
+             */
+            let params = new HttpParams({encoder: new WebHttpUrlEncodingCodec() })
                 .set('grant_type', 'password')
                 .set('client_id', this.clientId)
                 .set('scope', this.scope)
