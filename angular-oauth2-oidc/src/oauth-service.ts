@@ -85,6 +85,7 @@ export class OAuthService
             this.configure(config);
         }
 
+
         try {
             if (storage) {
                 this.setStorage(storage);
@@ -571,7 +572,7 @@ export class OAuthService
             this.http.post<TokenResponse>(this.tokenEndpoint, params, { headers }).subscribe(
                 (tokenResponse) => {
                     this.debug('tokenResponse', tokenResponse);
-                    this.storeAccessTokenResponse(tokenResponse.access_token, tokenResponse.refresh_token, tokenResponse.expires_in);
+                    this.storeAccessTokenResponse(tokenResponse.access_token, tokenResponse.refresh_token, tokenResponse.expires_in, tokenResponse.scope);
 
                     this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
                     resolve(tokenResponse);
@@ -622,7 +623,7 @@ export class OAuthService
             this.http.post<TokenResponse>(this.tokenEndpoint, params, { headers }).subscribe(
                 (tokenResponse) => {
                     this.debug('refresh tokenResponse', tokenResponse);
-                    this.storeAccessTokenResponse(tokenResponse.access_token, tokenResponse.refresh_token, tokenResponse.expires_in);
+                    this.storeAccessTokenResponse(tokenResponse.access_token, tokenResponse.refresh_token, tokenResponse.expires_in, tokenResponse.scope);
 
                     this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
                     this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
@@ -725,6 +726,7 @@ export class OAuthService
             }
             document.body.appendChild(iframe);
         });
+
 
         let errors = this.events.pipe(filter(e => e instanceof OAuthErrorEvent), first());
         let success = this.events.pipe(filter(e => e.type === 'silently_refreshed'), first());
@@ -1055,8 +1057,9 @@ export class OAuthService
         }
     }
 
-    private storeAccessTokenResponse(accessToken: string, refreshToken: string, expiresIn: number): void {
+    private storeAccessTokenResponse(accessToken: string, refreshToken: string, expiresIn: number, grantedScopes: String): void {
         this._storage.setItem('access_token', accessToken);
+        this._storage.setItem('granted_scopes', JSON.stringify(grantedScopes.split('+')));
         this._storage.setItem('access_token_stored_at', '' + Date.now());
         if (expiresIn) {
             let expiresInMilliSeconds = expiresIn * 1000;
@@ -1105,6 +1108,7 @@ export class OAuthService
         let idToken = parts['id_token'];
         let state = decodeURIComponent(parts['state']);
         let sessionState = parts['session_state'];
+        let grantedScopes = parts['scope'];
 
         if (!this.requestAccessToken && !this.oidc) {
             return Promise.reject('Either requestAccessToken or oidc or both must be true.');
@@ -1146,7 +1150,7 @@ export class OAuthService
         }
 
         if (this.requestAccessToken) {
-            this.storeAccessTokenResponse(accessToken, null, parts['expires_in']);
+            this.storeAccessTokenResponse(accessToken, null, parts['expires_in'], grantedScopes);
         }
 
         if (!this.oidc) {
@@ -1292,6 +1296,7 @@ export class OAuthService
             return Promise.reject(err);
         }
 
+
         if (!this.disableAtHashCheck && this.requestAccessToken && !claims['at_hash']) {
             let err = 'An at_hash is needed!';
             console.warn(err);
@@ -1350,6 +1355,15 @@ export class OAuthService
         let claims = this._storage.getItem('id_token_claims_obj');
         if (!claims) return null;
         return JSON.parse(claims);
+    }
+
+    /**
+     * Returns the granted scopes from the server.
+     */
+    public getGrantedScopes(): object {
+        let scopes = this._storage.getItem('granted_scopes');
+        if (!scopes) return null;
+        return JSON.parse(scopes);
     }
 
     /**
