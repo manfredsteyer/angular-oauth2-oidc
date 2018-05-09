@@ -359,8 +359,12 @@ export class OAuthService
                         return;
                     }
 
+                    // See: https://ping.force.com/Support/Group-Detail/PingFederate-Q&A/Feed-Detail/feedId_0D54000003BOpaaCAD
+                    this.logoutUrl = this.config.usePingFederate
+                        ? doc.ping_end_session_endpoint
+                        : doc.end_session_endpoint;
+
                     this.loginUrl = doc.authorization_endpoint;
-                    this.logoutUrl = doc.end_session_endpoint;
                     this.grantTypesSupported = doc.grant_types_supported;
                     this.issuer = doc.issuer;
                     this.tokenEndpoint = doc.token_endpoint;
@@ -1514,11 +1518,16 @@ export class OAuthService
             logoutUrl = this.logoutUrl.replace(/\{\{id_token\}\}/, id_token);
         }
         else {
+            // See: https://stackoverflow.com/questions/24669039/pingfederate-idp-initiated-logout-redirect-to-targetresource
+            const redirectUrlParamKey = this.config.usePingFederate
+                ? '&TargetResource='
+                : '&post_logout_redirect_uri=';
+
             logoutUrl = this.logoutUrl +
                 (this.logoutUrl.indexOf('?') > -1 ? '&' : '?')
                 + 'id_token_hint='
                 + encodeURIComponent(id_token)
-                + '&post_logout_redirect_uri='
+                + redirectUrlParamKey
                 + encodeURIComponent(this.postLogoutRedirectUri || this.redirectUri);
         }
         location.href = logoutUrl;
