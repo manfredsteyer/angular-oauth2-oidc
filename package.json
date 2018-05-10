@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/username/repo"
+    "url": "https://github.com/manfredsteyer/angular-oauth2-oidc"
   },
   "author": {
     "name": "ManfredSteyer",
@@ -24,7 +24,7 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/username/repo/issues"
+    "url": "https://github.com/manfredsteyer/angular-oauth2-oidc/issues"
   },
   "devDependencies": {
     "@angular/common": "^4.0.0",

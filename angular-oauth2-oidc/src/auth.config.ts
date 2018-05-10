@@ -186,6 +186,13 @@ export class AuthConfig {
      */
     public disableAtHashCheck? = false;
 
+    /**
+     * This property allows you to override the method that is used to open the login url,
+     * allowing a way for implementations to specify their own method of routing to new
+     * urls.
+     */
+    public openUri?: ((uri: string) => void) = (uri) => { location.href = uri; }
+
 
     /*
      * Defines wether to check the subject of a refreshed token after silent refresh.
@@ -207,5 +214,19 @@ export class AuthConfig {
      * This is a fallback value for the case this value is not exposed.
      */
     public fallbackAccessTokenExpirationTimeInSec?: number;
+
+    /*
+     * final state sent to issuer is built as follows:
+     * state = nonce + nonceStateSeparator + additional state
+     * Default separator is ';' (encoded %3B).
+     * In rare cases, this character might be forbidden or inconvenient to use by the issuer so it can be customized.
+     */
+    public nonceStateSeparator? = ';';    
+    
+    constructor(json?: Partial<AuthConfig>) {
+    if (json) {
+      Object.assign(this, json);
+    }
+  }
     
 }

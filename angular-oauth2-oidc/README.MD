@@ -59,7 +59,7 @@ See [Release Notes](https://github.com/manfredsteyer/angular-oauth2-oidc/release
 - Providing Events via the observable ``events``.
 - The event ``token_expires`` can be used together with a silent refresh to automatically refresh a token when/ before it expires (see also property ``timeoutFactor``).
 
-## Additional Features 
+## Additional Features
 - Logging in via OAuth2 and OpenId Connect (OIDC) Implicit Flow (where user is redirected to Identity Provider)
 - "Logging in" via Password Flow (where user enters his/her password into the client)
 - Token Refresh for Password Flow by using a Refresh Token
@@ -83,7 +83,7 @@ You can use the OIDC-Sample-Server mentioned in the samples for Testing. It assu
 
 Username/Password: max/geheim
 
-*clientIds:* 
+*clientIds:*
 - spa-demo (implicit flow)
 - demo-resource-owner (resource owner password flow)
 
@@ -105,7 +105,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 [...]
 
 @NgModule({
-  imports: [ 
+  imports: [
     [...]
     HttpModule,
     OAuthModule.forRoot()
@@ -116,13 +116,13 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     [...]
   ],
   bootstrap: [
-    AppComponent 
+    AppComponent
   ]
 })
 export class AppModule {
 }
 
-``` 
+```
 
 ## Configuring for Implicit Flow
 
@@ -236,9 +236,9 @@ The following snippet contains the template for the login page:
 
 ### Skipping the Login Form
 
-If you don't want to display a login form that tells the user that they are redirected to the identity server, you can use the convenince function ``this.oauthService.loadDiscoveryDocumentAndLogin();`` instead of ``this.oauthService.loadDiscoveryDocumentAndTryLogin();`` when setting up the library. 
+If you don't want to display a login form that tells the user that they are redirected to the identity server, you can use the convenince function ``this.oauthService.loadDiscoveryDocumentAndLogin();`` instead of ``this.oauthService.loadDiscoveryDocumentAndTryLogin();`` when setting up the library.
 
-This directly redirects the user to the identity server if there are no valid tokens. 
+This directly redirects the user to the identity server if there are no valid tokens.
 
 
 ### Calling a Web API with an Access Token
