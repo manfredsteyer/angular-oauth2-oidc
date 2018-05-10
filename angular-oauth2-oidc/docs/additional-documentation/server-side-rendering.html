@@ -98,10 +98,10 @@
                                     <a href="../additional-documentation/session-checks.html" >Session Checks</a>
                                 </li>
                                 <li class="link ">
-                                    <a href="../additional-documentation/server-side-rendering.html" >Server Side Rendering</a>
+                                    <a href="../additional-documentation/server-side-rendering.html"  data-type="entity-link" class="active" >Server Side Rendering</a>
                                 </li>
                                 <li class="link ">
-                                    <a href="../additional-documentation/configure-library-for-implicit-flow-without-discovery-document.html"  data-type="entity-link" class="active" >Configure Library for Implicit Flow without discovery document</a>
+                                    <a href="../additional-documentation/configure-library-for-implicit-flow-without-discovery-document.html" >Configure Library for Implicit Flow without discovery document</a>
                                 </li>
                                 <li class="link ">
                                     <a href="../additional-documentation/using-systemjs.html" >Using SystemJS</a>
@@ -379,10 +379,10 @@
                                            <a href="../additional-documentation/session-checks.html" >Session Checks</a>
                                        </li>
                                        <li class="link ">
-                                           <a href="../additional-documentation/server-side-rendering.html" >Server Side Rendering</a>
+                                           <a href="../additional-documentation/server-side-rendering.html"  data-type="entity-link" class="active" >Server Side Rendering</a>
                                        </li>
                                        <li class="link ">
-                                           <a href="../additional-documentation/configure-library-for-implicit-flow-without-discovery-document.html"  data-type="entity-link" class="active" >Configure Library for Implicit Flow without discovery document</a>
+                                           <a href="../additional-documentation/configure-library-for-implicit-flow-without-discovery-document.html" >Configure Library for Implicit Flow without discovery document</a>
                                        </li>
                                        <li class="link ">
                                            <a href="../additional-documentation/using-systemjs.html" >Using SystemJS</a>
@@ -592,42 +592,10 @@
 
 
 
-<h1 id="configure-library-for-implicit-flow-without-discovery-document-">Configure Library for Implicit Flow (without discovery document)</h1>
-<p>When you don&#39;t have a discovery document, you have to configure more properties manually:</p>
-<p>Please note that the following sample uses the original config API. For information about the new config API have a look to the project&#39;s README above.</p>
-<pre class="line-numbers"><code class="language-TypeScript">&#64;Component({ ... })
-export class AppComponent {
-
-  constructor(private oauthService: OAuthService) {
-
-        // Login-Url
-        this.oauthService.loginUrl = &quot;https://steyer-identity-server.azurewebsites.net/identity/connect/authorize&quot;; //Id-Provider?
-
-        // URL of the SPA to redirect the user to after login
-        this.oauthService.redirectUri = window.location.origin + &quot;/index.html&quot;;
-
-        // The SPA&#39;s id. Register SPA with this id at the auth-server
-        this.oauthService.clientId = &quot;spa-demo&quot;;
-
-        // set the scope for the permissions the client should request
-        this.oauthService.scope = &quot;openid profile email voucher&quot;;
-
-        // Use setStorage to use sessionStorage or another implementation of the TS-type Storage
-        // instead of localStorage
-        this.oauthService.setStorage(sessionStorage);
-
-        // To also enable single-sign-out set the url for your auth-server&#39;s logout-endpoint here
-        this.oauthService.logoutUrl = &quot;https://steyer-identity-server.azurewebsites.net/identity/connect/endsession&quot;;
-
-        // This method just tries to parse the token(s) within the url when
-        // the auth-server redirects the user back to the web-app
-        // It doesn&#39;t send the user the the login page
-        this.oauthService.tryLogin();
-
-
-  }
-
-}</code></pre>
+<h1 id="server-side-rendering">Server Side Rendering</h1>
+<p>There is a great blog post that shows how this library can be used together with server side rendering:</p>
+<pre class="line-numbers"><code class="language-none">https://medium.com/lankapura/angular-server-side-rendering-for-authenticated-users-a021627fd9d3</code></pre><p>The sample for this can be found here:</p>
+<pre class="line-numbers"><code class="language-none">https://github.com/lankaapura/Angular-AspNetCore-Idsvr</code></pre>
                    </div><div class="search-results">
     <div class="has-results">
         <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>

@@ -29,6 +29,13 @@ https://manfredsteyer.github.io/angular-oauth2-oidc/angular-oauth2-oidc/docs/
 
 Successfully tested with Angular 4.3+, Angular 5 and its Router,PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we've used IdentityServer (.NET/ .NET Core) and Redhat's Keycloak (Java).
 
+## Release Cycle
+
+- One major release for each Angular version
+    - Will contain new features
+    - Will contain bug fixes and PRs
+- Critical Bugfixes on a regular basis
+
 ## New Features in Version 3.1
 
 See [Release Notes](https://github.com/manfredsteyer/angular-oauth2-oidc/releases/tag/3.1)

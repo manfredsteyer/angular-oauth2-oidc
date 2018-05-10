@@ -22,5 +22,6 @@ export const authConfig: AuthConfig = {
 
   showDebugInformation: true,
 
-  sessionChecksEnabled: true
+  sessionChecksEnabled: true,
+
 }

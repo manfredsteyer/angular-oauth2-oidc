@@ -98,6 +98,9 @@
                                     <a href="../additional-documentation/session-checks.html" >Session Checks</a>
                                 </li>
                                 <li class="link ">
+                                    <a href="../additional-documentation/server-side-rendering.html" >Server Side Rendering</a>
+                                </li>
+                                <li class="link ">
                                     <a href="../additional-documentation/configure-library-for-implicit-flow-without-discovery-document.html" >Configure Library for Implicit Flow without discovery document</a>
                                 </li>
                                 <li class="link ">
@@ -376,6 +379,9 @@
                                            <a href="../additional-documentation/session-checks.html" >Session Checks</a>
                                        </li>
                                        <li class="link ">
+                                           <a href="../additional-documentation/server-side-rendering.html" >Server Side Rendering</a>
+                                       </li>
+                                       <li class="link ">
                                            <a href="../additional-documentation/configure-library-for-implicit-flow-without-discovery-document.html" >Configure Library for Implicit Flow without discovery document</a>
                                        </li>
                                        <li class="link ">
@@ -607,10 +613,10 @@
 import { OAuthService, OAuthStorage } from &#39;angular-oauth2-oidc&#39;;
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpErrorResponse } from &#39;&#64;angular/common/http&#39;;
 import {Observable} from &#39;rxjs/Observable&#39;;
-import { map, catchError } from &#39;rxjs/operators&#39;;
-import { of } from &#39;rxjs/observable/of&#39;;
 import { OAuthResourceServerErrorHandler } from &quot;./resource-server-error-handler&quot;;
 import { OAuthModuleConfig } from &quot;../oauth-module.config&quot;;
+
+import &#39;rxjs/add/operator/catch&#39;;
 
 &#64;Injectable()
 export class DefaultOAuthInterceptor implements HttpInterceptor {
@@ -649,9 +655,7 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
             req = req.clone({ headers });
         }
 
-        return next.handle(req).pipe(
-            catchError(err =&gt; this.errorHandler.handleError(err))
-        );
+        return next.handle(req).catch(err =&gt; this.errorHandler.handleError(err));
 
     }
 

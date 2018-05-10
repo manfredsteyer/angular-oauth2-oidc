@@ -98,6 +98,9 @@
                                     <a href="../additional-documentation/session-checks.html" >Session Checks</a>
                                 </li>
                                 <li class="link ">
+                                    <a href="../additional-documentation/server-side-rendering.html" >Server Side Rendering</a>
+                                </li>
+                                <li class="link ">
                                     <a href="../additional-documentation/configure-library-for-implicit-flow-without-discovery-document.html" >Configure Library for Implicit Flow without discovery document</a>
                                 </li>
                                 <li class="link ">
@@ -376,6 +379,9 @@
                                            <a href="../additional-documentation/session-checks.html" >Session Checks</a>
                                        </li>
                                        <li class="link ">
+                                           <a href="../additional-documentation/server-side-rendering.html" >Server Side Rendering</a>
+                                       </li>
+                                       <li class="link ">
                                            <a href="../additional-documentation/configure-library-for-implicit-flow-without-discovery-document.html" >Configure Library for Implicit Flow without discovery document</a>
                                        </li>
                                        <li class="link ">
@@ -639,7 +645,7 @@
                             </tr>
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/interceptors/default-oauth.interceptor.ts:11</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/interceptors/default-oauth.interceptor.ts:13</a></div>
                                         </td>
                                     </tr>
             
@@ -716,7 +722,7 @@
             
                                     <tr>
                                         <td class="col-md-4">
-                                            <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/interceptors/default-oauth.interceptor.ts:25</a></div>
+                                            <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/interceptors/default-oauth.interceptor.ts:27</a></div>
                                         </td>
                                     </tr>
             
@@ -777,13 +783,15 @@
 
     <div class="tab-pane fade tab-source-code" id="source">
         <pre class="line-numbers"><code class="language-typescript">import { Injectable, Inject, Optional } from &#x27;@angular/core&#x27;;
-import { OAuthService, OAuthStorage } from &#x27;angular-oauth2-oidc&#x27;;
+import { OAuthService } from &#x27;../oauth-service&#x27;;
+import { OAuthStorage } from &#x27;../types&#x27;;
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpErrorResponse } from &#x27;@angular/common/http&#x27;;
 import {Observable} from &#x27;rxjs/Observable&#x27;;
-import { map, catchError } from &#x27;rxjs/operators&#x27;;
-import { of } from &#x27;rxjs/observable/of&#x27;;
+import { catchError } from &#x27;rxjs/operators&#x27;;
 import { OAuthResourceServerErrorHandler } from &quot;./resource-server-error-handler&quot;;
 import { OAuthModuleConfig } from &quot;../oauth-module.config&quot;;
+
+import &#x27;rxjs/add/operator/catch&#x27;;
 
 @Injectable()
 export class DefaultOAuthInterceptor implements HttpInterceptor {
@@ -822,9 +830,7 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
             req &#x3D; req.clone({ headers });
         }
 
-        return next.handle(req).pipe(
-            catchError(err &#x3D;&gt; this.errorHandler.handleError(err))
-        );
+        return next.handle(req).catch(err &#x3D;&gt; this.errorHandler.handleError(err));
 
     }
 

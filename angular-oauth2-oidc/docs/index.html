@@ -98,6 +98,9 @@
                                     <a href="./additional-documentation/session-checks.html" >Session Checks</a>
                                 </li>
                                 <li class="link ">
+                                    <a href="./additional-documentation/server-side-rendering.html" >Server Side Rendering</a>
+                                </li>
+                                <li class="link ">
                                     <a href="./additional-documentation/configure-library-for-implicit-flow-without-discovery-document.html" >Configure Library for Implicit Flow without discovery document</a>
                                 </li>
                                 <li class="link ">
@@ -376,6 +379,9 @@
                                            <a href="./additional-documentation/session-checks.html" >Session Checks</a>
                                        </li>
                                        <li class="link ">
+                                           <a href="./additional-documentation/server-side-rendering.html" >Server Side Rendering</a>
+                                       </li>
+                                       <li class="link ">
                                            <a href="./additional-documentation/configure-library-for-implicit-flow-without-discovery-document.html" >Configure Library for Implicit Flow without discovery document</a>
                                        </li>
                                        <li class="link ">
@@ -578,10 +584,10 @@
 <p><img src="https://raw.githubusercontent.com/manfredsteyer/angular-oauth2-oidc/master/oidc.png" alt="OIDC Certified Logo" class="img-responsive"</p>
 <h2 id="credits">Credits</h2>
 <ul>
-<li><a href="https://github.com/jvandemo/generator-angular2-library">generator-angular2-library</a> for scaffolding a angular library</li>
+<li><a href="https://github.com/jvandemo/generator-angular2-library">generator-angular2-library</a> for scaffolding an Angular library</li>
 <li><a href="https://kjur.github.io/jsrsasign/">jsrasign</a> for validating token signature and for hashing</li>
-<li><a href="https://github.com/identityserver">Identity Server</a> (used for Testing with an .NET/.NET Core Backend)</li>
-<li><a href="http://www.keycloak.org/">Keycloak (Redhad)</a> for Testing with Java</li>
+<li><a href="https://github.com/identityserver">Identity Server</a> (used for testing with an .NET/.NET Core Backend)</li>
+<li><a href="http://www.keycloak.org/">Keycloak (Redhat)</a> for testing with Java</li>
 </ul>
 <h2 id="resources">Resources</h2>
 <ul>
@@ -592,8 +598,16 @@
 <a href="https://manfredsteyer.github.io/angular-oauth2-oidc/angular-oauth2-oidc/docs/">https://manfredsteyer.github.io/angular-oauth2-oidc/angular-oauth2-oidc/docs/</a></p>
 </li>
 </ul>
+<h2 id="tutorials">Tutorials</h2>
+<ul>
+<li><a href="https://developer.okta.com/blog/2017/04/17/angular-authentication-with-oidc">Angular Authentication with OpenID Connect and Okta in 20 Minutes</a></li>
+<li><a href="https://developer.okta.com/blog/2017/06/13/add-authentication-angular-pwa">Add Authentication to Your Angular PWA</a></li>
+<li><a href="https://developer.okta.com/blog/2017/08/22/build-an-ionic-app-with-user-authentication">Build an Ionic App with User Authentication</a></li>
+</ul>
 <h2 id="tested-environment">Tested Environment</h2>
 <p>Successfully tested with Angular 4.3+, Angular 5 and its Router,PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we&#39;ve used IdentityServer (.NET/ .NET Core) and Redhat&#39;s Keycloak (Java).</p>
+<h2 id="new-features-in-version-3-1">New Features in Version 3.1</h2>
+<p>See <a href="https://github.com/manfredsteyer/angular-oauth2-oidc/releases/tag/3.1">Release Notes</a></p>
 <h2 id="new-features-in-version-3-0">New Features in Version 3.0</h2>
 <p>See <a href="https://github.com/manfredsteyer/angular-oauth2-oidc/releases/tag/3.0.1">Release Notes</a></p>
 <h2 id="new-features-in-version-2-1">New Features in Version 2.1</h2>
@@ -613,7 +627,7 @@
 <li>Token Refresh for Implicit Flow by implementing &quot;silent refresh&quot;</li>
 <li>Validating the signature of the received id_token</li>
 <li>Providing Events via the observable <code>events</code>.</li>
-<li>The event <code>token_expires</code> can be used togehter with a silent refresh to automatically refresh a token when/ before it expires (see also property <code>timeoutFactor</code>).</li>
+<li>The event <code>token_expires</code> can be used together with a silent refresh to automatically refresh a token when/ before it expires (see also property <code>timeoutFactor</code>).</li>
 </ul>
 <h2 id="additional-features">Additional Features</h2>
 <ul>
@@ -735,7 +749,7 @@ export class HomeComponent {
     }
 
     public get name() {
-        let claims = this.oAuthService.getIdentityClaims();
+        let claims = this.oauthService.getIdentityClaims();
         if (!claims) return null;
         return claims.given_name;
     }
@@ -757,17 +771,24 @@ export class HomeComponent {
 
 &lt;div&gt;
     Username/Passwort zum Testen: max/geheim
-&lt;/div&gt;</code></pre><h3 id="skipping-the-login-form">Skipping the login form</h3>
+&lt;/div&gt;</code></pre><h3 id="skipping-the-login-form">Skipping the Login Form</h3>
 <p>If you don&#39;t want to display a login form that tells the user that they are redirected to the identity server, you can use the convenince function <code>this.oauthService.loadDiscoveryDocumentAndLogin();</code> instead of <code>this.oauthService.loadDiscoveryDocumentAndTryLogin();</code> when setting up the library. </p>
 <p>This directly redirects the user to the identity server if there are no valid tokens. </p>
 <h3 id="calling-a-web-api-with-an-access-token">Calling a Web API with an Access Token</h3>
 <p>Pass this Header to the used method of the <code>Http</code>-Service within an Instance of the class <code>Headers</code>:</p>
 <pre class="line-numbers"><code class="language-TypeScript">var headers = new Headers({
     &quot;Authorization&quot;: &quot;Bearer &quot; + this.oauthService.getAccessToken()
-});</code></pre><p>If you are using the new HttpClient, use the class HttpHeaders instead:</p>
+});</code></pre><p>If you are using the new <code>HttpClient</code>, use the class <code>HttpHeaders</code> instead:</p>
 <pre class="line-numbers"><code class="language-TypeScript">var headers = new HttpHeaders({
     &quot;Authorization&quot;: &quot;Bearer &quot; + this.oauthService.getAccessToken()
-});</code></pre><h2 id="some-infos-about-routing">Some infos about Routing</h2>
+});</code></pre><p>Since 3.1 you can also automate this task by switching <code>sendAccessToken</code> on and by setting <code>allowedUrls</code> to an array with prefixes for the respective urls. Use lower case for the prefixes.</p>
+<pre class="line-numbers"><code class="language-TypeScript">OAuthModule.forRoot({
+    resourceServer: {
+        allowedUrls: [&#39;http://www.angular.at/api&#39;],
+        sendAccessToken: true
+    }
+})</code></pre><h2 id="routing">Routing</h2>
+<p>If you use the <code>PathLocationStragegy</code> (which is on by default) and have a general catch-all-route (<code>path: &#39;**&#39;</code>) you should be fine. Otherwise look up the section <code>Routing with the HashStrategy</code> in the <a href="https://manfredsteyer.github.io/angular-oauth2-oidc/angular-oauth2-oidc/docs/">documation</a>.</p>
 <h2 id="more-documentation">More Documentation</h2>
 <p>See the <a href="https://manfredsteyer.github.io/angular-oauth2-oidc/angular-oauth2-oidc/docs/">documentation</a> for more information about this library.</p>
 

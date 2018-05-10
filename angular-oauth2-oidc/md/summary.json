@@ -40,6 +40,10 @@
         "file": "session-checks.md"
     },
     {
+        "title": "Server Side Rendering",
+        "file": "server-side-rendering.md"
+    },
+    {
         "title": "Configure Library for Implicit Flow without discovery document",
         "file": "implicit-flow-config-no-discovery.md"
     },

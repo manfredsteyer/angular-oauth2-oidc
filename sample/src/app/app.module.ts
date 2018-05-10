@@ -22,12 +22,12 @@ import {SharedModule} from './shared/shared.module';
         AppRouterModule,
         HttpClientModule,
         OAuthModule.forRoot(
-        //     {
-        //     resourceServer: {
-        //         allowedUrls: ['http://www.angular.at/api'],
-        //         sendAccessToken: true
-        //     }
-        // }
+            {
+            resourceServer: {
+                allowedUrls: ['http://www.angular.at/api'],
+                sendAccessToken: true
+            }
+        }
     )
     ],
     declarations: [
