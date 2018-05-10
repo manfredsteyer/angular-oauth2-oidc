@@ -1149,7 +1149,7 @@ export class OAuthService
         }
 
         if (this.requestAccessToken) {
-            this.storeAccessTokenResponse(accessToken, null, parts['expires_in']);
+            this.storeAccessTokenResponse(accessToken, null, parts['expires_in'] | this.fallbackAccessTokenExpirationTimeInSec);
         }
 
         if (!this.oidc) {
@@ -1175,9 +1175,10 @@ export class OAuthService
                         this.storeIdToken(result);
                         this.storeSessionState(sessionState);
                         this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
+                        if (this.clearHashAfterLogin) location.hash = '';
                         this.callOnTokenReceivedIfExists(options);
                         this.inImplicitFlow = false;
-                        if (this.clearHashAfterLogin) location.hash = '';
+                        
                     })
                 .catch(reason => {
                     this.eventsSubject.next(new OAuthErrorEvent('token_validation_error', reason));

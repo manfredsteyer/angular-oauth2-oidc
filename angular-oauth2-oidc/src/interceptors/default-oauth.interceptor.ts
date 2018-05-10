@@ -3,10 +3,11 @@ import { OAuthService } from '../oauth-service';
 import { OAuthStorage } from '../types';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
-import { map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
+import { catchError } from 'rxjs/operators';
 import { OAuthResourceServerErrorHandler } from "./resource-server-error-handler";
 import { OAuthModuleConfig } from "../oauth-module.config";
+
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class DefaultOAuthInterceptor implements HttpInterceptor {
@@ -45,9 +46,7 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
             req = req.clone({ headers });
         }
 
-        return next.handle(req).pipe(
-            catchError(err => this.errorHandler.handleError(err))
-        );
+        return next.handle(req).catch(err => this.errorHandler.handleError(err));
 
     }
 

@@ -200,5 +200,12 @@ export class AuthConfig {
      * Normally, the discovey document's url starts with the url of the issuer.
      */
     public skipIssuerCheck? = false;
+
+    /**
+     * According to rfc6749 it is recommended (but not required) that the auth 
+     * server exposes the access_token's life time in seconds. 
+     * This is a fallback value for the case this value is not exposed.
+     */
+    public fallbackAccessTokenExpirationTimeInSec?: number;
     
 }
