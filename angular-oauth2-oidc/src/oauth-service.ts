@@ -360,7 +360,9 @@ export class OAuthService
                     }
 
                     this.loginUrl = doc.authorization_endpoint;
-                    this.logoutUrl = doc.end_session_endpoint;
+                    if (doc.end_session_endpoint) {
+                        this.logoutUrl = doc.end_session_endpoint;
+                    }
                     this.grantTypesSupported = doc.grant_types_supported;
                     this.issuer = doc.issuer;
                     this.tokenEndpoint = doc.token_endpoint;
