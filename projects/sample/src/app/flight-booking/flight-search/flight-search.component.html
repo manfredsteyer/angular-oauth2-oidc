@@ -1,0 +1,124 @@
+<h1>Flight Search!</h1>
+
+<!--
+round-trip
+-->
+
+<form #f="ngForm" novalidate round-trip>
+
+    <div *ngIf="f?.control?.hasError('round-trip')">
+        Rund-Flüge sind nicht möglich.
+    </div>
+
+
+    <div class="form-group">
+        <label>From</label>
+        <input class="form-control"
+               [(ngModel)]="from"
+               name="from"
+               required
+               minlength="3"
+               maxlength="30"
+               city="Hamburg,Wien,Graz,Frankfurt,Luxemburg,Luxembourg"
+               async-city
+               pattern="[a-zA-ZöäüßÖÄÜ]+">
+
+        <div *ngIf="!f?.controls?.from?.valid && !f?.controls?.from?.pending ">
+            Validierungsfehler. Bitte prüfen Sie Ihre Eingaben.
+            <pre>
+            {{ f.controls.from?.errors | json }}
+            </pre>
+        </div>
+
+        <div *ngIf="f?.controls?.from?.hasError('async-city')">
+            Async-City: Die Stadt wird gerade wegen eines Unwetters nicht angeflogen.
+        </div>
+
+
+
+        <div *ngIf="f?.controls?.from?.pending">
+            <marquee>
+                Validierung wird ausgeführt. Bitte etwas warten!
+            </marquee>
+        </div>
+
+
+        <div *ngIf="f?.controls?.from?.hasError('required')">
+            Dieses Feld ist ein Pflichtfeld.
+        </div>
+
+        <div *ngIf="f?.controls?.from?.hasError('city')">
+            Diese Stadt wird nicht angeflogen.
+        </div>
+
+        <div *ngIf="f?.controls?.from?.hasError('minlength')">
+            Bitte erfassen Sie min. 3 Zeichen.
+        </div>
+        <div *ngIf="f?.controls?.from?.hasError('pattern')">
+            Bitte nur Buchstaben erfassen.
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+        <label>To</label>
+        <input class="form-control" [(ngModel)]="to" name="to">
+    </div>
+    <div class="form-group">
+        <button
+                class="btn btn-primary"
+                name="btnSearch"
+                [disabled]="!f.valid"
+                (click)="search()">Search</button>
+    </div>
+
+</form>
+<!--
+[ngClass]="{ 'active': f == selectedFlight }"
+-->
+<!--
+<table class="table table-striped">
+
+    <tr *ngFor="let f of flights" [ngStyle]="{ 'background-color': (f == selectedFlight) ? 'orange': '' } ">
+        <td>{{f.id}}</td>
+        <td>{{f.from | city:'short' }}</td>
+        <td>{{f.to | city:'long' }}</td>
+        <td>{{f.date | date:'dd.MM.yyyy HH:mm'}}</td>
+        <td><a (click)="select(f)">Auswählen</a></td>
+    </tr>
+</table>
+-->
+
+<div class="row">
+    <div *ngFor="let f of flights" class="col-sm-6 col-md-4 col-lg-3 ">
+        <flight-card [item]="f"
+                     [(selectedItem)]="selectedFlight">
+
+        </flight-card>
+
+        <!--
+        [selectedItem]="selectedFlight"
+                     (selectedItemChange)="selectedFlight = $event"
+        -->
+<!--
+        <alt-flight-card
+                [item]="f"
+                [selected]="f == selectedFlight"
+                (selectedChange)="selectedFlight = f">
+        </alt-flight-card>
+-->
+    </div>
+</div>
+
+<!--
+<flight-list [flights]="flights" [(selectedFlight)]="selectedFlight">
+</flight-list>
+-->
+
+<div class="row" style="margin-top:40px">
+<pre>Warenkorb
+----------------------
+{{selectedFlight | json}}
+</pre>
+</div>

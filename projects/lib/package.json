@@ -1,0 +1,11 @@
+{
+  "name": "lib",
+  "version": "4.0.0-rc.1",
+  "dependencies": {
+    "jsrsasign": "^8.0.12"
+  },
+  "peerDependencies": {
+    "@angular/common": "^6.0.0",
+    "@angular/core": "^6.0.0"
+  }
+}
