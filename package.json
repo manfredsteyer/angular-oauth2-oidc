@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --project sample -o",
-    "build": "ng build --prod --project lib",
+    "build": "ng build --prod --project lib && npm run copy:readme",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -14,8 +14,9 @@
     "docs:build": "compodoc -p projects/lib/tsconfig.lib.json -n angular-oauth2-oidc -d docs --hideGenerator",
     "docs:serve": "npm run docs:build -- -s",
     "docs:watch": "npm run docs:build -- -s -w",
-    "format": "prettier --single-quote --write projects/**/*.ts"
-  },
+    "format": "prettier --single-quote --write projects/**/*.ts",
+    "copy:readme": "cpr README.md dist/lib/README.md --overwrite"
+  }, 
   "private": true,
   "dependencies": {
     "@angular/animations": "6.0.0",

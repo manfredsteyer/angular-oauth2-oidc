@@ -1,5 +1,9 @@
 {
-  "name": "lib",
+  "name": "angular-oauth2-oidc",
+  "license": "MIT",
+  "author": {
+    "name": "Manfred Steyer"
+  },
   "version": "4.0.0",
   "dependencies": {
     "jsrsasign": "^8.0.12"
