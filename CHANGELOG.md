@@ -1,5 +1,9 @@
 # Change Log
 
+## New Features in Version 4.0.0
+
+See [Release Notes](https://github.com/manfredsteyer/angular-oauth2-oidc/releases/tag/4.0.0)
+
 ## New Features in Version 3.1
 
 See [Release Notes](https://github.com/manfredsteyer/angular-oauth2-oidc/releases/tag/3.1)
