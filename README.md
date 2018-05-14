@@ -21,7 +21,9 @@ https://manfredsteyer.github.io/angular-oauth2-oidc/angular-oauth2-oidc/docs/
 
 ## Tested Environment
 
-Successfully tested with Angular 4.3+, Angular 5 and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we've used IdentityServer (.NET/ .NET Core) and Redhat's Keycloak (Java).
+Successfully tested with Angular 6 and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we've used IdentityServer (.NET/ .NET Core) and Redhat's Keycloak (Java).
+
+If you need support for Angular < 6 (4.3 to 5.x) you can download the former version 3.1.4 (npm i angular-oauth2-oidc@^3 --save).
 
 ## Release Cycle
 
@@ -30,15 +32,11 @@ Successfully tested with Angular 4.3+, Angular 5 and its Router, PathLocationStr
     - Will contain bug fixes and PRs
 - Critical Bugfixes on a regular basis
 
-## Issues, Support Requests and Feature Requests
-- Everything that is not an issue is closed for administrative reasons.  This is just to focus on bugs on the "open" tab.
-- However, we can discuss support requests and feature requests even though they are closed.
-
-# Contributions
+## Contributions
 - Feel free to file pull requests
 - The closed issues contain some ideas for PRs and enhancements (see labels)
 
-## Additional Features 
+# Features 
 - Logging in via OAuth2 and OpenId Connect (OIDC) Implicit Flow (where user is redirected to Identity Provider)
 - "Logging in" via Password Flow (where user enters his/her password into the client)
 - Token Refresh for Password Flow by using a Refresh Token
