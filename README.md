@@ -17,7 +17,7 @@ Support for OAuth 2 and OpenId Connect (OIDC) in Angular.
 https://github.com/manfredsteyer/angular-oauth2-oidc
 
 - Source Code Documentation
-https://manfredsteyer.github.io/angular-oauth2-oidc/angular-oauth2-oidc/docs/
+https://manfredsteyer.github.io/angular-oauth2-oidc/docs
 
 ## Tested Environment
 
