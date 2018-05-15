@@ -249,7 +249,7 @@ export class OAuthService extends AuthConfig {
       return;
     }
 
-    if (this.hasValidIdToken) {
+    if (this.hasValidIdToken()) {
       this.clearAccessTokenTimer();
       this.clearIdTokenTimer();
       this.setupExpirationTimers();
@@ -803,7 +803,7 @@ export class OAuthService extends AuthConfig {
   public silentRefresh(params: object = {}, noPrompt = true): Promise<OAuthEvent> {
     const claims: object = this.getIdentityClaims() || {};
 
-    if (this.useIdTokenHintForSilentRefresh && this.hasValidIdToken) {
+    if (this.useIdTokenHintForSilentRefresh && this.hasValidIdToken()) {
       params['id_token_hint'] = this.getIdToken();
     }
 
@@ -1573,7 +1573,9 @@ export class OAuthService extends AuthConfig {
    * Returns the current id_token.
    */
   public getIdToken(): string {
-    return this._storage.getItem('id_token');
+    return this._storage ?
+            this._storage.getItem('id_token') :
+            null;
   }
 
   private padBase64(base64data): string {
