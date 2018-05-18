@@ -246,7 +246,7 @@ If you use the ``PathLocationStrategy`` (which is on by default) and have a gene
 
 ## More Documentation
 
-See the [documentation](https://manfredsteyer.github.io/angular-oauth2-oidc/angular-oauth2-oidc/docs/) for more information about this library.
+See the [documentation](https://manfredsteyer.github.io/angular-oauth2-oidc/docs/) for more information about this library.
 
 ## Tutorials
 
