@@ -1,4 +1,4 @@
-import { Injectable, Inject, Optional } from '@angular/core';
+import { Injectable, Inject, Optional, PLATFORM_ID } from '@angular/core';
 import { OAuthService } from '../oauth-service';
 import { OAuthStorage } from '../types';
 import {
@@ -13,12 +13,14 @@ import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { OAuthResourceServerErrorHandler } from './resource-server-error-handler';
 import { OAuthModuleConfig } from '../oauth-module.config';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable()
 export class DefaultOAuthInterceptor implements HttpInterceptor {
     constructor(
         private authStorage: OAuthStorage,
         private errorHandler: OAuthResourceServerErrorHandler,
+        @Inject(PLATFORM_ID) private platformId: Object,
         @Optional() private moduleConfig: OAuthModuleConfig
     ) { }
 
@@ -33,7 +35,7 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
     ): Observable<HttpEvent<any>> {
         const url = req.url.toLowerCase();
 
-        if (!this.moduleConfig) {
+        if (!isPlatformBrowser(this.platformId) || !this.moduleConfig) {
             return next.handle(req);
         }
         if (!this.moduleConfig.resourceServer) {

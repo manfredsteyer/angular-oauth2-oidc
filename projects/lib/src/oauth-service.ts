@@ -1588,11 +1588,15 @@ export class OAuthService extends AuthConfig {
      * Returns the current access_token.
      */
     public getAccessToken(): string {
-        return this._storage.getItem('access_token');
+        return this._storage
+            ? this._storage.getItem('access_token')
+            : null;
     }
 
     public getRefreshToken(): string {
-        return this._storage.getItem('refresh_token');
+        return this._storage
+            ? this._storage.getItem('refresh_token')
+            : null;
     }
 
     /**
