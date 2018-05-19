@@ -74,9 +74,11 @@ export class AuthConfig {
 
   /**
    * Defines whether additional debug information should
-   * be shown at the console.
+   * be shown at the console. Note that in certain browsers
+   * the verbosity of the console needs to be explicitly set
+   * to include Debug level messages.
    */
-  public showDebugInformation? = false;
+   public showDebugInformation? = false;
 
   /**
    * The redirect uri used when doing silent refresh.
