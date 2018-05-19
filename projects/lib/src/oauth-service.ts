@@ -330,10 +330,15 @@ export class OAuthService extends AuthConfig {
     }
 
     /**
+     * DEPRECATED. Use a provider for OAuthStorage instead:
+     * 
+     * { provide: OAuthStorage, useValue: localStorage }
+     * 
      * Sets a custom storage used to store the received
      * tokens on client side. By default, the browser's
      * sessionStorage is used.
-     *
+     * @ignore
+     * 
      * @param storage
      */
     public setStorage(storage: OAuthStorage): void {
