@@ -845,6 +845,7 @@ export class OAuthService extends AuthConfig {
         const redirectUri = this.silentRefreshRedirectUri || this.redirectUri;
         this.createLoginUrl(null, null, redirectUri, noPrompt, params).then(url => {
             iframe.setAttribute('src', url);
+            
             if (!this.silentRefreshShowIFrame) {
                 iframe.style['display'] = 'none';
             }
@@ -1703,7 +1704,8 @@ export class OAuthService extends AuthConfig {
         if (noRedirectToLogoutUrl) {
             return;
         }
-        if (!id_token) {
+
+        if (!id_token && !this.postLogoutRedirectUri) {
             return;
         }
 
@@ -1721,13 +1723,22 @@ export class OAuthService extends AuthConfig {
                 .replace(/\{\{id_token\}\}/, id_token)
                 .replace(/\{\{client_id\}\}/, this.clientId);
         } else {
+
+            let params = new HttpParams();
+
+            if (id_token) {
+                params = params.set('id_token_hint', id_token);
+            }
+
+            const postLogoutUrl = this.postLogoutRedirectUri || this.redirectUri;
+            if (postLogoutUrl) {
+                params = params.set('post_logout_redirect_uri', postLogoutUrl);
+            }
+
             logoutUrl =
                 this.logoutUrl +
                 (this.logoutUrl.indexOf('?') > -1 ? '&' : '?') +
-                'id_token_hint=' +
-                encodeURIComponent(id_token) +
-                '&post_logout_redirect_uri=' +
-                encodeURIComponent(this.postLogoutRedirectUri || this.redirectUri);
+                params.toString()
         }
         location.href = logoutUrl;
     }
