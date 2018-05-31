@@ -16,7 +16,7 @@
     "docs:watch": "npm run docs:build -- -s -w",
     "format": "prettier --single-quote --write projects/**/*.ts",
     "copy:readme": "cpr README.md dist/lib/README.md --overwrite"
-  }, 
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "6.0.0",
@@ -49,6 +49,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.0.51",
     "codelyzer": "~4.0.1",
+    "cpr": "^3.0.1",
     "jasmine-core": "~2.8.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~1.7.1",
