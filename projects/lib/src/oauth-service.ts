@@ -557,7 +557,7 @@ export class OAuthService extends AuthConfig {
         }
         if (!this.validateUrlForHttps(this.userinfoEndpoint)) {
             throw new Error(
-                'userinfoEndpoint must use Http. Also check property requireHttps.'
+                'userinfoEndpoint must use Https. Also check property requireHttps.'
             );
         }
 
@@ -618,7 +618,7 @@ export class OAuthService extends AuthConfig {
     ): Promise<object> {
         if (!this.validateUrlForHttps(this.tokenEndpoint)) {
             throw new Error(
-                'tokenEndpoint must use Http. Also check property requireHttps.'
+                'tokenEndpoint must use Https. Also check property requireHttps.'
             );
         }
 
@@ -695,7 +695,7 @@ export class OAuthService extends AuthConfig {
     public refreshToken(): Promise<object> {
         if (!this.validateUrlForHttps(this.tokenEndpoint)) {
             throw new Error(
-                'tokenEndpoint must use Http. Also check property requireHttps.'
+                'tokenEndpoint must use Https. Also check property requireHttps.'
             );
         }
 
@@ -1157,7 +1157,7 @@ export class OAuthService extends AuthConfig {
 
         if (!this.validateUrlForHttps(this.loginUrl)) {
             throw new Error(
-                'loginUrl must use Http. Also check property requireHttps.'
+                'loginUrl must use Https. Also check property requireHttps.'
             );
         }
 
@@ -1713,7 +1713,7 @@ export class OAuthService extends AuthConfig {
 
         if (!this.validateUrlForHttps(this.logoutUrl)) {
             throw new Error(
-                'logoutUrl must use Http. Also check property requireHttps.'
+                'logoutUrl must use Https. Also check property requireHttps.'
             );
         }
 
