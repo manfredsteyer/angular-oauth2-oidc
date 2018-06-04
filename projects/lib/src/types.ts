@@ -104,6 +104,7 @@ export interface ParsedIdToken {
  * http://openid.net/specs/openid-connect-core-1_0.html#TokenEndpoint
  */
 export interface TokenResponse {
+  id_token?: string;
   access_token: string;
   token_type: string;
   expires_in: number;

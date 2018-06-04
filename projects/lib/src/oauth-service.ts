@@ -632,73 +632,98 @@ export class OAuthService extends AuthConfig {
         password: string,
         headers: HttpHeaders = new HttpHeaders()
     ): Promise<object> {
+        const parameters = {
+            username: userName,
+            password: password,
+        };
+        return this.fetchTokenUsingGrant('password', parameters, headers);
+    }
+
+    /**
+     * Uses a custom grant type to retrieve tokens.
+     * @param grantType Grant type.
+     * @param parameters Parameters to pass.
+     * @param headers Optional additional HTTP headers.
+     */
+    public fetchTokenUsingGrant(grantType: string, parameters: object, headers: HttpHeaders = new HttpHeaders()): Promise<TokenResponse> {
         if (!this.validateUrlForHttps(this.tokenEndpoint)) {
             throw new Error(
                 'tokenEndpoint must use http, or config value for property requireHttps must allow http'
             );
         }
 
-        return new Promise((resolve, reject) => {
-            /**
-             * A `HttpParameterCodec` that uses `encodeURIComponent` and `decodeURIComponent` to
-             * serialize and parse URL parameter keys and values.
-             *
-             * @stable
-             */
-            let params = new HttpParams({ encoder: new WebHttpUrlEncodingCodec() })
-                .set('grant_type', 'password')
-                .set('scope', this.scope)
-                .set('username', userName)
-                .set('password', password);
+        /**
+         * A `HttpParameterCodec` that uses `encodeURIComponent` and `decodeURIComponent` to
+         * serialize and parse URL parameter keys and values.
+         *
+         * @stable
+         */
+        let params = new HttpParams({ encoder: new WebHttpUrlEncodingCodec() })
+            .set('grant_type', grantType)
+            .set('scope', this.scope);
 
-            if (this.useHttpBasicAuthForPasswordFlow) {
-                const header = btoa(`${this.clientId}:${this.dummyClientSecret}`);
-                headers = headers.set(
-                    'Authorization',
-                    'Basic ' + header);
-            }
-
-            if (!this.useHttpBasicAuthForPasswordFlow) {
-                params = params.set('client_id', this.clientId);
-            }
-
-            if (!this.useHttpBasicAuthForPasswordFlow && this.dummyClientSecret) {
-                params = params.set('client_secret', this.dummyClientSecret);
-            }
-
-            if (this.customQueryParams) {
-                for (const key of Object.getOwnPropertyNames(this.customQueryParams)) {
-                    params = params.set(key, this.customQueryParams[key]);
-                }
-            }
-
+        if (this.useHttpBasicAuthForPasswordFlow) {
+            const header = btoa(`${this.clientId}:${this.dummyClientSecret}`);
             headers = headers.set(
-                'Content-Type',
-                'application/x-www-form-urlencoded'
-            );
+                'Authorization',
+                'Basic ' + header);
+        }
 
-            this.http
-                .post<TokenResponse>(this.tokenEndpoint, params, { headers })
-                .subscribe(
-                    tokenResponse => {
-                        this.debug('tokenResponse', tokenResponse);
-                        this.storeAccessTokenResponse(
-                            tokenResponse.access_token,
-                            tokenResponse.refresh_token,
-                            tokenResponse.expires_in,
-                            tokenResponse.scope
-                        );
+        if (!this.useHttpBasicAuthForPasswordFlow) {
+            params = params.set('client_id', this.clientId);
+        }
 
-                        this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
-                        resolve(tokenResponse);
-                    },
-                    err => {
-                        this.logger.error('Error performing password flow', err);
-                        this.eventsSubject.next(new OAuthErrorEvent('token_error', err));
-                        reject(err);
-                    }
+        if (!this.useHttpBasicAuthForPasswordFlow && this.dummyClientSecret) {
+            params = params.set('client_secret', this.dummyClientSecret);
+        }
+
+        if (this.customQueryParams) {
+            for (const key of Object.getOwnPropertyNames(this.customQueryParams)) {
+                params = params.set(key, this.customQueryParams[key]);
+            }
+        }
+
+        // set explicit parameters last, to allow overwriting
+        for (const key of Object.keys(parameters)) {
+            params = params.set(key, parameters[key]);
+        }
+
+        headers = headers.set(
+            'Content-Type',
+            'application/x-www-form-urlencoded'
+        );
+
+        return this.http
+            .post<TokenResponse>(this.tokenEndpoint, params, { headers })
+            .toPromise()
+            .then(tokenResponse => {
+                this.debug('tokenResponse', tokenResponse);
+                this.storeAccessTokenResponse(
+                    tokenResponse.access_token,
+                    tokenResponse.refresh_token,
+                    tokenResponse.expires_in,
+                    tokenResponse.scope
                 );
-        });
+
+                if (tokenResponse.id_token) {
+                    return this.processIdToken(tokenResponse.id_token, tokenResponse.access_token)
+                        .then(idTokenResult => {
+                            this.storeIdToken(idTokenResult);
+                            return tokenResponse;
+                        });
+                }
+
+                return tokenResponse;
+            })
+            .then(tokenResponse => {
+                this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
+                return tokenResponse;
+            })
+            .catch(err => {
+                this.logger.error(`Error performing ${grantType} flow`, err);
+                this.eventsSubject.next(new OAuthErrorEvent('token_error', err));
+                throw err;
+            });
     }
 
     /**
