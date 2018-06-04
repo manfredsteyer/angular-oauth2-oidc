@@ -1335,6 +1335,7 @@ export class OAuthService extends AuthConfig {
             if (this.clearHashAfterLogin && !options.preventClearHashAfterLogin) {
                 location.hash = '';
             }
+            this.callOnTokenReceivedIfExists(options);
             return Promise.resolve();
         }
 
