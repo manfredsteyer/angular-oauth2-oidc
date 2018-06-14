@@ -331,14 +331,14 @@ export class OAuthService extends AuthConfig {
 
     /**
      * DEPRECATED. Use a provider for OAuthStorage instead:
-     * 
+     *
      * { provide: OAuthStorage, useValue: localStorage }
-     * 
+     *
      * Sets a custom storage used to store the received
      * tokens on client side. By default, the browser's
      * sessionStorage is used.
      * @ignore
-     * 
+     *
      * @param storage
      */
     public setStorage(storage: OAuthStorage): void {
@@ -845,7 +845,7 @@ export class OAuthService extends AuthConfig {
         const redirectUri = this.silentRefreshRedirectUri || this.redirectUri;
         this.createLoginUrl(null, null, redirectUri, noPrompt, params).then(url => {
             iframe.setAttribute('src', url);
-            
+
             if (!this.silentRefreshShowIFrame) {
                 iframe.style['display'] = 'none';
             }
@@ -1738,9 +1738,9 @@ export class OAuthService extends AuthConfig {
             logoutUrl =
                 this.logoutUrl +
                 (this.logoutUrl.indexOf('?') > -1 ? '&' : '?') +
-                params.toString()
-        }
-        location.href = logoutUrl;
+                params.toString();
+      }
+      this.config.openLogoutUri(logoutUrl);
     }
 
     /**
