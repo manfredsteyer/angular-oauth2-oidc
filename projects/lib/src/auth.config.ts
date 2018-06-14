@@ -231,4 +231,12 @@ export class AuthConfig {
   public openUri?: ((uri: string) => void) = uri => {
     location.href = uri;
   }
+  /**
+   * This property allows you to override the method that is used to open the logout url,
+   * allowing a way for implementations to specify their own method of routing to new
+   * urls.
+   */
+  public openLogoutUri?: ((uri: string) => void) = uri => {
+    location.href = uri;
+  }
 }
