@@ -7,7 +7,9 @@
   "version": "4.0.2",
   "repository": "manfredsteyer/angular-oauth2-oidc",
   "dependencies": {
-    "jsrsasign": "^8.0.12"
+    "jsonwebtoken": "^8.3.0",
+    "jwk-to-pem": "^2.0.0",
+    "@types/jsonwebtoken": "^7.2.7"
   },
   "peerDependencies": {
     "@angular/common": "^6.0.0",

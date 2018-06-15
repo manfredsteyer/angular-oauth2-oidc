@@ -16,7 +16,7 @@
     "docs:watch": "npm run docs:build -- -s -w",
     "format": "prettier --single-quote --write projects/**/*.ts",
     "copy:readme": "cpr README.md dist/lib/README.md --overwrite"
-  }, 
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "6.0.0",
@@ -29,11 +29,13 @@
     "@angular/platform-browser": "6.0.0",
     "@angular/platform-browser-dynamic": "6.0.0",
     "@angular/router": "6.0.0",
+    "@types/jsonwebtoken": "^7.2.7",
     "@webcomponents/custom-elements": "^1.1.0",
     "angular-oauth2-oidc": "^2.1.8",
     "bootstrap": "^3.3.7",
     "core-js": "^2.5.1",
-    "jsrsasign": "^8.0.12",
+    "jsonwebtoken": "^8.3.0",
+    "jwk-to-pem": "^2.0.0",
     "rxjs": "6.1.0",
     "rxjs-compat": "^6.0.0-rc.0",
     "zone.js": "^0.8.26"

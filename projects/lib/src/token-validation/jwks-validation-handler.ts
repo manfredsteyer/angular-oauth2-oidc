@@ -2,11 +2,9 @@ import {
   AbstractValidationHandler,
   ValidationParams
 } from './validation-handler';
+import * as jwkToPem from 'jwk-to-pem';
+import * as jwt from 'jsonwebtoken';
 
-// declare var require: any;
-// let rs = require('jsrsasign');
-
-import * as rs from 'jsrsasign';
 
 /**
  * Validates the signature of an id_token against one
@@ -109,22 +107,18 @@ export class JwksValidationHandler extends AbstractValidationHandler {
       return Promise.reject(error);
     }
 
-    let keyObj = rs.KEYUTIL.getKey(key);
-    let validationOptions = {
-      alg: this.allowedAlgorithms,
-      gracePeriod: this.gracePeriodInSec
-    };
-    let isValid = rs.KJUR.jws.JWS.verifyJWT(
-      params.idToken,
-      keyObj,
-      validationOptions
-    );
-
-    if (isValid) {
-      return Promise.resolve();
-    } else {
+    const pem = jwkToPem(key)
+    try{
+      jwt.verify(
+        params.idToken,
+        pem,
+        {algorithms: this.allowedAlgorithms, clockTolerance: this.gracePeriodInSec}
+      )
+    }
+    catch(err) {
       return Promise.reject('Signature not valid');
     }
+    return Promise.resolve();
   }
 
   private alg2kty(alg: string) {

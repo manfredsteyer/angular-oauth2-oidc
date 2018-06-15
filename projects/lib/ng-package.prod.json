@@ -5,6 +5,8 @@
     "entryFile": "src/public_api.ts"
   },
   "whitelistedNonPeerDependencies": [
-      "jsrsasign"
+    "jsonwebtoken",
+    "jwk-to-pem",
+    "@types/jsonwebtoken"
   ]
 }
