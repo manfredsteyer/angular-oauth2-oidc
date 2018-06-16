@@ -117,18 +117,6 @@ export class JwksValidationHandler extends AbstractValidationHandler {
     }else {
       return Promise.reject('Signature not valid');
     }
-
-    // const pem = jwkToPemAsAny(key);
-    // try {
-    //   jwt.verify(
-    //     params.idToken,
-    //     pem,
-    //     {algorithms: this.allowedAlgorithms, clockTolerance: this.gracePeriodInSec}
-    //   );
-    // } catch (err) {
-    //   return Promise.reject('Signature not valid');
-    // }
-    // return Promise.resolve();
   }
 
   private alg2kty(alg: string) {
