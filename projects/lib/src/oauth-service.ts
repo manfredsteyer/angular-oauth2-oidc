@@ -168,12 +168,26 @@ export class OAuthService extends AuthConfig {
         this.restartRefreshTimerIfStillLoggedIn();
     }
 
+    /**
+     * Convenience method that first calls `loadDiscoveryDocument(...)` and
+     * directly chains using the `then(...)` part of the promise to call
+     * the `tryLogin(...)` method.
+     *
+     * @param options LoginOptions to pass through to `tryLogin(...)`
+     */
     public loadDiscoveryDocumentAndTryLogin(options: LoginOptions = null) {
         return this.loadDiscoveryDocument().then(doc => {
             return this.tryLogin(options);
         });
     }
 
+    /**
+     * Convenience method that first calls `loadDiscoveryDocumentAndTryLogin(...)`
+     * and if then chains to `initImplicitFlow()`, but only if there is no valid
+     * IdToken or no valid AccessToken.
+     *
+     * @param options LoginOptions to pass through to `tryLogin(...)`
+     */
     public loadDiscoveryDocumentAndLogin(options: LoginOptions = null) {
         return this.loadDiscoveryDocumentAndTryLogin(options).then(_ => {
             if (!this.hasValidIdToken() || !this.hasValidAccessToken()) {
