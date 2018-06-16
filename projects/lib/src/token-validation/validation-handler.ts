@@ -22,7 +22,7 @@ export abstract class ValidationHandler {
   /**
    * Validates the at_hash in an id_token against the received access_token.
    */
-  public abstract validateAtHash(validationParams: ValidationParams): boolean;
+  public abstract validateAtHash(validationParams: ValidationParams): Promise<boolean>;
 }
 
 /**
@@ -39,10 +39,10 @@ export abstract class AbstractValidationHandler implements ValidationHandler {
   /**
    * Validates the at_hash in an id_token against the received access_token.
    */
-  validateAtHash(params: ValidationParams): boolean {
+  async validateAtHash(params: ValidationParams): Promise<boolean> {
     let hashAlg = this.inferHashAlgorithm(params.idTokenHeader);
 
-    let tokenHash = this.calcHash(params.accessToken, hashAlg); // sha256(accessToken, { asString: true });
+    let tokenHash = await this.calcHash(params.accessToken, hashAlg); // sha256(accessToken, { asString: true });
 
     let leftMostHalf = tokenHash.substr(0, tokenHash.length / 2);
 
@@ -85,5 +85,5 @@ export abstract class AbstractValidationHandler implements ValidationHandler {
    * @param valueToHash
    * @param algorithm
    */
-  protected abstract calcHash(valueToHash: string, algorithm: string): string;
+  protected abstract calcHash(valueToHash: string, algorithm: string): Promise<string>;
 }

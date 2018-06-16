@@ -107,15 +107,14 @@ export class JwksValidationHandler extends AbstractValidationHandler {
       return Promise.reject(error);
     }
 
-    const pem = jwkToPem(key)
-    try{
+    const pem = jwkToPem(key);
+    try {
       jwt.verify(
         params.idToken,
         pem,
         {algorithms: this.allowedAlgorithms, clockTolerance: this.gracePeriodInSec}
-      )
-    }
-    catch(err) {
+      );
+    } catch (err) {
       return Promise.reject('Signature not valid');
     }
     return Promise.resolve();
@@ -132,11 +131,12 @@ export class JwksValidationHandler extends AbstractValidationHandler {
     }
   }
 
-  calcHash(valueToHash: string, algorithm: string): string {
-    let hashAlg = new rs.KJUR.crypto.MessageDigest({ alg: algorithm });
-    let result = hashAlg.digestString(valueToHash);
-    let byteArrayAsString = this.toByteArrayAsString(result);
-    return byteArrayAsString;
+  async calcHash(valueToHash: string, algorithm: string): Promise<string> {
+    const encoder = new TextEncoder();
+    const valueAsBytes = encoder.encode(valueToHash);
+    const resultBytes = await window.crypto.subtle.digest(algorithm, valueAsBytes);
+    // the returned bytes are encoded as UTF-16
+    return String.fromCharCode.apply(null, new Uint16Array(resultBytes));
   }
 
   toByteArrayAsString(hexString: string) {
