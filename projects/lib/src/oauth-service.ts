@@ -331,14 +331,14 @@ export class OAuthService extends AuthConfig {
 
     /**
      * DEPRECATED. Use a provider for OAuthStorage instead:
-     * 
+     *
      * { provide: OAuthStorage, useValue: localStorage }
-     * 
+     *
      * Sets a custom storage used to store the received
      * tokens on client side. By default, the browser's
      * sessionStorage is used.
      * @ignore
-     * 
+     *
      * @param storage
      */
     public setStorage(storage: OAuthStorage): void {
@@ -845,7 +845,7 @@ export class OAuthService extends AuthConfig {
         const redirectUri = this.silentRefreshRedirectUri || this.redirectUri;
         this.createLoginUrl(null, null, redirectUri, noPrompt, params).then(url => {
             iframe.setAttribute('src', url);
-            
+
             if (!this.silentRefreshShowIFrame) {
                 iframe.style['display'] = 'none';
             }
@@ -1529,26 +1529,29 @@ export class OAuthService extends AuthConfig {
             loadKeys: () => this.loadJwks()
         };
 
-        if (
-            !this.disableAtHashCheck &&
-            this.requestAccessToken &&
-            !this.checkAtHash(validationParams)
-        ) {
-            const err = 'Wrong at_hash';
-            console.warn(err);
-            return Promise.reject(err);
-        }
+        return this.checkAtHash(validationParams)
+          .then(atHashValid => {
+            if (
+              !this.disableAtHashCheck &&
+              this.requestAccessToken &&
+              !atHashValid
+          ) {
+              const err = 'Wrong at_hash';
+              console.warn(err);
+              return Promise.reject(err);
+          }
 
-        return this.checkSignature(validationParams).then(_ => {
-            const result: ParsedIdToken = {
-                idToken: idToken,
-                idTokenClaims: claims,
-                idTokenClaimsJson: claimsJson,
-                idTokenHeader: header,
-                idTokenHeaderJson: headerJson,
-                idTokenExpiresAt: expiresAtMSec
-            };
-            return result;
+          return this.checkSignature(validationParams).then(_ => {
+              const result: ParsedIdToken = {
+                  idToken: idToken,
+                  idTokenClaims: claims,
+                  idTokenClaimsJson: claimsJson,
+                  idTokenHeader: header,
+                  idTokenHeaderJson: headerJson,
+                  idTokenExpiresAt: expiresAtMSec
+              };
+              return result;
+          });
         });
     }
 
@@ -1774,7 +1777,7 @@ export class OAuthService extends AuthConfig {
         });
     }
 
-    private checkAtHash(params: ValidationParams): boolean {
+    private async checkAtHash(params: ValidationParams): Promise<boolean> {
         if (!this.tokenValidationHandler) {
             console.warn(
                 'No tokenValidationHandler configured. Cannot check at_hash.'

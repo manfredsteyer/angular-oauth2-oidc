@@ -2,9 +2,6 @@ import {
   AbstractValidationHandler,
   ValidationParams
 } from './validation-handler';
-import * as jwkToPem from 'jwk-to-pem';
-import * as jwt from 'jsonwebtoken';
-
 
 /**
  * Validates the signature of an id_token against one
@@ -36,7 +33,10 @@ export class JwksValidationHandler extends AbstractValidationHandler {
    */
   gracePeriodInSec = 600;
 
-  validateSignature(params: ValidationParams, retry = false): Promise<any> {
+  private cyptoObj: Crypto = window.crypto || (window as any).msCrypto // for IE11
+  private textEncoder = new (window as any).TextEncoder();
+
+  async validateSignature(params: ValidationParams, retry = false): Promise<any> {
     if (!params.idToken) throw new Error('Parameter idToken expected!');
     if (!params.idTokenHeader)
       throw new Error('Parameter idTokenHandler expected.');
@@ -53,8 +53,8 @@ export class JwksValidationHandler extends AbstractValidationHandler {
     // console.debug('validateSignature: retry', retry);
 
     let kid: string = params.idTokenHeader['kid'];
-    let keys: object[] = params.jwks['keys'];
-    let key: object;
+    let keys: JsonWebKey[] = params.jwks['keys'];
+    let key: JsonWebKey;
 
     let alg = params.idTokenHeader['alg'];
 
@@ -107,17 +107,28 @@ export class JwksValidationHandler extends AbstractValidationHandler {
       return Promise.reject(error);
     }
 
-    const pem = jwkToPem(key);
-    try {
-      jwt.verify(
-        params.idToken,
-        pem,
-        {algorithms: this.allowedAlgorithms, clockTolerance: this.gracePeriodInSec}
-      );
-    } catch (err) {
+    const [header, body, sig] = params.idToken.split(',');
+
+    const cyptokey = await this.cyptoObj.subtle.importKey('jwk', key as any, alg, true, ['verify']);
+    const isValid = await this.cyptoObj.subtle.verify(alg, cyptokey, this.textEncoder.encode(sig), this.textEncoder.encode(body));
+
+    if(isValid) {
+      return Promise.resolve();
+    }else {
       return Promise.reject('Signature not valid');
     }
-    return Promise.resolve();
+
+    // const pem = jwkToPemAsAny(key);
+    // try {
+    //   jwt.verify(
+    //     params.idToken,
+    //     pem,
+    //     {algorithms: this.allowedAlgorithms, clockTolerance: this.gracePeriodInSec}
+    //   );
+    // } catch (err) {
+    //   return Promise.reject('Signature not valid');
+    // }
+    // return Promise.resolve();
   }
 
   private alg2kty(alg: string) {
@@ -132,9 +143,8 @@ export class JwksValidationHandler extends AbstractValidationHandler {
   }
 
   async calcHash(valueToHash: string, algorithm: string): Promise<string> {
-    const encoder = new TextEncoder();
-    const valueAsBytes = encoder.encode(valueToHash);
-    const resultBytes = await window.crypto.subtle.digest(algorithm, valueAsBytes);
+    const valueAsBytes = this.textEncoder.encode(valueToHash);
+    const resultBytes = await this.cyptoObj.subtle.digest(algorithm, valueAsBytes);
     // the returned bytes are encoded as UTF-16
     return String.fromCharCode.apply(null, new Uint16Array(resultBytes));
   }
