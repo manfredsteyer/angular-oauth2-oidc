@@ -33,8 +33,8 @@ import { WebHttpUrlEncodingCodec } from './encoder';
  */
 @Injectable()
 export class OAuthService extends AuthConfig {
-    // extending AuthConfig ist just for LEGACY reasons
-    // to not break existing code
+    // Extending AuthConfig ist just for LEGACY reasons
+    // to not break existing code.
 
     /**
      * The ValidationHandler used to validate received
@@ -56,7 +56,7 @@ export class OAuthService extends AuthConfig {
 
     /**
      * Informs about events, like token_received or token_expires.
-     * See the string enum EventType for a full list of events.
+     * See the string enum EventType for a full list of event types.
      */
     public events: Observable<OAuthEvent>;
 
@@ -64,12 +64,10 @@ export class OAuthService extends AuthConfig {
      * The received (passed around) state, when logging
      * in with implicit flow.
      */
-    public state?= '';
+    public state? = '';
 
     private eventsSubject: Subject<OAuthEvent> = new Subject<OAuthEvent>();
-    private discoveryDocumentLoadedSubject: Subject<object> = new Subject<
-        object
-        >();
+    private discoveryDocumentLoadedSubject: Subject<object> = new Subject<object>();
     private silentRefreshPostMessageEventListener: EventListener;
     private grantTypesSupported: Array<string> = [];
     private _storage: OAuthStorage;
@@ -110,10 +108,12 @@ export class OAuthService extends AuthConfig {
             }
         } catch (e) {
             console.error(
-                'cannot access sessionStorage. Consider setting an own storage implementation using setStorage',
+                'No OAuthStorage provided and cannot access default (sessionStorage).'
+                + 'Consider providing a custom OAuthStorage implementation in your module.',
                 e
             );
         }
+
         this.setupRefreshTimer();
     }
 
@@ -154,13 +154,14 @@ export class OAuthService extends AuthConfig {
     }
 
     /**
-     *
+     * Will setup up silent refreshing for when the token is
+     * about to expire.
      * @param params Additional parameter to pass
      */
     public setupAutomaticSilentRefresh(params: object = {}) {
         this.events.pipe(filter(e => e.type === 'token_expires')).subscribe(e => {
             this.silentRefresh(params).catch(_ => {
-                this.debug('automatic silent refresh did not work');
+                this.debug('Automatic silent refresh did not work');
             });
         });
 
@@ -331,14 +332,14 @@ export class OAuthService extends AuthConfig {
 
     /**
      * DEPRECATED. Use a provider for OAuthStorage instead:
-     * 
+     *
      * { provide: OAuthStorage, useValue: localStorage }
-     * 
+     *
      * Sets a custom storage used to store the received
      * tokens on client side. By default, the browser's
      * sessionStorage is used.
      * @ignore
-     * 
+     *
      * @param storage
      */
     public setStorage(storage: OAuthStorage): void {
@@ -366,7 +367,7 @@ export class OAuthService extends AuthConfig {
             }
 
             if (!this.validateUrlForHttps(fullUrl)) {
-                reject('issuer must use Https. Also check property requireHttps.');
+                reject('issuer must use https, or config value for property requireHttps must allow http');
                 return;
             }
 
@@ -525,7 +526,7 @@ export class OAuthService extends AuthConfig {
      * about the user in question.
      *
      * When using this, make sure that the property oidc is set to false.
-     * Otherwise stricter validations take happen that makes this operation
+     * Otherwise stricter validations take place that make this operation
      * fail.
      *
      * @param userName
@@ -546,8 +547,7 @@ export class OAuthService extends AuthConfig {
      * Loads the user profile by accessing the user info endpoint defined by OpenId Connect.
      *
      * When using this with OAuth2 password flow, make sure that the property oidc is set to false.
-     * Otherwise stricter validations take happen that makes this operation
-     * fail.
+     * Otherwise stricter validations take place that make this operation fail.
      */
     public loadUserProfile(): Promise<object> {
         if (!this.hasValidAccessToken()) {
@@ -555,7 +555,7 @@ export class OAuthService extends AuthConfig {
         }
         if (!this.validateUrlForHttps(this.userinfoEndpoint)) {
             throw new Error(
-                'userinfoEndpoint must use Http. Also check property requireHttps.'
+                'userinfoEndpoint must use http, or config value for property requireHttps must allow http'
             );
         }
 
@@ -616,7 +616,7 @@ export class OAuthService extends AuthConfig {
     ): Promise<object> {
         if (!this.validateUrlForHttps(this.tokenEndpoint)) {
             throw new Error(
-                'tokenEndpoint must use Http. Also check property requireHttps.'
+                'tokenEndpoint must use http, or config value for property requireHttps must allow http'
             );
         }
 
@@ -693,7 +693,7 @@ export class OAuthService extends AuthConfig {
     public refreshToken(): Promise<object> {
         if (!this.validateUrlForHttps(this.tokenEndpoint)) {
             throw new Error(
-                'tokenEndpoint must use Http. Also check property requireHttps.'
+                'tokenEndpoint must use http, or config value for property requireHttps must allow http'
             );
         }
 
@@ -800,8 +800,8 @@ export class OAuthService extends AuthConfig {
 
     /**
      * Performs a silent refresh for implicit flow.
-     * Use this method to get a new tokens when/ before
-     * the existing tokens expires.
+     * Use this method to get new tokens when/before
+     * the existing tokens expire.
      */
     public silentRefresh(params: object = {}, noPrompt = true): Promise<OAuthEvent> {
         const claims: object = this.getIdentityClaims() || {};
@@ -838,7 +838,7 @@ export class OAuthService extends AuthConfig {
         const redirectUri = this.silentRefreshRedirectUri || this.redirectUri;
         this.createLoginUrl(null, null, redirectUri, noPrompt, params).then(url => {
             iframe.setAttribute('src', url);
-            
+
             if (!this.silentRefreshShowIFrame) {
                 iframe.style['display'] = 'none';
             }
@@ -880,15 +880,14 @@ export class OAuthService extends AuthConfig {
         }
         if (!this.sessionCheckIFrameUrl) {
             console.warn(
-                'sessionChecksEnabled is activated but there ' +
-                'is no sessionCheckIFrameUrl'
+                'sessionChecksEnabled is activated but there is no sessionCheckIFrameUrl'
             );
             return false;
         }
         const sessionState = this.getSessionState();
         if (!sessionState) {
             console.warn(
-                'sessionChecksEnabled is activated but there ' + 'is no session_state'
+                'sessionChecksEnabled is activated but there is no session_state'
             );
             return false;
         }
@@ -1004,7 +1003,6 @@ export class OAuthService extends AuthConfig {
 
         const url = this.sessionCheckIFrameUrl;
         iframe.setAttribute('src', url);
-        // iframe.style.visibility = 'hidden';
         iframe.style.display = 'none';
         document.body.appendChild(iframe);
 
@@ -1150,7 +1148,7 @@ export class OAuthService extends AuthConfig {
 
         if (!this.validateUrlForHttps(this.loginUrl)) {
             throw new Error(
-                'loginUrl must use Http. Also check property requireHttps.'
+                'loginUrl must use http, or config value for property requireHttps must allow http'
             );
         }
 
@@ -1168,18 +1166,17 @@ export class OAuthService extends AuthConfig {
                 location.href = url;
             })
             .catch(error => {
-                console.error('Error in initImplicitFlow');
-                console.error(error);
+                console.error('Error in initImplicitFlow', error);
                 this.inImplicitFlow = false;
             });
     }
 
     /**
      * Starts the implicit flow and redirects to user to
-     * the auth servers login url.
+     * the auth servers' login url.
      *
-     * @param additionalState Optinal state that is passes around.
-     *  You find this state in the property ``state`` after ``tryLogin`` logged in the user.
+     * @param additionalState Optional state that is passed around.
+     *  You'll find this state in the property `state` after `tryLogin` logged in the user.
      * @param params Hash with additional parameter. If it is a string, it is used for the
      *               parameter loginHint (for the sake of compatibility with former versions)
      */
@@ -1238,7 +1235,7 @@ export class OAuthService extends AuthConfig {
      * parsed, validated and used to sign the user in to the
      * current client.
      *
-     * @param options Optinal options.
+     * @param options Optional options.
      */
     public tryLogin(options: LoginOptions = null): Promise<void> {
         options = options || {};
@@ -1280,7 +1277,7 @@ export class OAuthService extends AuthConfig {
 
         if (!this.requestAccessToken && !this.oidc) {
             return Promise.reject(
-                'Either requestAccessToken or oidc or both must be true.'
+                'Either requestAccessToken or oidc (or both) must be true.'
             );
         }
 
@@ -1297,7 +1294,7 @@ export class OAuthService extends AuthConfig {
         if (this.sessionChecksEnabled && !sessionState) {
             console.warn(
                 'session checks (Session Status Change Notification) ' +
-                'is activated in the configuration but the id_token ' +
+                'were activated in the configuration but the id_token ' +
                 'does not contain a session_state claim'
             );
         }
@@ -1371,7 +1368,7 @@ export class OAuthService extends AuthConfig {
     ): boolean {
         const savedNonce = this._storage.getItem('nonce');
         if (savedNonce !== nonceInState) {
-            const err = 'validating access_token failed. wrong state/nonce.';
+            const err = 'Validating access_token failed, wrong state/nonce.';
             console.error(err, savedNonce, nonceInState);
             return false;
         }
@@ -1439,10 +1436,10 @@ export class OAuthService extends AuthConfig {
         }
 
         /* For now, we only check whether the sub against
-             * silentRefreshSubject when sessionChecksEnabled is on
-             * We will reconsider in a later version to do this
-             * in every other case too.
-             */
+         * silentRefreshSubject when sessionChecksEnabled is on
+         * We will reconsider in a later version to do this
+         * in every other case too.
+         */
         if (
             this.sessionChecksEnabled &&
             this.silentRefreshSubject &&
@@ -1495,7 +1492,7 @@ export class OAuthService extends AuthConfig {
             issuedAtMSec - tenMinutesInMsec >= now ||
             expiresAtMSec + tenMinutesInMsec <= now
         ) {
-            const err = 'Token has been expired';
+            const err = 'Token has expired';
             console.error(err);
             console.error({
                 now: now,
@@ -1635,7 +1632,7 @@ export class OAuthService extends AuthConfig {
     }
 
     /**
-     * Checkes, whether there is a valid id_token.
+     * Checks whether there is a valid id_token.
      */
     public hasValidIdToken(): boolean {
         if (this.getIdToken()) {
@@ -1698,7 +1695,7 @@ export class OAuthService extends AuthConfig {
 
         if (!this.validateUrlForHttps(this.logoutUrl)) {
             throw new Error(
-                'logoutUrl must use Http. Also check property requireHttps.'
+                'logoutUrl must use http, or config value for property requireHttps must allow http'
             );
         }
 

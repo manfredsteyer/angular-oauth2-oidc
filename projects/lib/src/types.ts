@@ -12,6 +12,7 @@ export class LoginOptions {
 
   /**
    * Hook, to validate the received tokens.
+   *
    * Deprecated:  Use property ``tokenValidationHandler`` on OAuthService instead.
    */
   validationHandler?: (receivedTokens: ReceivedTokens) => Promise<any>;
