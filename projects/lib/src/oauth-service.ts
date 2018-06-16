@@ -515,8 +515,6 @@ export class OAuthService extends AuthConfig {
             );
         }
 
-        // this.sessionChecksEnabled = !!doc.check_session_iframe;
-
         return true;
     }
 
@@ -812,15 +810,9 @@ export class OAuthService extends AuthConfig {
             params['id_token_hint'] = this.getIdToken();
         }
 
-        /*
-            if (!claims) {
-                throw new Error('cannot perform a silent refresh as the user is not logged in');
-            }
-            */
-
         if (!this.validateUrlForHttps(this.loginUrl)) {
             throw new Error(
-                'tokenEndpoint must use Https. Also check property requireHttps.'
+                'tokenEndpoint must use https, or config value for property requireHttps must allow http'
             );
         }
 
@@ -831,6 +823,7 @@ export class OAuthService extends AuthConfig {
         const existingIframe = document.getElementById(
             this.silentRefreshIFrameName
         );
+
         if (existingIframe) {
             document.body.removeChild(existingIframe);
         }
@@ -1438,14 +1431,6 @@ export class OAuthService extends AuthConfig {
                 return Promise.reject(err);
             }
         }
-
-        /*
-            if (this.getKeyCount() > 1 && !header.kid) {
-                let err = 'There needs to be a kid property in the id_token header when multiple keys are defined via the property jwks';
-                console.warn(err);
-                return Promise.reject(err);
-            }
-            */
 
         if (!claims.sub) {
             const err = 'No sub claim in id_token';
