@@ -638,7 +638,7 @@ export class OAuthService extends AuthConfig {
             if (this.useHttpBasicAuthForPasswordFlow) {
                 const header = btoa(`${this.clientId}:${this.dummyClientSecret}`);
                 headers = headers.set(
-                    'Authentication',
+                    'Authorization',
                     'BASIC ' + header);
             }
 
