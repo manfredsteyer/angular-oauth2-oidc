@@ -135,7 +135,9 @@ export class OAuthService extends AuthConfig {
         this.configChanged();
     }
 
-    private configChanged(): void { }
+    private configChanged(): void {
+        this.setupRefreshTimer();
+    }
 
     public restartSessionChecksIfStillLoggedIn(): void {
         if (this.hasValidIdToken()) {
