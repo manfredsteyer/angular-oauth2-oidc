@@ -1740,7 +1740,7 @@ export class OAuthService extends AuthConfig {
                 (this.logoutUrl.indexOf('?') > -1 ? '&' : '?') +
                 params.toString()
         }
-        location.href = logoutUrl;
+        setTimeout(function(){ location.href = logoutUrl }, 500);
     }
 
     /**
