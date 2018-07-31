@@ -92,7 +92,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "sample:build"
+            "browserTarget": "sample:build",
+            "port": 8080
           },
           "configurations": {
             "production": {
