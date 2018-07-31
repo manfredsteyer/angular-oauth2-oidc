@@ -843,9 +843,9 @@ export class OAuthService extends AuthConfig {
         this.setupSilentRefreshEventListener();
 
         const redirectUri = this.silentRefreshRedirectUri || this.redirectUri;
-        this.createLoginUrl(null, null, redirectUri, noPrompt, params).then(url => {
+        this.createLoginUrl(null, redirectUri, noPrompt, params).then(url => {
             iframe.setAttribute('src', url);
-            
+
             if (!this.silentRefreshShowIFrame) {
                 iframe.style['display'] = 'none';
             }
@@ -1054,7 +1054,6 @@ export class OAuthService extends AuthConfig {
     }
 
     private createLoginUrl(
-        state = '',
         loginHint = '',
         customRedirectUri = '',
         noPrompt = false,
@@ -1071,12 +1070,6 @@ export class OAuthService extends AuthConfig {
         }
 
         return this.createAndSaveNonce().then((nonce: any) => {
-            if (state) {
-                state = nonce + this.config.nonceStateSeparator + state;
-            } else {
-                state = nonce;
-            }
-
             if (!this.requestAccessToken && !this.oidc) {
                 throw new Error(
                     'Either requestAccessToken or oidc or both must be true'
@@ -1107,7 +1100,7 @@ export class OAuthService extends AuthConfig {
                 '&client_id=' +
                 encodeURIComponent(that.clientId) +
                 '&state=' +
-                encodeURIComponent(state) +
+                encodeURIComponent(nonce) +
                 '&redirect_uri=' +
                 encodeURIComponent(redirectUri) +
                 '&scope=' +
@@ -1170,7 +1163,11 @@ export class OAuthService extends AuthConfig {
             addParams = params;
         }
 
-        this.createLoginUrl(additionalState, loginHint, null, false, addParams)
+        if (additionalState) {
+            this.storeAdditionalState(additionalState);
+        }
+
+        this.createLoginUrl(loginHint, null, false, addParams)
             .then(function (url) {
                 location.href = url;
             })
@@ -1179,6 +1176,10 @@ export class OAuthService extends AuthConfig {
                 console.error(error);
                 this.inImplicitFlow = false;
             });
+    }
+
+    private storeAdditionalState(additionalState: string) {
+        localStorage.setItem('additionalState', additionalState);
     }
 
     /**
@@ -1261,16 +1262,9 @@ export class OAuthService extends AuthConfig {
         this.debug('parsed url', parts);
 
         const state = parts['state'];
-        let nonceInState = state;
+        const nonceInState = state;
 
-        if (state) {
-            const idx = state.indexOf(this.config.nonceStateSeparator);
-
-            if (idx > -1) {
-                nonceInState = state.substr(0, idx);
-                this.state = state.substr(idx + this.config.nonceStateSeparator.length);
-            }
-        }
+        this.updateStateWithStoredAdditionalStateIfExists();
 
         if (parts['error']) {
             this.debug('error trying to login');
@@ -1370,6 +1364,13 @@ export class OAuthService extends AuthConfig {
                 console.error(reason);
                 return Promise.reject(reason);
             });
+    }
+
+    private updateStateWithStoredAdditionalStateIfExists() {
+        const additionalState = localStorage.getItem('additionalState');
+        if (additionalState) {
+            this.state = additionalState;
+        }
     }
 
     private validateNonceForAccessToken(
