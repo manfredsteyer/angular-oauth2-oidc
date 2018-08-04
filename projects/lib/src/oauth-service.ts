@@ -331,14 +331,14 @@ export class OAuthService extends AuthConfig {
 
     /**
      * DEPRECATED. Use a provider for OAuthStorage instead:
-     * 
+     *
      * { provide: OAuthStorage, useValue: localStorage }
-     * 
+     *
      * Sets a custom storage used to store the received
      * tokens on client side. By default, the browser's
      * sessionStorage is used.
      * @ignore
-     * 
+     *
      * @param storage
      */
     public setStorage(storage: OAuthStorage): void {
@@ -845,7 +845,7 @@ export class OAuthService extends AuthConfig {
         const redirectUri = this.silentRefreshRedirectUri || this.redirectUri;
         this.createLoginUrl(null, null, redirectUri, noPrompt, params).then(url => {
             iframe.setAttribute('src', url);
-            
+
             if (!this.silentRefreshShowIFrame) {
                 iframe.style['display'] = 'none';
             }
@@ -1083,12 +1083,16 @@ export class OAuthService extends AuthConfig {
                 );
             }
 
-            if (this.oidc && this.requestAccessToken) {
-                this.responseType = 'id_token token';
-            } else if (this.oidc && !this.requestAccessToken) {
-                this.responseType = 'id_token';
+            if (this.config.responseType) {
+              this.responseType = this.config.responseType;
             } else {
-                this.responseType = 'token';
+              if (this.oidc && this.requestAccessToken) {
+                  this.responseType = 'id_token token';
+              } else if (this.oidc && !this.requestAccessToken) {
+                  this.responseType = 'id_token';
+              } else {
+                  this.responseType = 'token';
+              }
             }
 
             const seperationChar = that.loginUrl.indexOf('?') > -1 ? '&' : '?';
