@@ -1239,6 +1239,18 @@ export class OAuthService extends AuthConfig {
         }
     }
 
+    private clearHash() {
+      // By @AndyE at https://stackoverflow.com/a/5298684/419956
+      if ('pushState' in history) {
+        // Clears the hash *including* the hash sigh, cross-browser.
+        history.pushState('', document.title, location.pathname + location.search);
+      } else {
+        // Fallback for older browsers, might leave the '#' character in the address
+        // bar in some cases.
+        location.hash = '';
+      }
+    }
+
     /**
      * Checks whether there are tokens in the hash fragment
      * as a result of the implicit flow. These tokens are
@@ -1333,7 +1345,7 @@ export class OAuthService extends AuthConfig {
         if (!this.oidc) {
             this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
             if (this.clearHashAfterLogin && !options.preventClearHashAfterLogin) {
-                location.hash = '';
+                this.clearHash();
             }
             return Promise.resolve();
         }
@@ -1356,7 +1368,7 @@ export class OAuthService extends AuthConfig {
                 this.storeIdToken(result);
                 this.storeSessionState(sessionState);
                 if (this.clearHashAfterLogin) {
-                    location.hash = '';
+                  this.clearHash();
                 }
                 this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
                 this.callOnTokenReceivedIfExists(options);
@@ -1405,7 +1417,7 @@ export class OAuthService extends AuthConfig {
             options.onLoginError(parts);
         }
         if (this.clearHashAfterLogin) {
-            location.hash = '';
+          this.clearHash();
         }
     }
 
