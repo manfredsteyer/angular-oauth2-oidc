@@ -15,6 +15,7 @@ import {
     OAuthSuccessEvent
 } from './events';
 import {
+    OAuthLogger,
     OAuthStorage,
     LoginOptions,
     ParsedIdToken,
@@ -87,7 +88,8 @@ export class OAuthService extends AuthConfig {
         @Optional() storage: OAuthStorage,
         @Optional() tokenValidationHandler: ValidationHandler,
         @Optional() private config: AuthConfig,
-        private urlHelper: UrlHelperService
+        private urlHelper: UrlHelperService,
+        private logger: OAuthLogger,
     ) {
         super();
 
@@ -109,7 +111,7 @@ export class OAuthService extends AuthConfig {
                 this.setStorage(sessionStorage);
             }
         } catch (e) {
-            console.error(
+            this.logger.error(
                 'cannot access sessionStorage. Consider setting an own storage implementation using setStorage',
                 e
             );
@@ -186,7 +188,7 @@ export class OAuthService extends AuthConfig {
 
     private debug(...args): void {
         if (this.showDebugInformation) {
-            console.debug.apply(console, args);
+            this.logger.debug.apply(console, args);
         }
     }
 
@@ -420,7 +422,7 @@ export class OAuthService extends AuthConfig {
                         });
                 },
                 err => {
-                    console.error('error loading discovery document', err);
+                    this.logger.error('error loading discovery document', err);
                     this.eventsSubject.next(
                         new OAuthErrorEvent('discovery_document_load_error', err)
                     );
@@ -442,7 +444,7 @@ export class OAuthService extends AuthConfig {
                         resolve(jwks);
                     },
                     err => {
-                        console.error('error loading jwks', err);
+                        this.logger.error('error loading jwks', err);
                         this.eventsSubject.next(
                             new OAuthErrorEvent('jwks_load_error', err)
                         );
@@ -459,7 +461,7 @@ export class OAuthService extends AuthConfig {
         let errors: string[];
 
         if (!this.skipIssuerCheck && doc.issuer !== this.issuer) {
-            console.error(
+            this.logger.error(
                 'invalid issuer in discovery document',
                 'expected: ' + this.issuer,
                 'current: ' + doc.issuer
@@ -469,7 +471,7 @@ export class OAuthService extends AuthConfig {
 
         errors = this.validateUrlFromDiscoveryDocument(doc.authorization_endpoint);
         if (errors.length > 0) {
-            console.error(
+            this.logger.error(
                 'error validating authorization_endpoint in discovery document',
                 errors
             );
@@ -478,7 +480,7 @@ export class OAuthService extends AuthConfig {
 
         errors = this.validateUrlFromDiscoveryDocument(doc.end_session_endpoint);
         if (errors.length > 0) {
-            console.error(
+            this.logger.error(
                 'error validating end_session_endpoint in discovery document',
                 errors
             );
@@ -487,7 +489,7 @@ export class OAuthService extends AuthConfig {
 
         errors = this.validateUrlFromDiscoveryDocument(doc.token_endpoint);
         if (errors.length > 0) {
-            console.error(
+            this.logger.error(
                 'error validating token_endpoint in discovery document',
                 errors
             );
@@ -495,7 +497,7 @@ export class OAuthService extends AuthConfig {
 
         errors = this.validateUrlFromDiscoveryDocument(doc.userinfo_endpoint);
         if (errors.length > 0) {
-            console.error(
+            this.logger.error(
                 'error validating userinfo_endpoint in discovery document',
                 errors
             );
@@ -504,12 +506,12 @@ export class OAuthService extends AuthConfig {
 
         errors = this.validateUrlFromDiscoveryDocument(doc.jwks_uri);
         if (errors.length > 0) {
-            console.error('error validating jwks_uri in discovery document', errors);
+            this.logger.error('error validating jwks_uri in discovery document', errors);
             return false;
         }
 
         if (this.sessionChecksEnabled && !doc.check_session_iframe) {
-            console.warn(
+            this.logger.warn(
                 'sessionChecksEnabled is activated but discovery document' +
                 ' does not contain a check_session_iframe field'
             );
@@ -595,7 +597,7 @@ export class OAuthService extends AuthConfig {
                     resolve(info);
                 },
                 err => {
-                    console.error('error loading user info', err);
+                    this.logger.error('error loading user info', err);
                     this.eventsSubject.next(
                         new OAuthErrorEvent('user_profile_load_error', err)
                     );
@@ -677,7 +679,7 @@ export class OAuthService extends AuthConfig {
                         resolve(tokenResponse);
                     },
                     err => {
-                        console.error('Error performing password flow', err);
+                        this.logger.error('Error performing password flow', err);
                         this.eventsSubject.next(new OAuthErrorEvent('token_error', err));
                         reject(err);
                     }
@@ -738,7 +740,7 @@ export class OAuthService extends AuthConfig {
                         resolve(tokenResponse);
                     },
                     err => {
-                        console.error('Error performing password flow', err);
+                        this.logger.error('Error performing password flow', err);
                         this.eventsSubject.next(
                             new OAuthErrorEvent('token_refresh_error', err)
                         );
@@ -886,7 +888,7 @@ export class OAuthService extends AuthConfig {
             return false;
         }
         if (!this.sessionCheckIFrameUrl) {
-            console.warn(
+            this.logger.warn(
                 'sessionChecksEnabled is activated but there ' +
                 'is no sessionCheckIFrameUrl'
             );
@@ -894,7 +896,7 @@ export class OAuthService extends AuthConfig {
         }
         const sessionState = this.getSessionState();
         if (!sessionState) {
-            console.warn(
+            this.logger.warn(
                 'sessionChecksEnabled is activated but there ' + 'is no session_state'
             );
             return false;
@@ -1037,7 +1039,7 @@ export class OAuthService extends AuthConfig {
         const iframe: any = document.getElementById(this.sessionCheckIFrameName);
 
         if (!iframe) {
-            console.warn(
+            this.logger.warn(
                 'checkSession did not find iframe',
                 this.sessionCheckIFrameName
             );
@@ -1175,8 +1177,8 @@ export class OAuthService extends AuthConfig {
                 location.href = url;
             })
             .catch(error => {
-                console.error('Error in initImplicitFlow');
-                console.error(error);
+                this.logger.error('Error in initImplicitFlow');
+                this.logger.error(error);
                 this.inImplicitFlow = false;
             });
     }
@@ -1302,7 +1304,7 @@ export class OAuthService extends AuthConfig {
         }
 
         if (this.sessionChecksEnabled && !sessionState) {
-            console.warn(
+            this.logger.warn(
                 'session checks (Session Status Change Notification) ' +
                 'is activated in the configuration but the id_token ' +
                 'does not contain a session_state claim'
@@ -1366,8 +1368,8 @@ export class OAuthService extends AuthConfig {
                 this.eventsSubject.next(
                     new OAuthErrorEvent('token_validation_error', reason)
                 );
-                console.error('Error validating tokens');
-                console.error(reason);
+                this.logger.error('Error validating tokens');
+                this.logger.error(reason);
                 return Promise.reject(reason);
             });
     }
@@ -1379,7 +1381,7 @@ export class OAuthService extends AuthConfig {
         const savedNonce = this._storage.getItem('nonce');
         if (savedNonce !== nonceInState) {
             const err = 'validating access_token failed. wrong state/nonce.';
-            console.error(err, savedNonce, nonceInState);
+            this.logger.error(err, savedNonce, nonceInState);
             return false;
         }
         return true;
@@ -1428,13 +1430,13 @@ export class OAuthService extends AuthConfig {
         if (Array.isArray(claims.aud)) {
             if (claims.aud.every(v => v !== this.clientId)) {
                 const err = 'Wrong audience: ' + claims.aud.join(',');
-                console.warn(err);
+                this.logger.warn(err);
                 return Promise.reject(err);
             }
         } else {
             if (claims.aud !== this.clientId) {
                 const err = 'Wrong audience: ' + claims.aud;
-                console.warn(err);
+                this.logger.warn(err);
                 return Promise.reject(err);
             }
         }
@@ -1442,14 +1444,14 @@ export class OAuthService extends AuthConfig {
         /*
             if (this.getKeyCount() > 1 && !header.kid) {
                 let err = 'There needs to be a kid property in the id_token header when multiple keys are defined via the property jwks';
-                console.warn(err);
+                this.logger.warn(err);
                 return Promise.reject(err);
             }
             */
 
         if (!claims.sub) {
             const err = 'No sub claim in id_token';
-            console.warn(err);
+            this.logger.warn(err);
             return Promise.reject(err);
         }
 
@@ -1469,25 +1471,25 @@ export class OAuthService extends AuthConfig {
                 claims['sub']
                 }`;
 
-            console.warn(err);
+            this.logger.warn(err);
             return Promise.reject(err);
         }
 
         if (!claims.iat) {
             const err = 'No iat claim in id_token';
-            console.warn(err);
+            this.logger.warn(err);
             return Promise.reject(err);
         }
 
         if (claims.iss !== this.issuer) {
             const err = 'Wrong issuer: ' + claims.iss;
-            console.warn(err);
+            this.logger.warn(err);
             return Promise.reject(err);
         }
 
         if (claims.nonce !== savedNonce) {
             const err = 'Wrong nonce: ' + claims.nonce;
-            console.warn(err);
+            this.logger.warn(err);
             return Promise.reject(err);
         }
 
@@ -1497,7 +1499,7 @@ export class OAuthService extends AuthConfig {
             !claims['at_hash']
         ) {
             const err = 'An at_hash is needed!';
-            console.warn(err);
+            this.logger.warn(err);
             return Promise.reject(err);
         }
 
@@ -1511,8 +1513,8 @@ export class OAuthService extends AuthConfig {
             expiresAtMSec + tenMinutesInMsec <= now
         ) {
             const err = 'Token has been expired';
-            console.error(err);
-            console.error({
+            this.logger.error(err);
+            this.logger.error({
                 now: now,
                 issuedAtMSec: issuedAtMSec,
                 expiresAtMSec: expiresAtMSec
@@ -1535,7 +1537,7 @@ export class OAuthService extends AuthConfig {
             !this.checkAtHash(validationParams)
         ) {
             const err = 'Wrong at_hash';
-            console.warn(err);
+            this.logger.warn(err);
             return Promise.reject(err);
         }
 
@@ -1776,7 +1778,7 @@ export class OAuthService extends AuthConfig {
 
     private checkAtHash(params: ValidationParams): boolean {
         if (!this.tokenValidationHandler) {
-            console.warn(
+            this.logger.warn(
                 'No tokenValidationHandler configured. Cannot check at_hash.'
             );
             return true;
@@ -1786,7 +1788,7 @@ export class OAuthService extends AuthConfig {
 
     private checkSignature(params: ValidationParams): Promise<any> {
         if (!this.tokenValidationHandler) {
-            console.warn(
+            this.logger.warn(
                 'No tokenValidationHandler configured. Cannot check signature.'
             );
             return Promise.resolve(null);
