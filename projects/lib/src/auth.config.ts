@@ -37,7 +37,7 @@ export class AuthConfig {
   public oidc? = true;
 
   /**
-   * Defines whether to request a access token during
+   * Defines whether to request an access token during
    * implicit flow.
    */
   public requestAccessToken? = true;
@@ -66,7 +66,6 @@ export class AuthConfig {
 
   /**
    * Url of the userinfo endpoint as defined by OpenId Connect.
-   *
    */
   public userinfoEndpoint?: string = null;
 
@@ -107,9 +106,9 @@ export class AuthConfig {
 
   /**
    * Some auth servers don't allow using password flow
-   * w/o a client secreat while the standards do not
+   * w/o a client secret while the standards do not
    * demand for it. In this case, you can set a password
-   * here. As this passwort is exposed to the public
+   * here. As this password is exposed to the public
    * it does not bring additional security and is therefore
    * as good as using no password.
    */
@@ -159,7 +158,7 @@ export class AuthConfig {
   public sessionChecksEnabled? = false;
 
   /**
-   * Intervall in msec for checking the session
+   * Interval in msec for checking the session
    * according to http://openid.net/specs/openid-connect-session-1_0.html#ChangeNotification
    */
   public sessionCheckIntervall? = 3 * 1000;
@@ -183,18 +182,18 @@ export class AuthConfig {
    */
   public disableAtHashCheck? = false;
 
-  /*
-     * Defines wether to check the subject of a refreshed token after silent refresh.
-     * Normally, it should be the same as before.
-    */
+  /**
+   * Defines wether to check the subject of a refreshed token after silent refresh.
+   * Normally, it should be the same as before.
+   */
   public skipSubjectCheck? = false;
 
   public useIdTokenHintForSilentRefresh? = false;
 
-  /*
-     * Defined whether to skip the validation of the issuer in the discovery document.
-     * Normally, the discovey document's url starts with the url of the issuer.
-     */
+  /**
+   * Defined whether to skip the validation of the issuer in the discovery document.
+   * Normally, the discovey document's url starts with the url of the issuer.
+   */
   public skipIssuerCheck? = false;
 
   /**
@@ -204,17 +203,17 @@ export class AuthConfig {
    */
   public fallbackAccessTokenExpirationTimeInSec?: number;
 
-  /*
-     * final state sent to issuer is built as follows:
-     * state = nonce + nonceStateSeparator + additional state
-     * Default separator is ';' (encoded %3B).
-     * In rare cases, this character might be forbidden or inconvenient to use by the issuer so it can be customized.
-     */
+  /**
+   * final state sent to issuer is built as follows:
+   * state = nonce + nonceStateSeparator + additional state
+   * Default separator is ';' (encoded %3B).
+   * In rare cases, this character might be forbidden or inconvenient to use by the issuer so it can be customized.
+   */
   public nonceStateSeparator? = ';';
 
-  /*
-   * set this to true to use HTTP BASIC auth for password flow
-  */
+  /**
+   * Set this to true to use HTTP BASIC auth for password flow
+   */
   public useHttpBasicAuthForPasswordFlow? = false;
 
   constructor(json?: Partial<AuthConfig>) {

@@ -33,8 +33,6 @@ export class OAuthModule {
     config: OAuthModuleConfig = null,
     validationHandlerClass = NullValidationHandler
   ): ModuleWithProviders {
-    // const setupInterceptor = config && config.resourceServer && config.resourceServer.allowedUrls;
-
     return {
       ngModule: OAuthModule,
       providers: [

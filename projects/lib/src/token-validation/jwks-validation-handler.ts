@@ -3,9 +3,6 @@ import {
   ValidationParams
 } from './validation-handler';
 
-// declare var require: any;
-// let rs = require('jsrsasign');
-
 import * as rs from 'jsrsasign';
 
 /**
@@ -52,8 +49,6 @@ export class JwksValidationHandler extends AbstractValidationHandler {
       throw new Error('Array keys in jwks missing!');
     }
 
-    // console.debug('validateSignature: retry', retry);
-
     let kid: string = params.idTokenHeader['kid'];
     let keys: object[] = params.jwks['keys'];
     let key: object;
@@ -68,12 +63,6 @@ export class JwksValidationHandler extends AbstractValidationHandler {
         k => k['kty'] === kty && k['use'] === 'sig'
       );
 
-      /*
-            if (matchingKeys.length == 0) {
-                let error = 'No matching key found.';
-                console.error(error);
-                return Promise.reject(error);
-            }*/
       if (matchingKeys.length > 1) {
         let error =
           'More than one matching key found. Please specify a kid in the id_token header.';
