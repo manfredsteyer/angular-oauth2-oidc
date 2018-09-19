@@ -3,8 +3,6 @@ import {
   ValidationParams
 } from './validation-handler';
 
-import * as rs from 'jsrsasign';
-
 /**
  * Validates the signature of an id_token against one
  * of the keys of an JSON Web Key Set (jwks).
@@ -35,7 +33,10 @@ export class JwksValidationHandler extends AbstractValidationHandler {
    */
   gracePeriodInSec = 600;
 
-  validateSignature(params: ValidationParams, retry = false): Promise<any> {
+  private cyptoObj: Crypto = window.crypto || (window as any).msCrypto // for IE11
+  private textEncoder = new (window as any).TextEncoder();
+
+  async validateSignature(params: ValidationParams, retry = false): Promise<any> {
     if (!params.idToken) throw new Error('Parameter idToken expected!');
     if (!params.idTokenHeader)
       throw new Error('Parameter idTokenHandler expected.');
@@ -50,8 +51,8 @@ export class JwksValidationHandler extends AbstractValidationHandler {
     }
 
     let kid: string = params.idTokenHeader['kid'];
-    let keys: object[] = params.jwks['keys'];
-    let key: object;
+    let keys: JsonWebKey[] = params.jwks['keys'];
+    let key: JsonWebKey;
 
     let alg = params.idTokenHeader['alg'];
 
@@ -98,20 +99,14 @@ export class JwksValidationHandler extends AbstractValidationHandler {
       return Promise.reject(error);
     }
 
-    let keyObj = rs.KEYUTIL.getKey(key);
-    let validationOptions = {
-      alg: this.allowedAlgorithms,
-      gracePeriod: this.gracePeriodInSec
-    };
-    let isValid = rs.KJUR.jws.JWS.verifyJWT(
-      params.idToken,
-      keyObj,
-      validationOptions
-    );
+    const [header, body, sig] = params.idToken.split(',');
 
-    if (isValid) {
+    const cyptokey = await this.cyptoObj.subtle.importKey('jwk', key as any, alg, true, ['verify']);
+    const isValid = await this.cyptoObj.subtle.verify(alg, cyptokey, this.textEncoder.encode(sig), this.textEncoder.encode(body));
+
+    if(isValid) {
       return Promise.resolve();
-    } else {
+    }else {
       return Promise.reject('Signature not valid');
     }
   }
@@ -127,11 +122,11 @@ export class JwksValidationHandler extends AbstractValidationHandler {
     }
   }
 
-  calcHash(valueToHash: string, algorithm: string): string {
-    let hashAlg = new rs.KJUR.crypto.MessageDigest({ alg: algorithm });
-    let result = hashAlg.digestString(valueToHash);
-    let byteArrayAsString = this.toByteArrayAsString(result);
-    return byteArrayAsString;
+  async calcHash(valueToHash: string, algorithm: string): Promise<string> {
+    const valueAsBytes = this.textEncoder.encode(valueToHash);
+    const resultBytes = await this.cyptoObj.subtle.digest(algorithm, valueAsBytes);
+    // the returned bytes are encoded as UTF-16
+    return String.fromCharCode.apply(null, new Uint16Array(resultBytes));
   }
 
   toByteArrayAsString(hexString: string) {

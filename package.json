@@ -33,7 +33,6 @@
     "angular-oauth2-oidc": "^2.1.8",
     "bootstrap": "^3.3.7",
     "core-js": "^2.5.1",
-    "jsrsasign": "^8.0.12",
     "rxjs": "6.1.0",
     "rxjs-compat": "^6.0.0-rc.0",
     "zone.js": "^0.8.26"
@@ -63,7 +62,7 @@
     "protractor": "~5.2.0",
     "ts-node": "~3.3.0",
     "tslint": "~5.8.0",
-    "typescript": "^2.7.2",
+    "typescript": "2.7.2",
     "webpack": "^4.4.1"
   }
 }

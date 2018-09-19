@@ -8,7 +8,7 @@ export class NullValidationHandler implements ValidationHandler {
   validateSignature(validationParams: ValidationParams): Promise<any> {
     return Promise.resolve(null);
   }
-  validateAtHash(validationParams: ValidationParams): boolean {
-    return true;
+  validateAtHash(validationParams: ValidationParams): Promise<boolean> {
+    return Promise.resolve(true);
   }
 }

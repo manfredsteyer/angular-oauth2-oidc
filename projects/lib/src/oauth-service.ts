@@ -1537,26 +1537,31 @@ export class OAuthService extends AuthConfig {
             loadKeys: () => this.loadJwks()
         };
 
-        if (
-            !this.disableAtHashCheck &&
-            this.requestAccessToken &&
-            !this.checkAtHash(validationParams)
-        ) {
-            const err = 'Wrong at_hash';
-            this.logger.warn(err);
-            return Promise.reject(err);
-        }
 
-        return this.checkSignature(validationParams).then(_ => {
-            const result: ParsedIdToken = {
-                idToken: idToken,
-                idTokenClaims: claims,
-                idTokenClaimsJson: claimsJson,
-                idTokenHeader: header,
-                idTokenHeaderJson: headerJson,
-                idTokenExpiresAt: expiresAtMSec
-            };
-            return result;
+        return this.checkAtHash(validationParams)
+          .then(atHashValid => {
+            if (
+              !this.disableAtHashCheck &&
+              this.requestAccessToken &&
+              !atHashValid
+          ) {
+              const err = 'Wrong at_hash';
+              this.logger.warn(err);
+              return Promise.reject(err);
+          }
+
+          return this.checkSignature(validationParams).then(_ => {
+              const result: ParsedIdToken = {
+                  idToken: idToken,
+                  idTokenClaims: claims,
+                  idTokenClaimsJson: claimsJson,
+                  idTokenHeader: header,
+                  idTokenHeaderJson: headerJson,
+                  idTokenExpiresAt: expiresAtMSec
+              };
+              return result;
+          });
+
         });
     }
 
@@ -1782,7 +1787,7 @@ export class OAuthService extends AuthConfig {
         });
     }
 
-    private checkAtHash(params: ValidationParams): boolean {
+    private async checkAtHash(params: ValidationParams): Promise<boolean> {
         if (!this.tokenValidationHandler) {
             this.logger.warn(
                 'No tokenValidationHandler configured. Cannot check at_hash.'
