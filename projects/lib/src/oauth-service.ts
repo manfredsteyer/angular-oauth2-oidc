@@ -171,6 +171,7 @@ export class OAuthService extends AuthConfig {
         this.restartRefreshTimerIfStillLoggedIn();
     }
 
+
     /**
      * Convenience method that first calls `loadDiscoveryDocument(...)` and
      * directly chains using the `then(...)` part of the promise to call
@@ -178,7 +179,7 @@ export class OAuthService extends AuthConfig {
      *
      * @param options LoginOptions to pass through to `tryLogin(...)`
      */
-    public loadDiscoveryDocumentAndTryLogin(options: LoginOptions = null) {
+    public loadDiscoveryDocumentAndTryLogin(options: LoginOptions = null): Promise<boolean> {
         return this.loadDiscoveryDocument().then(doc => {
             return this.tryLogin(options);
         });
@@ -191,7 +192,7 @@ export class OAuthService extends AuthConfig {
      *
      * @param options LoginOptions to pass through to `tryLogin(...)`
      */
-    public loadDiscoveryDocumentAndLogin(options: LoginOptions = null) {
+    public loadDiscoveryDocumentAndLogin(options: LoginOptions = null): Promise<boolean> {
         return this.loadDiscoveryDocumentAndTryLogin(options).then(_ => {
             if (!this.hasValidIdToken() || !this.hasValidAccessToken()) {
                 this.initImplicitFlow();
@@ -1258,7 +1259,7 @@ export class OAuthService extends AuthConfig {
      *
      * @param options Optional options.
      */
-    public tryLogin(options: LoginOptions = null): Promise<void> {
+    public tryLogin(options: LoginOptions = null): Promise<boolean> {
         options = options || {};
 
         let parts: object;
@@ -1303,13 +1304,13 @@ export class OAuthService extends AuthConfig {
         }
 
         if (this.requestAccessToken && !accessToken) {
-            return Promise.resolve();
+            return Promise.resolve(false);
         }
         if (this.requestAccessToken && !options.disableOAuth2StateCheck && !state) {
-            return Promise.resolve();
+            return Promise.resolve(false);
         }
         if (this.oidc && !idToken) {
-            return Promise.resolve();
+            return Promise.resolve(false);
         }
 
         if (this.sessionChecksEnabled && !sessionState) {
@@ -1346,8 +1347,10 @@ export class OAuthService extends AuthConfig {
             if (this.clearHashAfterLogin && !options.preventClearHashAfterLogin) {
                 location.hash = '';
             }
+
             this.callOnTokenReceivedIfExists(options);
-            return Promise.resolve();
+            return Promise.resolve(true);
+
         }
 
         return this.processIdToken(idToken, accessToken)
@@ -1373,6 +1376,7 @@ export class OAuthService extends AuthConfig {
                 this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
                 this.callOnTokenReceivedIfExists(options);
                 this.inImplicitFlow = false;
+                return true;
             })
             .catch(reason => {
                 this.eventsSubject.next(
