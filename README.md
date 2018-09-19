@@ -37,8 +37,8 @@ Successfully tested with **Angular 6** and its Router, PathLocationStrategy as w
 - The closed issues contain some ideas for PRs and enhancements (see labels)
 
 # Features 
-- Logging in via OAuth2 and OpenId Connect (OIDC) Implicit Flow (where user is redirected to Identity Provider)
-- "Logging in" via Password Flow (where user enters their password into the client)
+- Logging in via OAuth2 and OpenId Connect (OIDC) Implicit Flow (where a user is redirected to Identity Provider)
+- "Logging in" via Password Flow (where a user enters their password into the client)
 - Token Refresh for Password Flow by using a Refresh Token
 - Automatically refreshing a token when/some time before it expires
 - Querying Userinfo Endpoint
@@ -100,7 +100,7 @@ This section shows how to implement login leveraging implicit flow. This is the 
 Single Page Application. It sends the user to the Identity Provider's login page. After logging in, the SPA gets tokens.
 This also allows for single sign on as well as single sign off.
 
-To configure the library the following sample uses the new configuration API introduced with Version 2.1.
+To configure the library, the following sample uses the new configuration API introduced with Version 2.1.
 Hence, the original API is still supported.
 
 ```TypeScript
@@ -229,7 +229,7 @@ var headers = new HttpHeaders({
 });
 ```
 
-Since 3.1 you can also automate this task by switching ``sendAccessToken`` on and by setting ``allowedUrls`` to an array with prefixes for the respective urls. Use lower case for the prefixes.
+Since 3.1 you can also automate this task by switching ``sendAccessToken`` on and by setting ``allowedUrls`` to an array with prefixes for the respective URLs. Use lower case for the prefixes.
 
 ```TypeScript
 OAuthModule.forRoot({
