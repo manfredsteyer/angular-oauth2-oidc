@@ -71,19 +71,20 @@ npm i angular-oauth2-oidc --save
 ## Importing the NgModule
 
 ```TypeScript
+import { HttpClientModule } from '@angular/common/http';
 import { OAuthModule } from 'angular-oauth2-oidc';
-[...]
+// etc.
 
 @NgModule({
   imports: [ 
-    [...]
-    HttpModule,
+    // etc.
+    HttpClientModule,
     OAuthModule.forRoot()
   ],
   declarations: [
     AppComponent,
     HomeComponent,
-    [...]
+    // etc.
   ],
   bootstrap: [
     AppComponent 
@@ -91,7 +92,6 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 })
 export class AppModule {
 }
-
 ``` 
 
 ## Configuring for Implicit Flow
