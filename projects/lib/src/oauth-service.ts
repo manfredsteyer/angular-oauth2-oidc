@@ -15,6 +15,7 @@ import {
     OAuthSuccessEvent
 } from './events';
 import {
+    OAuthLogger,
     OAuthStorage,
     LoginOptions,
     ParsedIdToken,
@@ -33,8 +34,8 @@ import { WebHttpUrlEncodingCodec } from './encoder';
  */
 @Injectable()
 export class OAuthService extends AuthConfig {
-    // extending AuthConfig ist just for LEGACY reasons
-    // to not break existing code
+    // Extending AuthConfig ist just for LEGACY reasons
+    // to not break existing code.
 
     /**
      * The ValidationHandler used to validate received
@@ -56,7 +57,7 @@ export class OAuthService extends AuthConfig {
 
     /**
      * Informs about events, like token_received or token_expires.
-     * See the string enum EventType for a full list of events.
+     * See the string enum EventType for a full list of event types.
      */
     public events: Observable<OAuthEvent>;
 
@@ -64,12 +65,10 @@ export class OAuthService extends AuthConfig {
      * The received (passed around) state, when logging
      * in with implicit flow.
      */
-    public state?= '';
+    public state? = '';
 
     private eventsSubject: Subject<OAuthEvent> = new Subject<OAuthEvent>();
-    private discoveryDocumentLoadedSubject: Subject<object> = new Subject<
-        object
-        >();
+    private discoveryDocumentLoadedSubject: Subject<object> = new Subject<object>();
     private silentRefreshPostMessageEventListener: EventListener;
     private grantTypesSupported: Array<string> = [];
     private _storage: OAuthStorage;
@@ -87,7 +86,8 @@ export class OAuthService extends AuthConfig {
         @Optional() storage: OAuthStorage,
         @Optional() tokenValidationHandler: ValidationHandler,
         @Optional() private config: AuthConfig,
-        private urlHelper: UrlHelperService
+        private urlHelper: UrlHelperService,
+        private logger: OAuthLogger,
     ) {
         super();
 
@@ -109,11 +109,14 @@ export class OAuthService extends AuthConfig {
                 this.setStorage(sessionStorage);
             }
         } catch (e) {
+
             console.error(
-                'cannot access sessionStorage. Consider setting an own storage implementation using setStorage',
+                'No OAuthStorage provided and cannot access default (sessionStorage).'
+                + 'Consider providing a custom OAuthStorage implementation in your module.',
                 e
             );
         }
+
         this.setupRefreshTimer();
     }
 
@@ -154,26 +157,42 @@ export class OAuthService extends AuthConfig {
     }
 
     /**
-     *
+     * Will setup up silent refreshing for when the token is
+     * about to expire.
      * @param params Additional parameter to pass
      */
     public setupAutomaticSilentRefresh(params: object = {}) {
         this.events.pipe(filter(e => e.type === 'token_expires')).subscribe(e => {
             this.silentRefresh(params).catch(_ => {
-                this.debug('automatic silent refresh did not work');
+                this.debug('Automatic silent refresh did not work');
             });
         });
 
         this.restartRefreshTimerIfStillLoggedIn();
     }
 
-    public loadDiscoveryDocumentAndTryLogin(options: LoginOptions = null) {
+
+    /**
+     * Convenience method that first calls `loadDiscoveryDocument(...)` and
+     * directly chains using the `then(...)` part of the promise to call
+     * the `tryLogin(...)` method.
+     *
+     * @param options LoginOptions to pass through to `tryLogin(...)`
+     */
+    public loadDiscoveryDocumentAndTryLogin(options: LoginOptions = null): Promise<boolean> {
         return this.loadDiscoveryDocument().then(doc => {
             return this.tryLogin(options);
         });
     }
 
-    public loadDiscoveryDocumentAndLogin(options: LoginOptions = null) {
+    /**
+     * Convenience method that first calls `loadDiscoveryDocumentAndTryLogin(...)`
+     * and if then chains to `initImplicitFlow()`, but only if there is no valid
+     * IdToken or no valid AccessToken.
+     *
+     * @param options LoginOptions to pass through to `tryLogin(...)`
+     */
+    public loadDiscoveryDocumentAndLogin(options: LoginOptions = null): Promise<boolean> {
         return this.loadDiscoveryDocumentAndTryLogin(options).then(_ => {
             if (!this.hasValidIdToken() || !this.hasValidAccessToken()) {
                 this.initImplicitFlow();
@@ -186,7 +205,7 @@ export class OAuthService extends AuthConfig {
 
     private debug(...args): void {
         if (this.showDebugInformation) {
-            console.debug.apply(console, args);
+            this.logger.debug.apply(console, args);
         }
     }
 
@@ -366,7 +385,7 @@ export class OAuthService extends AuthConfig {
             }
 
             if (!this.validateUrlForHttps(fullUrl)) {
-                reject('issuer must use Https. Also check property requireHttps.');
+                reject('issuer must use https, or config value for property requireHttps must allow http');
                 return;
             }
 
@@ -420,7 +439,7 @@ export class OAuthService extends AuthConfig {
                         });
                 },
                 err => {
-                    console.error('error loading discovery document', err);
+                    this.logger.error('error loading discovery document', err);
                     this.eventsSubject.next(
                         new OAuthErrorEvent('discovery_document_load_error', err)
                     );
@@ -442,7 +461,7 @@ export class OAuthService extends AuthConfig {
                         resolve(jwks);
                     },
                     err => {
-                        console.error('error loading jwks', err);
+                        this.logger.error('error loading jwks', err);
                         this.eventsSubject.next(
                             new OAuthErrorEvent('jwks_load_error', err)
                         );
@@ -459,7 +478,7 @@ export class OAuthService extends AuthConfig {
         let errors: string[];
 
         if (!this.skipIssuerCheck && doc.issuer !== this.issuer) {
-            console.error(
+            this.logger.error(
                 'invalid issuer in discovery document',
                 'expected: ' + this.issuer,
                 'current: ' + doc.issuer
@@ -469,7 +488,7 @@ export class OAuthService extends AuthConfig {
 
         errors = this.validateUrlFromDiscoveryDocument(doc.authorization_endpoint);
         if (errors.length > 0) {
-            console.error(
+            this.logger.error(
                 'error validating authorization_endpoint in discovery document',
                 errors
             );
@@ -478,7 +497,7 @@ export class OAuthService extends AuthConfig {
 
         errors = this.validateUrlFromDiscoveryDocument(doc.end_session_endpoint);
         if (errors.length > 0) {
-            console.error(
+            this.logger.error(
                 'error validating end_session_endpoint in discovery document',
                 errors
             );
@@ -487,7 +506,7 @@ export class OAuthService extends AuthConfig {
 
         errors = this.validateUrlFromDiscoveryDocument(doc.token_endpoint);
         if (errors.length > 0) {
-            console.error(
+            this.logger.error(
                 'error validating token_endpoint in discovery document',
                 errors
             );
@@ -495,7 +514,7 @@ export class OAuthService extends AuthConfig {
 
         errors = this.validateUrlFromDiscoveryDocument(doc.userinfo_endpoint);
         if (errors.length > 0) {
-            console.error(
+            this.logger.error(
                 'error validating userinfo_endpoint in discovery document',
                 errors
             );
@@ -504,18 +523,16 @@ export class OAuthService extends AuthConfig {
 
         errors = this.validateUrlFromDiscoveryDocument(doc.jwks_uri);
         if (errors.length > 0) {
-            console.error('error validating jwks_uri in discovery document', errors);
+            this.logger.error('error validating jwks_uri in discovery document', errors);
             return false;
         }
 
         if (this.sessionChecksEnabled && !doc.check_session_iframe) {
-            console.warn(
+            this.logger.warn(
                 'sessionChecksEnabled is activated but discovery document' +
                 ' does not contain a check_session_iframe field'
             );
         }
-
-        // this.sessionChecksEnabled = !!doc.check_session_iframe;
 
         return true;
     }
@@ -527,7 +544,7 @@ export class OAuthService extends AuthConfig {
      * about the user in question.
      *
      * When using this, make sure that the property oidc is set to false.
-     * Otherwise stricter validations take happen that makes this operation
+     * Otherwise stricter validations take place that make this operation
      * fail.
      *
      * @param userName
@@ -548,8 +565,7 @@ export class OAuthService extends AuthConfig {
      * Loads the user profile by accessing the user info endpoint defined by OpenId Connect.
      *
      * When using this with OAuth2 password flow, make sure that the property oidc is set to false.
-     * Otherwise stricter validations take happen that makes this operation
-     * fail.
+     * Otherwise stricter validations take place that make this operation fail.
      */
     public loadUserProfile(): Promise<object> {
         if (!this.hasValidAccessToken()) {
@@ -557,7 +573,7 @@ export class OAuthService extends AuthConfig {
         }
         if (!this.validateUrlForHttps(this.userinfoEndpoint)) {
             throw new Error(
-                'userinfoEndpoint must use Http. Also check property requireHttps.'
+                'userinfoEndpoint must use http, or config value for property requireHttps must allow http'
             );
         }
 
@@ -595,7 +611,7 @@ export class OAuthService extends AuthConfig {
                     resolve(info);
                 },
                 err => {
-                    console.error('error loading user info', err);
+                    this.logger.error('error loading user info', err);
                     this.eventsSubject.next(
                         new OAuthErrorEvent('user_profile_load_error', err)
                     );
@@ -618,7 +634,7 @@ export class OAuthService extends AuthConfig {
     ): Promise<object> {
         if (!this.validateUrlForHttps(this.tokenEndpoint)) {
             throw new Error(
-                'tokenEndpoint must use Http. Also check property requireHttps.'
+                'tokenEndpoint must use http, or config value for property requireHttps must allow http'
             );
         }
 
@@ -638,8 +654,8 @@ export class OAuthService extends AuthConfig {
             if (this.useHttpBasicAuthForPasswordFlow) {
                 const header = btoa(`${this.clientId}:${this.dummyClientSecret}`);
                 headers = headers.set(
-                    'Authentication',
-                    'BASIC ' + header);
+                    'Authorization',
+                    'Basic ' + header);
             }
 
             if (!this.useHttpBasicAuthForPasswordFlow) {
@@ -677,7 +693,7 @@ export class OAuthService extends AuthConfig {
                         resolve(tokenResponse);
                     },
                     err => {
-                        console.error('Error performing password flow', err);
+                        this.logger.error('Error performing password flow', err);
                         this.eventsSubject.next(new OAuthErrorEvent('token_error', err));
                         reject(err);
                     }
@@ -695,7 +711,7 @@ export class OAuthService extends AuthConfig {
     public refreshToken(): Promise<object> {
         if (!this.validateUrlForHttps(this.tokenEndpoint)) {
             throw new Error(
-                'tokenEndpoint must use Http. Also check property requireHttps.'
+                'tokenEndpoint must use http, or config value for property requireHttps must allow http'
             );
         }
 
@@ -738,7 +754,7 @@ export class OAuthService extends AuthConfig {
                         resolve(tokenResponse);
                     },
                     err => {
-                        console.error('Error performing password flow', err);
+                        this.logger.error('Error performing password flow', err);
                         this.eventsSubject.next(
                             new OAuthErrorEvent('token_refresh_error', err)
                         );
@@ -802,8 +818,8 @@ export class OAuthService extends AuthConfig {
 
     /**
      * Performs a silent refresh for implicit flow.
-     * Use this method to get a new tokens when/ before
-     * the existing tokens expires.
+     * Use this method to get new tokens when/before
+     * the existing tokens expire.
      */
     public silentRefresh(params: object = {}, noPrompt = true): Promise<OAuthEvent> {
         const claims: object = this.getIdentityClaims() || {};
@@ -812,15 +828,9 @@ export class OAuthService extends AuthConfig {
             params['id_token_hint'] = this.getIdToken();
         }
 
-        /*
-            if (!claims) {
-                throw new Error('cannot perform a silent refresh as the user is not logged in');
-            }
-            */
-
         if (!this.validateUrlForHttps(this.loginUrl)) {
             throw new Error(
-                'tokenEndpoint must use Https. Also check property requireHttps.'
+                'tokenEndpoint must use https, or config value for property requireHttps must allow http'
             );
         }
 
@@ -831,6 +841,7 @@ export class OAuthService extends AuthConfig {
         const existingIframe = document.getElementById(
             this.silentRefreshIFrameName
         );
+
         if (existingIframe) {
             document.body.removeChild(existingIframe);
         }
@@ -887,15 +898,14 @@ export class OAuthService extends AuthConfig {
         }
         if (!this.sessionCheckIFrameUrl) {
             console.warn(
-                'sessionChecksEnabled is activated but there ' +
-                'is no sessionCheckIFrameUrl'
+                'sessionChecksEnabled is activated but there is no sessionCheckIFrameUrl'
             );
             return false;
         }
         const sessionState = this.getSessionState();
         if (!sessionState) {
             console.warn(
-                'sessionChecksEnabled is activated but there ' + 'is no session_state'
+                'sessionChecksEnabled is activated but there is no session_state'
             );
             return false;
         }
@@ -1011,7 +1021,6 @@ export class OAuthService extends AuthConfig {
 
         const url = this.sessionCheckIFrameUrl;
         iframe.setAttribute('src', url);
-        // iframe.style.visibility = 'hidden';
         iframe.style.display = 'none';
         document.body.appendChild(iframe);
 
@@ -1037,7 +1046,7 @@ export class OAuthService extends AuthConfig {
         const iframe: any = document.getElementById(this.sessionCheckIFrameName);
 
         if (!iframe) {
-            console.warn(
+            this.logger.warn(
                 'checkSession did not find iframe',
                 this.sessionCheckIFrameName
             );
@@ -1083,12 +1092,16 @@ export class OAuthService extends AuthConfig {
                 );
             }
 
-            if (this.oidc && this.requestAccessToken) {
-                this.responseType = 'id_token token';
-            } else if (this.oidc && !this.requestAccessToken) {
-                this.responseType = 'id_token';
+            if (this.config.responseType) {
+              this.responseType = this.config.responseType;
             } else {
-                this.responseType = 'token';
+              if (this.oidc && this.requestAccessToken) {
+                  this.responseType = 'id_token token';
+              } else if (this.oidc && !this.requestAccessToken) {
+                  this.responseType = 'id_token';
+              } else {
+                  this.responseType = 'token';
+              }
             }
 
             const seperationChar = that.loginUrl.indexOf('?') > -1 ? '&' : '?';
@@ -1157,7 +1170,7 @@ export class OAuthService extends AuthConfig {
 
         if (!this.validateUrlForHttps(this.loginUrl)) {
             throw new Error(
-                'loginUrl must use Http. Also check property requireHttps.'
+                'loginUrl must use http, or config value for property requireHttps must allow http'
             );
         }
 
@@ -1175,18 +1188,17 @@ export class OAuthService extends AuthConfig {
                 location.href = url;
             })
             .catch(error => {
-                console.error('Error in initImplicitFlow');
-                console.error(error);
+                console.error('Error in initImplicitFlow', error);
                 this.inImplicitFlow = false;
             });
     }
 
     /**
      * Starts the implicit flow and redirects to user to
-     * the auth servers login url.
+     * the auth servers' login url.
      *
-     * @param additionalState Optinal state that is passes around.
-     *  You find this state in the property ``state`` after ``tryLogin`` logged in the user.
+     * @param additionalState Optional state that is passed around.
+     *  You'll find this state in the property `state` after `tryLogin` logged in the user.
      * @param params Hash with additional parameter. If it is a string, it is used for the
      *               parameter loginHint (for the sake of compatibility with former versions)
      */
@@ -1245,9 +1257,9 @@ export class OAuthService extends AuthConfig {
      * parsed, validated and used to sign the user in to the
      * current client.
      *
-     * @param options Optinal options.
+     * @param options Optional options.
      */
-    public tryLogin(options: LoginOptions = null): Promise<void> {
+    public tryLogin(options: LoginOptions = null): Promise<boolean> {
         options = options || {};
 
         let parts: object;
@@ -1287,24 +1299,24 @@ export class OAuthService extends AuthConfig {
 
         if (!this.requestAccessToken && !this.oidc) {
             return Promise.reject(
-                'Either requestAccessToken or oidc or both must be true.'
+                'Either requestAccessToken or oidc (or both) must be true.'
             );
         }
 
         if (this.requestAccessToken && !accessToken) {
-            return Promise.resolve();
+            return Promise.resolve(false);
         }
         if (this.requestAccessToken && !options.disableOAuth2StateCheck && !state) {
-            return Promise.resolve();
+            return Promise.resolve(false);
         }
         if (this.oidc && !idToken) {
-            return Promise.resolve();
+            return Promise.resolve(false);
         }
 
         if (this.sessionChecksEnabled && !sessionState) {
-            console.warn(
+            this.logger.warn(
                 'session checks (Session Status Change Notification) ' +
-                'is activated in the configuration but the id_token ' +
+                'were activated in the configuration but the id_token ' +
                 'does not contain a session_state claim'
             );
         }
@@ -1335,7 +1347,10 @@ export class OAuthService extends AuthConfig {
             if (this.clearHashAfterLogin && !options.preventClearHashAfterLogin) {
                 location.hash = '';
             }
-            return Promise.resolve();
+
+            this.callOnTokenReceivedIfExists(options);
+            return Promise.resolve(true);
+
         }
 
         return this.processIdToken(idToken, accessToken)
@@ -1361,13 +1376,14 @@ export class OAuthService extends AuthConfig {
                 this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
                 this.callOnTokenReceivedIfExists(options);
                 this.inImplicitFlow = false;
+                return true;
             })
             .catch(reason => {
                 this.eventsSubject.next(
                     new OAuthErrorEvent('token_validation_error', reason)
                 );
-                console.error('Error validating tokens');
-                console.error(reason);
+                this.logger.error('Error validating tokens');
+                this.logger.error(reason);
                 return Promise.reject(reason);
             });
     }
@@ -1378,7 +1394,7 @@ export class OAuthService extends AuthConfig {
     ): boolean {
         const savedNonce = this._storage.getItem('nonce');
         if (savedNonce !== nonceInState) {
-            const err = 'validating access_token failed. wrong state/nonce.';
+            const err = 'Validating access_token failed, wrong state/nonce.';
             console.error(err, savedNonce, nonceInState);
             return false;
         }
@@ -1428,36 +1444,28 @@ export class OAuthService extends AuthConfig {
         if (Array.isArray(claims.aud)) {
             if (claims.aud.every(v => v !== this.clientId)) {
                 const err = 'Wrong audience: ' + claims.aud.join(',');
-                console.warn(err);
+                this.logger.warn(err);
                 return Promise.reject(err);
             }
         } else {
             if (claims.aud !== this.clientId) {
                 const err = 'Wrong audience: ' + claims.aud;
-                console.warn(err);
+                this.logger.warn(err);
                 return Promise.reject(err);
             }
         }
 
-        /*
-            if (this.getKeyCount() > 1 && !header.kid) {
-                let err = 'There needs to be a kid property in the id_token header when multiple keys are defined via the property jwks';
-                console.warn(err);
-                return Promise.reject(err);
-            }
-            */
-
         if (!claims.sub) {
             const err = 'No sub claim in id_token';
-            console.warn(err);
+            this.logger.warn(err);
             return Promise.reject(err);
         }
 
         /* For now, we only check whether the sub against
-             * silentRefreshSubject when sessionChecksEnabled is on
-             * We will reconsider in a later version to do this
-             * in every other case too.
-             */
+         * silentRefreshSubject when sessionChecksEnabled is on
+         * We will reconsider in a later version to do this
+         * in every other case too.
+         */
         if (
             this.sessionChecksEnabled &&
             this.silentRefreshSubject &&
@@ -1469,25 +1477,25 @@ export class OAuthService extends AuthConfig {
                 claims['sub']
                 }`;
 
-            console.warn(err);
+            this.logger.warn(err);
             return Promise.reject(err);
         }
 
         if (!claims.iat) {
             const err = 'No iat claim in id_token';
-            console.warn(err);
+            this.logger.warn(err);
             return Promise.reject(err);
         }
 
         if (claims.iss !== this.issuer) {
             const err = 'Wrong issuer: ' + claims.iss;
-            console.warn(err);
+            this.logger.warn(err);
             return Promise.reject(err);
         }
 
         if (claims.nonce !== savedNonce) {
             const err = 'Wrong nonce: ' + claims.nonce;
-            console.warn(err);
+            this.logger.warn(err);
             return Promise.reject(err);
         }
 
@@ -1497,7 +1505,7 @@ export class OAuthService extends AuthConfig {
             !claims['at_hash']
         ) {
             const err = 'An at_hash is needed!';
-            console.warn(err);
+            this.logger.warn(err);
             return Promise.reject(err);
         }
 
@@ -1510,7 +1518,7 @@ export class OAuthService extends AuthConfig {
             issuedAtMSec - tenMinutesInMsec >= now ||
             expiresAtMSec + tenMinutesInMsec <= now
         ) {
-            const err = 'Token has been expired';
+            const err = 'Token has expired';
             console.error(err);
             console.error({
                 now: now,
@@ -1529,6 +1537,7 @@ export class OAuthService extends AuthConfig {
             loadKeys: () => this.loadJwks()
         };
 
+
         return this.checkAtHash(validationParams)
           .then(atHashValid => {
             if (
@@ -1537,7 +1546,7 @@ export class OAuthService extends AuthConfig {
               !atHashValid
           ) {
               const err = 'Wrong at_hash';
-              console.warn(err);
+              this.logger.warn(err);
               return Promise.reject(err);
           }
 
@@ -1552,6 +1561,7 @@ export class OAuthService extends AuthConfig {
               };
               return result;
           });
+
         });
     }
 
@@ -1653,7 +1663,7 @@ export class OAuthService extends AuthConfig {
     }
 
     /**
-     * Checkes, whether there is a valid id_token.
+     * Checks whether there is a valid id_token.
      */
     public hasValidIdToken(): boolean {
         if (this.getIdToken()) {
@@ -1716,7 +1726,7 @@ export class OAuthService extends AuthConfig {
 
         if (!this.validateUrlForHttps(this.logoutUrl)) {
             throw new Error(
-                'logoutUrl must use Http. Also check property requireHttps.'
+                'logoutUrl must use http, or config value for property requireHttps must allow http'
             );
         }
 
@@ -1779,7 +1789,7 @@ export class OAuthService extends AuthConfig {
 
     private async checkAtHash(params: ValidationParams): Promise<boolean> {
         if (!this.tokenValidationHandler) {
-            console.warn(
+            this.logger.warn(
                 'No tokenValidationHandler configured. Cannot check at_hash.'
             );
             return true;
@@ -1789,7 +1799,7 @@ export class OAuthService extends AuthConfig {
 
     private checkSignature(params: ValidationParams): Promise<any> {
         if (!this.tokenValidationHandler) {
-            console.warn(
+            this.logger.warn(
                 'No tokenValidationHandler configured. Cannot check signature.'
             );
             return Promise.resolve(null);

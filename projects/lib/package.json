@@ -4,7 +4,7 @@
   "author": {
     "name": "Manfred Steyer"
   },
-  "version": "4.0.2",
+  "version": "4.0.3",
   "repository": "manfredsteyer/angular-oauth2-oidc",
   "peerDependencies": {
     "@angular/common": "^6.0.0",

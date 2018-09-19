@@ -37,8 +37,8 @@ Successfully tested with **Angular 6** and its Router, PathLocationStrategy as w
 - The closed issues contain some ideas for PRs and enhancements (see labels)
 
 # Features 
-- Logging in via OAuth2 and OpenId Connect (OIDC) Implicit Flow (where user is redirected to Identity Provider)
-- "Logging in" via Password Flow (where user enters their password into the client)
+- Logging in via OAuth2 and OpenId Connect (OIDC) Implicit Flow (where a user is redirected to Identity Provider)
+- "Logging in" via Password Flow (where a user enters their password into the client)
 - Token Refresh for Password Flow by using a Refresh Token
 - Automatically refreshing a token when/some time before it expires
 - Querying Userinfo Endpoint
@@ -71,19 +71,20 @@ npm i angular-oauth2-oidc --save
 ## Importing the NgModule
 
 ```TypeScript
+import { HttpClientModule } from '@angular/common/http';
 import { OAuthModule } from 'angular-oauth2-oidc';
-[...]
+// etc.
 
 @NgModule({
   imports: [ 
-    [...]
-    HttpModule,
+    // etc.
+    HttpClientModule,
     OAuthModule.forRoot()
   ],
   declarations: [
     AppComponent,
     HomeComponent,
-    [...]
+    // etc.
   ],
   bootstrap: [
     AppComponent 
@@ -91,7 +92,6 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 })
 export class AppModule {
 }
-
 ``` 
 
 ## Configuring for Implicit Flow
@@ -100,7 +100,7 @@ This section shows how to implement login leveraging implicit flow. This is the 
 Single Page Application. It sends the user to the Identity Provider's login page. After logging in, the SPA gets tokens.
 This also allows for single sign on as well as single sign off.
 
-To configure the library the following sample uses the new configuration API introduced with Version 2.1.
+To configure the library, the following sample uses the new configuration API introduced with Version 2.1.
 Hence, the original API is still supported.
 
 ```TypeScript
@@ -229,7 +229,7 @@ var headers = new HttpHeaders({
 });
 ```
 
-Since 3.1 you can also automate this task by switching ``sendAccessToken`` on and by setting ``allowedUrls`` to an array with prefixes for the respective urls. Use lower case for the prefixes.
+Since 3.1 you can also automate this task by switching ``sendAccessToken`` on and by setting ``allowedUrls`` to an array with prefixes for the respective URLs. Use lower case for the prefixes.
 
 ```TypeScript
 OAuthModule.forRoot({
@@ -250,10 +250,11 @@ See the [documentation](https://manfredsteyer.github.io/angular-oauth2-oidc/docs
 
 ## Tutorials
 
+* [Tutorial with Demo Servers available online](https://www.softwarearchitekt.at/post/2016/07/03/authentication-in-angular-2-with-oauth2-oidc-and-guards-for-the-newest-new-router-english-version.aspx)
 * [Angular Authentication with OpenID Connect and Okta in 20 Minutes](https://developer.okta.com/blog/2017/04/17/angular-authentication-with-oidc)
 * [Add Authentication to Your Angular PWA](https://developer.okta.com/blog/2017/06/13/add-authentication-angular-pwa)
 * [Build an Ionic App with User Authentication](https://developer.okta.com/blog/2017/08/22/build-an-ionic-app-with-user-authentication)
-
+* [On-Site Workshops](https://www.softwarearchitekt.at)
 
 
 

@@ -70,7 +70,7 @@ this
     .catch(err => console.error('refresh error', err));
 ```
 
-When there is an error in the iframe that prevents the communication with the main application, silentRefresh will give you a timeout. To configure the timespan for this, you can set the property ``siletRefreshTimeout`` (msec). The default value is 20.000 (20 seconds).
+When there is an error in the iframe that prevents the communication with the main application, silentRefresh will give you a timeout. To configure the timespan for this, you can set the property ``silentRefreshTimeout`` (msec). The default value is 20.000 (20 seconds).
 
 ### Automatically refreshing a token when/ before it expires
 
