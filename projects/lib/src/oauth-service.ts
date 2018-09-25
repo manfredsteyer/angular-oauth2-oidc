@@ -232,7 +232,7 @@ export class OAuthService extends AuthConfig {
 
     private validateUrlForHttps(url: string): boolean {
         if (!url) {
-            return true;
+            return false;
         }
 
         const lcUrl = url.toLowerCase();
