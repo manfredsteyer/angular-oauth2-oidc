@@ -935,22 +935,30 @@ export class OAuthService extends AuthConfig {
                 );
             }
 
+            // only run in Angular zone if it is 'changed' or 'error'
             switch (e.data) {
                 case 'unchanged':
                     this.handleSessionUnchanged();
                     break;
                 case 'changed':
-                    this.handleSessionChange();
+                    this.ngZone.run(() => {
+                        this.handleSessionChange() 
+                    });
                     break;
                 case 'error':
-                    this.handleSessionError();
+                    this.ngZone.run(() => { 
+                        this.handleSessionError()
+                    });
                     break;
             }
 
             this.debug('got info from session check inframe', e);
         };
 
-        window.addEventListener('message', this.sessionCheckEventListener);
+        // prevent Angular from refreshing the view on every message (runs in intervals)
+        this.ngZone.runOutsideAngular(() => {
+            window.addEventListener('message', this.sessionCheckEventListener);
+        });
     }
 
     private handleSessionUnchanged(): void {
@@ -1029,10 +1037,12 @@ export class OAuthService extends AuthConfig {
 
     private startSessionCheckTimer(): void {
         this.stopSessionCheckTimer();
-        this.sessionCheckTimer = setInterval(
-            this.checkSession.bind(this),
-            this.sessionCheckIntervall
-        );
+        this.ngZone.runOutsideAngular(() => {
+            this.sessionCheckTimer = setInterval(
+                this.checkSession.bind(this),
+                this.sessionCheckIntervall
+            );
+        });
     }
 
     private stopSessionCheckTimer(): void {
