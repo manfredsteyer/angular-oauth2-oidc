@@ -67,27 +67,27 @@ export class OAuthService extends AuthConfig {
      */
     public state? = '';
 
-    private eventsSubject: Subject<OAuthEvent> = new Subject<OAuthEvent>();
-    private discoveryDocumentLoadedSubject: Subject<object> = new Subject<object>();
-    private silentRefreshPostMessageEventListener: EventListener;
-    private grantTypesSupported: Array<string> = [];
-    private _storage: OAuthStorage;
-    private accessTokenTimeoutSubscription: Subscription;
-    private idTokenTimeoutSubscription: Subscription;
-    private sessionCheckEventListener: EventListener;
-    private jwksUri: string;
-    private sessionCheckTimer: any;
-    private silentRefreshSubject: string;
-    private inImplicitFlow = false;
+    protected eventsSubject: Subject<OAuthEvent> = new Subject<OAuthEvent>();
+    protected discoveryDocumentLoadedSubject: Subject<object> = new Subject<object>();
+    protected silentRefreshPostMessageEventListener: EventListener;
+    protected grantTypesSupported: Array<string> = [];
+    protected _storage: OAuthStorage;
+    protected accessTokenTimeoutSubscription: Subscription;
+    protected idTokenTimeoutSubscription: Subscription;
+    protected sessionCheckEventListener: EventListener;
+    protected jwksUri: string;
+    protected sessionCheckTimer: any;
+    protected silentRefreshSubject: string;
+    protected inImplicitFlow = false;
 
     constructor(
-        private ngZone: NgZone,
-        private http: HttpClient,
+        protected ngZone: NgZone,
+        protected http: HttpClient,
         @Optional() storage: OAuthStorage,
         @Optional() tokenValidationHandler: ValidationHandler,
-        @Optional() private config: AuthConfig,
-        private urlHelper: UrlHelperService,
-        private logger: OAuthLogger,
+        @Optional() protected config: AuthConfig,
+        protected urlHelper: UrlHelperService,
+        protected logger: OAuthLogger,
     ) {
         super();
 
@@ -138,7 +138,7 @@ export class OAuthService extends AuthConfig {
         this.configChanged();
     }
 
-    private configChanged(): void { }
+    protected configChanged(): void { }
 
     public restartSessionChecksIfStillLoggedIn(): void {
         if (this.hasValidIdToken()) {
@@ -146,11 +146,11 @@ export class OAuthService extends AuthConfig {
         }
     }
 
-    private restartRefreshTimerIfStillLoggedIn(): void {
+    protected restartRefreshTimerIfStillLoggedIn(): void {
         this.setupExpirationTimers();
     }
 
-    private setupSessionCheck() {
+    protected setupSessionCheck() {
         this.events.pipe(filter(e => e.type === 'token_received')).subscribe(e => {
             this.initSessionCheck();
         });
@@ -203,13 +203,13 @@ export class OAuthService extends AuthConfig {
         });
     }
 
-    private debug(...args): void {
+    protected debug(...args): void {
         if (this.showDebugInformation) {
             this.logger.debug.apply(console, args);
         }
     }
 
-    private validateUrlFromDiscoveryDocument(url: string): string[] {
+    protected validateUrlFromDiscoveryDocument(url: string): string[] {
         const errors: string[] = [];
         const httpsCheck = this.validateUrlForHttps(url);
         const issuerCheck = this.validateUrlAgainstIssuer(url);
@@ -230,7 +230,7 @@ export class OAuthService extends AuthConfig {
         return errors;
     }
 
-    private validateUrlForHttps(url: string): boolean {
+    protected validateUrlForHttps(url: string): boolean {
         if (!url) {
             return true;
         }
@@ -252,7 +252,7 @@ export class OAuthService extends AuthConfig {
         return lcUrl.startsWith('https://');
     }
 
-    private validateUrlAgainstIssuer(url: string) {
+    protected validateUrlAgainstIssuer(url: string) {
         if (!this.strictDiscoveryDocumentValidation) {
             return true;
         }
@@ -262,7 +262,7 @@ export class OAuthService extends AuthConfig {
         return url.toLowerCase().startsWith(this.issuer.toLowerCase());
     }
 
-    private setupRefreshTimer(): void {
+    protected setupRefreshTimer(): void {
         if (typeof window === 'undefined') {
             this.debug('timer not supported on this plattform');
             return;
@@ -281,7 +281,7 @@ export class OAuthService extends AuthConfig {
         });
     }
 
-    private setupExpirationTimers(): void {
+    protected setupExpirationTimers(): void {
         const idTokenExp = this.getIdTokenExpiration() || Number.MAX_VALUE;
         const accessTokenExp = this.getAccessTokenExpiration() || Number.MAX_VALUE;
         const useAccessTokenExp = accessTokenExp <= idTokenExp;
@@ -295,7 +295,7 @@ export class OAuthService extends AuthConfig {
         }
     }
 
-    private setupAccessTokenTimer(): void {
+    protected setupAccessTokenTimer(): void {
         const expiration = this.getAccessTokenExpiration();
         const storedAt = this.getAccessTokenStoredAt();
         const timeout = this.calcTimeout(storedAt, expiration);
@@ -313,7 +313,7 @@ export class OAuthService extends AuthConfig {
         });
     }
 
-    private setupIdTokenTimer(): void {
+    protected setupIdTokenTimer(): void {
         const expiration = this.getIdTokenExpiration();
         const storedAt = this.getIdTokenStoredAt();
         const timeout = this.calcTimeout(storedAt, expiration);
@@ -331,19 +331,19 @@ export class OAuthService extends AuthConfig {
         });
     }
 
-    private clearAccessTokenTimer(): void {
+    protected clearAccessTokenTimer(): void {
         if (this.accessTokenTimeoutSubscription) {
             this.accessTokenTimeoutSubscription.unsubscribe();
         }
     }
 
-    private clearIdTokenTimer(): void {
+    protected clearIdTokenTimer(): void {
         if (this.idTokenTimeoutSubscription) {
             this.idTokenTimeoutSubscription.unsubscribe();
         }
     }
 
-    private calcTimeout(storedAt: number, expiration: number): number {
+    protected calcTimeout(storedAt: number, expiration: number): number {
         const delta = (expiration - storedAt) * this.timeoutFactor;
         return delta;
     }
@@ -449,7 +449,7 @@ export class OAuthService extends AuthConfig {
         });
     }
 
-    private loadJwks(): Promise<object> {
+    protected loadJwks(): Promise<object> {
         return new Promise<object>((resolve, reject) => {
             if (this.jwksUri) {
                 this.http.get(this.jwksUri).subscribe(
@@ -474,7 +474,7 @@ export class OAuthService extends AuthConfig {
         });
     }
 
-    private validateDiscoveryDocument(doc: OidcDiscoveryDoc): boolean {
+    protected validateDiscoveryDocument(doc: OidcDiscoveryDoc): boolean {
         let errors: string[];
 
         if (!this.skipIssuerCheck && doc.issuer !== this.issuer) {
@@ -764,7 +764,7 @@ export class OAuthService extends AuthConfig {
         });
     }
 
-    private removeSilentRefreshEventListener(): void {
+    protected removeSilentRefreshEventListener(): void {
         if (this.silentRefreshPostMessageEventListener) {
             window.removeEventListener(
                 'message',
@@ -774,7 +774,7 @@ export class OAuthService extends AuthConfig {
         }
     }
 
-    private setupSilentRefreshEventListener(): void {
+    protected setupSilentRefreshEventListener(): void {
         this.removeSilentRefreshEventListener();
 
         this.silentRefreshPostMessageEventListener = (e: MessageEvent) => {
@@ -892,7 +892,7 @@ export class OAuthService extends AuthConfig {
             .toPromise();
     }
 
-    private canPerformSessionCheck(): boolean {
+    protected canPerformSessionCheck(): boolean {
         if (!this.sessionChecksEnabled) {
             return false;
         }
@@ -916,7 +916,7 @@ export class OAuthService extends AuthConfig {
         return true;
     }
 
-    private setupSessionCheckEventListener(): void {
+    protected setupSessionCheckEventListener(): void {
         this.removeSessionCheckEventListener();
 
         this.sessionCheckEventListener = (e: MessageEvent) => {
@@ -961,11 +961,11 @@ export class OAuthService extends AuthConfig {
         });
     }
 
-    private handleSessionUnchanged(): void {
+    protected handleSessionUnchanged(): void {
         this.debug('session check', 'session unchanged');
     }
 
-    private handleSessionChange(): void {
+    protected handleSessionChange(): void {
         /* events: session_changed, relogin, stopTimer, logged_out*/
         this.eventsSubject.next(new OAuthInfoEvent('session_changed'));
         this.stopSessionCheckTimer();
@@ -980,7 +980,7 @@ export class OAuthService extends AuthConfig {
         }
     }
 
-    private waitForSilentRefreshAfterSessionChange() {
+    protected waitForSilentRefreshAfterSessionChange() {
         this.events
             .pipe(
                 filter(
@@ -1000,19 +1000,19 @@ export class OAuthService extends AuthConfig {
             });
     }
 
-    private handleSessionError(): void {
+    protected handleSessionError(): void {
         this.stopSessionCheckTimer();
         this.eventsSubject.next(new OAuthInfoEvent('session_error'));
     }
 
-    private removeSessionCheckEventListener(): void {
+    protected removeSessionCheckEventListener(): void {
         if (this.sessionCheckEventListener) {
             window.removeEventListener('message', this.sessionCheckEventListener);
             this.sessionCheckEventListener = null;
         }
     }
 
-    private initSessionCheck(): void {
+    protected initSessionCheck(): void {
         if (!this.canPerformSessionCheck()) {
             return;
         }
@@ -1035,7 +1035,7 @@ export class OAuthService extends AuthConfig {
         this.startSessionCheckTimer();
     }
 
-    private startSessionCheckTimer(): void {
+    protected startSessionCheckTimer(): void {
         this.stopSessionCheckTimer();
         this.ngZone.runOutsideAngular(() => {
             this.sessionCheckTimer = setInterval(
@@ -1045,14 +1045,14 @@ export class OAuthService extends AuthConfig {
         });
     }
 
-    private stopSessionCheckTimer(): void {
+    protected stopSessionCheckTimer(): void {
         if (this.sessionCheckTimer) {
             clearInterval(this.sessionCheckTimer);
             this.sessionCheckTimer = null;
         }
     }
 
-    private checkSession(): void {
+    protected checkSession(): void {
         const iframe: any = document.getElementById(this.sessionCheckIFrameName);
 
         if (!iframe) {
@@ -1072,7 +1072,7 @@ export class OAuthService extends AuthConfig {
         iframe.contentWindow.postMessage(message, this.issuer);
     }
 
-    private createLoginUrl(
+    protected createLoginUrl(
         state = '',
         loginHint = '',
         customRedirectUri = '',
@@ -1225,7 +1225,7 @@ export class OAuthService extends AuthConfig {
         }
     }
 
-    private callOnTokenReceivedIfExists(options: LoginOptions): void {
+    protected callOnTokenReceivedIfExists(options: LoginOptions): void {
         const that = this;
         if (options.onTokenReceived) {
             const tokenParams = {
@@ -1238,7 +1238,7 @@ export class OAuthService extends AuthConfig {
         }
     }
 
-    private storeAccessTokenResponse(
+    protected storeAccessTokenResponse(
         accessToken: string,
         refreshToken: string,
         expiresIn: number,
@@ -1398,7 +1398,7 @@ export class OAuthService extends AuthConfig {
             });
     }
 
-    private validateNonceForAccessToken(
+    protected validateNonceForAccessToken(
         accessToken: string,
         nonceInState: string
     ): boolean {
@@ -1426,7 +1426,7 @@ export class OAuthService extends AuthConfig {
         return this._storage.getItem('session_state');
     }
 
-    private handleLoginError(options: LoginOptions, parts: object): void {
+    protected handleLoginError(options: LoginOptions, parts: object): void {
         if (options.onLoginError) {
             options.onLoginError(parts);
         }
@@ -1606,7 +1606,7 @@ export class OAuthService extends AuthConfig {
             : null;
     }
 
-    private padBase64(base64data): string {
+    protected padBase64(base64data): string {
         while (base64data.length % 4 !== 0) {
             base64data += '=';
         }
@@ -1635,11 +1635,11 @@ export class OAuthService extends AuthConfig {
         return parseInt(this._storage.getItem('expires_at'), 10);
     }
 
-    private getAccessTokenStoredAt(): number {
+    protected getAccessTokenStoredAt(): number {
         return parseInt(this._storage.getItem('access_token_stored_at'), 10);
     }
 
-    private getIdTokenStoredAt(): number {
+    protected getIdTokenStoredAt(): number {
         return parseInt(this._storage.getItem('id_token_stored_at'), 10);
     }
 
@@ -1797,7 +1797,7 @@ export class OAuthService extends AuthConfig {
         });
     }
 
-    private async checkAtHash(params: ValidationParams): Promise<boolean> {
+    protected async checkAtHash(params: ValidationParams): Promise<boolean> {
         if (!this.tokenValidationHandler) {
             this.logger.warn(
                 'No tokenValidationHandler configured. Cannot check at_hash.'
@@ -1807,7 +1807,7 @@ export class OAuthService extends AuthConfig {
         return this.tokenValidationHandler.validateAtHash(params);
     }
 
-    private checkSignature(params: ValidationParams): Promise<any> {
+    protected checkSignature(params: ValidationParams): Promise<any> {
         if (!this.tokenValidationHandler) {
             this.logger.warn(
                 'No tokenValidationHandler configured. Cannot check signature.'
