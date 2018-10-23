@@ -20,10 +20,12 @@
       "sample": [
         "dist/sample"
       ],
-      "angular-oauth2-oidc": [
-        "projects/lib/src/public_api"
-        //"dist/lib"
-      ]
+      
+      // "angular-oauth2-oidc": [
+      //   "projects/lib/src/public_api"
+      //   //"dist/lib"
+      // ]
+      
     }
   }
 }

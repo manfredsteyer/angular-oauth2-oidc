@@ -7,7 +7,7 @@ Support for OAuth 2 and OpenId Connect (OIDC) in Angular.
 ## Credits
 
 - [generator-angular2-library](https://github.com/jvandemo/generator-angular2-library) for scaffolding an Angular library
-- [jsrasign](https://kjur.github.io/jsrsasign/) for validating token signature and for hashing
+- [jsrasign](https://kjur.github.io/jsrsasign/) until version 5: For validating token signature and for hashing; beginning with version 6, we are using browser APIs to minimize our bundle size
 - [Identity Server](https://github.com/identityserver) (used for testing with an .NET/.NET Core Backend)
 - [Keycloak (Redhat)](http://www.keycloak.org/) for testing with Java
 
@@ -21,16 +21,18 @@ https://manfredsteyer.github.io/angular-oauth2-oidc/docs
 
 ## Tested Environment
 
-Successfully tested with **Angular 6** and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we've used IdentityServer (.NET/ .NET Core) and Redhat's Keycloak (Java).
+Successfully tested with **Angular 7** and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we've used IdentityServer (.NET/ .NET Core) and Redhat's Keycloak (Java).
+
+**Angular 6**: Use Version 4.x of this library. Version 4.x was tested with Angular 6. You can also try the newer version 5.x of this library which has a much smaller bundle size.
 
 **Angular 5.x or 4.3**: If you need support for Angular < 6 (4.3 to 5.x) you can download the former version 3.1.4 (npm i angular-oauth2-oidc@^3 --save).
 
 ## Release Cycle
 
-- One major release for each Angular version
+- We plan one major release for each Angular version
     - Will contain new features
     - Will contain bug fixes and PRs
-- Critical Bugfixes on a regular basis
+- Critical Bugfixes on demand
 
 ## Contributions
 - Feel free to file pull requests

@@ -69,7 +69,7 @@ export class AuthConfig {
    */
   public userinfoEndpoint?: string = null;
 
-  public responseType? = 'token';
+  public responseType? = '';
 
   /**
    * Defines whether additional debug information should
