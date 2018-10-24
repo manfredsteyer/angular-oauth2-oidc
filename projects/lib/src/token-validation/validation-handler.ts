@@ -70,12 +70,12 @@ export abstract class AbstractValidationHandler implements ValidationHandler {
    */
   protected inferHashAlgorithm(jwtHeader: object): string {
     let alg: string = jwtHeader['alg'];
-
+    
     if (!alg.match(/^.S[0-9]{3}$/)) {
       throw new Error('Algorithm not supported: ' + alg);
     }
 
-    return 'sha' + alg.substr(2);
+    return 'sha-' + alg.substr(2);
   }
 
   /**

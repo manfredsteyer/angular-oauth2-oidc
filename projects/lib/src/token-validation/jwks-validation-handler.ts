@@ -3,6 +3,11 @@ import {
   ValidationParams
 } from './validation-handler';
 
+// declare var require: any;
+// let rs = require('jsrsasign');
+
+import * as rs from 'jsrsasign';
+
 /**
  * Validates the signature of an id_token against one
  * of the keys of an JSON Web Key Set (jwks).
@@ -33,10 +38,7 @@ export class JwksValidationHandler extends AbstractValidationHandler {
    */
   gracePeriodInSec = 600;
 
-  private cyptoObj: Crypto = window.crypto || (window as any).msCrypto // for IE11
-  private textEncoder = new (window as any).TextEncoder();
-
-  async validateSignature(params: ValidationParams, retry = false): Promise<any> {
+  validateSignature(params: ValidationParams, retry = false): Promise<any> {
     if (!params.idToken) throw new Error('Parameter idToken expected!');
     if (!params.idTokenHeader)
       throw new Error('Parameter idTokenHandler expected.');
@@ -50,9 +52,11 @@ export class JwksValidationHandler extends AbstractValidationHandler {
       throw new Error('Array keys in jwks missing!');
     }
 
+    // console.debug('validateSignature: retry', retry);
+
     let kid: string = params.idTokenHeader['kid'];
-    let keys: JsonWebKey[] = params.jwks['keys'];
-    let key: JsonWebKey;
+    let keys: object[] = params.jwks['keys'];
+    let key: object;
 
     let alg = params.idTokenHeader['alg'];
 
@@ -64,6 +68,12 @@ export class JwksValidationHandler extends AbstractValidationHandler {
         k => k['kty'] === kty && k['use'] === 'sig'
       );
 
+      /*
+            if (matchingKeys.length == 0) {
+                let error = 'No matching key found.';
+                console.error(error);
+                return Promise.reject(error);
+            }*/
       if (matchingKeys.length > 1) {
         let error =
           'More than one matching key found. Please specify a kid in the id_token header.';
@@ -99,14 +109,20 @@ export class JwksValidationHandler extends AbstractValidationHandler {
       return Promise.reject(error);
     }
 
-    const [header, body, sig] = params.idToken.split(',');
+    let keyObj = rs.KEYUTIL.getKey(key);
+    let validationOptions = {
+      alg: this.allowedAlgorithms,
+      gracePeriod: this.gracePeriodInSec
+    };
+    let isValid = rs.KJUR.jws.JWS.verifyJWT(
+      params.idToken,
+      keyObj,
+      validationOptions
+    );
 
-    const cyptokey = await this.cyptoObj.subtle.importKey('jwk', key as any, alg, true, ['verify']);
-    const isValid = await this.cyptoObj.subtle.verify(alg, cyptokey, this.textEncoder.encode(sig), this.textEncoder.encode(body));
-
-    if(isValid) {
+    if (isValid) {
       return Promise.resolve();
-    }else {
+    } else {
       return Promise.reject('Signature not valid');
     }
   }
@@ -122,11 +138,11 @@ export class JwksValidationHandler extends AbstractValidationHandler {
     }
   }
 
-  async calcHash(valueToHash: string, algorithm: string): Promise<string> {
-    const valueAsBytes = this.textEncoder.encode(valueToHash);
-    const resultBytes = await this.cyptoObj.subtle.digest(algorithm, valueAsBytes);
-    // the returned bytes are encoded as UTF-16
-    return String.fromCharCode.apply(null, new Uint16Array(resultBytes));
+  calcHash(valueToHash: string, algorithm: string): Promise<string> {
+    let hashAlg = new rs.KJUR.crypto.MessageDigest({ alg: algorithm });
+    let result = hashAlg.digestString(valueToHash);
+    let byteArrayAsString = this.toByteArrayAsString(result);
+    return Promise.resolve(byteArrayAsString);
   }
 
   toByteArrayAsString(hexString: string) {
