@@ -161,11 +161,14 @@ export class OAuthService extends AuthConfig {
      * about to expire.
      * @param params Additional parameter to pass
      */
-    public setupAutomaticSilentRefresh(params: object = {}) {
+    public setupAutomaticSilentRefresh(params: object = {}, listenTo?: 'access_token' | 'id_token' | 'any') {
         this.events.pipe(filter(e => e.type === 'token_expires')).subscribe(e => {
-            this.silentRefresh(params).catch(_ => {
-                this.debug('Automatic silent refresh did not work');
-            });
+            const event = e as OAuthInfoEvent;
+            if ( listenTo == null || listenTo === 'any' || event.info === listenTo ) {
+                this.silentRefresh(params).catch(_ => {
+                    this.debug('Automatic silent refresh did not work');
+                });
+            }
         });
 
         this.restartRefreshTimerIfStillLoggedIn();
@@ -942,12 +945,12 @@ export class OAuthService extends AuthConfig {
                     break;
                 case 'changed':
                     this.ngZone.run(() => {
-                        this.handleSessionChange() 
+                        this.handleSessionChange();
                     });
                     break;
                 case 'error':
-                    this.ngZone.run(() => { 
-                        this.handleSessionError()
+                    this.ngZone.run(() => {
+                        this.handleSessionError();
                     });
                     break;
             }
@@ -1761,7 +1764,7 @@ export class OAuthService extends AuthConfig {
             logoutUrl =
                 this.logoutUrl +
                 (this.logoutUrl.indexOf('?') > -1 ? '&' : '?') +
-                params.toString()
+                params.toString();
         }
         location.href = logoutUrl;
     }
