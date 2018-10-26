@@ -1,4 +1,4 @@
-import { Injectable, NgZone, Optional } from '@angular/core';
+import { Injectable, NgZone, Optional, OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, Subject, Subscription, of, race } from 'rxjs';
 import { filter, take, delay, first, tap, map } from 'rxjs/operators';
@@ -33,7 +33,7 @@ import { WebHttpUrlEncodingCodec } from './encoder';
  * password flow.
  */
 @Injectable()
-export class OAuthService extends AuthConfig {
+export class OAuthService extends AuthConfig implements OnDestroy {
     // Extending AuthConfig ist just for LEGACY reasons
     // to not break existing code.
 
@@ -1778,6 +1778,14 @@ export class OAuthService extends AuthConfig {
             that._storage.setItem('nonce', nonce);
             return nonce;
         });
+    }
+
+    /**
+     * @ignore
+     */
+    public ngOnDestroy() {
+        this.clearAccessTokenTimer();
+        this.clearIdTokenTimer();
     }
 
     protected createNonce(): Promise<string> {
