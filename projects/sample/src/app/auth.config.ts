@@ -21,6 +21,8 @@ export const authConfig: AuthConfig = {
 
   // silentRefreshShowIFrame: true,
 
+  responseType: 'id_token token',
+
   showDebugInformation: true,
 
   sessionChecksEnabled: false
