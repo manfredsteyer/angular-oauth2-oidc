@@ -781,23 +781,7 @@ export class OAuthService extends AuthConfig {
         this.removeSilentRefreshEventListener();
 
         this.silentRefreshPostMessageEventListener = (e: MessageEvent) => {
-            let expectedPrefix = '#';
-
-            if (this.silentRefreshMessagePrefix) {
-                expectedPrefix += this.silentRefreshMessagePrefix;
-            }
-
-            if (!e || !e.data || typeof e.data !== 'string') {
-                return;
-            }
-
-            const prefixedMessage: string = e.data;
-
-            if (!prefixedMessage.startsWith(expectedPrefix)) {
-                return;
-            }
-
-            const message = '#' + prefixedMessage.substr(expectedPrefix.length);
+            const message = this.processMessageEventMessage(e);
 
             this.tryLogin({
                 customHashFragment: message,
@@ -893,6 +877,69 @@ export class OAuthService extends AuthConfig {
                 })
             )
             .toPromise();
+    }
+
+    public initImplicitFlowInPopup(options?: { height?: number, width?: number }) {
+        options = options || {};
+        return this.createLoginUrl(null, null, this.silentRefreshRedirectUri, false, {
+            display: 'popup'
+        }).then(url => {
+            return new Promise((resolve, reject) => {
+                let windowRef = window.open(url, '_blank', this.calculatePopupFeatures(options));
+
+                const cleanup = () => {
+                    window.removeEventListener('message', listener);
+                    windowRef.close();
+                    windowRef = null;
+                };
+
+                const listener = (e: MessageEvent) => {
+                    const message = this.processMessageEventMessage(e);
+
+                    this.tryLogin({
+                        customHashFragment: message,
+                        preventClearHashAfterLogin: true,
+                    }).then(() => {
+                        cleanup();
+                        resolve();
+                    }, err => {
+                        cleanup();
+                        reject(err);
+                    });
+                };
+
+                window.addEventListener('message', listener);
+            });
+        });
+    }
+
+    protected calculatePopupFeatures(options: { height?: number, width?: number }) {
+        // Specify an static height and width and calculate centered position
+        const height = options.height || 470;
+        const width = options.width || 500;
+        const left = (screen.width / 2) - (width / 2);
+        const top = (screen.height / 2) - (height / 2);
+        return `location=no,toolbar=no,width=${width},height=${height},top=${top},left=${left}`;
+    }
+
+    protected processMessageEventMessage(e: MessageEvent) {
+        let expectedPrefix = '#';
+
+        if (this.silentRefreshMessagePrefix) {
+            expectedPrefix += this.silentRefreshMessagePrefix;
+        }
+
+        if (!e || !e.data || typeof e.data !== 'string') {
+            return;
+        }
+
+        const prefixedMessage: string = e.data;
+
+        if (!prefixedMessage.startsWith(expectedPrefix)) {
+            return;
+        }
+
+        return '#' + prefixedMessage.substr(expectedPrefix.length);
     }
 
     protected canPerformSessionCheck(): boolean {
