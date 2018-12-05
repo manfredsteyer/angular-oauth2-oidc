@@ -347,8 +347,9 @@ export class OAuthService extends AuthConfig {
     }
 
     protected calcTimeout(storedAt: number, expiration: number): number {
-        const delta = (expiration - storedAt) * this.timeoutFactor;
-        return delta;
+        const now = Date.now();
+        const delta = (expiration - storedAt) * this.timeoutFactor - (now - storedAt);
+        return Math.max(0, delta);
     }
 
     /**
