@@ -1,80 +1,62 @@
-# angular-oauth2-oidc
+# @arroyo/ngx-oauth-oidc
 
-Support for OAuth 2 and OpenId Connect (OIDC) in Angular.
+Angular library for OAuth and OIDC Workflows.
 
-![OIDC Certified Logo](https://raw.githubusercontent.com/manfredsteyer/angular-oauth2-oidc/master/oidc.png)
+This project is supported and maintained by [Arroyo Networks](https://arroyonetworks.com).
+Contributors are welcome!
 
-## Credits
+**This project is still incubating. Please refain from using until it is graduated from the 0.x.x release**
 
-- [generator-angular2-library](https://github.com/jvandemo/generator-angular2-library) for scaffolding an Angular library
-- [jsrasign](https://kjur.github.io/jsrsasign/) until version 5: For validating token signature and for hashing; beginning with version 6, we are using browser APIs to minimize our bundle size
-- [Identity Server](https://github.com/identityserver) (used for testing with an .NET/.NET Core Backend)
-- [Keycloak (Redhat)](http://www.keycloak.org/) for testing with Java
+## Supported Angular Versions
 
-## Resources
+**1.0.0**
+- Angular 6
+- Angular 7 
 
-- Sources and Sample:
-https://github.com/manfredsteyer/angular-oauth2-oidc
+# Features 
 
-- Source Code Documentation
-https://manfredsteyer.github.io/angular-oauth2-oidc/docs
+## Support Grants:
 
-## Tested Environment
+- **Authorization Code (with PKCE)**
+- Implicit
+- Resource Owner Credentials
+
+## Noteworthy:
+  
+- Token Refresh for Password Flow by using a Refresh Token
+- Automatically Refreshing of Tokens
+- Querying Userinfo Endpoint
+- Querying Discovery Document for Auto-configuration
+- Validating Claims of `id_token`
+- Custom Token Validation Hooks
+
+<!--
+# Tested Environment
 
 Successfully tested with **Angular 7** and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we've used IdentityServer (.NET/ .NET Core) and Redhat's Keycloak (Java).
 
 **Angular 6**: Use Version 4.x of this library. Version 4.x was tested with Angular 6. You can also try the newer version 5.x of this library which has a much smaller bundle size.
 
 **Angular 5.x or 4.3**: If you need support for Angular < 6 (4.3 to 5.x) you can download the former version 3.1.4 (npm i angular-oauth2-oidc@^3 --save).
+-->
 
-## Release Cycle
-
-- We plan one major release for each Angular version
-    - Will contain new features
-    - Will contain bug fixes and PRs
-- Critical Bugfixes on demand
-
-## Contributions
-- Feel free to file pull requests
-- The closed issues contain some ideas for PRs and enhancements (see labels)
-
-# Features 
-- Logging in via OAuth2 and OpenId Connect (OIDC) Implicit Flow (where a user is redirected to Identity Provider)
-- "Logging in" via Password Flow (where a user enters their password into the client)
-- Token Refresh for Password Flow by using a Refresh Token
-- Automatically refreshing a token when/some time before it expires
-- Querying Userinfo Endpoint
-- Querying Discovery Document to ease configuration
-- Validating claims of the id_token regarding the specs
-- Hook for further custom validations
-- Single-Sign-Out by redirecting to the auth-server's logout-endpoint
+# Examples
 
 ## Sample-Auth-Server
 
-You can use the OIDC-Sample-Server mentioned in the samples for Testing. It assumes, that your Web-App runs on http://localhost:8080.
-
-Username/Password: max/geheim
-
-*clientIds:* 
-- spa-demo (implicit flow)
-- demo-resource-owner (resource owner password flow)
-
-*redirectUris:*
-- localhost:[8080-8089|4200-4202]
-- localhost:[8080-8089|4200-4202]/index.html
-- localhost:[8080-8089|4200-4202]/silent-refresh.html
+- Pending Review
 
 ## Installing
 
 ```
-npm i angular-oauth2-oidc --save
+npm i @arroyo/ngx-oauth-oidc --save
 ```
 
 ## Importing the NgModule
 
 ```TypeScript
 import { HttpClientModule } from '@angular/common/http';
-import { OAuthModule } from 'angular-oauth2-oidc';
+import { OAuthModule } from '@arroyo/ngx-oauth-oidc';
 // etc.
 
 @NgModule({
@@ -96,6 +78,7 @@ export class AppModule {
 }
 ``` 
 
+<!--
 ## Configuring for Implicit Flow
 
 This section shows how to implement login leveraging implicit flow. This is the OAuth2/OIDC flow best suitable for
@@ -260,8 +243,22 @@ See the [documentation](https://manfredsteyer.github.io/angular-oauth2-oidc/docs
 
 
 
+-->
 
 
+# More Information
 
+## TODOs for Version 1.0.0 Series
 
+1. Remove `jsrasign` and use browser native APIs.
+
+## Release Cycle
+
+- TBD
+
+The release cycle will produce new major versions whenever support for a new Angular version requires a breaking change.
+
+## Contributions
+
+We are still establishing our Open Source guidelines for Arroyo Networks. Please feel free to submit any contribution via Pull Request.
 

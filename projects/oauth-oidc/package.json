@@ -1,0 +1,31 @@
+{
+  "name": "@arroyo/ngx-oauth-oidc",
+  "version": "0.0.1",
+  "author": "Arroyo Networks <open.source@arroyo.io>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ArroyoNetworks/ngx-oauth-oidc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ArroyoNetworks/ngx-oauth-oidc/issues"
+  },
+  "homepage": "https://github.com/ArroyoNetworks/ngx-oauth-oidc",
+  "keywords": [
+    "ng",
+    "ngx",
+    "angular",
+    "angular7",
+    "oauth2",
+    "oauth",
+    "openid",
+    "oidc"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^6.0.0 || ^7.0.0",
+    "@angular/core": "^6.0.0 || ^7.0.0"
+  },
+  "dependencies": {
+    "jsrsasign": "^8.0.12"
+  }
+}
