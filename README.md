@@ -37,6 +37,11 @@ Successfully tested with **Angular 7** and its Router, PathLocationStrategy as w
 ## Contributions
 - Feel free to file pull requests
 - The closed issues contain some ideas for PRs and enhancements (see labels)
+- If you want to contribute to the docs, you can do so in the `docs-src` folder. Make sure you update `summary.json` as well. Then generate the docs with the following commands:
+```
+npm install -g @compodoc/compodoc
+npm run docs
+```
 
 # Features 
 - Logging in via OAuth2 and OpenId Connect (OIDC) Implicit Flow (where a user is redirected to Identity Provider)
