@@ -58,5 +58,9 @@
     {
         "title": "Using Password Flow",
         "file": "password-flow.md"
+    },
+    {
+        "title": "Configure custom OAuthStorage",
+        "file": "configure-custom-oauthstorage.md"
     }
 ]
