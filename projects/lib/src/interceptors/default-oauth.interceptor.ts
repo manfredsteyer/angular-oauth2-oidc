@@ -1,13 +1,10 @@
-import { Injectable, Inject, Optional } from '@angular/core';
-import { OAuthService } from '../oauth-service';
+import { Injectable, Optional } from '@angular/core';
 import { OAuthStorage } from '../types';
 import {
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
-  HttpResponse,
-  HttpErrorResponse
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
