@@ -1,20 +1,22 @@
 import { Injectable, Optional } from '@angular/core';
-import { OAuthStorage } from '../types';
+import { OAuthService } from '../oauth-service';
 import {
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, of, merge } from 'rxjs';
+import { catchError, filter, map, take, mergeMap, timeout } from 'rxjs/operators';
 import { OAuthResourceServerErrorHandler } from './resource-server-error-handler';
 import { OAuthModuleConfig } from '../oauth-module.config';
+
+const WAIT_FOR_TOKEN_RECEIVED = 1000;
 
 @Injectable()
 export class DefaultOAuthInterceptor implements HttpInterceptor {
   constructor(
-    private authStorage: OAuthStorage,
+    private oAuthService: OAuthService,
     private errorHandler: OAuthResourceServerErrorHandler,
     @Optional() private moduleConfig: OAuthModuleConfig
   ) { }
@@ -42,17 +44,34 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
 
     const sendAccessToken = this.moduleConfig.resourceServer.sendAccessToken;
 
-    if (sendAccessToken && this.authStorage.getItem('access_token')) {
-      const token = this.authStorage.getItem('access_token');
-      const header = 'Bearer ' + token;
-
-      const headers = req.headers.set('Authorization', header);
-
-      req = req.clone({ headers });
+    if (!sendAccessToken) {
+      return next
+        .handle(req)
+        .pipe(catchError(err => this.errorHandler.handleError(err)));
     }
 
-    return next
-      .handle(req)
-      .pipe(catchError(err => this.errorHandler.handleError(err)));
+    return merge(
+      of(this.oAuthService.getAccessToken()).pipe(
+        filter(token => token ? true : false),
+      ),
+      this.oAuthService.events.pipe(
+        filter(e => e.type === 'token_received'),
+        timeout(WAIT_FOR_TOKEN_RECEIVED),
+        map(_ => this.oAuthService.getAccessToken()),
+      ),
+    ).pipe(
+      take(1),
+      mergeMap(token => {
+        if (token) {
+          const header = 'Bearer ' + token;
+          const headers = req.headers.set('Authorization', header);
+          req = req.clone({ headers });
+        }
+
+        return next
+          .handle(req)
+          .pipe(catchError(err => this.errorHandler.handleError(err)));
+      }),
+    );
   }
 }
