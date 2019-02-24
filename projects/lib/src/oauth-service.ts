@@ -1500,7 +1500,10 @@ export class OAuthService extends AuthConfig {
             return Promise.reject(err);
         }
 
-        if (claims.iss !== this.issuer) {
+        // Google sets iss to 'accounts.google.com' (without https://)
+        // so accept a missing 'https://' if iss is 'accounts.google.com'
+        if (claims.iss !== this.issuer &&
+            (claims.iss !== 'accounts.google.com') || 'https://' + claims.iss !== this.issuer) {
             const err = 'Wrong issuer: ' + claims.iss;
             this.logger.warn(err);
             return Promise.reject(err);
