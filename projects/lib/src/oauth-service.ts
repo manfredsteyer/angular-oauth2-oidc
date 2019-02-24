@@ -65,7 +65,7 @@ export class OAuthService extends AuthConfig {
      * The received (passed around) state, when logging
      * in with implicit flow.
      */
-    public state?= '';
+    public state? = '';
 
     protected eventsSubject: Subject<OAuthEvent> = new Subject<OAuthEvent>();
     protected discoveryDocumentLoadedSubject: Subject<object> = new Subject<object>();
@@ -164,7 +164,7 @@ export class OAuthService extends AuthConfig {
     public setupAutomaticSilentRefresh(params: object = {}, listenTo?: 'access_token' | 'id_token' | 'any') {
         this.events.pipe(filter(e => e.type === 'token_expires')).subscribe(e => {
             const event = e as OAuthInfoEvent;
-            if (listenTo == null || listenTo === 'any' || event.info === listenTo) {
+            if ( listenTo == null || listenTo === 'any' || event.info === listenTo ) {
                 this.silentRefresh(params).catch(_ => {
                     this.debug('Automatic silent refresh did not work');
                 });
@@ -1106,15 +1106,15 @@ export class OAuthService extends AuthConfig {
             }
 
             if (this.config.responseType) {
-                this.responseType = this.config.responseType;
+              this.responseType = this.config.responseType;
             } else {
-                if (this.oidc && this.requestAccessToken) {
-                    this.responseType = 'id_token token';
-                } else if (this.oidc && !this.requestAccessToken) {
-                    this.responseType = 'id_token';
-                } else {
-                    this.responseType = 'token';
-                }
+              if (this.oidc && this.requestAccessToken) {
+                  this.responseType = 'id_token token';
+              } else if (this.oidc && !this.requestAccessToken) {
+                  this.responseType = 'id_token';
+              } else {
+                  this.responseType = 'token';
+              }
             }
 
             const seperationChar = that.loginUrl.indexOf('?') > -1 ? '&' : '?';
@@ -1500,8 +1500,7 @@ export class OAuthService extends AuthConfig {
             return Promise.reject(err);
         }
 
-        /* Fix for google oidc */
-        if (claims.iss !== this.issuer && 'https://' + claims.iss !== this.issuer) {
+        if (claims.iss !== this.issuer) {
             const err = 'Wrong issuer: ' + claims.iss;
             this.logger.warn(err);
             return Promise.reject(err);
@@ -1553,30 +1552,30 @@ export class OAuthService extends AuthConfig {
 
 
         return this.checkAtHash(validationParams)
-            .then(atHashValid => {
-                if (
-                    !this.disableAtHashCheck &&
-                    this.requestAccessToken &&
-                    !atHashValid
-                ) {
-                    const err = 'Wrong at_hash';
-                    this.logger.warn(err);
-                    return Promise.reject(err);
-                }
+          .then(atHashValid => {
+            if (
+              !this.disableAtHashCheck &&
+              this.requestAccessToken &&
+              !atHashValid
+          ) {
+              const err = 'Wrong at_hash';
+              this.logger.warn(err);
+              return Promise.reject(err);
+          }
 
-                return this.checkSignature(validationParams).then(_ => {
-                    const result: ParsedIdToken = {
-                        idToken: idToken,
-                        idTokenClaims: claims,
-                        idTokenClaimsJson: claimsJson,
-                        idTokenHeader: header,
-                        idTokenHeaderJson: headerJson,
-                        idTokenExpiresAt: expiresAtMSec
-                    };
-                    return result;
-                });
+          return this.checkSignature(validationParams).then(_ => {
+              const result: ParsedIdToken = {
+                  idToken: idToken,
+                  idTokenClaims: claims,
+                  idTokenClaimsJson: claimsJson,
+                  idTokenHeader: header,
+                  idTokenHeaderJson: headerJson,
+                  idTokenExpiresAt: expiresAtMSec
+              };
+              return result;
+          });
 
-            });
+        });
     }
 
     /**
