@@ -1229,9 +1229,11 @@ export class OAuthService extends AuthConfig {
     }
 
     /**
-     * Abort current implicit flow
+     * Reset current implicit flow
+     *
+     * @description This method allows resetting the current implict flow in order to be initialized again.
      */
-    public abortImplicitFlow(): void {
+    public resetImplicitFlow(): void {
       this.inImplicitFlow = false;
     }
 
