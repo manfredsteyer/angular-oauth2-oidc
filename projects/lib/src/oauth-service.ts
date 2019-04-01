@@ -1228,6 +1228,13 @@ export class OAuthService extends AuthConfig {
         }
     }
 
+    /**
+     * Abort current implicit flow
+     */
+    public abortImplicitFlow(): void {
+      this.inImplicitFlow = false;
+    }
+
     protected callOnTokenReceivedIfExists(options: LoginOptions): void {
         const that = this;
         if (options.onTokenReceived) {
