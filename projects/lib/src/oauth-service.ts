@@ -2,6 +2,7 @@ import { Injectable, NgZone, Optional } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, Subject, Subscription, of, race } from 'rxjs';
 import { filter, take, delay, first, tap, map } from 'rxjs/operators';
+import nanoid from 'nanoid/async';
 
 import {
     ValidationHandler,
@@ -1781,23 +1782,13 @@ export class OAuthService extends AuthConfig {
     }
 
     protected createNonce(): Promise<string> {
-        return new Promise((resolve, reject) => {
-            if (this.rngUrl) {
-                throw new Error(
-                    'createNonce with rng-web-api has not been implemented so far'
-                );
-            } else {
-                let text = '';
-                const possible =
-                    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        if (this.rngUrl) {
+            return Promise.reject(
+                'createNonce with rng-web-api has not been implemented so far'
+            );
+        }
 
-                for (let i = 0; i < 40; i++) {
-                    text += possible.charAt(Math.floor(Math.random() * possible.length));
-                }
-
-                resolve(text);
-            }
-        });
+        return nanoid(40);
     }
 
     protected async checkAtHash(params: ValidationParams): Promise<boolean> {
