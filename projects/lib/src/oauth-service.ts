@@ -1781,22 +1781,34 @@ export class OAuthService extends AuthConfig {
     }
 
     protected createNonce(): Promise<string> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             if (this.rngUrl) {
                 throw new Error(
                     'createNonce with rng-web-api has not been implemented so far'
                 );
-            } else {
-                let text = '';
-                const possible =
-                    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-                for (let i = 0; i < 40; i++) {
-                    text += possible.charAt(Math.floor(Math.random() * possible.length));
-                }
-
-                resolve(text);
             }
+
+            /*
+             * This alphabet uses a-z A-Z 0-9 _- symbols.
+             * Symbols order was changed for better gzip compression.
+             */
+            const url = 'Uint8ArdomValuesObj012345679BCDEFGHIJKLMNPQRSTWXYZ_cfghkpqvwxyz-';
+            let size = 40;
+            let id = '';
+
+            const crypto = self.crypto || self.msCrypto;
+            if (crypto) {
+                const bytes = crypto.getRandomValues(new Uint8Array(size));
+                while (0 < size--) {
+                    id += url[bytes[size] & 63];
+                }
+            } else {
+                while (0 < size--) {
+                    id += url[Math.random() * 64 | 0];
+                }
+            }
+
+            resolve(id);
         });
     }
 
