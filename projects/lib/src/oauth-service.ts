@@ -1241,11 +1241,7 @@ export class OAuthService extends AuthConfig {
         }
     }
 
-<<<<<<< HEAD
     protected storeAccessTokenResponse(
-=======
-    public storeAccessTokenResponse(
->>>>>>> Opened storeAccessTokenResponse to public to for users that uses other authentication flows like Silent Login within same software
         accessToken: string,
         refreshToken: string,
         expiresIn: number,
