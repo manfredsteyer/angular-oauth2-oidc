@@ -41,7 +41,7 @@ export class FlightSearchReactiveComponent {
           Validators.required,
           Validators.minLength(3),
           (c: AbstractControl): any => {
-            if (c.value != 'Graz' && c.value != 'Hamburg') {
+            if (c.value !== 'Graz' && c.value !== 'Hamburg') {
               return {
                 city: true
               };
@@ -67,7 +67,7 @@ export class FlightSearchReactiveComponent {
   }
 
   public search(): void {
-    let value = this.filter.value;
+    const value = this.filter.value;
 
     this.flightService.find(value.from, value.to);
 

@@ -71,7 +71,7 @@ export class OAuthService extends AuthConfig {
     protected discoveryDocumentLoadedSubject: Subject<object> = new Subject<object>();
     protected silentRefreshPostMessageEventListener: EventListener;
     protected grantTypesSupported: Array<string> = [];
-    protected _storage: OAuthStorage;
+    protected storage: OAuthStorage;
     protected accessTokenTimeoutSubscription: Subscription;
     protected idTokenTimeoutSubscription: Subscription;
     protected sessionCheckEventListener: EventListener;
@@ -156,11 +156,11 @@ export class OAuthService extends AuthConfig {
         });
     }
 
-    /**
-     * Will setup up silent refreshing for when the token is
-     * about to expire.
-     * @param params Additional parameter to pass
-     */
+  /**
+   * Will setup up silent refreshing for when the token is
+   * about to expire.
+   * @param params Additional parameter to pass
+   */
     public setupAutomaticSilentRefresh(params: object = {}, listenTo?: 'access_token' | 'id_token' | 'any') {
         this.events.pipe(filter(e => e.type === 'token_expires')).subscribe(e => {
             const event = e as OAuthInfoEvent;
@@ -364,7 +364,7 @@ export class OAuthService extends AuthConfig {
      * @param storage
      */
     public setStorage(storage: OAuthStorage): void {
-        this._storage = storage;
+        this.storage = storage;
         this.configChanged();
     }
 
@@ -609,7 +609,7 @@ export class OAuthService extends AuthConfig {
 
                     info = Object.assign({}, existingClaims, info);
 
-                    this._storage.setItem('id_token_claims_obj', JSON.stringify(info));
+                    this.storage.setItem('id_token_claims_obj', JSON.stringify(info));
                     this.eventsSubject.next(new OAuthSuccessEvent('user_profile_loaded'));
                     resolve(info);
                 },
@@ -723,7 +723,7 @@ export class OAuthService extends AuthConfig {
                 .set('grant_type', 'refresh_token')
                 .set('client_id', this.clientId)
                 .set('scope', this.scope)
-                .set('refresh_token', this._storage.getItem('refresh_token'));
+                .set('refresh_token', this.storage.getItem('refresh_token'));
 
             if (this.dummyClientSecret) {
                 params = params.set('client_secret', this.dummyClientSecret);
@@ -1197,7 +1197,7 @@ export class OAuthService extends AuthConfig {
         }
 
         this.createLoginUrl(additionalState, loginHint, null, false, addParams)
-            .then(function(url) {
+            .then(url => {
                 location.href = url;
             })
             .catch(error => {
@@ -1245,22 +1245,22 @@ export class OAuthService extends AuthConfig {
         accessToken: string,
         refreshToken: string,
         expiresIn: number,
-        grantedScopes: String
+        grantedScopes: string
     ): void {
-        this._storage.setItem('access_token', accessToken);
+        this.storage.setItem('access_token', accessToken);
         if (grantedScopes) {
-            this._storage.setItem('granted_scopes', JSON.stringify(grantedScopes.split('+')));
+            this.storage.setItem('granted_scopes', JSON.stringify(grantedScopes.split('+')));
         }
-        this._storage.setItem('access_token_stored_at', '' + Date.now());
+        this.storage.setItem('access_token_stored_at', '' + Date.now());
         if (expiresIn) {
             const expiresInMilliSeconds = expiresIn * 1000;
             const now = new Date();
             const expiresAt = now.getTime() + expiresInMilliSeconds;
-            this._storage.setItem('expires_at', '' + expiresAt);
+            this.storage.setItem('expires_at', '' + expiresAt);
         }
 
         if (refreshToken) {
-            this._storage.setItem('refresh_token', refreshToken);
+            this.storage.setItem('refresh_token', refreshToken);
         }
     }
 
@@ -1405,7 +1405,7 @@ export class OAuthService extends AuthConfig {
         accessToken: string,
         nonceInState: string
     ): boolean {
-        const savedNonce = this._storage.getItem('nonce');
+        const savedNonce = this.storage.getItem('nonce');
         if (savedNonce !== nonceInState) {
             const err = 'Validating access_token failed, wrong state/nonce.';
             console.error(err, savedNonce, nonceInState);
@@ -1415,18 +1415,18 @@ export class OAuthService extends AuthConfig {
     }
 
     protected storeIdToken(idToken: ParsedIdToken) {
-        this._storage.setItem('id_token', idToken.idToken);
-        this._storage.setItem('id_token_claims_obj', idToken.idTokenClaimsJson);
-        this._storage.setItem('id_token_expires_at', '' + idToken.idTokenExpiresAt);
-        this._storage.setItem('id_token_stored_at', '' + Date.now());
+        this.storage.setItem('id_token', idToken.idToken);
+        this.storage.setItem('id_token_claims_obj', idToken.idTokenClaimsJson);
+        this.storage.setItem('id_token_expires_at', '' + idToken.idTokenExpiresAt);
+        this.storage.setItem('id_token_stored_at', '' + Date.now());
     }
 
     protected storeSessionState(sessionState: string): void {
-        this._storage.setItem('session_state', sessionState);
+        this.storage.setItem('session_state', sessionState);
     }
 
     protected getSessionState(): string {
-        return this._storage.getItem('session_state');
+        return this.storage.getItem('session_state');
     }
 
     protected handleLoginError(options: LoginOptions, parts: object): void {
@@ -1452,7 +1452,7 @@ export class OAuthService extends AuthConfig {
         const claimsBase64 = this.padBase64(tokenParts[1]);
         const claimsJson = b64DecodeUnicode(claimsBase64);
         const claims = JSON.parse(claimsJson);
-        const savedNonce = this._storage.getItem('nonce');
+        const savedNonce = this.storage.getItem('nonce');
 
         if (Array.isArray(claims.aud)) {
             if (claims.aud.every(v => v !== this.clientId)) {
@@ -1582,7 +1582,7 @@ export class OAuthService extends AuthConfig {
      * Returns the received claims about the user.
      */
     public getIdentityClaims(): object {
-        const claims = this._storage.getItem('id_token_claims_obj');
+        const claims = this.storage.getItem('id_token_claims_obj');
         if (!claims) {
             return null;
         }
@@ -1593,7 +1593,7 @@ export class OAuthService extends AuthConfig {
      * Returns the granted scopes from the server.
      */
     public getGrantedScopes(): object {
-        const scopes = this._storage.getItem('granted_scopes');
+        const scopes = this.storage.getItem('granted_scopes');
         if (!scopes) {
             return null;
         }
@@ -1604,8 +1604,8 @@ export class OAuthService extends AuthConfig {
      * Returns the current id_token.
      */
     public getIdToken(): string {
-        return this._storage
-            ? this._storage.getItem('id_token')
+        return this.storage
+            ? this.storage.getItem('id_token')
             : null;
     }
 
@@ -1620,11 +1620,11 @@ export class OAuthService extends AuthConfig {
      * Returns the current access_token.
      */
     public getAccessToken(): string {
-        return this._storage.getItem('access_token');
+        return this.storage.getItem('access_token');
     }
 
     public getRefreshToken(): string {
-        return this._storage.getItem('refresh_token');
+        return this.storage.getItem('refresh_token');
     }
 
     /**
@@ -1632,18 +1632,18 @@ export class OAuthService extends AuthConfig {
      * as milliseconds since 1970.
      */
     public getAccessTokenExpiration(): number {
-        if (!this._storage.getItem('expires_at')) {
+        if (!this.storage.getItem('expires_at')) {
             return null;
         }
-        return parseInt(this._storage.getItem('expires_at'), 10);
+        return parseInt(this.storage.getItem('expires_at'), 10);
     }
 
     protected getAccessTokenStoredAt(): number {
-        return parseInt(this._storage.getItem('access_token_stored_at'), 10);
+        return parseInt(this.storage.getItem('access_token_stored_at'), 10);
     }
 
     protected getIdTokenStoredAt(): number {
-        return parseInt(this._storage.getItem('id_token_stored_at'), 10);
+        return parseInt(this.storage.getItem('id_token_stored_at'), 10);
     }
 
     /**
@@ -1651,11 +1651,11 @@ export class OAuthService extends AuthConfig {
      * as milliseconds since 1970.
      */
     public getIdTokenExpiration(): number {
-        if (!this._storage.getItem('id_token_expires_at')) {
+        if (!this.storage.getItem('id_token_expires_at')) {
             return null;
         }
 
-        return parseInt(this._storage.getItem('id_token_expires_at'), 10);
+        return parseInt(this.storage.getItem('id_token_expires_at'), 10);
     }
 
     /**
@@ -1663,7 +1663,7 @@ export class OAuthService extends AuthConfig {
      */
     public hasValidAccessToken(): boolean {
         if (this.getAccessToken()) {
-            const expiresAt = this._storage.getItem('expires_at');
+            const expiresAt = this.storage.getItem('expires_at');
             const now = new Date();
             if (expiresAt && parseInt(expiresAt, 10) < now.getTime()) {
                 return false;
@@ -1680,7 +1680,7 @@ export class OAuthService extends AuthConfig {
      */
     public hasValidIdToken(): boolean {
         if (this.getIdToken()) {
-            const expiresAt = this._storage.getItem('id_token_expires_at');
+            const expiresAt = this.storage.getItem('id_token_expires_at');
             const now = new Date();
             if (expiresAt && parseInt(expiresAt, 10) < now.getTime()) {
                 return false;
@@ -1708,17 +1708,17 @@ export class OAuthService extends AuthConfig {
      */
     public logOut(noRedirectToLogoutUrl = false): void {
         const id_token = this.getIdToken();
-        this._storage.removeItem('access_token');
-        this._storage.removeItem('id_token');
-        this._storage.removeItem('refresh_token');
-        this._storage.removeItem('nonce');
-        this._storage.removeItem('expires_at');
-        this._storage.removeItem('id_token_claims_obj');
-        this._storage.removeItem('id_token_expires_at');
-        this._storage.removeItem('id_token_stored_at');
-        this._storage.removeItem('access_token_stored_at');
-        this._storage.removeItem('granted_scopes');
-        this._storage.removeItem('session_state');
+        this.storage.removeItem('access_token');
+        this.storage.removeItem('id_token');
+        this.storage.removeItem('refresh_token');
+        this.storage.removeItem('nonce');
+        this.storage.removeItem('expires_at');
+        this.storage.removeItem('id_token_claims_obj');
+        this.storage.removeItem('id_token_expires_at');
+        this.storage.removeItem('id_token_stored_at');
+        this.storage.removeItem('access_token_stored_at');
+        this.storage.removeItem('granted_scopes');
+        this.storage.removeItem('session_state');
 
         this.silentRefreshSubject = null;
 
@@ -1774,8 +1774,8 @@ export class OAuthService extends AuthConfig {
      */
     public createAndSaveNonce(): Promise<string> {
         const that = this;
-        return this.createNonce().then(function(nonce: any) {
-            that._storage.setItem('nonce', nonce);
+        return this.createNonce().then((nonce: any) => {
+            that.storage.setItem('nonce', nonce);
             return nonce;
         });
     }

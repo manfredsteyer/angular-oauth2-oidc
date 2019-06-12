@@ -47,12 +47,12 @@ round-trip
 
 </form>
 <!--
-[ngClass]="{ 'active': f == selectedFlight }"
+[ngClass]="{ 'active': f === selectedFlight }"
 -->
 <!--
 <table class="table table-striped">
 
-    <tr *ngFor="let f of flights" [ngStyle]="{ 'background-color': (f == selectedFlight) ? 'orange': '' } ">
+    <tr *ngFor="let f of flights" [ngStyle]="{ 'background-color': (f === selectedFlight) ? 'orange': '' } ">
         <td>{{f.id}}</td>
         <td>{{f.from | city:'short' }}</td>
         <td>{{f.to | city:'long' }}</td>
@@ -75,7 +75,7 @@ round-trip
 
         <alt-flight-card
                 [item]="f"
-                [selected]="f == selectedFlight"
+                [selected]="f === selectedFlight"
                 (selectedChange)="selectedFlight = f">
         </alt-flight-card>
 

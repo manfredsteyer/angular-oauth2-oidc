@@ -41,13 +41,13 @@ export class HomeComponent implements OnInit {
   }
 
   get givenName() {
-    let claims = this.oauthService.getIdentityClaims();
+    const claims = this.oauthService.getIdentityClaims();
     if (!claims) { return null; }
     return claims.given_name;
   }
 
   get familyName() {
-    let claims = this.oauthService.getIdentityClaims();
+    const claims = this.oauthService.getIdentityClaims();
     if (!claims) { return null; }
     return claims.family_name;
   }

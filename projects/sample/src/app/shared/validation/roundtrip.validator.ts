@@ -22,7 +22,7 @@ export class RoundTrip implements Validator {
     const from = fromCtrl.value;
     const to = toCtrl.value;
 
-    if (from == to) {
+    if (from === to) {
       return {
         'round-trip': {
           city: from

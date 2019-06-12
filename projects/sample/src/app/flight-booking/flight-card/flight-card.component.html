@@ -1,5 +1,5 @@
 <div style="padding:20px;"
-     [ngStyle]="{'background-color': (selectedItem == item) ?  'orange' : 'lightsteelblue' }">
+     [ngStyle]="{'background-color': (selectedItem === item) ?  'orange' : 'lightsteelblue' }">
 
     <h2>{{item.from}} - {{item.to}}</h2>
     <p>Flugnr. #{{item.id}}</p>

@@ -15,7 +15,7 @@ export class AsyncCityValidatorDirective {
   validate(ctrl: AbstractControl): Promise<any> {
     return new Promise((resolve: Function) => {
       setTimeout(() => {
-        if (ctrl.value == 'Graz' || ctrl.value == 'Hamburg') {
+        if (ctrl.value === 'Graz' || ctrl.value === 'Hamburg') {
           resolve({});
           return;
         }

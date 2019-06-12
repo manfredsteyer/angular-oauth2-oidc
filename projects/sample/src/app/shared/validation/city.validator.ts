@@ -29,7 +29,7 @@ export class CityValidatorDirective implements Validator {
 
     const otherValue = otherValueCtrl.value;
 
-    if (otherValue == c.value) {
+    if (otherValue === c.value) {
       return {
         city: 'rundflug'
       };
@@ -39,7 +39,7 @@ export class CityValidatorDirective implements Validator {
 
     const allowed = this.city.split(','); // ['Graz', 'Hamburg', 'Wien', 'Frankfurt'];
 
-    if (allowed.indexOf(c.value) == -1) {
+    if (allowed.indexOf(c.value) === -1) {
       return {
         city: true
       };
