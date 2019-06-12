@@ -62,11 +62,11 @@ export class JwksValidationHandler extends AbstractValidationHandler {
     const alg = params.idTokenHeader.alg;
 
     if (kid) {
-      key = keys.find(k => k.kid === kid /* && k['use'] === 'sig' */);
+      key = keys.find((k: any) => k.kid === kid /* && k['use'] === 'sig' */);
     } else {
       const kty = this.alg2kty(alg);
       const matchingKeys = keys.filter(
-        k => k.kty === kty && k.use === 'sig'
+        (k: any) => k.kty === kty && k.use === 'sig'
       );
 
       /*

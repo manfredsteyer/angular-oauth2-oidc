@@ -1,28 +1,12 @@
 import { Injectable, NgZone, Optional } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, Subject, Subscription, of, race } from 'rxjs';
-import { filter, take, delay, first, tap, map } from 'rxjs/operators';
+import { Observable, of, race, Subject, Subscription } from 'rxjs';
+import { delay, filter, first, map, tap } from 'rxjs/operators';
 
-import {
-    ValidationHandler,
-    ValidationParams
-} from './token-validation/validation-handler';
+import { ValidationHandler, ValidationParams } from './token-validation/validation-handler';
 import { UrlHelperService } from './url-helper.service';
-import {
-    OAuthEvent,
-    OAuthInfoEvent,
-    OAuthErrorEvent,
-    OAuthSuccessEvent
-} from './events';
-import {
-    OAuthLogger,
-    OAuthStorage,
-    LoginOptions,
-    ParsedIdToken,
-    OidcDiscoveryDoc,
-    TokenResponse,
-    UserInfo
-} from './types';
+import { OAuthErrorEvent, OAuthEvent, OAuthInfoEvent, OAuthSuccessEvent } from './events';
+import { LoginOptions, OAuthLogger, OAuthStorage, OidcDiscoveryDoc, ParsedIdToken, TokenResponse, UserInfo } from './types';
 import { b64DecodeUnicode } from './base64-helper';
 import { AuthConfig } from './auth.config';
 import { WebHttpUrlEncodingCodec } from './encoder';
@@ -347,8 +331,7 @@ export class OAuthService extends AuthConfig {
     }
 
     protected calcTimeout(storedAt: number, expiration: number): number {
-        const delta = (expiration - storedAt) * this.timeoutFactor;
-        return delta;
+      return (expiration - storedAt) * this.timeoutFactor;
     }
 
     /**
@@ -590,7 +573,7 @@ export class OAuthService extends AuthConfig {
                 info => {
                     this.debug('userinfo received', info);
 
-                    const existingClaims = this.getIdentityClaims() || {};
+                    const existingClaims: any = this.getIdentityClaims() || {};
 
                     if (!this.skipSubjectCheck) {
                         if (
@@ -824,8 +807,8 @@ export class OAuthService extends AuthConfig {
      * Use this method to get new tokens when/before
      * the existing tokens expire.
      */
-    public silentRefresh(params: object = {}, noPrompt = true): Promise<OAuthEvent> {
-        const claims: object = this.getIdentityClaims() || {};
+    public silentRefresh(params: any = {}, noPrompt = true): Promise<OAuthEvent> {
+        const claims: any = this.getIdentityClaims() || {};
 
         if (this.useIdTokenHintForSilentRefresh && this.hasValidIdToken()) {
             params.id_token_hint = this.getIdToken();
@@ -1275,7 +1258,7 @@ export class OAuthService extends AuthConfig {
     public tryLogin(options: LoginOptions = null): Promise<boolean> {
         options = options || {};
 
-        let parts: object;
+        let parts: any;
 
         if (options.customHashFragment) {
             parts = this.urlHelper.getHashFragmentParams(options.customHashFragment);
@@ -1707,7 +1690,7 @@ export class OAuthService extends AuthConfig {
      * @param noRedirectToLogoutUrl
      */
     public logOut(noRedirectToLogoutUrl = false): void {
-        const id_token = this.getIdToken();
+        const ID_TOKEN = this.getIdToken();
         this.storage.removeItem('access_token');
         this.storage.removeItem('id_token');
         this.storage.removeItem('refresh_token');
@@ -1731,7 +1714,7 @@ export class OAuthService extends AuthConfig {
             return;
         }
 
-        if (!id_token && !this.postLogoutRedirectUri) {
+        if (!ID_TOKEN && !this.postLogoutRedirectUri) {
             return;
         }
 
@@ -1746,14 +1729,14 @@ export class OAuthService extends AuthConfig {
         // For backward compatibility
         if (this.logoutUrl.indexOf('{{') > -1) {
             logoutUrl = this.logoutUrl
-                .replace(/\{\{id_token\}\}/, id_token)
+                .replace(/\{\{id_token\}\}/, ID_TOKEN)
                 .replace(/\{\{client_id\}\}/, this.clientId);
         } else {
 
             let params = new HttpParams();
 
-            if (id_token) {
-                params = params.set('id_token_hint', id_token);
+            if (ID_TOKEN) {
+                params = params.set('id_token_hint', ID_TOKEN);
             }
 
             const postLogoutUrl = this.postLogoutRedirectUri || this.redirectUri;

@@ -1,9 +1,9 @@
 export interface ValidationParams {
   idToken: string;
   accessToken: string;
-  idTokenHeader: object;
-  idTokenClaims: object;
-  jwks: object;
+  idTokenHeader: any;
+  idTokenClaims: any;
+  jwks: any;
   loadKeys: () => Promise<object>;
 }
 
@@ -68,7 +68,7 @@ export abstract class AbstractValidationHandler implements ValidationHandler {
    *
    * @param jwtHeader the id_token's parsed header
    */
-  protected inferHashAlgorithm(jwtHeader: object): string {
+  protected inferHashAlgorithm(jwtHeader): string {
     const alg: string = jwtHeader.alg;
 
     if (!alg.match(/^.S[0-9]{3}$/)) {
