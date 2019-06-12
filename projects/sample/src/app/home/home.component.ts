@@ -8,6 +8,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
 export class HomeComponent implements OnInit {
   loginFailed = false;
   userProfile: object;
+  claims: any;
 
   constructor(private oauthService: OAuthService) {
     // Tweak config for implicit flow.
@@ -41,15 +42,19 @@ export class HomeComponent implements OnInit {
   }
 
   get givenName() {
-    const claims = this.oauthService.getIdentityClaims();
-    if (!claims) { return null; }
-    return claims.given_name;
+    this.claims = this.oauthService.getIdentityClaims();
+    if (!this.claims) {
+      return null;
+    }
+    return this.claims.given_name;
   }
 
   get familyName() {
-    const claims = this.oauthService.getIdentityClaims();
-    if (!claims) { return null; }
-    return claims.family_name;
+    this.claims = this.oauthService.getIdentityClaims();
+    if (!this.claims) {
+      return null;
+    }
+    return this.claims.family_name;
   }
 
   testSilentRefresh() {

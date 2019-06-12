@@ -11,6 +11,7 @@ export class PasswordFlowLoginComponent implements OnInit {
   password: string;
   loginFailed = false;
   userProfile: object;
+  claims: any;
 
   constructor(private oauthService: OAuthService) {
     // Tweak config for password flow
@@ -21,7 +22,8 @@ export class PasswordFlowLoginComponent implements OnInit {
     this.oauthService.loadDiscoveryDocument();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   loadUserProfile(): void {
     this.oauthService.loadUserProfile().then(up => (this.userProfile = up));
@@ -36,15 +38,19 @@ export class PasswordFlowLoginComponent implements OnInit {
   }
 
   get givenName() {
-    const claims = this.oauthService.getIdentityClaims();
-    if (!claims) { return null; }
-    return claims.given_name;
+    this.claims = this.oauthService.getIdentityClaims();
+    if (!this.claims) {
+      return null;
+    }
+    return this.claims.given_name;
   }
 
   get familyName() {
-    const claims = this.oauthService.getIdentityClaims();
-    if (!claims) { return null; }
-    return claims.family_name;
+    this.claims = this.oauthService.getIdentityClaims();
+    if (!this.claims) {
+      return null;
+    }
+    return this.claims.family_name;
   }
 
   loginWithPassword() {
