@@ -10,8 +10,11 @@ import { OAuthService } from 'angular-oauth2-oidc';
     `
 })
 export class PassengerSearchComponent implements OnInit {
-  constructor(private oauthService: OAuthService) {}
-  ngOnInit() {}
+  constructor(private oauthService: OAuthService) {
+  }
+
+  ngOnInit() {
+  }
 
   refresh() {
     this.oauthService.silentRefresh();

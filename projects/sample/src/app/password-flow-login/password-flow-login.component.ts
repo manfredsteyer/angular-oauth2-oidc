@@ -22,13 +22,6 @@ export class PasswordFlowLoginComponent implements OnInit {
     this.oauthService.loadDiscoveryDocument();
   }
 
-  ngOnInit() {
-  }
-
-  loadUserProfile(): void {
-    this.oauthService.loadUserProfile().then(up => (this.userProfile = up));
-  }
-
   get access_token() {
     return this.oauthService.getAccessToken();
   }
@@ -51,6 +44,13 @@ export class PasswordFlowLoginComponent implements OnInit {
       return null;
     }
     return this.claims.family_name;
+  }
+
+  ngOnInit() {
+  }
+
+  loadUserProfile(): void {
+    this.oauthService.loadUserProfile().then(up => (this.userProfile = up));
   }
 
   loginWithPassword() {

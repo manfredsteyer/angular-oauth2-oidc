@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 
 @Component({
   selector: 'date-component',
@@ -21,7 +21,8 @@ export class DateComponent implements OnInit, OnChanges {
     console.debug('ctrl');
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   ngOnChanges(change) {
     // if(change.date) { ... }

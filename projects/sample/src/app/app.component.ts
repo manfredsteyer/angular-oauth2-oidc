@@ -1,13 +1,10 @@
 import { noDiscoveryAuthConfig } from './auth-no-discovery.config';
-import { googleAuthConfig } from './auth.google.config';
 import { authConfig } from './auth.config';
-import { FlightHistoryComponent } from './flight-history/flight-history.component';
 import { Component } from '@angular/core';
-import { OAuthService, AuthConfig, NullValidationHandler, JwksValidationHandler } from 'angular-oauth2-oidc';
+import { JwksValidationHandler, NullValidationHandler, OAuthService } from 'angular-oauth2-oidc';
 // import { JwksValidationHandler } from 'angular-oauth2-oidc';
 import { Router } from '@angular/router';
-import { filter, delay } from 'rxjs/operators';
-import { of, race } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Component({
   // tslint:disable-next-line:component-selector

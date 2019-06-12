@@ -22,7 +22,9 @@ export class CityPipe implements PipeTransform {
         long = short = 'ROM';
     }
 
-    if (fmt === 'short') { return short; }
+    if (fmt === 'short') {
+      return short;
+    }
     return long;
   }
 }

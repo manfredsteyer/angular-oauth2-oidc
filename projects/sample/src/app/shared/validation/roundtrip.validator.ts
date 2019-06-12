@@ -1,15 +1,9 @@
 import { Directive } from '@angular/core';
-import {
-  FormGroup,
-  Validator,
-  AbstractControl,
-  NG_VALIDATORS,
-  FormGroupDirective
-} from '@angular/forms';
+import { AbstractControl, FormGroup, NG_VALIDATORS, Validator } from '@angular/forms';
 
 @Directive({
   selector: 'form[round-trip]',
-  providers: [{ provide: NG_VALIDATORS, useExisting: RoundTrip, multi: true }]
+  providers: [{provide: NG_VALIDATORS, useExisting: RoundTrip, multi: true}]
 })
 export class RoundTrip implements Validator {
   validate(control: AbstractControl): any {
@@ -17,7 +11,9 @@ export class RoundTrip implements Validator {
     const fromCtrl = formGroup.controls.from;
     const toCtrl = formGroup.controls.to;
 
-    if (!fromCtrl || !toCtrl) { return {}; }
+    if (!fromCtrl || !toCtrl) {
+      return {};
+    }
 
     const from = fromCtrl.value;
     const to = toCtrl.value;

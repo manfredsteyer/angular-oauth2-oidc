@@ -1,10 +1,5 @@
-import { Directive, Input, Attribute } from '@angular/core';
-import {
-  NG_VALIDATORS,
-  Validator,
-  AbstractControl,
-  FormGroup
-} from '@angular/forms';
+import { Attribute, Directive } from '@angular/core';
+import { AbstractControl, FormGroup, NG_VALIDATORS, Validator } from '@angular/forms';
 
 @Directive({
   selector: 'input[city]', // <input city>
@@ -19,13 +14,16 @@ import {
 export class CityValidatorDirective implements Validator {
   // @Input() city: string;
 
-  constructor(@Attribute('city') private city: string) {}
+  constructor(@Attribute('city') private city: string) {
+  }
 
   validate(c: AbstractControl): any {
     const formGroup = c.root as FormGroup;
     const otherValueCtrl = formGroup.controls.to;
 
-    if (!otherValueCtrl) { return {}; }
+    if (!otherValueCtrl) {
+      return {};
+    }
 
     const otherValue = otherValueCtrl.value;
 
@@ -35,7 +33,9 @@ export class CityValidatorDirective implements Validator {
       };
     }
 
-    if (!this.city) { return {}; }
+    if (!this.city) {
+      return {};
+    }
 
     const allowed = this.city.split(','); // ['Graz', 'Hamburg', 'Wien', 'Frankfurt'];
 

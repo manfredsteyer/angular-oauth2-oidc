@@ -1,12 +1,8 @@
-import {
-  AbstractValidationHandler,
-  ValidationParams
-} from './validation-handler';
+import { AbstractValidationHandler, ValidationParams } from './validation-handler';
+import * as rs from 'jsrsasign';
 
 // declare var require: any;
 // let rs = require('jsrsasign');
-
-import * as rs from 'jsrsasign';
 
 /**
  * Validates the signature of an id_token against one
@@ -39,11 +35,15 @@ export class JwksValidationHandler extends AbstractValidationHandler {
   gracePeriodInSec = 600;
 
   validateSignature(params: ValidationParams, retry = false): Promise<any> {
-    if (!params.idToken) { throw new Error('Parameter idToken expected!'); }
+    if (!params.idToken) {
+      throw new Error('Parameter idToken expected!');
+    }
     if (!params.idTokenHeader) {
       throw new Error('Parameter idTokenHandler expected.');
     }
-    if (!params.jwks) { throw new Error('Parameter jwks expected!'); }
+    if (!params.jwks) {
+      throw new Error('Parameter jwks expected!');
+    }
 
     if (
       !params.jwks.keys ||
@@ -128,19 +128,8 @@ export class JwksValidationHandler extends AbstractValidationHandler {
     }
   }
 
-  private alg2kty(alg: string) {
-    switch (alg.charAt(0)) {
-      case 'R':
-        return 'RSA';
-      case 'E':
-        return 'EC';
-      default:
-        throw new Error('Cannot infer kty from alg: ' + alg);
-    }
-  }
-
   calcHash(valueToHash: string, algorithm: string): Promise<string> {
-    const hashAlg = new rs.KJUR.crypto.MessageDigest({ alg: algorithm });
+    const hashAlg = new rs.KJUR.crypto.MessageDigest({alg: algorithm});
     const result = hashAlg.digestString(valueToHash);
     const byteArrayAsString = this.toByteArrayAsString(result);
     return Promise.resolve(byteArrayAsString);
@@ -154,5 +143,16 @@ export class JwksValidationHandler extends AbstractValidationHandler {
       result += String.fromCharCode(num);
     }
     return result;
+  }
+
+  private alg2kty(alg: string) {
+    switch (alg.charAt(0)) {
+      case 'R':
+        return 'RSA';
+      case 'E':
+        return 'EC';
+      default:
+        throw new Error('Cannot infer kty from alg: ' + alg);
+    }
   }
 }

@@ -34,4 +34,5 @@ import { FlightService } from './services/flight.service';
   providers: [FlightService],
   exports: []
 })
-export class FlightBookingModule {}
+export class FlightBookingModule {
+}

@@ -1,4 +1,5 @@
 import { HttpParameterCodec } from '@angular/common/http';
+
 /**
  * This custom encoder allows charactes like +, % and / to be used in passwords
  */

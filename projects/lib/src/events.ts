@@ -22,7 +22,8 @@ export type EventType =
   | 'logout';
 
 export abstract class OAuthEvent {
-  constructor(readonly type: EventType) {}
+  constructor(readonly type: EventType) {
+  }
 }
 
 export class OAuthSuccessEvent extends OAuthEvent {

@@ -10,4 +10,5 @@ import { Component } from '@angular/core';
         </ul>
     `
 })
-export class FlightHistoryComponent {}
+export class FlightHistoryComponent {
+}

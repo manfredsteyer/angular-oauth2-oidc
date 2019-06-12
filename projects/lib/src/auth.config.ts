@@ -77,7 +77,7 @@ export class AuthConfig {
    * the verbosity of the console needs to be explicitly set
    * to include Debug level messages.
    */
-   public showDebugInformation ? = false;
+  public showDebugInformation ? = false;
 
   /**
    * The redirect uri used when doing silent refresh.
@@ -229,5 +229,5 @@ export class AuthConfig {
    */
   public openUri?: ((uri: string) => void) = uri => {
     location.href = uri;
-  }
+  };
 }

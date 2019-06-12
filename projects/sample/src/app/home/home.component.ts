@@ -18,6 +18,47 @@ export class HomeComponent implements OnInit {
     this.oauthService.loadDiscoveryDocument();
   }
 
+  get givenName() {
+    this.claims = this.oauthService.getIdentityClaims();
+    if (!this.claims) {
+      return null;
+    }
+    return this.claims.given_name;
+  }
+
+  get familyName() {
+    this.claims = this.oauthService.getIdentityClaims();
+    if (!this.claims) {
+      return null;
+    }
+    return this.claims.family_name;
+  }
+
+  get requestAccessToken() {
+    return this.oauthService.requestAccessToken;
+  }
+
+  set requestAccessToken(value: boolean) {
+    this.oauthService.requestAccessToken = value;
+    localStorage.setItem('requestAccessToken', '' + value);
+  }
+
+  get id_token() {
+    return this.oauthService.getIdToken();
+  }
+
+  get access_token() {
+    return this.oauthService.getAccessToken();
+  }
+
+  get id_token_expiration() {
+    return this.oauthService.getIdTokenExpiration();
+  }
+
+  get access_token_expiration() {
+    return this.oauthService.getAccessTokenExpiration();
+  }
+
   ngOnInit() {
     /*
             this.oauthService.loadDiscoveryDocumentAndTryLogin().then(_ => {
@@ -41,22 +82,6 @@ export class HomeComponent implements OnInit {
     this.oauthService.loadUserProfile().then(up => (this.userProfile = up));
   }
 
-  get givenName() {
-    this.claims = this.oauthService.getIdentityClaims();
-    if (!this.claims) {
-      return null;
-    }
-    return this.claims.given_name;
-  }
-
-  get familyName() {
-    this.claims = this.oauthService.getIdentityClaims();
-    if (!this.claims) {
-      return null;
-    }
-    return this.claims.family_name;
-  }
-
   testSilentRefresh() {
     /*
          * Tweak config for implicit flow.
@@ -69,30 +94,5 @@ export class HomeComponent implements OnInit {
       .silentRefresh()
       .then(info => console.debug('refresh ok', info))
       .catch(err => console.error('refresh error', err));
-  }
-
-  set requestAccessToken(value: boolean) {
-    this.oauthService.requestAccessToken = value;
-    localStorage.setItem('requestAccessToken', '' + value);
-  }
-
-  get requestAccessToken() {
-    return this.oauthService.requestAccessToken;
-  }
-
-  get id_token() {
-    return this.oauthService.getIdToken();
-  }
-
-  get access_token() {
-    return this.oauthService.getAccessToken();
-  }
-
-  get id_token_expiration() {
-    return this.oauthService.getIdTokenExpiration();
-  }
-
-  get access_token_expiration() {
-    return this.oauthService.getAccessTokenExpiration();
   }
 }

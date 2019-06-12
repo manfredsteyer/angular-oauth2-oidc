@@ -53,7 +53,9 @@ export class UrlHelperService {
       key = decodeURIComponent(escapedKey);
       value = decodeURIComponent(escapedValue);
 
-      if (key.substr(0, 1) === '/') { key = key.substr(1); }
+      if (key.substr(0, 1) === '/') {
+        key = key.substr(1);
+      }
 
       data[key] = value;
     }

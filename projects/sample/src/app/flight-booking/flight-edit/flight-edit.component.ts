@@ -23,19 +23,20 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class FlightEditComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute) {
-    route.params.subscribe(p => {
-      this.id = p.id;
-    });
-  }
   public id: string;
-
   exitWarning = {
     show: false,
     resolve: null
   };
 
-  ngOnInit() {}
+  constructor(private route: ActivatedRoute) {
+    route.params.subscribe(p => {
+      this.id = p.id;
+    });
+  }
+
+  ngOnInit() {
+  }
 
   decide(decision: boolean) {
     this.exitWarning.show = false;

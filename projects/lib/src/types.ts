@@ -58,9 +58,13 @@ export class LoginOptions {
  */
 export abstract class OAuthLogger {
   abstract debug(message?: any, ...optionalParams: any[]): void;
+
   abstract info(message?: any, ...optionalParams: any[]): void;
+
   abstract log(message?: any, ...optionalParams: any[]): void;
+
   abstract warn(message?: any, ...optionalParams: any[]): void;
+
   abstract error(message?: any, ...optionalParams: any[]): void;
 }
 
@@ -72,7 +76,9 @@ export abstract class OAuthLogger {
  */
 export abstract class OAuthStorage {
   abstract getItem(key: string): string | null;
+
   abstract removeItem(key: string): void;
+
   abstract setItem(key: string, data: string): void;
 }
 
@@ -118,6 +124,7 @@ export interface TokenResponse {
  */
 export interface UserInfo {
   sub: string;
+
   [key: string]: any;
 }
 
