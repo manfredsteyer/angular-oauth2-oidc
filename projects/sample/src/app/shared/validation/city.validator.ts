@@ -22,12 +22,12 @@ export class CityValidatorDirective implements Validator {
   constructor(@Attribute('city') private city: string) {}
 
   validate(c: AbstractControl): any {
-    let formGroup = <FormGroup>c.root;
-    let otherValueCtrl = formGroup.controls['to'];
+    const formGroup = c.root as FormGroup;
+    const otherValueCtrl = formGroup.controls.to;
 
-    if (!otherValueCtrl) return {};
+    if (!otherValueCtrl) { return {}; }
 
-    let otherValue = otherValueCtrl.value;
+    const otherValue = otherValueCtrl.value;
 
     if (otherValue == c.value) {
       return {
@@ -35,9 +35,9 @@ export class CityValidatorDirective implements Validator {
       };
     }
 
-    if (!this.city) return {};
+    if (!this.city) { return {}; }
 
-    let allowed = this.city.split(','); //['Graz', 'Hamburg', 'Wien', 'Frankfurt'];
+    const allowed = this.city.split(','); // ['Graz', 'Hamburg', 'Wien', 'Frankfurt'];
 
     if (allowed.indexOf(c.value) == -1) {
       return {

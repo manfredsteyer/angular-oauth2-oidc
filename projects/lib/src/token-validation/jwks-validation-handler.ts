@@ -39,33 +39,34 @@ export class JwksValidationHandler extends AbstractValidationHandler {
   gracePeriodInSec = 600;
 
   validateSignature(params: ValidationParams, retry = false): Promise<any> {
-    if (!params.idToken) throw new Error('Parameter idToken expected!');
-    if (!params.idTokenHeader)
+    if (!params.idToken) { throw new Error('Parameter idToken expected!'); }
+    if (!params.idTokenHeader) {
       throw new Error('Parameter idTokenHandler expected.');
-    if (!params.jwks) throw new Error('Parameter jwks expected!');
+    }
+    if (!params.jwks) { throw new Error('Parameter jwks expected!'); }
 
     if (
-      !params.jwks['keys'] ||
-      !Array.isArray(params.jwks['keys']) ||
-      params.jwks['keys'].length === 0
+      !params.jwks.keys ||
+      !Array.isArray(params.jwks.keys) ||
+      params.jwks.keys.length === 0
     ) {
       throw new Error('Array keys in jwks missing!');
     }
 
     // console.debug('validateSignature: retry', retry);
 
-    let kid: string = params.idTokenHeader['kid'];
-    let keys: object[] = params.jwks['keys'];
+    const kid: string = params.idTokenHeader.kid;
+    const keys: object[] = params.jwks.keys;
     let key: object;
 
-    let alg = params.idTokenHeader['alg'];
+    const alg = params.idTokenHeader.alg;
 
     if (kid) {
-      key = keys.find(k => k['kid'] === kid /* && k['use'] === 'sig' */);
+      key = keys.find(k => k.kid === kid /* && k['use'] === 'sig' */);
     } else {
-      let kty = this.alg2kty(alg);
-      let matchingKeys = keys.filter(
-        k => k['kty'] === kty && k['use'] === 'sig'
+      const kty = this.alg2kty(alg);
+      const matchingKeys = keys.filter(
+        k => k.kty === kty && k.use === 'sig'
       );
 
       /*
@@ -75,7 +76,7 @@ export class JwksValidationHandler extends AbstractValidationHandler {
                 return Promise.reject(error);
             }*/
       if (matchingKeys.length > 1) {
-        let error =
+        const error =
           'More than one matching key found. Please specify a kid in the id_token header.';
         console.error(error);
         return Promise.reject(error);
@@ -92,13 +93,13 @@ export class JwksValidationHandler extends AbstractValidationHandler {
     }
 
     if (!key && retry && !kid) {
-      let error = 'No matching key found.';
+      const error = 'No matching key found.';
       console.error(error);
       return Promise.reject(error);
     }
 
     if (!key && retry && kid) {
-      let error =
+      const error =
         'expected key not found in property jwks. ' +
         'This property is most likely loaded with the ' +
         'discovery document. ' +
@@ -109,12 +110,12 @@ export class JwksValidationHandler extends AbstractValidationHandler {
       return Promise.reject(error);
     }
 
-    let keyObj = rs.KEYUTIL.getKey(key);
-    let validationOptions = {
+    const keyObj = rs.KEYUTIL.getKey(key);
+    const validationOptions = {
       alg: this.allowedAlgorithms,
       gracePeriod: this.gracePeriodInSec
     };
-    let isValid = rs.KJUR.jws.JWS.verifyJWT(
+    const isValid = rs.KJUR.jws.JWS.verifyJWT(
       params.idToken,
       keyObj,
       validationOptions
@@ -139,17 +140,17 @@ export class JwksValidationHandler extends AbstractValidationHandler {
   }
 
   calcHash(valueToHash: string, algorithm: string): Promise<string> {
-    let hashAlg = new rs.KJUR.crypto.MessageDigest({ alg: algorithm });
-    let result = hashAlg.digestString(valueToHash);
-    let byteArrayAsString = this.toByteArrayAsString(result);
+    const hashAlg = new rs.KJUR.crypto.MessageDigest({ alg: algorithm });
+    const result = hashAlg.digestString(valueToHash);
+    const byteArrayAsString = this.toByteArrayAsString(result);
     return Promise.resolve(byteArrayAsString);
   }
 
   toByteArrayAsString(hexString: string) {
     let result = '';
     for (let i = 0; i < hexString.length; i += 2) {
-      let hexDigit = hexString.charAt(i) + hexString.charAt(i + 1);
-      let num = parseInt(hexDigit, 16);
+      const hexDigit = hexString.charAt(i) + hexString.charAt(i + 1);
+      const num = parseInt(hexDigit, 16);
       result += String.fromCharCode(num);
     }
     return result;

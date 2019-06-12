@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class PasswordFlowLoginComponent implements OnInit {
   userName: string;
   password: string;
-  loginFailed: boolean = false;
+  loginFailed = false;
   userProfile: object;
 
   constructor(private oauthService: OAuthService) {
@@ -36,15 +36,15 @@ export class PasswordFlowLoginComponent implements OnInit {
   }
 
   get givenName() {
-    var claims = this.oauthService.getIdentityClaims();
-    if (!claims) return null;
-    return claims['given_name'];
+    let claims = this.oauthService.getIdentityClaims();
+    if (!claims) { return null; }
+    return claims.given_name;
   }
 
   get familyName() {
-    var claims = this.oauthService.getIdentityClaims();
-    if (!claims) return null;
-    return claims['family_name'];
+    let claims = this.oauthService.getIdentityClaims();
+    if (!claims) { return null; }
+    return claims.family_name;
   }
 
   loginWithPassword() {

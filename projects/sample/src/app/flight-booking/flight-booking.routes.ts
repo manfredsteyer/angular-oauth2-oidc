@@ -6,7 +6,7 @@ import { FlightBookingComponent } from './flight-booking.component';
 import { AuthGuard } from '../shared/auth/auth.guard';
 import { LeaveComponentGuard } from '../shared/deactivation/LeaveComponentGuard';
 
-let FLIGHT_BOOKING_ROUTES: Routes = [
+const FLIGHT_BOOKING_ROUTES: Routes = [
   {
     path: '',
     component: FlightBookingComponent,

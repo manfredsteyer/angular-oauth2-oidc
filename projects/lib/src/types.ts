@@ -47,7 +47,7 @@ export class LoginOptions {
    * the lib read the token(s) so that they are not displayed
    * anymore in the url. If not, set this to true.
    */
-  preventClearHashAfterLogin? = false;
+  preventClearHashAfterLogin ? = false;
 }
 
 /**

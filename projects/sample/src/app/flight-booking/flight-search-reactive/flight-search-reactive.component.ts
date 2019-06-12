@@ -57,7 +57,7 @@ export class FlightSearchReactiveComponent {
       console.debug('formular geändert', e);
     });
 
-    this.filter.controls['from'].valueChanges.subscribe(e => {
+    this.filter.controls.from.valueChanges.subscribe(e => {
       console.debug('from geändert', e);
     });
   }
@@ -67,7 +67,7 @@ export class FlightSearchReactiveComponent {
   }
 
   public search(): void {
-    var value = this.filter.value;
+    let value = this.filter.value;
 
     this.flightService.find(value.from, value.to);
 

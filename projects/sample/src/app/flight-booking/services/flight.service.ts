@@ -16,11 +16,11 @@ export class FlightService {
   public flights: Array<Flight> = [];
 
   find(from: string, to: string): void {
-    let url = this.baseUrl + '/api/flight';
-    let headers = new HttpHeaders().set('Accept', 'application/json');
-    //.set('Authorization', 'Bearer ' + this.oauthService.getAccessToken());
+    const url = this.baseUrl + '/api/flight';
+    const headers = new HttpHeaders().set('Accept', 'application/json');
+    // .set('Authorization', 'Bearer ' + this.oauthService.getAccessToken());
 
-    let params = new HttpParams().set('from', from).set('to', to);
+    const params = new HttpParams().set('from', from).set('to', to);
 
     this.http.get<Flight[]>(url, { headers, params }).subscribe(
       flights => {

@@ -65,7 +65,7 @@ export class OAuthService extends AuthConfig {
      * The received (passed around) state, when logging
      * in with implicit flow.
      */
-    public state? = '';
+    public state ? = '';
 
     protected eventsSubject: Subject<OAuthEvent> = new Subject<OAuthEvent>();
     protected discoveryDocumentLoadedSubject: Subject<object> = new Subject<object>();
@@ -422,7 +422,7 @@ export class OAuthService extends AuthConfig {
                         .then(jwks => {
                             const result: object = {
                                 discoveryDocument: doc,
-                                jwks: jwks
+                                jwks
                             };
 
                             const event = new OAuthSuccessEvent(
@@ -595,7 +595,7 @@ export class OAuthService extends AuthConfig {
                     if (!this.skipSubjectCheck) {
                         if (
                             this.oidc &&
-                            (!existingClaims['sub'] || info.sub !== existingClaims['sub'])
+                            (!existingClaims.sub || info.sub !== existingClaims.sub)
                         ) {
                             const err =
                                 'if property oidc is true, the received user-id (sub) has to be the user-id ' +
@@ -828,7 +828,7 @@ export class OAuthService extends AuthConfig {
         const claims: object = this.getIdentityClaims() || {};
 
         if (this.useIdTokenHintForSilentRefresh && this.hasValidIdToken()) {
-            params['id_token_hint'] = this.getIdToken();
+            params.id_token_hint = this.getIdToken();
         }
 
         if (!this.validateUrlForHttps(this.loginUrl)) {
@@ -849,7 +849,7 @@ export class OAuthService extends AuthConfig {
             document.body.removeChild(existingIframe);
         }
 
-        this.silentRefreshSubject = claims['sub'];
+        this.silentRefreshSubject = claims.sub;
 
         const iframe = document.createElement('iframe');
         iframe.id = this.silentRefreshIFrameName;
@@ -861,7 +861,7 @@ export class OAuthService extends AuthConfig {
             iframe.setAttribute('src', url);
 
             if (!this.silentRefreshShowIFrame) {
-                iframe.style['display'] = 'none';
+                iframe.style.display = 'none';
             }
             document.body.appendChild(iframe);
         });
@@ -1197,7 +1197,7 @@ export class OAuthService extends AuthConfig {
         }
 
         this.createLoginUrl(additionalState, loginHint, null, false, addParams)
-            .then(function (url) {
+            .then(function(url) {
                 location.href = url;
             })
             .catch(error => {
@@ -1285,7 +1285,7 @@ export class OAuthService extends AuthConfig {
 
         this.debug('parsed url', parts);
 
-        const state = parts['state'];
+        const state = parts.state;
         let nonceInState = state;
 
         if (state) {
@@ -1297,7 +1297,7 @@ export class OAuthService extends AuthConfig {
             }
         }
 
-        if (parts['error']) {
+        if (parts.error) {
             this.debug('error trying to login');
             this.handleLoginError(options, parts);
             const err = new OAuthErrorEvent('token_error', {}, parts);
@@ -1305,10 +1305,10 @@ export class OAuthService extends AuthConfig {
             return Promise.reject(err);
         }
 
-        const accessToken = parts['access_token'];
-        const idToken = parts['id_token'];
-        const sessionState = parts['session_state'];
-        const grantedScopes = parts['scope'];
+        const accessToken = parts.access_token;
+        const idToken = parts.id_token;
+        const sessionState = parts.session_state;
+        const grantedScopes = parts.scope;
 
         if (!this.requestAccessToken && !this.oidc) {
             return Promise.reject(
@@ -1350,7 +1350,7 @@ export class OAuthService extends AuthConfig {
             this.storeAccessTokenResponse(
                 accessToken,
                 null,
-                parts['expires_in'] || this.fallbackAccessTokenExpirationTimeInSec,
+                parts.expires_in || this.fallbackAccessTokenExpirationTimeInSec,
                 grantedScopes
             );
         }
@@ -1371,10 +1371,10 @@ export class OAuthService extends AuthConfig {
                 if (options.validationHandler) {
                     return options
                         .validationHandler({
-                            accessToken: accessToken,
+                            accessToken,
                             idClaims: result.idTokenClaims,
                             idToken: result.idToken,
-                            state: state
+                            state
                         })
                         .then(_ => result);
                 }
@@ -1482,12 +1482,12 @@ export class OAuthService extends AuthConfig {
         if (
             this.sessionChecksEnabled &&
             this.silentRefreshSubject &&
-            this.silentRefreshSubject !== claims['sub']
+            this.silentRefreshSubject !== claims.sub
         ) {
             const err =
                 'After refreshing, we got an id_token for another user (sub). ' +
                 `Expected sub: ${this.silentRefreshSubject}, received sub: ${
-                claims['sub']
+                claims.sub
                 }`;
 
             this.logger.warn(err);
@@ -1515,7 +1515,7 @@ export class OAuthService extends AuthConfig {
         if (
             !this.disableAtHashCheck &&
             this.requestAccessToken &&
-            !claims['at_hash']
+            !claims.at_hash
         ) {
             const err = 'An at_hash is needed!';
             this.logger.warn(err);
@@ -1534,16 +1534,16 @@ export class OAuthService extends AuthConfig {
             const err = 'Token has expired';
             console.error(err);
             console.error({
-                now: now,
-                issuedAtMSec: issuedAtMSec,
-                expiresAtMSec: expiresAtMSec
+                now,
+                issuedAtMSec,
+                expiresAtMSec
             });
             return Promise.reject(err);
         }
 
         const validationParams: ValidationParams = {
-            accessToken: accessToken,
-            idToken: idToken,
+            accessToken,
+            idToken,
             jwks: this.jwks,
             idTokenClaims: claims,
             idTokenHeader: header,
@@ -1563,9 +1563,9 @@ export class OAuthService extends AuthConfig {
               return Promise.reject(err);
           }
 
-          return this.checkSignature(validationParams).then(_ => {
+            return this.checkSignature(validationParams).then(_ => {
               const result: ParsedIdToken = {
-                  idToken: idToken,
+                  idToken,
                   idTokenClaims: claims,
                   idTokenClaimsJson: claimsJson,
                   idTokenHeader: header,
@@ -1774,7 +1774,7 @@ export class OAuthService extends AuthConfig {
      */
     public createAndSaveNonce(): Promise<string> {
         const that = this;
-        return this.createNonce().then(function (nonce: any) {
+        return this.createNonce().then(function(nonce: any) {
             that._storage.setItem('nonce', nonce);
             return nonce;
         });

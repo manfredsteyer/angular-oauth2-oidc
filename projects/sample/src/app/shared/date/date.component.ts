@@ -28,7 +28,7 @@ export class DateComponent implements OnInit, OnChanges {
 
     console.debug('change', change);
 
-    let date = new Date(this.date);
+    const date = new Date(this.date);
 
     this.day = date.getDate();
     this.month = date.getMonth() + 1;

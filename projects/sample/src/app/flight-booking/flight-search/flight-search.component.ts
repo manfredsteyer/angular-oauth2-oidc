@@ -9,8 +9,8 @@ import { FlightService } from '../services/flight.service';
   styleUrls: ['./flight-search.component.css']
 })
 export class FlightSearchComponent {
-  public from: string = 'Graz';
-  public to: string = '';
+  public from = 'Graz';
+  public to = '';
   public selectedFlight: Flight;
 
   constructor(
