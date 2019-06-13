@@ -7,7 +7,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class CityPipe implements PipeTransform {
   transform(value: any, ...args: any[]): any {
     const fmt = args[0]; // short, long
-    let short, long;
+    let short;
+    let long;
 
     switch (value) {
       case 'Graz':

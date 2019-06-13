@@ -4,7 +4,7 @@ import { Flight } from '../../entities/flight';
 import { FlightService } from '../services/flight.service';
 
 @Component({
-  selector: 'flight-search',
+  selector: 'app-flight-search',
   templateUrl: './flight-search.component.html',
   styleUrls: ['./flight-search.component.css']
 })
@@ -17,7 +17,7 @@ export class FlightSearchComponent {
     private flightService: FlightService,
     private oauthService: OAuthService
   ) {
-    console.debug('access-token', this.oauthService.getAccessToken());
+    console.log('access-token', this.oauthService.getAccessToken());
   }
 
   // cmp.flights

@@ -4,7 +4,7 @@ import { FlightService } from '../services/flight.service';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'flight-search-reactive',
+  selector: 'app-flight-search-reactive',
   templateUrl: 'flight-search-reactive.component.html',
   providers: [FlightService],
   styleUrls: ['flight-search-reactive.component.css']
@@ -37,7 +37,7 @@ export class FlightSearchReactiveComponent {
           (c: AbstractControl): any => {
             if (c.value !== 'Graz' && c.value !== 'Hamburg') {
               return {
-                city: true
+                appCity: true
               };
             }
             return {};
@@ -48,11 +48,11 @@ export class FlightSearchReactiveComponent {
     });
 
     this.filter.valueChanges.subscribe(e => {
-      console.debug('formular geändert', e);
+      console.log('formular geändert', e);
     });
 
     this.filter.controls.from.valueChanges.subscribe(e => {
-      console.debug('from geändert', e);
+      console.log('from geändert', e);
     });
   }
 

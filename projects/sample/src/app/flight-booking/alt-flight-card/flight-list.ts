@@ -2,15 +2,15 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Flight } from '../../entities/flight';
 
 @Component({
-  selector: 'flight-list',
+  selector: 'app-flight-list',
   template: `
         <div class="row">
             <div *ngFor="let f of flights" class="col-sm-6 col-md-4 col-lg-3 ">
-                <alt-flight-card
+                <app-alt-flight-card
                              [item]="f"
                              [selected]="f === selectedFlight"
                              (selectedChange)="change(f)">
-                </alt-flight-card>
+                </app-alt-flight-card>
             </div>
         </div>
     `

@@ -53,7 +53,7 @@ export class JwksValidationHandler extends AbstractValidationHandler {
       throw new Error('Array keys in jwks missing!');
     }
 
-    // console.debug('validateSignature: retry', retry);
+    // console.log('validateSignature: retry', retry);
 
     const kid: string = params.idTokenHeader.kid;
     const keys: object[] = params.jwks.keys;

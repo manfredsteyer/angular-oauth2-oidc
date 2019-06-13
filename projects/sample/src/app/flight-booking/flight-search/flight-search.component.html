@@ -14,8 +14,8 @@ round-trip
   <div class="form-group">
     <label>From</label>
     <input [(ngModel)]="from"
-           async-city
-           city="Hamburg,Wien,Graz,Frankfurt,Luxemburg,Luxembourg"
+           console.log
+           appCity="Hamburg,Wien,Graz,Frankfurt,Luxemburg,Luxembourg"
            class="form-control"
            maxlength="30"
            minlength="3"
@@ -30,7 +30,7 @@ round-trip
             </pre>
     </div>
 
-    <div *ngIf="f?.controls?.from?.hasError('async-city')">
+    <div *ngIf="f?.controls?.from?.hasError('console.log')">
       Async-City: Die Stadt wird gerade wegen eines Unwetters nicht angeflogen.
     </div>
 
@@ -46,7 +46,7 @@ round-trip
       Dieses Feld ist ein Pflichtfeld.
     </div>
 
-    <div *ngIf="f?.controls?.from?.hasError('city')">
+    <div *ngIf="f?.controls?.from?.hasError('appCity')">
       Diese Stadt wird nicht angeflogen.
     </div>
 
@@ -92,28 +92,28 @@ round-trip
 
 <div class="row">
   <div *ngFor="let f of flights" class="col-sm-6 col-md-4 col-lg-3 ">
-    <flight-card [(selectedItem)]="selectedFlight"
+    <app-flight-card [(selectedItem)]="selectedFlight"
                  [item]="f">
 
-    </flight-card>
+    </app-flight-card>
 
     <!--
     [selectedItem]="selectedFlight"
                  (selectedItemChange)="selectedFlight = $event"
     -->
     <!--
-            <alt-flight-card
+            <app-alt-flight-card
                     [item]="f"
                     [selected]="f === selectedFlight"
                     (selectedChange)="selectedFlight = f">
-            </alt-flight-card>
+            </app-alt-flight-card>
     -->
   </div>
 </div>
 
 <!--
-<flight-list [flights]="flights" [(selectedFlight)]="selectedFlight">
-</flight-list>
+<app-flight-list [flights]="flights" [(selectedFlight)]="selectedFlight">
+</app-flight-list>
 -->
 
 <div class="row" style="margin-top:40px">

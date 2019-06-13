@@ -22,7 +22,7 @@ round-trip
       Validierungsfehler. Bitte prüfen Sie Ihre Eingaben.
     </div>
 
-    <div *ngIf="filter.controls.from.hasError('city')">
+    <div *ngIf="filter.controls.from.hasError('appCity')">
       Diese Stadt wird nicht angefolgen
     </div>
 
@@ -65,27 +65,27 @@ round-trip
 
 <div class="row">
   <div *ngFor="let f of flights" class="col-sm-6 col-md-4 col-lg-3 ">
-    <flight-card [(selectedItem)]="selectedFlight"
+    <app-flight-card [(selectedItem)]="selectedFlight"
                  [item]="f">
-    </flight-card>
+    </app-flight-card>
 
     <!--
     [selectedItem]="selectedFlight"
                  (selectedItemChange)="selectedFlight = $event"
     -->
 
-    <alt-flight-card
+    <app-alt-flight-card
       (selectedChange)="selectedFlight = f"
       [item]="f"
       [selected]="f === selectedFlight">
-    </alt-flight-card>
+    </app-alt-flight-card>
 
   </div>
 </div>
 
 <!--
-<flight-list [flights]="flights" [(selectedFlight)]="selectedFlight">
-</flight-list>
+<app-flight-list [flights]="flights" [(selectedFlight)]="selectedFlight">
+</app-flight-list>
 -->
 
 <div class="row" style="margin-top:40px">

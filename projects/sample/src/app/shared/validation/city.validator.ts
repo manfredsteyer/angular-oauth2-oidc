@@ -2,7 +2,7 @@ import { Attribute, Directive } from '@angular/core';
 import { AbstractControl, FormGroup, NG_VALIDATORS, Validator } from '@angular/forms';
 
 @Directive({
-  selector: 'input[city]', // <input city>
+  selector: 'input[appCity]', // <input appCity>
   providers: [
     {
       provide: NG_VALIDATORS,
@@ -12,9 +12,9 @@ import { AbstractControl, FormGroup, NG_VALIDATORS, Validator } from '@angular/f
   ]
 })
 export class CityValidatorDirective implements Validator {
-  // @Input() city: string;
+  // @Input() appCity: string;
 
-  constructor(@Attribute('city') private city: string) {
+  constructor(@Attribute('appCity') private appCity: string) {
   }
 
   validate(c: AbstractControl): any {
@@ -29,19 +29,19 @@ export class CityValidatorDirective implements Validator {
 
     if (otherValue === c.value) {
       return {
-        city: 'rundflug'
+        appCity: 'rundflug'
       };
     }
 
-    if (!this.city) {
+    if (!this.appCity) {
       return {};
     }
 
-    const allowed = this.city.split(','); // ['Graz', 'Hamburg', 'Wien', 'Frankfurt'];
+    const allowed = this.appCity.split(','); // ['Graz', 'Hamburg', 'Wien', 'Frankfurt'];
 
     if (allowed.indexOf(c.value) === -1) {
       return {
-        city: true
+        appCity: true
       };
     }
 

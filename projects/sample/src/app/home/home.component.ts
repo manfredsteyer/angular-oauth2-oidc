@@ -92,7 +92,7 @@ export class HomeComponent implements OnInit {
 
     this.oauthService
       .silentRefresh()
-      .then(info => console.debug('refresh ok', info))
+      .then(info => console.log('refresh ok', info))
       .catch(err => console.error('refresh error', err));
   }
 }

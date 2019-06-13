@@ -58,15 +58,13 @@ export class PasswordFlowLoginComponent implements OnInit {
       .fetchTokenUsingPasswordFlowAndLoadUserProfile(
         this.userName,
         this.password
-      )
-      .then(() => {
-        console.debug('successfully logged in');
-        this.loginFailed = false;
-      })
-      .catch(err => {
-        console.error('error logging in', err);
-        this.loginFailed = true;
-      });
+      ).then(() => {
+      console.error('successfully logged in');
+      this.loginFailed = false;
+    }).catch(err => {
+      console.error('error logging in', err);
+      this.loginFailed = true;
+    });
   }
 
   logout() {

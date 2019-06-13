@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'flight-booking',
+  selector: 'app-flight-booking',
   templateUrl: './flight-booking.component.html'
 })
 export class FlightBookingComponent {

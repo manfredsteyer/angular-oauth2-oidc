@@ -82,8 +82,8 @@ export abstract class AbstractValidationHandler implements ValidationHandler {
    * Calculates the hash for the passed value by using
    * the passed hash algorithm.
    *
-   * @param valueToHash
-   * @param algorithm
+   * @param valueToHash: valueToHash
+   * @param algorithm: valueToHash
    */
   protected abstract calcHash(valueToHash: string, algorithm: string): Promise<string>;
 }

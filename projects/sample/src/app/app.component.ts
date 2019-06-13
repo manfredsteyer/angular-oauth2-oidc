@@ -38,14 +38,14 @@ export class AppComponent {
 
     this.oauthService.events.subscribe(e => {
       // tslint:disable-next-line:no-console
-      console.debug('oauth/oidc event', e);
+      console.log('oauth/oidc event', e);
     });
 
     this.oauthService.events
       .pipe(filter(e => e.type === 'session_terminated'))
       .subscribe(e => {
         // tslint:disable-next-line:no-console
-        console.debug('Your session has been terminated!');
+        console.log('Your session has been terminated!');
       });
 
     this.oauthService.events
@@ -82,7 +82,7 @@ export class AppComponent {
 
     this.oauthService.events.subscribe(e => {
       // tslint:disable-next-line:no-console
-      console.debug('oauth/oidc event', e);
+      console.log('oauth/oidc event', e);
     });
 
     // Load Discovery Document and then try to login the user
@@ -94,7 +94,7 @@ export class AppComponent {
       .pipe(filter(e => e.type === 'token_expires'))
       .subscribe(e => {
         // tslint:disable-next-line:no-console
-        console.debug('received token_expires event', e);
+        console.log('received token_expires event', e);
         this.oauthService.silentRefresh();
       });
   }
