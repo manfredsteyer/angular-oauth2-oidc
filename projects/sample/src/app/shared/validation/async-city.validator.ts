@@ -20,7 +20,7 @@ export class AsyncCityValidatorDirective {
           return;
         }
 
-        resolve({'console.log': false});
+        resolve({appAsyncCity: false});
       }, 100);
     });
   }

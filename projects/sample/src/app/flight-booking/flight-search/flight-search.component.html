@@ -1,12 +1,12 @@
 <h1>Flight Search!</h1>
 
 <!--
-round-trip
+appRoundTrip
 -->
 
-<form #f="ngForm" novalidate round-trip>
+<form #f="ngForm" novalidate appRoundTrip>
 
-  <div *ngIf="f?.control?.hasError('round-trip')">
+  <div *ngIf="f?.control?.hasError('appRoundTrip')">
     Rund-Flüge sind nicht möglich.
   </div>
 
@@ -14,7 +14,7 @@ round-trip
   <div class="form-group">
     <label>From</label>
     <input [(ngModel)]="from"
-           console.log
+           appAsyncCity
            appCity="Hamburg,Wien,Graz,Frankfurt,Luxemburg,Luxembourg"
            class="form-control"
            maxlength="30"

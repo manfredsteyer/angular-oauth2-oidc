@@ -2,8 +2,7 @@ import { Directive } from '@angular/core';
 import { AbstractControl, FormGroup, NG_VALIDATORS, Validator } from '@angular/forms';
 
 @Directive({
-  // tslint:disable-next-line:directive-selector
-  selector: 'form[round-trip]',
+  selector: 'form[appRoundTrip]',
   providers: [
     {
       provide: NG_VALIDATORS,
@@ -27,7 +26,7 @@ export class RoundTripDirective implements Validator {
 
     if (from === to) {
       return {
-        'round-trip': {
+        appRoundTrip: {
           appCity: from
         }
       };
