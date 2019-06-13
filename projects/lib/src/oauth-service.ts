@@ -132,6 +132,7 @@ export class OAuthService extends AuthConfig {
    * Will setup up silent refreshing for when the token is
    * about to expire.
    * @param params Additional parameter to pass
+   * @param listenTo: listenTo
    */
   public setupAutomaticSilentRefresh(params: object = {}, listenTo?: 'access_token' | 'id_token' | 'any') {
     this.events.pipe(filter(e => e.type === 'token_expires')).subscribe(e => {
@@ -187,7 +188,6 @@ export class OAuthService extends AuthConfig {
    * sessionStorage is used.
    * @ignore
    *
-   * @param storage
    */
   public setStorage(storage: OAuthStorage): void {
     this.storage = storage;
@@ -201,7 +201,7 @@ export class OAuthService extends AuthConfig {
    * to the OpenId Connect spec. To use another url you
    * can pass it to to optional parameter fullUrl.
    *
-   * @param fullUrl
+   * @param fullUrl: fullUrl
    */
   public loadDiscoveryDocument(fullUrl: string = null): Promise<object> {
     return new Promise((resolve, reject) => {
@@ -288,8 +288,8 @@ export class OAuthService extends AuthConfig {
    * Otherwise stricter validations take place that make this operation
    * fail.
    *
-   * @param userName
-   * @param password
+   * @param userName: userName
+   * @param password: password
    * @param headers Optional additional http-headers.
    */
   public fetchTokenUsingPasswordFlowAndLoadUserProfile(
@@ -364,8 +364,8 @@ export class OAuthService extends AuthConfig {
 
   /**
    * Uses password flow to exchange userName and password for an access_token.
-   * @param userName
-   * @param password
+   * @param userName: userName
+   * @param password: password
    * @param headers Optional additional http-headers.
    */
   public fetchTokenUsingPasswordFlow(
@@ -1026,7 +1026,7 @@ export class OAuthService extends AuthConfig {
    * Removes all tokens and logs the user out.
    * If a logout url is configured, the user is
    * redirected to it.
-   * @param noRedirectToLogoutUrl
+   * @param noRedirectToLogoutUrl: noRedirectToLogoutUrl
    */
   public logOut(noRedirectToLogoutUrl = false): void {
     const ID_TOKEN = this.getIdToken();
