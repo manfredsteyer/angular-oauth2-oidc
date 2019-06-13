@@ -229,5 +229,5 @@ export class AuthConfig {
    */
   public openUri?: ((uri: string) => void) = uri => {
     location.href = uri;
-  };
+  }
 }
