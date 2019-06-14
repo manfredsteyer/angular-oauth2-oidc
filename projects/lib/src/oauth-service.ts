@@ -1525,11 +1525,11 @@ export class OAuthService extends AuthConfig {
         const now = Date.now();
         const issuedAtMSec = claims.iat * 1000;
         const expiresAtMSec = claims.exp * 1000;
-        const tenMinutesInMsec = 1000 * 60 * 10;
+        const clockSkewInMSec = (this.clockSkewInSec || 600) * 1000;
 
         if (
-            issuedAtMSec - tenMinutesInMsec >= now ||
-            expiresAtMSec + tenMinutesInMsec <= now
+            issuedAtMSec - clockSkewInMSec >= now ||
+            expiresAtMSec + clockSkewInMSec <= now
         ) {
             const err = 'Token has expired';
             console.error(err);
