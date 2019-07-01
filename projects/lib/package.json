@@ -10,7 +10,7 @@
     "jsrsasign": "^8.0.12"
   },
   "peerDependencies": {
-    "@angular/common": ">=6.0.0 < 8.0.0",
-    "@angular/core": ">=6.0.0 < 8.0.0"
+    "@angular/common": ">=6.0.0 < 8.0.2",
+    "@angular/core": ">=6.0.0 < 8.0.3"
   }
 }
