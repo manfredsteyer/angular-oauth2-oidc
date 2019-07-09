@@ -1109,7 +1109,7 @@ export class OAuthService extends AuthConfig {
               this.responseType = this.config.responseType;
             } else {
               if (this.oidc && this.requestAccessToken) {
-                  this.responseType = 'id_token token';
+                  this.responseType = 'token';
               } else if (this.oidc && !this.requestAccessToken) {
                   this.responseType = 'id_token';
               } else {
