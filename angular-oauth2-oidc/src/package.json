@@ -1,0 +1,32 @@
+{
+  "name": "angular-oauth2-oidc",
+  "version": "3.1.3",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/manfredsteyer/angular-oauth2-oidc"
+  },
+  "author": {
+    "name": "ManfredSteyer",
+    "email": "manfred.steyer@gmx.net"
+  },
+  "keywords": [
+    "angular"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/manfredsteyer/angular-oauth2-oidc/issues"
+  },
+  "main": "angular-oauth2-oidc.umd.js",
+  "module": "angular-oauth2-oidc.js",
+  "jsnext:main": "angular-oauth2-oidc.js",
+  "typings": "angular-oauth2-oidc.d.ts",
+  "peerDependencies": {
+    "@angular/core": ">= 4.3.0 < 6",
+    "@angular/common": ">= 4.3.0 < 6",
+    "rxjs": ">= 5.1.0",
+    "zone.js": ">= 0.8.4"
+  },
+  "dependencies": {
+    "jsrsasign": "^8.0.3"
+  }
+}

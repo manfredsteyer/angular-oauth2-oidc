@@ -2,9 +2,10 @@
   "name": "angular-oauth2-oidc",
   "version": "0.1.0",
   "scripts": {
+    "tsc": "tsc",
     "build": "gulp build",
     "build:watch": "gulp",
-    "docs": "npm run docs:build",
+    "docs": "npm run docs:build -- --disableCoverage --disablePrivate --disableInternal --includes md",
     "docs:build": "compodoc -p tsconfig.json -n angular-oauth2-oidc -d docs --hideGenerator",
     "docs:serve": "npm run docs:build -- -s",
     "docs:watch": "npm run docs:build -- -s -w",
@@ -66,6 +67,7 @@
     "node": ">=6.0.0"
   },
   "dependencies": {
+    "@compodoc/compodoc": "^1.0.4",
     "jsrsasign": "^8.0.3"
   }
 }
