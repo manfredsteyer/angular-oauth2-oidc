@@ -1275,6 +1275,15 @@ export class OAuthService extends AuthConfig {
         }
     }
 
+    /**
+     * Reset current implicit flow
+     *
+     * @description This method allows resetting the current implict flow in order to be initialized again.
+     */
+    public resetImplicitFlow(): void {
+      this.inImplicitFlow = false;
+    }
+
     protected callOnTokenReceivedIfExists(options: LoginOptions): void {
         const that = this;
         if (options.onTokenReceived) {
