@@ -216,6 +216,11 @@ export class AuthConfig {
    */
   public useHttpBasicAuthForPasswordFlow? = false;
 
+  /**
+   * The window of time (in seconds) to allow the current time to deviate when validating id_token's iat and exp values.
+   */
+  public clockSkewInSec?: 600;
+
   constructor(json?: Partial<AuthConfig>) {
     if (json) {
       Object.assign(this, json);
