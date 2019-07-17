@@ -13,6 +13,7 @@ import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { OAuthResourceServerErrorHandler } from './resource-server-error-handler';
 import { OAuthModuleConfig } from '../oauth-module.config';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable()
 export class DefaultOAuthInterceptor implements HttpInterceptor {
@@ -23,8 +24,15 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
     ) { }
 
     private checkUrl(url: string): boolean {
-        const found = this.moduleConfig.resourceServer.allowedUrls.find(u => url.startsWith(u));
-        return !!found;
+        if (this.moduleConfig.resourceServer.customUrlValidation) {
+            return this.moduleConfig.resourceServer.customUrlValidation(url);
+        }
+
+        if (this.moduleConfig.resourceServer.allowedUrls) {
+            return !!this.moduleConfig.resourceServer.allowedUrls.find(u => url.startsWith(u));
+        }
+
+        return true;
     }
 
     public intercept(
@@ -39,7 +47,7 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
         if (!this.moduleConfig.resourceServer) {
             return next.handle(req);
         }
-        if (this.moduleConfig.resourceServer.allowedUrls && !this.checkUrl(url)) {
+        if (!this.checkUrl(url)) {
             return next.handle(req);
         }
 
