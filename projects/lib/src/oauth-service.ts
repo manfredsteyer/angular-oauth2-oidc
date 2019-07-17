@@ -164,7 +164,7 @@ export class OAuthService extends AuthConfig {
      * @param params Additional parameter to pass
      * @param listenTo Setup automatic refresh of a specific token type
      */
-    public setupAutomaticSilentRefresh(params: object = {}, listenTo?: 'access_token' | 'id_token' | 'any') {
+    public setupAutomaticSilentRefresh(params: object = {}, listenTo?: 'access_token' | 'id_token' | 'any', noPrompt = true) {
       let shouldRunSilentRefresh = true;
       this.events.pipe(
         tap((e) => {
@@ -178,7 +178,7 @@ export class OAuthService extends AuthConfig {
       ).subscribe(e => {
         const event = e as OAuthInfoEvent;
         if ((listenTo == null || listenTo === 'any' || event.info === listenTo) && shouldRunSilentRefresh) {
-          this.silentRefresh(params).catch(_ => {
+          this.silentRefresh(params, noPrompt).catch(_ => {
             this.debug('Automatic silent refresh did not work');
           });
         }
@@ -367,7 +367,9 @@ export class OAuthService extends AuthConfig {
     /**
      * DEPRECATED. Use a provider for OAuthStorage instead:
      *
-     * { provide: OAuthStorage, useValue: localStorage }
+     * 
+     * { provide: OAuthStorage, useFactory: oAuthStorageFactory }
+     * export function oAuthStorageFactory(): OAuthStorage { return localStorage; }
      *
      * Sets a custom storage used to store the received
      * tokens on client side. By default, the browser's
@@ -794,23 +796,7 @@ export class OAuthService extends AuthConfig {
         this.removeSilentRefreshEventListener();
 
         this.silentRefreshPostMessageEventListener = (e: MessageEvent) => {
-            let expectedPrefix = '#';
-
-            if (this.silentRefreshMessagePrefix) {
-                expectedPrefix += this.silentRefreshMessagePrefix;
-            }
-
-            if (!e || !e.data || typeof e.data !== 'string') {
-                return;
-            }
-
-            const prefixedMessage: string = e.data;
-
-            if (!prefixedMessage.startsWith(expectedPrefix)) {
-                return;
-            }
-
-            const message = '#' + prefixedMessage.substr(expectedPrefix.length);
+            const message = this.processMessageEventMessage(e);
 
             this.tryLogin({
                 customHashFragment: message,
@@ -906,6 +892,69 @@ export class OAuthService extends AuthConfig {
                 })
             )
             .toPromise();
+    }
+
+    public initImplicitFlowInPopup(options?: { height?: number, width?: number }) {
+        options = options || {};
+        return this.createLoginUrl(null, null, this.silentRefreshRedirectUri, false, {
+            display: 'popup'
+        }).then(url => {
+            return new Promise((resolve, reject) => {
+                let windowRef = window.open(url, '_blank', this.calculatePopupFeatures(options));
+
+                const cleanup = () => {
+                    window.removeEventListener('message', listener);
+                    windowRef.close();
+                    windowRef = null;
+                };
+
+                const listener = (e: MessageEvent) => {
+                    const message = this.processMessageEventMessage(e);
+
+                    this.tryLogin({
+                        customHashFragment: message,
+                        preventClearHashAfterLogin: true,
+                    }).then(() => {
+                        cleanup();
+                        resolve();
+                    }, err => {
+                        cleanup();
+                        reject(err);
+                    });
+                };
+
+                window.addEventListener('message', listener);
+            });
+        });
+    }
+
+    protected calculatePopupFeatures(options: { height?: number, width?: number }) {
+        // Specify an static height and width and calculate centered position
+        const height = options.height || 470;
+        const width = options.width || 500;
+        const left = (screen.width / 2) - (width / 2);
+        const top = (screen.height / 2) - (height / 2);
+        return `location=no,toolbar=no,width=${width},height=${height},top=${top},left=${left}`;
+    }
+
+    protected processMessageEventMessage(e: MessageEvent) {
+        let expectedPrefix = '#';
+
+        if (this.silentRefreshMessagePrefix) {
+            expectedPrefix += this.silentRefreshMessagePrefix;
+        }
+
+        if (!e || !e.data || typeof e.data !== 'string') {
+            return;
+        }
+
+        const prefixedMessage: string = e.data;
+
+        if (!prefixedMessage.startsWith(expectedPrefix)) {
+            return;
+        }
+
+        return '#' + prefixedMessage.substr(expectedPrefix.length);
     }
 
     protected canPerformSessionCheck(): boolean {
@@ -1241,6 +1290,15 @@ export class OAuthService extends AuthConfig {
         }
     }
 
+    /**
+     * Reset current implicit flow
+     *
+     * @description This method allows resetting the current implict flow in order to be initialized again.
+     */
+    public resetImplicitFlow(): void {
+      this.inImplicitFlow = false;
+    }
+
     protected callOnTokenReceivedIfExists(options: LoginOptions): void {
         const that = this;
         if (options.onTokenReceived) {
@@ -1513,7 +1571,7 @@ export class OAuthService extends AuthConfig {
             return Promise.reject(err);
         }
 
-        if (claims.iss !== this.issuer) {
+        if (!this.skipIssuerCheck && claims.iss !== this.issuer) {
             const err = 'Wrong issuer: ' + claims.iss;
             this.logger.warn(err);
             return Promise.reject(err);
@@ -1538,11 +1596,11 @@ export class OAuthService extends AuthConfig {
         const now = Date.now();
         const issuedAtMSec = claims.iat * 1000;
         const expiresAtMSec = claims.exp * 1000;
-        const tenMinutesInMsec = 1000 * 60 * 10;
+        const clockSkewInMSec = (this.clockSkewInSec || 600) * 1000;
 
         if (
-            issuedAtMSec - tenMinutesInMsec >= now ||
-            expiresAtMSec + tenMinutesInMsec <= now
+            issuedAtMSec - clockSkewInMSec >= now ||
+            expiresAtMSec + clockSkewInMSec <= now
         ) {
             const err = 'Token has expired';
             console.error(err);
@@ -1794,22 +1852,34 @@ export class OAuthService extends AuthConfig {
     }
 
     protected createNonce(): Promise<string> {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             if (this.rngUrl) {
                 throw new Error(
                     'createNonce with rng-web-api has not been implemented so far'
                 );
-            } else {
-                let text = '';
-                const possible =
-                    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-                for (let i = 0; i < 40; i++) {
-                    text += possible.charAt(Math.floor(Math.random() * possible.length));
-                }
-
-                resolve(text);
             }
+
+            /*
+             * This alphabet uses a-z A-Z 0-9 _- symbols.
+             * Symbols order was changed for better gzip compression.
+             */
+            const url = 'Uint8ArdomValuesObj012345679BCDEFGHIJKLMNPQRSTWXYZ_cfghkpqvwxyz-';
+            let size = 40;
+            let id = '';
+
+            const crypto = self.crypto || self.msCrypto;
+            if (crypto) {
+                const bytes = crypto.getRandomValues(new Uint8Array(size));
+                while (0 < size--) {
+                    id += url[bytes[size] & 63];
+                }
+            } else {
+                while (0 < size--) {
+                    id += url[Math.random() * 64 | 0];
+                }
+            }
+
+            resolve(id);
         });
     }
 

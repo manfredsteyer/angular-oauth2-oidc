@@ -116,7 +116,7 @@ export const authConfig: AuthConfig = {
   // URL of the SPA to redirect the user to after login
   redirectUri: window.location.origin + '/index.html',
 
-  // The SPA's id. The SPA is registerd with this id at the auth-server
+  // The SPA's id. The SPA is registered with this id at the auth-server
   clientId: 'spa-demo',
 
   // set the scope for the permissions the client should request
@@ -215,23 +215,7 @@ This directly redirects the user to the identity server if there are no valid to
 
 ### Calling a Web API with an Access Token
 
-Pass this Header to the used method of the ``Http``-Service within an Instance of the class ``Headers``:
-
-```TypeScript
-var headers = new Headers({
-    "Authorization": "Bearer " + this.oauthService.getAccessToken()
-});
-```
-
-If you are using the new ``HttpClient``, use the class ``HttpHeaders`` instead:
-
-```TypeScript
-var headers = new HttpHeaders({
-    "Authorization": "Bearer " + this.oauthService.getAccessToken()
-});
-```
-
-Since 3.1 you can also automate this task by switching ``sendAccessToken`` on and by setting ``allowedUrls`` to an array with prefixes for the respective URLs. Use lower case for the prefixes.
+You can automate this task by switching ``sendAccessToken`` on and by setting ``allowedUrls`` to an array with prefixes for the respective URLs. Use lower case for the prefixes.
 
 ```TypeScript
 OAuthModule.forRoot({
@@ -241,6 +225,8 @@ OAuthModule.forRoot({
     }
 })
 ```
+
+If you need more versatility, you can look in the [documentation](https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/working-with-httpinterceptors.html) how to setup a custom interceptor.
 
 ## Routing
 
