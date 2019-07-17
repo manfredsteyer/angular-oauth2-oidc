@@ -160,12 +160,13 @@ export class OAuthService extends AuthConfig {
      * Will setup up silent refreshing for when the token is
      * about to expire.
      * @param params Additional parameter to pass
+     * @param noPrompt True if `prompt=none` should be added to the token refresh url
      */
-    public setupAutomaticSilentRefresh(params: object = {}, listenTo?: 'access_token' | 'id_token' | 'any') {
+    public setupAutomaticSilentRefresh(params: object = {}, listenTo?: 'access_token' | 'id_token' | 'any', noPrompt = true) {
         this.events.pipe(filter(e => e.type === 'token_expires')).subscribe(e => {
             const event = e as OAuthInfoEvent;
             if ( listenTo == null || listenTo === 'any' || event.info === listenTo ) {
-                this.silentRefresh(params).catch(_ => {
+                this.silentRefresh(params, noPrompt).catch(_ => {
                     this.debug('Automatic silent refresh did not work');
                 });
             }
