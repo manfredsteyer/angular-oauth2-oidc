@@ -591,7 +591,7 @@ export class OAuthService extends AuthConfig {
         }
         if (!this.validateUrlForHttps(this.userinfoEndpoint)) {
             throw new Error(
-                'userinfoEndpoint must use http, or config value for property requireHttps must allow http'
+                'userinfoEndpoint must use https, or config value for property requireHttps must allow http'
             );
         }
 
@@ -652,7 +652,7 @@ export class OAuthService extends AuthConfig {
     ): Promise<object> {
         if (!this.validateUrlForHttps(this.tokenEndpoint)) {
             throw new Error(
-                'tokenEndpoint must use http, or config value for property requireHttps must allow http'
+                'tokenEndpoint must use https, or config value for property requireHttps must allow http'
             );
         }
 
@@ -729,7 +729,7 @@ export class OAuthService extends AuthConfig {
     public refreshToken(): Promise<object> {
         if (!this.validateUrlForHttps(this.tokenEndpoint)) {
             throw new Error(
-                'tokenEndpoint must use http, or config value for property requireHttps must allow http'
+                'tokenEndpoint must use https, or config value for property requireHttps must allow http'
             );
         }
 
@@ -1245,7 +1245,7 @@ export class OAuthService extends AuthConfig {
 
         if (!this.validateUrlForHttps(this.loginUrl)) {
             throw new Error(
-                'loginUrl must use http, or config value for property requireHttps must allow http'
+                'loginUrl must use https, or config value for property requireHttps must allow http'
             );
         }
 
@@ -1810,7 +1810,7 @@ export class OAuthService extends AuthConfig {
 
         if (!this.validateUrlForHttps(this.logoutUrl)) {
             throw new Error(
-                'logoutUrl must use http, or config value for property requireHttps must allow http'
+                'logoutUrl must use https, or config value for property requireHttps must allow http'
             );
         }
 
