@@ -158,21 +158,33 @@ export class OAuthService extends AuthConfig {
 
     /**
      * Will setup up silent refreshing for when the token is
-     * about to expire.
+     * about to expire. When the user is logged out via this.logOut method, the
+     * silent refreshing will pause and not refresh the tokens until the user is
+     * logged back in via receiving a new token.
      * @param params Additional parameter to pass
-     * @param noPrompt True if `prompt=none` should be added to the token refresh url
+     * @param listenTo Setup automatic refresh of a specific token type
      */
     public setupAutomaticSilentRefresh(params: object = {}, listenTo?: 'access_token' | 'id_token' | 'any', noPrompt = true) {
-        this.events.pipe(filter(e => e.type === 'token_expires')).subscribe(e => {
-            const event = e as OAuthInfoEvent;
-            if ( listenTo == null || listenTo === 'any' || event.info === listenTo ) {
-                this.silentRefresh(params, noPrompt).catch(_ => {
-                    this.debug('Automatic silent refresh did not work');
-                });
-            }
-        });
+      let shouldRunSilentRefresh = true;
+      this.events.pipe(
+        tap((e) => {
+          if (e.type === 'token_received') {
+            shouldRunSilentRefresh = true;
+          } else if (e.type === 'logout') {
+            shouldRunSilentRefresh = false;
+          }
+        }),
+        filter(e => e.type === 'token_expires')
+      ).subscribe(e => {
+        const event = e as OAuthInfoEvent;
+        if ((listenTo == null || listenTo === 'any' || event.info === listenTo) && shouldRunSilentRefresh) {
+          this.silentRefresh(params, noPrompt).catch(_ => {
+            this.debug('Automatic silent refresh did not work');
+          });
+        }
+      });
 
-        this.restartRefreshTimerIfStillLoggedIn();
+      this.restartRefreshTimerIfStillLoggedIn();
     }
 
 
