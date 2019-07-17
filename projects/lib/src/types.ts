@@ -12,6 +12,7 @@ export class LoginOptions {
 
   /**
    * Hook, to validate the received tokens.
+   *
    * Deprecated:  Use property ``tokenValidationHandler`` on OAuthService instead.
    */
   validationHandler?: (receivedTokens: ReceivedTokens) => Promise<any>;
@@ -47,6 +48,20 @@ export class LoginOptions {
    * anymore in the url. If not, set this to true.
    */
   preventClearHashAfterLogin? = false;
+}
+
+/**
+ * Defines the logging interface the OAuthService uses
+ * internally. Is compatible with the `console` object,
+ * but you can provide your own implementation as well
+ * through dependency injection.
+ */
+export abstract class OAuthLogger {
+  abstract debug(message?: any, ...optionalParams: any[]): void;
+  abstract info(message?: any, ...optionalParams: any[]): void;
+  abstract log(message?: any, ...optionalParams: any[]): void;
+  abstract warn(message?: any, ...optionalParams: any[]): void;
+  abstract error(message?: any, ...optionalParams: any[]): void;
 }
 
 /**

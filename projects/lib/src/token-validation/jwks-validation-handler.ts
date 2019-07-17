@@ -138,11 +138,11 @@ export class JwksValidationHandler extends AbstractValidationHandler {
     }
   }
 
-  calcHash(valueToHash: string, algorithm: string): string {
+  calcHash(valueToHash: string, algorithm: string): Promise<string> {
     let hashAlg = new rs.KJUR.crypto.MessageDigest({ alg: algorithm });
     let result = hashAlg.digestString(valueToHash);
     let byteArrayAsString = this.toByteArrayAsString(result);
-    return byteArrayAsString;
+    return Promise.resolve(byteArrayAsString);
   }
 
   toByteArrayAsString(hexString: string) {

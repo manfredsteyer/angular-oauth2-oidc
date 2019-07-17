@@ -7,7 +7,7 @@ Support for OAuth 2 and OpenId Connect (OIDC) in Angular.
 ## Credits
 
 - [generator-angular2-library](https://github.com/jvandemo/generator-angular2-library) for scaffolding an Angular library
-- [jsrasign](https://kjur.github.io/jsrsasign/) for validating token signature and for hashing
+- [jsrasign](https://kjur.github.io/jsrsasign/) until version 5: For validating token signature and for hashing; beginning with version 6, we are using browser APIs to minimize our bundle size
 - [Identity Server](https://github.com/identityserver) (used for testing with an .NET/.NET Core Backend)
 - [Keycloak (Redhat)](http://www.keycloak.org/) for testing with Java
 
@@ -21,24 +21,31 @@ https://manfredsteyer.github.io/angular-oauth2-oidc/docs
 
 ## Tested Environment
 
-Successfully tested with **Angular 6** and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we've used IdentityServer (.NET/ .NET Core) and Redhat's Keycloak (Java).
+Successfully tested with **Angular 7** and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we've used IdentityServer (.NET/ .NET Core) and Redhat's Keycloak (Java).
+
+**Angular 6**: Use Version 4.x of this library. Version 4.x was tested with Angular 6. You can also try the newer version 5.x of this library which has a much smaller bundle size.
 
 **Angular 5.x or 4.3**: If you need support for Angular < 6 (4.3 to 5.x) you can download the former version 3.1.4 (npm i angular-oauth2-oidc@^3 --save).
 
 ## Release Cycle
 
-- One major release for each Angular version
+- We plan one major release for each Angular version
     - Will contain new features
     - Will contain bug fixes and PRs
-- Critical Bugfixes on a regular basis
+- Critical Bugfixes on demand
 
 ## Contributions
 - Feel free to file pull requests
 - The closed issues contain some ideas for PRs and enhancements (see labels)
+- If you want to contribute to the docs, you can do so in the `docs-src` folder. Make sure you update `summary.json` as well. Then generate the docs with the following commands:
+```
+npm install -g @compodoc/compodoc
+npm run docs
+```
 
 # Features 
-- Logging in via OAuth2 and OpenId Connect (OIDC) Implicit Flow (where user is redirected to Identity Provider)
-- "Logging in" via Password Flow (where user enters their password into the client)
+- Logging in via OAuth2 and OpenId Connect (OIDC) Implicit Flow (where a user is redirected to Identity Provider)
+- "Logging in" via Password Flow (where a user enters their password into the client)
 - Token Refresh for Password Flow by using a Refresh Token
 - Automatically refreshing a token when/some time before it expires
 - Querying Userinfo Endpoint
@@ -71,19 +78,20 @@ npm i angular-oauth2-oidc --save
 ## Importing the NgModule
 
 ```TypeScript
+import { HttpClientModule } from '@angular/common/http';
 import { OAuthModule } from 'angular-oauth2-oidc';
-[...]
+// etc.
 
 @NgModule({
   imports: [ 
-    [...]
-    HttpModule,
+    // etc.
+    HttpClientModule,
     OAuthModule.forRoot()
   ],
   declarations: [
     AppComponent,
     HomeComponent,
-    [...]
+    // etc.
   ],
   bootstrap: [
     AppComponent 
@@ -91,7 +99,6 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 })
 export class AppModule {
 }
-
 ``` 
 
 ## Configuring for Implicit Flow
@@ -100,7 +107,7 @@ This section shows how to implement login leveraging implicit flow. This is the 
 Single Page Application. It sends the user to the Identity Provider's login page. After logging in, the SPA gets tokens.
 This also allows for single sign on as well as single sign off.
 
-To configure the library the following sample uses the new configuration API introduced with Version 2.1.
+To configure the library, the following sample uses the new configuration API introduced with Version 2.1.
 Hence, the original API is still supported.
 
 ```TypeScript
@@ -114,7 +121,7 @@ export const authConfig: AuthConfig = {
   // URL of the SPA to redirect the user to after login
   redirectUri: window.location.origin + '/index.html',
 
-  // The SPA's id. The SPA is registerd with this id at the auth-server
+  // The SPA's id. The SPA is registered with this id at the auth-server
   clientId: 'spa-demo',
 
   // set the scope for the permissions the client should request
@@ -213,23 +220,7 @@ This directly redirects the user to the identity server if there are no valid to
 
 ### Calling a Web API with an Access Token
 
-Pass this Header to the used method of the ``Http``-Service within an Instance of the class ``Headers``:
-
-```TypeScript
-var headers = new Headers({
-    "Authorization": "Bearer " + this.oauthService.getAccessToken()
-});
-```
-
-If you are using the new ``HttpClient``, use the class ``HttpHeaders`` instead:
-
-```TypeScript
-var headers = new HttpHeaders({
-    "Authorization": "Bearer " + this.oauthService.getAccessToken()
-});
-```
-
-Since 3.1 you can also automate this task by switching ``sendAccessToken`` on and by setting ``allowedUrls`` to an array with prefixes for the respective urls. Use lower case for the prefixes.
+You can automate this task by switching ``sendAccessToken`` on and by setting ``allowedUrls`` to an array with prefixes for the respective URLs. Use lower case for the prefixes.
 
 ```TypeScript
 OAuthModule.forRoot({
@@ -239,6 +230,8 @@ OAuthModule.forRoot({
     }
 })
 ```
+
+If you need more versatility, you can look in the [documentation](https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/working-with-httpinterceptors.html) how to setup a custom interceptor.
 
 ## Routing
 
@@ -250,10 +243,11 @@ See the [documentation](https://manfredsteyer.github.io/angular-oauth2-oidc/docs
 
 ## Tutorials
 
+* [Tutorial with Demo Servers available online](https://www.softwarearchitekt.at/post/2016/07/03/authentication-in-angular-2-with-oauth2-oidc-and-guards-for-the-newest-new-router-english-version.aspx)
 * [Angular Authentication with OpenID Connect and Okta in 20 Minutes](https://developer.okta.com/blog/2017/04/17/angular-authentication-with-oidc)
 * [Add Authentication to Your Angular PWA](https://developer.okta.com/blog/2017/06/13/add-authentication-angular-pwa)
 * [Build an Ionic App with User Authentication](https://developer.okta.com/blog/2017/08/22/build-an-ionic-app-with-user-authentication)
-
+* [On-Site Workshops](https://www.softwarearchitekt.at)
 
 
 

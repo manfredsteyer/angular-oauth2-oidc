@@ -33,7 +33,7 @@ export const authConfig: AuthConfig = {
 To get notified, you can hook up for the event ``session_terminated``:
 
 ```TypeScript
-this.oauthService.events.filter(e => e.type === 'session_terminated').subscribe(e => {
-console.debug('Your session has been terminated!');
+this.oauthService.events.pipe(filter(e => e.type === 'session_terminated')).subscribe(e => {
+  console.debug('Your session has been terminated!');
 })
 ```
