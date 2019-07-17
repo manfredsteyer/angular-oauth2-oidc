@@ -3,7 +3,7 @@ import { googleAuthConfig } from './auth.google.config';
 import { authConfig } from './auth.config';
 import { FlightHistoryComponent } from './flight-history/flight-history.component';
 import { Component } from '@angular/core';
-import { OAuthService, AuthConfig, NullValidationHandler } from 'angular-oauth2-oidc';
+import { OAuthService, AuthConfig, NullValidationHandler, JwksValidationHandler } from 'angular-oauth2-oidc';
 // import { JwksValidationHandler } from 'angular-oauth2-oidc';
 import { Router } from '@angular/router';
 import { filter, delay } from 'rxjs/operators';
@@ -32,7 +32,7 @@ export class AppComponent {
   private configureWithNewConfigApi() {
     this.oauthService.configure(authConfig);
     this.oauthService.setStorage(localStorage);
-    this.oauthService.tokenValidationHandler = new NullValidationHandler();
+    this.oauthService.tokenValidationHandler = new JwksValidationHandler();
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
 
 

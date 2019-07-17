@@ -1,4 +1,4 @@
-import { OAuthStorage } from './types';
+import { OAuthStorage, OAuthLogger } from './types';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -14,10 +14,7 @@ import {
 import { DefaultOAuthInterceptor } from './interceptors/default-oauth.interceptor';
 import { ValidationHandler } from './token-validation/validation-handler';
 import { NullValidationHandler } from './token-validation/null-validation-handler';
-
-export function createDefaultStorage() {
-  return typeof sessionStorage !== 'undefined' ? sessionStorage : null;
-}
+import { createDefaultLogger, createDefaultStorage } from './factories';
 
 @NgModule({
   imports: [CommonModule],
@@ -29,13 +26,12 @@ export class OAuthModule {
     config: OAuthModuleConfig = null,
     validationHandlerClass = NullValidationHandler
   ): ModuleWithProviders {
-    // const setupInterceptor = config && config.resourceServer && config.resourceServer.allowedUrls;
-
     return {
       ngModule: OAuthModule,
       providers: [
         OAuthService,
         UrlHelperService,
+        { provide: OAuthLogger, useFactory: createDefaultLogger },
         { provide: OAuthStorage, useFactory: createDefaultStorage },
         { provide: ValidationHandler, useClass: validationHandlerClass},
         {

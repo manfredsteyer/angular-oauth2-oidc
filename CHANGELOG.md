@@ -1,16 +1,8 @@
 # Change Log
 
-## New Features in Version 4.0.0
+## Lates features
 
-See [Release Notes](https://github.com/manfredsteyer/angular-oauth2-oidc/releases/tag/4.0.0)
-
-## New Features in Version 3.1
-
-See [Release Notes](https://github.com/manfredsteyer/angular-oauth2-oidc/releases/tag/3.1)
-
-## New Features in Version 3.0
-
-See [Release Notes](https://github.com/manfredsteyer/angular-oauth2-oidc/releases/tag/3.0.1)
+See [Release Notes](https://github.com/manfredsteyer/angular-oauth2-oidc/releases)
 
 ## New Features in Version 2.1
 - New Config API (the original one is still supported)
