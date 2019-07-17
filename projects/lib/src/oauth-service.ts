@@ -138,7 +138,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         this.configChanged();
     }
 
-    protected configChanged(): void { }
+    protected configChanged(): void {
+        this.setupRefreshTimer();
+    }
 
     public restartSessionChecksIfStillLoggedIn(): void {
         if (this.hasValidIdToken()) {
