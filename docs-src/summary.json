@@ -48,6 +48,10 @@
         "file": "implicit-flow-config-no-discovery.md"
     },
     {
+        "title": "Using an ID Provider that Fails Discovery Document Validation",
+        "file": "discovery-document-validation.md"
+    },
+    {
         "title": "Using SystemJS",
         "file": "systemjs.md"
     },

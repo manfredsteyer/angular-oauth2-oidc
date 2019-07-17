@@ -37,3 +37,5 @@ export class AppComponent {
 
 }
 ```
+
+If you find yourself receiving errors related to discovery document validation, your ID Provider may have OAuth2 endpoints that do not use the `issuer` value as a consistent base URL. You can turn off strict validation of discovery document endpoints for this scenario. See [Discovery Document Validation](https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/discovery-document-validation.html) for details.
