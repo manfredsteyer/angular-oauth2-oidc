@@ -221,6 +221,13 @@ export class AuthConfig {
    */
   public clockSkewInSec?: 600;
 
+  /**
+   * Code Flow is by defauld used together with PKCI which is also higly recommented.
+   * You can disbale it here by setting this flag to true.
+   * https://tools.ietf.org/html/rfc7636#section-1.1
+   */
+  public disablePKCE? = false;
+
   constructor(json?: Partial<AuthConfig>) {
     if (json) {
       Object.assign(this, json);

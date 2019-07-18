@@ -29,7 +29,7 @@ export class CodeFlowComponent implements OnInit {
   }
 
   login() {
-    this.oauthService.initCodeFlow('/some-state;p1=1;p2=2');
+    this.oauthService.initLoginFlow('/some-state;p1=1;p2=2');
     // the parameter here is optional. It's passed around and can be used after logging in
   }
 

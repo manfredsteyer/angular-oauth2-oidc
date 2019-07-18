@@ -21,8 +21,7 @@ export class AppComponent {
     // Remember the selected configuration
     if (sessionStorage.getItem('flow') === 'code') {
       this.configureCodeFlow();
-    }
-    else {
+    } else {
       this.configureImplicitFlow();
     }
     
@@ -32,12 +31,21 @@ export class AppComponent {
   }
 
   private configureCodeFlow() {
+
     this.oauthService.configure(authCodeFlowConfig);
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
-    this.oauthService.loadDiscoveryDocumentAndTryLogin().then(_ => {
-      this.oauthService.loadUserProfile();
-    })
+    this.oauthService.loadDiscoveryDocumentAndTryLogin();
 
+    // Optional
+    // this.oauthService.setupAutomaticSilentRefresh();
+
+    // The used auth server does not return the profile as part
+    // of the id_token, hence we have to query it
+    this.oauthService.events
+      .pipe(filter(e => e.type === 'token_received'))
+      .subscribe(_ => {
+        this.oauthService.loadUserProfile();
+      });
   }
 
   private configureWithoutDiscovery() {
@@ -46,10 +54,9 @@ export class AppComponent {
     this.oauthService.tryLogin();
   }
 
-  // This api will come in the next version
   private configureImplicitFlow() {
     this.oauthService.configure(authConfig);
-    this.oauthService.setStorage(localStorage);
+    // this.oauthService.setStorage(localStorage);
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
 
