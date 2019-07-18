@@ -6,7 +6,7 @@ The last section shows how to automate refreshing for both flows.
 
 ## Refreshing when using Code Flow (not Implicit Flow!)
 
->> For refreshing a token with implicit flow, please see section below!
+> For refreshing a token with implicit flow, please see section below!
 
 When using code flow, you can get an ``refresh_token``. While the original standard DOES NOT allow this for SPAs, the mentioned document proposes to ease this limitation. However, it specifies a list of requirements one should take care about before using refresh_tokens. Please make sure you respect those requirements.
 

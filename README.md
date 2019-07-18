@@ -235,6 +235,14 @@ OAuthModule.forRoot({
 
 If you need more versatility, you can look in the [documentation](https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/working-with-httpinterceptors.html) how to setup a custom interceptor.
 
+## Code Flow + PKCE
+
+See docs: https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/code-flow-+-pcke.html
+
+## Token Refresh
+
+See docs: https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/refreshing-a-token.html
+
 ## Routing
 
 If you use the ``PathLocationStrategy`` (which is on by default) and have a general catch-all-route (``path: '**'``) you should be fine. Otherwise look up the section ``Routing with the HashStrategy`` in the [documentation](https://manfredsteyer.github.io/angular-oauth2-oidc/docs/).
