@@ -43,6 +43,7 @@
 
 
 
+                   
 
 
 
@@ -50,7 +51,7 @@
 <h1 id="refreshing-a-token">Refreshing a Token</h1>
 <p>The strategy to use for refreshing your token differs between implicit flow and code flow. Hence, you find here one separate section for both of them.</p>
 <p>The last section shows how to automate refreshing for both flows.</p>
-<h2 id="refreshing-when-using-code-flow-not-implicit-flow-">Refreshing when using Code Flow (not Implicit Flow!)</h2>
+<h2 id="refreshing-when-using-code-flow-not-implicit-flow">Refreshing when using Code Flow (not Implicit Flow!)</h2>
 <blockquote>
 <blockquote>
 <p>For refreshing a token with implicit flow, please see section below!</p>
@@ -59,7 +60,7 @@
 <p>When using code flow, you can get an <code>refresh_token</code>. While the original standard DOES NOT allow this for SPAs, the mentioned document proposes to ease this limitation. However, it specifies a list of requirements one should take care about before using refresh_tokens. Please make sure you respect those requirements.</p>
 <p>Please also note, that you have to request the <code>offline_access</code> scope to get an refresh token.</p>
 <p>To refresh your token, just call the <code>refresh</code> method:</p>
-<div><pre class="line-numbers"><code class="language-typescript">this.oauthService.refresh();</code></pre></div><h2 id="refreshing-when-using-implicit-flow-not-code-flow-">Refreshing when using Implicit Flow (not Code Flow!)</h2>
+<div><pre class="line-numbers"><code class="language-typescript">this.oauthService.refresh();</code></pre></div><h2 id="refreshing-when-using-implicit-flow-not-code-flow">Refreshing when using Implicit Flow (not Code Flow!)</h2>
 <p>To refresh your tokens when using implicit flow you can use a silent refresh. This is a well-known solution that compensates the fact that implicit flow does not allow for issuing a refresh token. It uses a hidden iframe to get another token from the auth server. When the user is there still logged in (by using a cookie) it will respond without user interaction and provide new tokens.</p>
 <p>To use this approach, setup a redirect uri for the silent refresh.</p>
 <p>For this, you can set the property silentRefreshRedirectUri in the config object:</p>
@@ -103,7 +104,7 @@ export const authConfig: AuthConfig = {
     .silentRefresh()
     .then(info =&gt; console.debug(&#39;refresh ok&#39;, info))
     .catch(err =&gt; console.error(&#39;refresh error&#39;, err));</code></pre></div><p>When there is an error in the iframe that prevents the communication with the main application, silentRefresh will give you a timeout. To configure the timespan for this, you can set the property <code>silentRefreshTimeout</code> (msec). The default value is 20.000 (20 seconds).</p>
-<h3 id="automatically-refreshing-a-token-when-before-it-expires-code-flow-and-implicit-flow-">Automatically refreshing a token when/ before it expires (Code Flow and Implicit Flow)</h3>
+<h3 id="automatically-refreshing-a-token-when-before-it-expires-code-flow-and-implicit-flow">Automatically refreshing a token when/ before it expires (Code Flow and Implicit Flow)</h3>
 <p>To automatically refresh a token when/ some time before it expires, just call the following method after configuring the OAuthService:</p>
 <div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.setupAutomaticSilentRefresh();</code></pre></div><p>By default, this event is fired after 75% of the token&#39;s life time is over. You can adjust this factor by setting the property <code>timeoutFactor</code> to a value between 0 and 1. For instance, 0.5 means, that the event is fired after half of the life time is over and 0.33 triggers the event after a third.</p>
 

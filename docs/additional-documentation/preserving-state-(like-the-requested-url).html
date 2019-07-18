@@ -43,11 +43,12 @@
 
 
 
+                   
 
 
 
 
-<h1 id="preserving-state-like-the-requested-url-">Preserving State (like the Requested URL)</h1>
+<h1 id="preserving-state-like-the-requested-url">Preserving State (like the Requested URL)</h1>
 <p>When calling <code>initImplicitFlow</code>, you can pass an optional state which could be the requested url:</p>
 <div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.initImplicitFlow(&#39;http://www.myurl.com/x/y/z&#39;);</code></pre></div><p>After login succeeded, you can read this state:</p>
 <div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.tryLogin({

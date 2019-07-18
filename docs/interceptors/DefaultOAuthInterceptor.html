@@ -97,7 +97,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(authStorage: <a href="../classes/OAuthStorage.html">OAuthStorage</a>, errorHandler: <a href="../classes/OAuthResourceServerErrorHandler.html">OAuthResourceServerErrorHandler</a>, moduleConfig: <a href="../classes/OAuthModuleConfig.html">OAuthModuleConfig</a>)</code>
+<code>constructor(authStorage: <a href="../classes/OAuthStorage.html">OAuthStorage</a>, oAuthService: <a href="../injectables/OAuthService.html">OAuthService</a>, errorHandler: <a href="../classes/OAuthResourceServerErrorHandler.html">OAuthResourceServerErrorHandler</a>, moduleConfig: <a href="../classes/OAuthModuleConfig.html">OAuthModuleConfig</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -123,7 +123,19 @@
                                                         <td>authStorage</td>
                                                   
                                                         <td>
-                                                                    <code><a href="../classes/OAuthStorage.html" target="_self" >OAuthStorage</a></code>
+                                                                        <code><a href="../classes/OAuthStorage.html" target="_self" >OAuthStorage</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                        <td>oAuthService</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/OAuthService.html" target="_self" >OAuthService</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -135,7 +147,7 @@
                                                         <td>errorHandler</td>
                                                   
                                                         <td>
-                                                                    <code><a href="../classes/OAuthResourceServerErrorHandler.html" target="_self" >OAuthResourceServerErrorHandler</a></code>
+                                                                        <code><a href="../classes/OAuthResourceServerErrorHandler.html" target="_self" >OAuthResourceServerErrorHandler</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -147,7 +159,7 @@
                                                         <td>moduleConfig</td>
                                                   
                                                         <td>
-                                                                    <code><a href="../classes/OAuthModuleConfig.html" target="_self" >OAuthModuleConfig</a></code>
+                                                                        <code><a href="../classes/OAuthModuleConfig.html" target="_self" >OAuthModuleConfig</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -166,120 +178,122 @@
 
             <section>
     
-        <h3 id="methods">
-            Methods
-        </h3>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="intercept"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Public</span>
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="intercept"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
                             intercept
-                            </b>
-                            <a href="#intercept"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="col-md-4">
-                            <span class="modifier-icon icon ion-ios-reset"></span>
-                        <code>intercept(req: HttpRequest<any>, next: <a href="https://angular.io/api/common/http/HttpHandler" target="_blank">HttpHandler</a>)</code>
-                    </td>
-                </tr>
+                        </b>
+                        <a href="#intercept"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>intercept(req: HttpRequest<any>, next: <a href="https://angular.io/api/common/http/HttpHandler" target="_blank">HttpHandler</a>)</code>
+                </td>
+            </tr>
 
 
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">projects/lib/src/interceptors/default-oauth.interceptor.ts:38</a></div>
-                            </td>
-                        </tr>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="40"
+                            class="link-to-prism">projects/lib/src/interceptors/default-oauth.interceptor.ts:40</a></div>
+                </td>
+            </tr>
 
 
-                <tr>
-                    <td class="col-md-4">
+            <tr>
+                <td class="col-md-4">
 
-                            <div class="io-description">
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>req</td>
-                                                        <td>
-                                                                    <code>HttpRequest&lt;any&gt;</code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>req</td>
+                                    <td>
+                                            <code>HttpRequest&lt;any&gt;</code>
+                                    </td>
 
-                                                </tr>
-                                                <tr>
-                                                        <td>next</td>
-                                                        <td>
-                                                                    <code><a href="https://angular.io/api/common/http/HttpHandler" target="_blank" >HttpHandler</a></code>
-                                                        </td>
-                                                    
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
+                                    <td>
+                                        No
+                                    </td>
 
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
-                            <div>
-                            </div>
-                            <div class="io-description">
-                                <b>Returns : </b>    <code>Observable&lt;HttpEvent&lt;any&gt;&gt;</code>
 
-                            </div>
-                                <div class="io-description">
-                                    
-                                </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                                </tr>
+                                <tr>
+                                    <td>next</td>
+                                    <td>
+                                                <code><a href="https://angular.io/api/common/http/HttpHandler" target="_blank" >HttpHandler</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Observable&lt;HttpEvent&lt;any&gt;&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
-
 
     </div>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, Inject, Optional } from &#x27;@angular/core&#x27;;
-import { OAuthService } from &#x27;../oauth-service&#x27;;
-import { OAuthStorage } from &#x27;../types&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, Optional } from &#x27;@angular/core&#x27;;
+
 import {
-    HttpEvent,
-    HttpHandler,
-    HttpInterceptor,
-    HttpRequest,
-    HttpResponse,
-    HttpErrorResponse
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest,
 } from &#x27;@angular/common/http&#x27;;
-import { Observable } from &#x27;rxjs&#x27;;
-import { catchError } from &#x27;rxjs/operators&#x27;;
+import { Observable, of, merge } from &#x27;rxjs&#x27;;
+import { catchError, filter, map, take, mergeMap, timeout } from &#x27;rxjs/operators&#x27;;
 import { OAuthResourceServerErrorHandler } from &#x27;./resource-server-error-handler&#x27;;
 import { OAuthModuleConfig } from &#x27;../oauth-module.config&#x27;;
-import { isPlatformBrowser } from &#x27;@angular/common&#x27;;
+import { OAuthStorage } from &#x27;../types&#x27;;
+import { OAuthService } from &#x27;../oauth-service&#x27;;
+
+const WAIT_FOR_TOKEN_RECEIVED &#x3D; 1000;
 
 @Injectable()
 export class DefaultOAuthInterceptor implements HttpInterceptor {
+
     constructor(
         private authStorage: OAuthStorage,
+        private oAuthService: OAuthService,
         private errorHandler: OAuthResourceServerErrorHandler,
         @Optional() private moduleConfig: OAuthModuleConfig
     ) { }
@@ -296,37 +310,55 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
         return true;
     }
 
-    public intercept(
-        req: HttpRequest&lt;any&gt;,
-        next: HttpHandler
-    ): Observable&lt;HttpEvent&lt;any&gt;&gt; {
-        const url &#x3D; req.url.toLowerCase();
+  public intercept(
+    req: HttpRequest&lt;any&gt;,
+    next: HttpHandler
+  ): Observable&lt;HttpEvent&lt;any&gt;&gt; {
+    const url &#x3D; req.url.toLowerCase();
 
-        if (!this.moduleConfig) {
-            return next.handle(req);
-        }
-        if (!this.moduleConfig.resourceServer) {
-            return next.handle(req);
-        }
-        if (!this.checkUrl(url)) {
-            return next.handle(req);
-        }
 
-        const sendAccessToken &#x3D; this.moduleConfig.resourceServer.sendAccessToken;
+    if (!this.moduleConfig) {
+      return next.handle(req);
+    }
+    if (!this.moduleConfig.resourceServer) {
+      return next.handle(req);
+    }
+    if (this.moduleConfig.resourceServer.allowedUrls &amp;&amp; !this.checkUrl(url)) {
+      return next.handle(req);
+    }
 
-        if (sendAccessToken &amp;&amp; this.authStorage.getItem(&#x27;access_token&#x27;)) {
-            const token &#x3D; this.authStorage.getItem(&#x27;access_token&#x27;);
-            const header &#x3D; &#x27;Bearer &#x27; + token;
+    const sendAccessToken &#x3D; this.moduleConfig.resourceServer.sendAccessToken;
 
-            const headers &#x3D; req.headers.set(&#x27;Authorization&#x27;, header);
+    if (!sendAccessToken) {
+      return next
+        .handle(req)
+        .pipe(catchError(err &#x3D;&gt; this.errorHandler.handleError(err)));
+    }
 
-            req &#x3D; req.clone({ headers });
+    return merge(
+      of(this.oAuthService.getAccessToken()).pipe(
+        filter(token &#x3D;&gt; token ? true : false),
+      ),
+      this.oAuthService.events.pipe(
+        filter(e &#x3D;&gt; e.type &#x3D;&#x3D;&#x3D; &#x27;token_received&#x27;),
+        timeout(WAIT_FOR_TOKEN_RECEIVED),
+        map(_ &#x3D;&gt; this.oAuthService.getAccessToken()),
+      ),
+    ).pipe(
+      take(1),
+      mergeMap(token &#x3D;&gt; {
+        if (token) {
+          const header &#x3D; &#x27;Bearer &#x27; + token;
+          const headers &#x3D; req.headers.set(&#x27;Authorization&#x27;, header);
+          req &#x3D; req.clone({ headers });
         }
 
         return next
-            .handle(req)
-            .pipe(catchError(err &#x3D;&gt; this.errorHandler.handleError(err)));
-    }
+          .handle(req)
+          .pipe(catchError(err &#x3D;&gt; this.errorHandler.handleError(err)));
+      }),
+    );
+  }
 }
 </code></pre>
     </div>
@@ -337,6 +369,7 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
 
 
 
+                   
 
 
 

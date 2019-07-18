@@ -1,5 +1,5 @@
 import { Injectable, Optional } from '@angular/core';
-import { OAuthService } from '../oauth-service';
+
 import {
   HttpEvent,
   HttpHandler,
@@ -10,7 +10,8 @@ import { Observable, of, merge } from 'rxjs';
 import { catchError, filter, map, take, mergeMap, timeout } from 'rxjs/operators';
 import { OAuthResourceServerErrorHandler } from './resource-server-error-handler';
 import { OAuthModuleConfig } from '../oauth-module.config';
-import { isPlatformBrowser } from '@angular/common';
+import { OAuthStorage } from '../types';
+import { OAuthService } from '../oauth-service';
 
 const WAIT_FOR_TOKEN_RECEIVED = 1000;
 
@@ -19,6 +20,7 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
 
     constructor(
         private authStorage: OAuthStorage,
+        private oAuthService: OAuthService,
         private errorHandler: OAuthResourceServerErrorHandler,
         @Optional() private moduleConfig: OAuthModuleConfig
     ) { }
@@ -34,12 +36,6 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
 
         return true;
     }
-
-
-  private checkUrl(url: string): boolean {
-    const found = this.moduleConfig.resourceServer.allowedUrls.find(u => url.startsWith(u));
-    return !!found;
-  }
 
   public intercept(
     req: HttpRequest<any>,
