@@ -10,16 +10,31 @@ import { Observable, of, merge } from 'rxjs';
 import { catchError, filter, map, take, mergeMap, timeout } from 'rxjs/operators';
 import { OAuthResourceServerErrorHandler } from './resource-server-error-handler';
 import { OAuthModuleConfig } from '../oauth-module.config';
+import { isPlatformBrowser } from '@angular/common';
 
 const WAIT_FOR_TOKEN_RECEIVED = 1000;
 
 @Injectable()
 export class DefaultOAuthInterceptor implements HttpInterceptor {
-  constructor(
-    private oAuthService: OAuthService,
-    private errorHandler: OAuthResourceServerErrorHandler,
-    @Optional() private moduleConfig: OAuthModuleConfig
-  ) { }
+
+    constructor(
+        private authStorage: OAuthStorage,
+        private errorHandler: OAuthResourceServerErrorHandler,
+        @Optional() private moduleConfig: OAuthModuleConfig
+    ) { }
+
+    private checkUrl(url: string): boolean {
+        if (this.moduleConfig.resourceServer.customUrlValidation) {
+            return this.moduleConfig.resourceServer.customUrlValidation(url);
+        }
+
+        if (this.moduleConfig.resourceServer.allowedUrls) {
+            return !!this.moduleConfig.resourceServer.allowedUrls.find(u => url.startsWith(u));
+        }
+
+        return true;
+    }
+
 
   private checkUrl(url: string): boolean {
     const found = this.moduleConfig.resourceServer.allowedUrls.find(u => url.startsWith(u));
@@ -31,6 +46,7 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const url = req.url.toLowerCase();
+
 
     if (!this.moduleConfig) {
       return next.handle(req);

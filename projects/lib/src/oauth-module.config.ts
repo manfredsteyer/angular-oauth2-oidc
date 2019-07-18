@@ -10,4 +10,5 @@ export abstract class OAuthResourceServerConfig {
    */
   allowedUrls?: Array<string>;
   sendAccessToken: boolean;
+  customUrlValidation?: (url: string) => boolean;
 }

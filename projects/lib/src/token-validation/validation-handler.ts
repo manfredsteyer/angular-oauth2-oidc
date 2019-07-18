@@ -1,3 +1,5 @@
+import { base64UrlEncode } from "../base64-helper";
+
 export interface ValidationParams {
   idToken: string;
   accessToken: string;
@@ -46,12 +48,8 @@ export abstract class AbstractValidationHandler implements ValidationHandler {
 
     let leftMostHalf = tokenHash.substr(0, tokenHash.length / 2);
 
-    let tokenHashBase64 = btoa(leftMostHalf);
+    let atHash = base64UrlEncode(leftMostHalf);
 
-    let atHash = tokenHashBase64
-      .replace(/\+/g, '-')
-      .replace(/\//g, '_')
-      .replace(/=/g, '');
     let claimsAtHash = params.idTokenClaims['at_hash'].replace(/=/g, '');
 
     if (atHash !== claimsAtHash) {
@@ -70,7 +68,7 @@ export abstract class AbstractValidationHandler implements ValidationHandler {
    */
   protected inferHashAlgorithm(jwtHeader: object): string {
     let alg: string = jwtHeader['alg'];
-    
+
     if (!alg.match(/^.S[0-9]{3}$/)) {
       throw new Error('Algorithm not supported: ' + alg);
     }

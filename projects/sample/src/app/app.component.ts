@@ -8,6 +8,7 @@ import { OAuthService, AuthConfig, NullValidationHandler, JwksValidationHandler 
 import { Router } from '@angular/router';
 import { filter, delay } from 'rxjs/operators';
 import { of, race } from 'rxjs';
+import { authCodeFlowConfig } from './auth-code-flow.config';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -16,22 +17,38 @@ import { of, race } from 'rxjs';
 })
 export class AppComponent {
   constructor(private router: Router, private oauthService: OAuthService) {
-    // this.configureWithoutDiscovery();
-    this.configureWithNewConfigApi();
-    // this.configureAuth();
-    // this.configurePasswordFlow();
+    
+    // Remember the selected configuration
+    if (sessionStorage.getItem('flow') === 'code') {
+      this.configureCodeFlow();
+    } else {
+      this.configureImplicitFlow();
+    }
+
+    // Automatically load user profile
+    this.oauthService.events
+      .pipe(filter(e => e.type === 'token_received'))
+      .subscribe(_ => {
+        this.oauthService.loadUserProfile();
+      });
+
   }
 
-  private configureWithoutDiscovery() {
-    this.oauthService.configure(noDiscoveryAuthConfig);
-    this.oauthService.tokenValidationHandler = new NullValidationHandler();
-    this.oauthService.tryLogin();
+  private configureCodeFlow() {
+
+    this.oauthService.configure(authCodeFlowConfig);
+    this.oauthService.tokenValidationHandler = new JwksValidationHandler();
+    this.oauthService.loadDiscoveryDocumentAndTryLogin();
+
+    // Optional
+    // this.oauthService.setupAutomaticSilentRefresh();
+
   }
 
-  // This api will come in the next version
-  private configureWithNewConfigApi() {
+
+  private configureImplicitFlow() {
     this.oauthService.configure(authConfig);
-    this.oauthService.setStorage(localStorage);
+    // this.oauthService.setStorage(localStorage);
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
 
@@ -39,6 +56,7 @@ export class AppComponent {
     // Optional
     this.oauthService.setupAutomaticSilentRefresh();
 
+    // Display all events
     this.oauthService.events.subscribe(e => {
       // tslint:disable-next-line:no-console
       console.debug('oauth/oidc event', e);
@@ -51,11 +69,16 @@ export class AppComponent {
         console.debug('Your session has been terminated!');
       });
 
-    this.oauthService.events
-      .pipe(filter(e => e.type === 'token_received'))
-      .subscribe(e => {
-        // this.oauthService.loadUserProfile();
-      });
+  }
+
+  // 
+  // Below you find further examples for configuration functions
+  //
+
+  private configureWithoutDiscovery() {
+    this.oauthService.configure(noDiscoveryAuthConfig);
+    this.oauthService.tokenValidationHandler = new NullValidationHandler();
+    this.oauthService.tryLogin();
   }
 
   private configureAuth() {

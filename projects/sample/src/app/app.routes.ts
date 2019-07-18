@@ -1,10 +1,10 @@
 import { PasswordFlowLoginComponent } from './password-flow-login/password-flow-login.component';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { FlightHistoryComponent } from './flight-history/flight-history.component';
 import { CustomPreloadingStrategy } from './shared/preload/custom-preloading.strategy';
 
-let APP_ROUTES: Routes = [
+export let APP_ROUTES: Routes = [
   {
     path: '',
     redirectTo: 'home',
@@ -20,7 +20,7 @@ let APP_ROUTES: Routes = [
   },
   {
     path: 'flight-booking',
-    loadChildren: './flight-booking/flight-booking.module#FlightBookingModule'
+    loadChildren: () => import('./flight-booking/flight-booking.module').then(mod => mod.FlightBookingModule)
   },
   {
     path: 'history',

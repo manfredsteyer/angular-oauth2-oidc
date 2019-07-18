@@ -1,6 +1,27 @@
-# Refreshing a Token when using Implicit Flow (Silent Refresh)
+# Refreshing a Token 
 
-To refresh your tokens when using implicit flow you can use a silent refresh. This is a well-known solution that compensates the fact that implicit flow does not allow for issuing a refresh token. It uses a hidden iframe to get another token from the auth-server. When the user is there still logged in (by using a cookie) it will respond without user interaction and provide new tokens.
+The strategy to use for refreshing your token differs between implicit flow and code flow. Hence, you find here one separate section for both of them.
+
+The last section shows how to automate refreshing for both flows.
+
+## Refreshing when using Code Flow (not Implicit Flow!)
+
+>> For refreshing a token with implicit flow, please see section below!
+
+When using code flow, you can get an ``refresh_token``. While the original standard DOES NOT allow this for SPAs, the mentioned document proposes to ease this limitation. However, it specifies a list of requirements one should take care about before using refresh_tokens. Please make sure you respect those requirements.
+
+Please also note, that you have to request the ``offline_access`` scope to get an refresh token.
+
+To refresh your token, just call the ``refresh`` method:
+
+```typescript
+this.oauthService.refresh();
+```
+
+
+## Refreshing when using Implicit Flow (not Code Flow!)
+
+To refresh your tokens when using implicit flow you can use a silent refresh. This is a well-known solution that compensates the fact that implicit flow does not allow for issuing a refresh token. It uses a hidden iframe to get another token from the auth server. When the user is there still logged in (by using a cookie) it will respond without user interaction and provide new tokens.
 
 To use this approach, setup a redirect uri for the silent refresh.
 
@@ -72,7 +93,8 @@ this
 
 When there is an error in the iframe that prevents the communication with the main application, silentRefresh will give you a timeout. To configure the timespan for this, you can set the property ``silentRefreshTimeout`` (msec). The default value is 20.000 (20 seconds).
 
-### Automatically refreshing a token when/ before it expires
+### Automatically refreshing a token when/ before it expires (Code Flow and Implicit Flow)
+
 
 To automatically refresh a token when/ some time before it expires, just call the following method after configuring the OAuthService:
 

@@ -1,14 +1,8 @@
-import { authConfig } from './auth.config';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
-import {
-  AuthConfig,
-  JwksValidationHandler,
-  OAuthModule,
-  ValidationHandler
-} from 'angular-oauth2-oidc';
+import { OAuthModule } from 'angular-oauth2-oidc';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRouterModule } from './app.routes';
@@ -23,9 +17,9 @@ import { SharedModule } from './shared/shared.module';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     SharedModule.forRoot(),
     AppRouterModule,
-    HttpClientModule,
     OAuthModule.forRoot({
       resourceServer: {
         allowedUrls: ['http://www.angular.at/api'],
@@ -37,7 +31,7 @@ import { SharedModule } from './shared/shared.module';
     AppComponent,
     HomeComponent,
     FlightHistoryComponent,
-    PasswordFlowLoginComponent
+    PasswordFlowLoginComponent,
   ],
   providers: [
     // {provide: AuthConfig, useValue: authConfig },

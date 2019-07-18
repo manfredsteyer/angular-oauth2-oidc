@@ -37,11 +37,18 @@ Successfully tested with **Angular 7** and its Router, PathLocationStrategy as w
 ## Contributions
 - Feel free to file pull requests
 - The closed issues contain some ideas for PRs and enhancements (see labels)
+- If you want to contribute to the docs, you can do so in the `docs-src` folder. Make sure you update `summary.json` as well. Then generate the docs with the following commands:
+
+  ```
+  npm install -g @compodoc/compodoc
+  npm run docs
+  ```
 
 # Features 
-- Logging in via OAuth2 and OpenId Connect (OIDC) Implicit Flow (where a user is redirected to Identity Provider)
+- Logging in via Implicit Flow (where a user is redirected to Identity Provider)
+- Logging in via Code Flow + PKCE
 - "Logging in" via Password Flow (where a user enters their password into the client)
-- Token Refresh for Password Flow by using a Refresh Token
+- Token Refresh for all supported flows
 - Automatically refreshing a token when/some time before it expires
 - Querying Userinfo Endpoint
 - Querying Discovery Document to ease configuration
@@ -116,7 +123,7 @@ export const authConfig: AuthConfig = {
   // URL of the SPA to redirect the user to after login
   redirectUri: window.location.origin + '/index.html',
 
-  // The SPA's id. The SPA is registerd with this id at the auth-server
+  // The SPA's id. The SPA is registered with this id at the auth-server
   clientId: 'spa-demo',
 
   // set the scope for the permissions the client should request
@@ -125,7 +132,7 @@ export const authConfig: AuthConfig = {
 }
 ```
 
-Configure the OAuthService with this config object when the application starts up:
+Configure the ``OAuthService`` with this config object when the application starts up:
 
 ```TypeScript
 import { OAuthService } from 'angular-oauth2-oidc';
@@ -140,10 +147,10 @@ import { Component } from '@angular/core';
 export class AppComponent {
 
     constructor(private oauthService: OAuthService) {
-      this.configureWithNewConfigApi();
+      this.configure();
     }
 
-    private configureWithNewConfigApi() {
+    private configure() {
       this.oauthService.configure(authConfig);
       this.oauthService.tokenValidationHandler = new JwksValidationHandler();
       this.oauthService.loadDiscoveryDocumentAndTryLogin();
@@ -168,7 +175,7 @@ export class HomeComponent {
     }
 
     public login() {
-        this.oauthService.initImplicitFlow();
+        this.oauthService.initLoginFlow();
     }
 
     public logoff() {
@@ -215,23 +222,7 @@ This directly redirects the user to the identity server if there are no valid to
 
 ### Calling a Web API with an Access Token
 
-Pass this Header to the used method of the ``Http``-Service within an Instance of the class ``Headers``:
-
-```TypeScript
-var headers = new Headers({
-    "Authorization": "Bearer " + this.oauthService.getAccessToken()
-});
-```
-
-If you are using the new ``HttpClient``, use the class ``HttpHeaders`` instead:
-
-```TypeScript
-var headers = new HttpHeaders({
-    "Authorization": "Bearer " + this.oauthService.getAccessToken()
-});
-```
-
-Since 3.1 you can also automate this task by switching ``sendAccessToken`` on and by setting ``allowedUrls`` to an array with prefixes for the respective URLs. Use lower case for the prefixes.
+You can automate this task by switching ``sendAccessToken`` on and by setting ``allowedUrls`` to an array with prefixes for the respective URLs. Use lower case for the prefixes.
 
 ```TypeScript
 OAuthModule.forRoot({
@@ -242,11 +233,13 @@ OAuthModule.forRoot({
 })
 ```
 
+If you need more versatility, you can look in the [documentation](https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/working-with-httpinterceptors.html) how to setup a custom interceptor.
+
 ## Routing
 
 If you use the ``PathLocationStrategy`` (which is on by default) and have a general catch-all-route (``path: '**'``) you should be fine. Otherwise look up the section ``Routing with the HashStrategy`` in the [documentation](https://manfredsteyer.github.io/angular-oauth2-oidc/docs/).
 
-## More Documentation
+## More Documentation (!)
 
 See the [documentation](https://manfredsteyer.github.io/angular-oauth2-oidc/docs/) for more information about this library.
 
