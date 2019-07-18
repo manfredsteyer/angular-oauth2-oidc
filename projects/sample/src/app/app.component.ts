@@ -24,10 +24,14 @@ export class AppComponent {
     } else {
       this.configureImplicitFlow();
     }
-    
-    // this.configureWithoutDiscovery();
-    // this.configureAuth();
-    // this.configurePasswordFlow();
+
+    // Automatically load user profile
+    this.oauthService.events
+      .pipe(filter(e => e.type === 'token_received'))
+      .subscribe(_ => {
+        this.oauthService.loadUserProfile();
+      });
+
   }
 
   private configureCodeFlow() {
@@ -39,20 +43,8 @@ export class AppComponent {
     // Optional
     // this.oauthService.setupAutomaticSilentRefresh();
 
-    // The used auth server does not return the profile as part
-    // of the id_token, hence we have to query it
-    this.oauthService.events
-      .pipe(filter(e => e.type === 'token_received'))
-      .subscribe(_ => {
-        this.oauthService.loadUserProfile();
-      });
   }
 
-  private configureWithoutDiscovery() {
-    this.oauthService.configure(noDiscoveryAuthConfig);
-    this.oauthService.tokenValidationHandler = new NullValidationHandler();
-    this.oauthService.tryLogin();
-  }
 
   private configureImplicitFlow() {
     this.oauthService.configure(authConfig);
@@ -64,6 +56,7 @@ export class AppComponent {
     // Optional
     this.oauthService.setupAutomaticSilentRefresh();
 
+    // Display all events
     this.oauthService.events.subscribe(e => {
       // tslint:disable-next-line:no-console
       console.debug('oauth/oidc event', e);
@@ -76,11 +69,16 @@ export class AppComponent {
         console.debug('Your session has been terminated!');
       });
 
-    this.oauthService.events
-      .pipe(filter(e => e.type === 'token_received'))
-      .subscribe(e => {
-        // this.oauthService.loadUserProfile();
-      });
+  }
+
+  // 
+  // Below you find further examples for configuration functions
+  //
+
+  private configureWithoutDiscovery() {
+    this.oauthService.configure(noDiscoveryAuthConfig);
+    this.oauthService.tokenValidationHandler = new NullValidationHandler();
+    this.oauthService.tryLogin();
   }
 
   private configureAuth() {

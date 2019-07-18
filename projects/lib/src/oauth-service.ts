@@ -740,6 +740,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
      * method silentRefresh.
      */
     public refreshToken(): Promise<object> {
+
         if (!this.validateUrlForHttps(this.tokenEndpoint)) {
             throw new Error(
                 'tokenEndpoint must use https, or config value for property requireHttps must allow http'

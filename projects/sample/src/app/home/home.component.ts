@@ -1,6 +1,7 @@
 import { authConfig } from '../auth.config';
 import { Component, OnInit } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { authCodeFlowConfig } from '../auth-code-flow.config';
 
 @Component({
   templateUrl: './home.component.html'
@@ -10,27 +11,37 @@ export class HomeComponent implements OnInit {
   userProfile: object;
 
   constructor(private oauthService: OAuthService) {
-    // Tweak config for implicit flow.
-    // This is just needed b/c this demo uses both,
-    // implicit flow as well as password flow
-    this.oauthService.configure(authConfig);
-    this.oauthService.loadDiscoveryDocument();
-    sessionStorage.setItem('flow', 'implicit');
   }
 
   ngOnInit() {
     /*
-            this.oauthService.loadDiscoveryDocumentAndTryLogin().then(_ => {
-                if (!this.oauthService.hasValidIdToken() || !this.oauthService.hasValidAccessToken()) {
-                  this.oauthService.initImplicitFlow('some-state');
-                }
-            });
-            */
+        this.oauthService.loadDiscoveryDocumentAndTryLogin().then(_ => {
+            if (!this.oauthService.hasValidIdToken() || !this.oauthService.hasValidAccessToken()) {
+              this.oauthService.initImplicitFlow('some-state');
+            }
+        });
+    */
   }
 
-  login() {
-    this.oauthService.initImplicitFlow('/some-state;p1=1;p2=2');
-    // the parameter here is optional. It's passed around and can be used after logging in
+  async loginImplicit() {
+
+    // Tweak config for implicit flow
+    this.oauthService.configure(authConfig);
+    await this.oauthService.loadDiscoveryDocument();
+    sessionStorage.setItem('flow', 'implicit');
+
+    this.oauthService.initLoginFlow('/some-state;p1=1;p2=2');
+      // the parameter here is optional. It's passed around and can be used after logging in
+  }
+
+  async loginCode() {
+      // Tweak config for code flow
+      this.oauthService.configure(authCodeFlowConfig);
+      await this.oauthService.loadDiscoveryDocument();
+      sessionStorage.setItem('flow', 'code');
+  
+      this.oauthService.initLoginFlow('/some-state;p1=1;p2=2');
+       // the parameter here is optional. It's passed around and can be used after logging in
   }
 
   logout() {
@@ -53,18 +64,21 @@ export class HomeComponent implements OnInit {
     return claims['family_name'];
   }
 
-  testSilentRefresh() {
-    /*
-         * Tweak config for implicit flow.
-         * This is needed b/c this sample uses both flows
-        */
-    //this.oauthService.clientId = "spa-demo";
+  refresh() {
+
     this.oauthService.oidc = true;
 
-    this.oauthService
-      .silentRefresh()
-      .then(info => console.debug('refresh ok', info))
-      .catch(err => console.error('refresh error', err));
+    if (this.oauthService.responseType === 'code') {
+      this.oauthService
+        .refreshToken()
+        .then(info => console.debug('refresh ok', info))
+        .catch(err => console.error('refresh error', err));
+    } else {
+      this.oauthService
+        .silentRefresh()
+        .then(info => console.debug('refresh ok', info))
+        .catch(err => console.error('refresh error', err));
+    }
   }
 
   set requestAccessToken(value: boolean) {
