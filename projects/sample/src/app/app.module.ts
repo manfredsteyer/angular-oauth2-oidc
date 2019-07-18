@@ -13,6 +13,7 @@ import { FlightHistoryComponent } from './flight-history/flight-history.componen
 import { HomeComponent } from './home/home.component';
 import { PasswordFlowLoginComponent } from './password-flow-login/password-flow-login.component';
 import { SharedModule } from './shared/shared.module';
+import { CodeFlowComponent } from './code-flow/code-flow.component';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { SharedModule } from './shared/shared.module';
     AppComponent,
     HomeComponent,
     FlightHistoryComponent,
-    PasswordFlowLoginComponent
+    PasswordFlowLoginComponent,
+    CodeFlowComponent
   ],
   providers: [
     // {provide: AuthConfig, useValue: authConfig },

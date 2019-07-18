@@ -1,11 +1,11 @@
-import { authConfig } from '../auth.config';
 import { Component, OnInit } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { authCodeFlowConfig } from '../auth-code-flow.config';
 
 @Component({
-  templateUrl: './home.component.html'
+  templateUrl: './code-flow.component.html'
 })
-export class HomeComponent implements OnInit {
+export class CodeFlowComponent implements OnInit {
   loginFailed: boolean = false;
   userProfile: object;
 
@@ -13,9 +13,9 @@ export class HomeComponent implements OnInit {
     // Tweak config for implicit flow.
     // This is just needed b/c this demo uses both,
     // implicit flow as well as password flow
-    this.oauthService.configure(authConfig);
+    this.oauthService.configure(authCodeFlowConfig);
     this.oauthService.loadDiscoveryDocument();
-    sessionStorage.setItem('flow', 'implicit');
+    sessionStorage.setItem('flow', 'code');
   }
 
   ngOnInit() {
@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
   }
 
   login() {
-    this.oauthService.initImplicitFlow('/some-state;p1=1;p2=2');
+    this.oauthService.initCodeFlow('/some-state;p1=1;p2=2');
     // the parameter here is optional. It's passed around and can be used after logging in
   }
 
@@ -53,27 +53,17 @@ export class HomeComponent implements OnInit {
     return claims['family_name'];
   }
 
-  testSilentRefresh() {
-    /*
-         * Tweak config for implicit flow.
-         * This is needed b/c this sample uses both flows
-        */
-    //this.oauthService.clientId = "spa-demo";
+  refresh() {
+  
     this.oauthService.oidc = true;
 
     this.oauthService
-      .silentRefresh()
-      .then(info => console.debug('refresh ok', info))
+      .refreshToken()
+      .then(info =>  {
+        console.debug('refresh ok', info);
+        this.oauthService.loadUserProfile();
+      })
       .catch(err => console.error('refresh error', err));
-  }
-
-  set requestAccessToken(value: boolean) {
-    this.oauthService.requestAccessToken = value;
-    localStorage.setItem('requestAccessToken', '' + value);
-  }
-
-  get requestAccessToken() {
-    return this.oauthService.requestAccessToken;
   }
 
   get id_token() {
@@ -92,3 +82,4 @@ export class HomeComponent implements OnInit {
     return this.oauthService.getAccessTokenExpiration();
   }
 }
+

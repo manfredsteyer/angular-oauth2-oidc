@@ -1,7 +1,7 @@
 import { Injectable, NgZone, Optional, OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, Subject, Subscription, of, race } from 'rxjs';
-import { filter, take, delay, first, tap, map } from 'rxjs/operators';
+import { Observable, Subject, Subscription, of, race, from } from 'rxjs';
+import { filter, delay, first, tap, map, switchMap } from 'rxjs/operators';
 
 import {
     ValidationHandler,
@@ -90,6 +90,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         protected logger: OAuthLogger,
     ) {
         super();
+
+        console.debug('angular-oauth2-oidc v8-beta');
 
         this.discoveryDocumentLoaded$ = this.discoveryDocumentLoadedSubject.asObservable();
         this.events = this.eventsSubject.asObservable();
@@ -671,18 +673,18 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                 .set('username', userName)
                 .set('password', password);
 
-            if (this.useHttpBasicAuthForPasswordFlow) {
+            if (this.useHttpBasicAuth) {
                 const header = btoa(`${this.clientId}:${this.dummyClientSecret}`);
                 headers = headers.set(
                     'Authorization',
                     'Basic ' + header);
             }
 
-            if (!this.useHttpBasicAuthForPasswordFlow) {
+            if (!this.useHttpBasicAuth) {
                 params = params.set('client_id', this.clientId);
             }
 
-            if (!this.useHttpBasicAuthForPasswordFlow && this.dummyClientSecret) {
+            if (!this.useHttpBasicAuth && this.dummyClientSecret) {
                 params = params.set('client_secret', this.dummyClientSecret);
             }
 
@@ -759,6 +761,18 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
             this.http
                 .post<TokenResponse>(this.tokenEndpoint, params, { headers })
+                .pipe(switchMap(tokenResponse => {
+                    if (tokenResponse.id_token) {
+                        return from(this.processIdToken(tokenResponse.id_token, tokenResponse.access_token, true))
+                            .pipe(
+                                tap(result => this.storeIdToken(result)),
+                                map(_ => tokenResponse)
+                            );
+                    }
+                    else {
+                        return of(tokenResponse);
+                    }
+                }))
                 .subscribe(
                     tokenResponse => {
                         this.debug('refresh tokenResponse', tokenResponse);
@@ -1336,6 +1350,157 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
 
     /**
+     * Delegates to tryLoginImplicitFlow for the sake of competability
+     * @param options Optional options.
+     */
+    public tryLogin(options: LoginOptions = null): Promise<boolean> {
+        if (this.config.responseType === 'code') {
+            return this.tryLoginCodeFlow().then(_ => true);
+        }
+        else {
+            return this.tryLoginImplicitFlow(options);
+        }
+    }
+
+
+    private parseQueryString(queryString: string): object {
+        if (!queryString || queryString.length === 0) {
+            return {};
+        }
+
+        if (queryString.charAt(0) === '?') {
+            queryString = queryString.substr(1);
+        }
+
+        return this.urlHelper.parseQueryString(queryString);
+
+
+    }
+
+    public tryLoginCodeFlow(): Promise<void> {
+
+        const parts = this.parseQueryString(window.location.search)
+
+        const code = parts['code'];
+        const state = parts['state'];
+
+        let [nonceInState, userState] = this.parseState(state);
+        this.state = userState;
+
+        if (parts['error']) {
+            this.debug('error trying to login');
+            this.handleLoginError({}, parts);
+            const err = new OAuthErrorEvent('code_error', {}, parts);
+            this.eventsSubject.next(err);
+            return Promise.reject(err);
+        }
+
+        const success = this.validateNonce(nonceInState);
+        if (!success) {
+            const event = new OAuthErrorEvent('invalid_nonce_in_state', null);
+            this.eventsSubject.next(event);
+            return Promise.reject(event);
+        }
+
+        if (code) {
+            return new Promise((resolve, reject) => {
+                this.getTokenFromCode(code).then(result => {
+                    resolve();
+                }).catch(err => {
+                    reject(err);
+                });
+            });
+        } else {
+            return Promise.resolve();
+        }
+    }
+
+    /**
+     * Get token using an intermediate code. Works for the Authorization Code flow.
+     */
+    private getTokenFromCode(code: string): Promise<object> {
+        let params = new HttpParams()
+            .set('grant_type', 'authorization_code')
+            .set('code', code)
+            .set('redirect_uri', this.redirectUri);
+        return this.fetchAndProcessToken(params);
+    }
+
+    private fetchAndProcessToken(params: HttpParams): Promise<object> {    
+
+        let headers = new HttpHeaders()
+                                .set('Content-Type', 'application/x-www-form-urlencoded');
+
+        if (!this.validateUrlForHttps(this.tokenEndpoint)) {
+            throw new Error('tokenEndpoint must use Http. Also check property requireHttps.');
+        }
+
+        if (this.useHttpBasicAuth) {
+            const header = btoa(`${this.clientId}:${this.dummyClientSecret}`);
+            headers = headers.set(
+                'Authorization',
+                'Basic ' + header);
+        }
+
+        if (!this.useHttpBasicAuth) {
+            params = params.set('client_id', this.clientId);
+        }
+
+        if (!this.useHttpBasicAuth && this.dummyClientSecret) {
+            params = params.set('client_secret', this.dummyClientSecret);
+        }
+
+        return new Promise((resolve, reject) => {
+
+            if (this.customQueryParams) {
+                for (let key of Object.getOwnPropertyNames(this.customQueryParams)) {
+                    params = params.set(key, this.customQueryParams[key]);
+                }
+            }
+
+            this.http.post<TokenResponse>(this.tokenEndpoint, params, { headers }).subscribe(
+                (tokenResponse) => {
+                    this.debug('refresh tokenResponse', tokenResponse);
+                    this.storeAccessTokenResponse(
+                        tokenResponse.access_token, 
+                        tokenResponse.refresh_token, 
+                        tokenResponse.expires_in,
+                        tokenResponse.scope);
+
+                    if (this.oidc && tokenResponse.id_token) {
+                        this.processIdToken(tokenResponse.id_token, tokenResponse.access_token).  
+                        then(result => {
+                            this.storeIdToken(result);
+            
+                            this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
+                            this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
+            
+                            resolve(tokenResponse);
+                        })
+                        .catch(reason => {
+                            this.eventsSubject.next(new OAuthErrorEvent('token_validation_error', reason));
+                            console.error('Error validating tokens');
+                            console.error(reason);
+            
+                            reject(reason);
+                        });
+                    } else {
+                        this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
+                        this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
+            
+                        resolve(tokenResponse);
+                    }
+                },
+                (err) => {
+                    console.error('Error getting token', err);
+                    this.eventsSubject.next(new OAuthErrorEvent('token_refresh_error', err));
+                    reject(err);
+                }
+            );
+        });
+    }
+
+    /**
      * Checks whether there are tokens in the hash fragment
      * as a result of the implicit flow. These tokens are
      * parsed, validated and used to sign the user in to the
@@ -1343,7 +1508,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
      *
      * @param options Optional options.
      */
-    public tryLogin(options: LoginOptions = null): Promise<boolean> {
+    public tryLoginImplicitFlow(options: LoginOptions = null): Promise<boolean> {
         options = options || {};
 
         let parts: object;
@@ -1357,16 +1522,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         this.debug('parsed url', parts);
 
         const state = parts['state'];
-        let nonceInState = state;
 
-        if (state) {
-            const idx = state.indexOf(this.config.nonceStateSeparator);
-
-            if (idx > -1) {
-                nonceInState = state.substr(0, idx);
-                this.state = state.substr(idx + this.config.nonceStateSeparator.length);
-            }
-        }
+        let [nonceInState, userState] = this.parseState(state);
+        this.state = userState;
 
         if (parts['error']) {
             this.debug('error trying to login');
@@ -1406,10 +1564,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         }
 
         if (this.requestAccessToken && !options.disableOAuth2StateCheck) {
-            const success = this.validateNonceForAccessToken(
-                accessToken,
-                nonceInState
-            );
+            const success = this.validateNonce(nonceInState);
+
             if (!success) {
                 const event = new OAuthErrorEvent('invalid_nonce_in_state', null);
                 this.eventsSubject.next(event);
@@ -1472,12 +1628,26 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             });
     }
 
-    protected validateNonceForAccessToken(
-        accessToken: string,
+    private parseState(state: string): [string, string] {
+        let nonce = state;
+        let userState = '';
+
+        if (state) {
+            const idx = state.indexOf(this.config.nonceStateSeparator);
+            if (idx > -1) {
+                nonce = state.substr(0, idx);
+                userState = state.substr(idx + this.config.nonceStateSeparator.length);
+            }
+        }
+        return [nonce, userState];
+    }
+
+    protected validateNonce(
         nonceInState: string
     ): boolean {
         const savedNonce = this._storage.getItem('nonce');
         if (savedNonce !== nonceInState) {
+            
             const err = 'Validating access_token failed, wrong state/nonce.';
             console.error(err, savedNonce, nonceInState);
             return false;
@@ -1514,7 +1684,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
      */
     public processIdToken(
         idToken: string,
-        accessToken: string
+        accessToken: string,
+        skipNonceCheck = false
     ): Promise<ParsedIdToken> {
         const tokenParts = idToken.split('.');
         const headerBase64 = this.padBase64(tokenParts[0]);
@@ -1577,7 +1748,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             return Promise.reject(err);
         }
 
-        if (claims.nonce !== savedNonce) {
+        if (!skipNonceCheck && claims.nonce !== savedNonce) {
             const err = 'Wrong nonce: ' + claims.nonce;
             this.logger.warn(err);
             return Promise.reject(err);
@@ -1879,7 +2050,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             let size = 40;
             let id = '';
 
-            const crypto = self.crypto || self.msCrypto;
+            const crypto = self.crypto || self['msCrypto'];
             if (crypto) {
                 const bytes = crypto.getRandomValues(new Uint8Array(size));
                 while (0 < size--) {
@@ -1913,5 +2084,39 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             return Promise.resolve(null);
         }
         return this.tokenValidationHandler.validateSignature(params);
+    }
+
+    /**
+     * Starts the authorization code flow and redirects to user to
+     * the auth servers login url.
+     */
+    public initCodeFlow(
+        additionalState = '',
+        params = {}
+    ): void {
+        if (this.loginUrl !== '') {
+            this.initCodeFlowInternal(additionalState, params);
+        } else {
+            this.events.pipe(filter(e => e.type === 'discovery_document_loaded'))
+            .subscribe(_ => this.initCodeFlowInternal(additionalState, params));
+        }
+    }
+
+    private initCodeFlowInternal(
+        additionalState = '',
+        params = {}
+    ): void {
+
+        if (!this.validateUrlForHttps(this.loginUrl)) {
+            throw new Error('loginUrl must use Http. Also check property requireHttps.');
+        }
+
+        this.createLoginUrl(additionalState, '', null, false, params).then(function (url) {
+            location.href = url;
+        })
+        .catch(error => {
+            console.error('Error in initAuthorizationCodeFlow');
+            console.error(error);
+        });
     }
 }

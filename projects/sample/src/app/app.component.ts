@@ -8,6 +8,7 @@ import { OAuthService, AuthConfig, NullValidationHandler, JwksValidationHandler 
 import { Router } from '@angular/router';
 import { filter, delay } from 'rxjs/operators';
 import { of, race } from 'rxjs';
+import { authCodeFlowConfig } from './auth-code-flow.config';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -16,10 +17,27 @@ import { of, race } from 'rxjs';
 })
 export class AppComponent {
   constructor(private router: Router, private oauthService: OAuthService) {
+    
+    // Remember the selected configuration
+    if (sessionStorage.getItem('flow') === 'code') {
+      this.configureCodeFlow();
+    }
+    else {
+      this.configureImplicitFlow();
+    }
+    
     // this.configureWithoutDiscovery();
-    this.configureWithNewConfigApi();
     // this.configureAuth();
     // this.configurePasswordFlow();
+  }
+
+  private configureCodeFlow() {
+    this.oauthService.configure(authCodeFlowConfig);
+    this.oauthService.tokenValidationHandler = new JwksValidationHandler();
+    this.oauthService.loadDiscoveryDocumentAndTryLogin().then(_ => {
+      this.oauthService.loadUserProfile();
+    })
+
   }
 
   private configureWithoutDiscovery() {
@@ -29,7 +47,7 @@ export class AppComponent {
   }
 
   // This api will come in the next version
-  private configureWithNewConfigApi() {
+  private configureImplicitFlow() {
     this.oauthService.configure(authConfig);
     this.oauthService.setStorage(localStorage);
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();

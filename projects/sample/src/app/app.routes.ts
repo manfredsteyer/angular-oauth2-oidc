@@ -4,16 +4,21 @@ import { HomeComponent } from './home/home.component';
 import { FlightHistoryComponent } from './flight-history/flight-history.component';
 import { CustomPreloadingStrategy } from './shared/preload/custom-preloading.strategy';
 import { FlightBookingModule } from './flight-booking/flight-booking.module';
+import { CodeFlowComponent } from './code-flow/code-flow.component';
 
 export let APP_ROUTES: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'code-flow',
     pathMatch: 'full'
   },
   {
     path: 'home',
     component: HomeComponent
+  },
+  {
+    path: 'code-flow',
+    component: CodeFlowComponent
   },
   {
     path: 'password-flow-login',
@@ -30,7 +35,7 @@ export let APP_ROUTES: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'home'
+    redirectTo: 'code-flow'
   }
 ];
 
