@@ -50,7 +50,7 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
     if (!this.moduleConfig.resourceServer) {
       return next.handle(req);
     }
-    if (this.moduleConfig.resourceServer.allowedUrls && !this.checkUrl(url)) {
+    if (!this.checkUrl(url)) {
       return next.handle(req);
     }
 
