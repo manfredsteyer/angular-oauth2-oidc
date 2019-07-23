@@ -663,6 +663,25 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         password: string,
         headers: HttpHeaders = new HttpHeaders()
     ): Promise<object> {
+        /**
+         * A `HttpParameterCodec` that uses `encodeURIComponent` and `decodeURIComponent` to
+         * serialize and parse URL parameter keys and values.
+         *
+         * @stable
+         */
+        let params = new HttpParams({ encoder: new WebHttpUrlEncodingCodec() })
+                .set('grant_type', 'password')
+                .set('scope', this.scope)
+                .set('username', userName)
+                .set('password', password);
+        
+        return this.fetchTokenUsingHttpParams(params, headers);
+    }
+
+    public fetchTokenUsingHttpParams(
+        params: HttpParams,
+        headers: HttpHeaders = new HttpHeaders()
+    ): Promise<object> {
         if (!this.validateUrlForHttps(this.tokenEndpoint)) {
             throw new Error(
                 'tokenEndpoint must use https, or config value for property requireHttps must allow http'
@@ -670,18 +689,6 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         }
 
         return new Promise((resolve, reject) => {
-            /**
-             * A `HttpParameterCodec` that uses `encodeURIComponent` and `decodeURIComponent` to
-             * serialize and parse URL parameter keys and values.
-             *
-             * @stable
-             */
-            let params = new HttpParams({ encoder: new WebHttpUrlEncodingCodec() })
-                .set('grant_type', 'password')
-                .set('scope', this.scope)
-                .set('username', userName)
-                .set('password', password);
-
             if (this.useHttpBasicAuth) {
                 const header = btoa(`${this.clientId}:${this.dummyClientSecret}`);
                 headers = headers.set(
