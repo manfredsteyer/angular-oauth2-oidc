@@ -26,7 +26,7 @@ import {
 import { b64DecodeUnicode, base64UrlEncode } from './base64-helper';
 import { AuthConfig } from './auth.config';
 import { WebHttpUrlEncodingCodec } from './encoder';
-import { CryptoHandler } from './token-validation/crypto-handler';
+import { HashHandler } from './token-validation/hash-handler';
 
 /**
  * Service for logging in and logging out with
@@ -89,7 +89,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         @Optional() protected config: AuthConfig,
         protected urlHelper: UrlHelperService,
         protected logger: OAuthLogger,
-        @Optional() protected crypto: CryptoHandler,
+        @Optional() protected crypto: HashHandler,
     ) {
         super();
 
@@ -217,15 +217,15 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
     /**
      * Convenience method that first calls `loadDiscoveryDocumentAndTryLogin(...)`
-     * and if then chains to `initImplicitFlow()`, but only if there is no valid
+     * and if then chains to `initLoginFlow()`, but only if there is no valid
      * IdToken or no valid AccessToken.
      *
      * @param options LoginOptions to pass through to `tryLogin(...)`
      */
-    public loadDiscoveryDocumentAndLogin(options: LoginOptions = null): Promise<boolean> {
+    public loadDiscoveryDocumentAndLogin(options: LoginOptions & { state?: string } = null): Promise<boolean> {
         return this.loadDiscoveryDocumentAndTryLogin(options).then(_ => {
             if (!this.hasValidIdToken() || !this.hasValidAccessToken()) {
-                this.initImplicitFlow();
+                this.initLoginFlow(options.state);
                 return false;
             } else {
                 return true;

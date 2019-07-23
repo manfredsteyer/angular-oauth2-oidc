@@ -6,7 +6,8 @@ import {
 // declare var require: any;
 // let rs = require('jsrsasign');
 
-import * as rs from 'jsrsasign';
+//import * as rs from 'jsrsasign';
+import { KEYUTIL, KJUR } from 'jsrsasign';
 
 /**
  * Validates the signature of an id_token against one
@@ -109,12 +110,12 @@ export class JwksValidationHandler extends AbstractValidationHandler {
       return Promise.reject(error);
     }
 
-    let keyObj = rs.KEYUTIL.getKey(key);
+    let keyObj = /*#__PURE__*/ KEYUTIL.getKey(key);
     let validationOptions = {
       alg: this.allowedAlgorithms,
       gracePeriod: this.gracePeriodInSec
     };
-    let isValid = rs.KJUR.jws.JWS.verifyJWT(
+    let isValid = /*#__PURE__*/ KJUR.jws.JWS.verifyJWT(
       params.idToken,
       keyObj,
       validationOptions
@@ -139,7 +140,7 @@ export class JwksValidationHandler extends AbstractValidationHandler {
   }
 
   calcHash(valueToHash: string, algorithm: string): Promise<string> {
-    let hashAlg = new rs.KJUR.crypto.MessageDigest({ alg: algorithm });
+    let hashAlg = new /*#__PURE__*/ KJUR.crypto.MessageDigest({ alg: algorithm });
     let result = hashAlg.digestString(valueToHash);
     let byteArrayAsString = this.toByteArrayAsString(result);
     return Promise.resolve(byteArrayAsString);
