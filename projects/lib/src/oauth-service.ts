@@ -678,6 +678,22 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         return this.fetchTokenUsingHttpParams(params, headers);
     }
 
+    public fetchTokenUsingParams(
+        params: Object,
+        headers: HttpHeaders = new HttpHeaders()
+    ): Promise<object> {
+        
+        let httpParams = new HttpParams({ encoder: new WebHttpUrlEncodingCodec() });
+
+        // fill http params
+        Object.keys(params).map(function(key) {
+            let value = params[key];
+            httpParams = httpParams.set(key, value);
+        });
+
+        return this.fetchTokenUsingHttpParams(httpParams, headers);
+    }
+
     public fetchTokenUsingHttpParams(
         params: HttpParams,
         headers: HttpHeaders = new HttpHeaders()
