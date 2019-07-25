@@ -2091,7 +2091,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             let size = 45;
             let id = '';
 
-            const crypto = self.crypto || self['msCrypto'];
+            const crypto = typeof self === 'undefined' ? null : (self.crypto || self['msCrypto']);
             if (crypto) {
                 const bytes = crypto.getRandomValues(new Uint8Array(size));
                 while (0 < size--) {
