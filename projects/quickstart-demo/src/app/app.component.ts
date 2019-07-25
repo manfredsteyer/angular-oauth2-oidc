@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { authCodeFlowConfig } from 'projects/sample/src/app/auth-code-flow.config';
 import { filter } from 'rxjs/operators';
+import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 
 @Component({
   selector: 'app-root',
@@ -13,12 +14,9 @@ export class AppComponent {
 
   constructor(private oauthService: OAuthService) {
     this.oauthService.configure(authCodeFlowConfig);
-    this.oauthService.loadDiscoveryDocumentAndLogin({
-      state: 'abcde'
-    }).then(_ => {
-      console.debug('logged in', this.oauthService.state);
-    });
+    this.oauthService.loadDiscoveryDocumentAndLogin();
 
+    // Automatically load user profile
     this.oauthService
         .events
         .pipe(filter(e => e.type === 'token_received'))

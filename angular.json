@@ -130,28 +130,7 @@
         }
       }
     },
-    "sample-e2e": {
-      "root": "projects/sample-e2e/",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "projects/sample-e2e/protractor.conf.js",
-            "devServerTarget": "sample:serve"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "projects/sample-e2e/tsconfig.e2e.json",
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
-      }
-    },
+
     "quickstart-demo": {
       "projectType": "application",
       "schematics": {},
@@ -261,6 +240,42 @@
             "production": {
               "devServerTarget": "quickstart-demo:serve:production"
             }
+          }
+        }
+      }
+    },
+
+    "angular-oauth2-oidc-jwks": {
+      "projectType": "library",
+      "root": "projects/angular-oauth2-oidc-jwks",
+      "sourceRoot": "projects/angular-oauth2-oidc-jwks/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/angular-oauth2-oidc-jwks/tsconfig.lib.json",
+            "project": "projects/angular-oauth2-oidc-jwks/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/angular-oauth2-oidc-jwks/src/test.ts",
+            "tsConfig": "projects/angular-oauth2-oidc-jwks/tsconfig.spec.json",
+            "karmaConfig": "projects/angular-oauth2-oidc-jwks/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/angular-oauth2-oidc-jwks/tsconfig.lib.json",
+              "projects/angular-oauth2-oidc-jwks/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }
