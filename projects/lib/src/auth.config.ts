@@ -62,12 +62,12 @@ export class AuthConfig {
   /**
    * Url of the token endpoint as defined by OpenId Connect and OAuth 2.
    */
-  public tokenEndpoint?: string = null;
+  public tokenEndpoint?: string | null = null;
 
   /**
    * Url of the userinfo endpoint as defined by OpenId Connect.
    */
-  public userinfoEndpoint?: string = null;
+  public userinfoEndpoint?: string | null = null;
 
   public responseType? = '';
 

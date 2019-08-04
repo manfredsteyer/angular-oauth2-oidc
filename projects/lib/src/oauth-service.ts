@@ -261,10 +261,6 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
 
     protected validateUrlForHttps(url: string): boolean {
-        if (!url) {
-            return false;
-        }
-
         const lcUrl = url.toLowerCase();
 
         if (this.requireHttps === false) {
@@ -602,6 +598,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         if (!this.hasValidAccessToken()) {
             throw new Error('Can not load User Profile without access_token');
         }
+        if (!this.userinfoEndpoint) {
+          throw new Error('Cannot call loadUserProfile() without userinfoEndpoint')
+        }
         if (!this.validateUrlForHttps(this.userinfoEndpoint)) {
             throw new Error(
                 'userinfoEndpoint must use https, or config value for property requireHttps must allow http'
@@ -663,6 +662,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         password: string,
         headers: HttpHeaders = new HttpHeaders()
     ): Promise<object> {
+        if (!this.tokenEndpoint) {
+          throw new Error('Cannot call fetchTokenUsingPasswordFlow() without tokenEndpoint')
+        }
+
         if (!this.validateUrlForHttps(this.tokenEndpoint)) {
             throw new Error(
                 'tokenEndpoint must use https, or config value for property requireHttps must allow http'
@@ -740,6 +743,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
      * method silentRefresh.
      */
     public refreshToken(): Promise<object> {
+        if (!this.tokenEndpoint) {
+           throw new Error("Cannot call refreshToken() without tokenEndpoint");
+        }
 
         if (!this.validateUrlForHttps(this.tokenEndpoint)) {
             throw new Error(
@@ -1264,7 +1270,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         }
 
         return url;
-        
+
     }
 
     initImplicitFlowInternal(
@@ -1472,6 +1478,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         let headers = new HttpHeaders()
                                 .set('Content-Type', 'application/x-www-form-urlencoded');
 
+        if (!this.tokenEndpoint) {
+          throw new Error('Cannot call fetchAndProcessToken() without tokenEndpoint')
+        }
+
         if (!this.validateUrlForHttps(this.tokenEndpoint)) {
             throw new Error('tokenEndpoint must use Http. Also check property requireHttps.');
         }
@@ -1503,32 +1513,32 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                 (tokenResponse) => {
                     this.debug('refresh tokenResponse', tokenResponse);
                     this.storeAccessTokenResponse(
-                        tokenResponse.access_token, 
-                        tokenResponse.refresh_token, 
+                        tokenResponse.access_token,
+                        tokenResponse.refresh_token,
                         tokenResponse.expires_in,
                         tokenResponse.scope);
 
                     if (this.oidc && tokenResponse.id_token) {
-                        this.processIdToken(tokenResponse.id_token, tokenResponse.access_token).  
+                        this.processIdToken(tokenResponse.id_token, tokenResponse.access_token).
                         then(result => {
                             this.storeIdToken(result);
-            
+
                             this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
                             this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
-            
+
                             resolve(tokenResponse);
                         })
                         .catch(reason => {
                             this.eventsSubject.next(new OAuthErrorEvent('token_validation_error', reason));
                             console.error('Error validating tokens');
                             console.error(reason);
-            
+
                             reject(reason);
                         });
                     } else {
                         this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
                         this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
-            
+
                         resolve(tokenResponse);
                     }
                 },
@@ -1688,7 +1698,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     ): boolean {
         const savedNonce = this._storage.getItem('nonce');
         if (savedNonce !== nonceInState) {
-            
+
             const err = 'Validating access_token failed, wrong state/nonce.';
             console.error(err, savedNonce, nonceInState);
             return false;
