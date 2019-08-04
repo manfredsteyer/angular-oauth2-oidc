@@ -1,4 +1,4 @@
-import { OAuthStorage, OAuthLogger } from './types';
+import { OAuthStorage, OAuthLogger, DatetimeProvider } from './types';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -17,6 +17,7 @@ import { NullValidationHandler } from './token-validation/null-validation-handle
 import { createDefaultLogger, createDefaultStorage } from './factories';
 import { CryptoHandler } from './token-validation/crypto-handler';
 import { JwksValidationHandler } from './token-validation/jwks-validation-handler';
+import { DefaultDatetimeProvider } from './default.datetime.provider';
 
 @NgModule({
   imports: [CommonModule],
@@ -35,8 +36,9 @@ export class OAuthModule {
         UrlHelperService,
         { provide: OAuthLogger, useFactory: createDefaultLogger },
         { provide: OAuthStorage, useFactory: createDefaultStorage },
-        { provide: ValidationHandler, useClass: validationHandlerClass},
+        { provide: ValidationHandler, useClass: validationHandlerClass },
         { provide: CryptoHandler, useClass: JwksValidationHandler },
+        { provide: DatetimeProvider, useClass: DefaultDatetimeProvider },
         {
           provide: OAuthResourceServerErrorHandler,
           useClass: OAuthNoopResourceServerErrorHandler

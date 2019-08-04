@@ -47,7 +47,7 @@ export class LoginOptions {
    * the lib read the token(s) so that they are not displayed
    * anymore in the url. If not, set this to true.
    */
-  preventClearHashAfterLogin? = false;
+  preventClearHashAfterLogin?= false;
 }
 
 /**
@@ -74,6 +74,11 @@ export abstract class OAuthStorage {
   abstract getItem(key: string): string | null;
   abstract removeItem(key: string): void;
   abstract setItem(key: string, data: string): void;
+}
+
+export abstract class DatetimeProvider {
+  abstract get myDate(): Date | null;
+  abstract get myNow(): number | null;
 }
 
 /**
@@ -105,7 +110,7 @@ export interface ParsedIdToken {
  */
 export interface TokenResponse {
   access_token: string;
-  id_token: string; 
+  id_token: string;
   token_type: string;
   expires_in: number;
   refresh_token: string;
