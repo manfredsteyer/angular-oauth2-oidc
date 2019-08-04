@@ -7,7 +7,7 @@ Support for OAuth 2 and OpenId Connect (OIDC) in Angular.
 ## Credits
 
 - [generator-angular2-library](https://github.com/jvandemo/generator-angular2-library) for scaffolding an Angular library
-- [jsrasign](https://kjur.github.io/jsrsasign/) for validating token signature and for hashing
+- [jsrasign](https://kjur.github.io/jsrsasign/) until version 5: For validating token signature and for hashing; beginning with version 6, we are using browser APIs to minimize our bundle size
 - [Identity Server](https://github.com/identityserver) (used for testing with an .NET/.NET Core Backend)
 - [Keycloak (Redhat)](http://www.keycloak.org/) for testing with Java
 
@@ -21,25 +21,34 @@ https://manfredsteyer.github.io/angular-oauth2-oidc/docs
 
 ## Tested Environment
 
-Successfully tested with **Angular 6** and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we've used IdentityServer (.NET/ .NET Core) and Redhat's Keycloak (Java).
+Successfully tested with **Angular 7** and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we've used IdentityServer (.NET/ .NET Core) and Redhat's Keycloak (Java).
+
+**Angular 6**: Use Version 4.x of this library. Version 4.x was tested with Angular 6. You can also try the newer version 5.x of this library which has a much smaller bundle size.
 
 **Angular 5.x or 4.3**: If you need support for Angular < 6 (4.3 to 5.x) you can download the former version 3.1.4 (npm i angular-oauth2-oidc@^3 --save).
 
 ## Release Cycle
 
-- One major release for each Angular version
+- We plan one major release for each Angular version
     - Will contain new features
     - Will contain bug fixes and PRs
-- Critical Bugfixes on a regular basis
+- Critical Bugfixes on demand
 
 ## Contributions
 - Feel free to file pull requests
 - The closed issues contain some ideas for PRs and enhancements (see labels)
+- If you want to contribute to the docs, you can do so in the `docs-src` folder. Make sure you update `summary.json` as well. Then generate the docs with the following commands:
+
+  ```
+  npm install -g @compodoc/compodoc
+  npm run docs
+  ```
 
 # Features 
-- Logging in via OAuth2 and OpenId Connect (OIDC) Implicit Flow (where a user is redirected to Identity Provider)
+- Logging in via Implicit Flow (where a user is redirected to Identity Provider)
+- Logging in via Code Flow + PKCE
 - "Logging in" via Password Flow (where a user enters their password into the client)
-- Token Refresh for Password Flow by using a Refresh Token
+- Token Refresh for all supported flows
 - Automatically refreshing a token when/some time before it expires
 - Querying Userinfo Endpoint
 - Querying Discovery Document to ease configuration
@@ -114,7 +123,7 @@ export const authConfig: AuthConfig = {
   // URL of the SPA to redirect the user to after login
   redirectUri: window.location.origin + '/index.html',
 
-  // The SPA's id. The SPA is registerd with this id at the auth-server
+  // The SPA's id. The SPA is registered with this id at the auth-server
   clientId: 'spa-demo',
 
   // set the scope for the permissions the client should request
@@ -123,7 +132,7 @@ export const authConfig: AuthConfig = {
 }
 ```
 
-Configure the OAuthService with this config object when the application starts up:
+Configure the ``OAuthService`` with this config object when the application starts up:
 
 ```TypeScript
 import { OAuthService } from 'angular-oauth2-oidc';
@@ -138,10 +147,10 @@ import { Component } from '@angular/core';
 export class AppComponent {
 
     constructor(private oauthService: OAuthService) {
-      this.configureWithNewConfigApi();
+      this.configure();
     }
 
-    private configureWithNewConfigApi() {
+    private configure() {
       this.oauthService.configure(authConfig);
       this.oauthService.tokenValidationHandler = new JwksValidationHandler();
       this.oauthService.loadDiscoveryDocumentAndTryLogin();
@@ -166,7 +175,7 @@ export class HomeComponent {
     }
 
     public login() {
-        this.oauthService.initImplicitFlow();
+        this.oauthService.initLoginFlow();
     }
 
     public logoff() {
@@ -213,23 +222,7 @@ This directly redirects the user to the identity server if there are no valid to
 
 ### Calling a Web API with an Access Token
 
-Pass this Header to the used method of the ``Http``-Service within an Instance of the class ``Headers``:
-
-```TypeScript
-var headers = new Headers({
-    "Authorization": "Bearer " + this.oauthService.getAccessToken()
-});
-```
-
-If you are using the new ``HttpClient``, use the class ``HttpHeaders`` instead:
-
-```TypeScript
-var headers = new HttpHeaders({
-    "Authorization": "Bearer " + this.oauthService.getAccessToken()
-});
-```
-
-Since 3.1 you can also automate this task by switching ``sendAccessToken`` on and by setting ``allowedUrls`` to an array with prefixes for the respective URLs. Use lower case for the prefixes.
+You can automate this task by switching ``sendAccessToken`` on and by setting ``allowedUrls`` to an array with prefixes for the respective URLs. Use lower case for the prefixes.
 
 ```TypeScript
 OAuthModule.forRoot({
@@ -240,11 +233,21 @@ OAuthModule.forRoot({
 })
 ```
 
+If you need more versatility, you can look in the [documentation](https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/working-with-httpinterceptors.html) how to setup a custom interceptor.
+
+## Code Flow + PKCE
+
+See docs: https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/code-flow-+-pcke.html
+
+## Token Refresh
+
+See docs: https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/refreshing-a-token.html
+
 ## Routing
 
 If you use the ``PathLocationStrategy`` (which is on by default) and have a general catch-all-route (``path: '**'``) you should be fine. Otherwise look up the section ``Routing with the HashStrategy`` in the [documentation](https://manfredsteyer.github.io/angular-oauth2-oidc/docs/).
 
-## More Documentation
+## More Documentation (!)
 
 See the [documentation](https://manfredsteyer.github.io/angular-oauth2-oidc/docs/) for more information about this library.
 

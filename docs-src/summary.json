@@ -8,7 +8,11 @@
         "file": "preserving-state.md"
     },
     {
-        "title": "Refreshing a Token (Silent Refresh)",
+        "title": "Code Flow + PCKE",
+        "file": "code-flow.md"
+    },
+    {
+        "title": "Refreshing a Token",
         "file": "silent-refresh.md"
     },
     {
@@ -48,6 +52,10 @@
         "file": "implicit-flow-config-no-discovery.md"
     },
     {
+        "title": "Using an ID Provider that Fails Discovery Document Validation",
+        "file": "discovery-document-validation.md"
+    },
+    {
         "title": "Using SystemJS",
         "file": "systemjs.md"
     },
@@ -58,5 +66,9 @@
     {
         "title": "Using Password Flow",
         "file": "password-flow.md"
+    },
+    {
+        "title": "Configure custom OAuthStorage",
+        "file": "configure-custom-oauthstorage.md"
     }
 ]

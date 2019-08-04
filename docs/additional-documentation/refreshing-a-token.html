@@ -1,0 +1,157 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>angular-oauth2-oidc</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">angular-oauth2-oidc</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content additional-page">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+<h1 id="refreshing-a-token">Refreshing a Token</h1>
+<p>The strategy to use for refreshing your token differs between implicit flow and code flow. Hence, you find here one separate section for both of them.</p>
+<p>The last section shows how to automate refreshing for both flows.</p>
+<h2 id="refreshing-when-using-code-flow-not-implicit-flow">Refreshing when using Code Flow (not Implicit Flow!)</h2>
+<blockquote>
+<p>For refreshing a token with implicit flow, please see section below!</p>
+</blockquote>
+<p>When using code flow, you can get an <code>refresh_token</code>. While the original standard DOES NOT allow this for SPAs, the mentioned document proposes to ease this limitation. However, it specifies a list of requirements one should take care about before using refresh_tokens. Please make sure you respect those requirements.</p>
+<p>Please also note, that you have to request the <code>offline_access</code> scope to get an refresh token.</p>
+<p>To refresh your token, just call the <code>refresh</code> method:</p>
+<div><pre class="line-numbers"><code class="language-typescript">this.oauthService.refresh();</code></pre></div><h2 id="refreshing-when-using-implicit-flow-not-code-flow">Refreshing when using Implicit Flow (not Code Flow!)</h2>
+<p>To refresh your tokens when using implicit flow you can use a silent refresh. This is a well-known solution that compensates the fact that implicit flow does not allow for issuing a refresh token. It uses a hidden iframe to get another token from the auth server. When the user is there still logged in (by using a cookie) it will respond without user interaction and provide new tokens.</p>
+<p>To use this approach, setup a redirect uri for the silent refresh.</p>
+<p>For this, you can set the property silentRefreshRedirectUri in the config object:</p>
+<div><pre class="line-numbers"><code class="language-TypeScript">// This api will come in the next version
+
+import { AuthConfig } from &#39;angular-oauth2-oidc&#39;;
+
+export const authConfig: AuthConfig = {
+
+  // Url of the Identity Provider
+  issuer: &#39;https://steyer-identity-server.azurewebsites.net/identity&#39;,
+
+  // URL of the SPA to redirect the user to after login
+  redirectUri: window.location.origin + &#39;/index.html&#39;,
+
+  // URL of the SPA to redirect the user after silent refresh
+  silentRefreshRedirectUri: window.location.origin + &#39;/silent-refresh.html&#39;,
+
+  // The SPA&#39;s id. The SPA is registerd with this id at the auth-server
+  clientId: &#39;spa-demo&#39;,
+
+  // set the scope for the permissions the client should request
+  // The first three are defined by OIDC. The 4th is a usecase-specific one
+  scope: &#39;openid profile email voucher&#39;,
+}</code></pre></div><p>As an alternative, you can set the same property directly with the OAuthService:</p>
+<div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.silentRefreshRedirectUri = window.location.origin + &quot;/silent-refresh.html&quot;;</code></pre></div><p>Please keep in mind that this uri has to be configured at the auth-server too.</p>
+<p>This file is loaded into the hidden iframe after getting new tokens. Its only task is to send the received tokens to the main application:</p>
+<div><pre class="line-numbers"><code class="language-HTML">&lt;html&gt;
+&lt;body&gt;
+    &lt;script&gt;
+    parent.postMessage(location.hash, location.origin);
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div><p>Please make sure that this file is copied to your output directory by your build task. When using the CLI you can define it as an asset for this. For this, you have to add the following line to the file <code>.angular-cli.json</code>:</p>
+<div><pre class="line-numbers"><code class="language-JSON">&quot;assets&quot;: [
+    [...],
+    &quot;silent-refresh.html&quot;
+],</code></pre></div><p>To perform a silent refresh, just call the following method:</p>
+<div><pre class="line-numbers"><code class="language-TypeScript">this
+    .oauthService
+    .silentRefresh()
+    .then(info =&gt; console.debug(&#39;refresh ok&#39;, info))
+    .catch(err =&gt; console.error(&#39;refresh error&#39;, err));</code></pre></div><p>When there is an error in the iframe that prevents the communication with the main application, silentRefresh will give you a timeout. To configure the timespan for this, you can set the property <code>silentRefreshTimeout</code> (msec). The default value is 20.000 (20 seconds).</p>
+<h3 id="automatically-refreshing-a-token-when-before-it-expires-code-flow-and-implicit-flow">Automatically refreshing a token when/ before it expires (Code Flow and Implicit Flow)</h3>
+<p>To automatically refresh a token when/ some time before it expires, just call the following method after configuring the OAuthService:</p>
+<div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.setupAutomaticSilentRefresh();</code></pre></div><p>By default, this event is fired after 75% of the token&#39;s life time is over. You can adjust this factor by setting the property <code>timeoutFactor</code> to a value between 0 and 1. For instance, 0.5 means, that the event is fired after half of the life time is over and 0.33 triggers the event after a third.</p>
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
+            var COMPODOC_CURRENT_PAGE_URL = 'refreshing-a-token.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

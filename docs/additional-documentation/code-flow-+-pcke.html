@@ -1,0 +1,139 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>angular-oauth2-oidc</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">angular-oauth2-oidc</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content additional-page">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+<h1 id="code-flow">Code Flow</h1>
+<p>Since Version 8, this library also supports code flow and <a href="https://tools.ietf.org/html/rfc7636">PKCE</a> to align with the current draft of the <a href="https://tools.ietf.org/html/draft-ietf-oauth-security-topics-13">OAuth 2.0 Security Best Current Practice</a> document. </p>
+<p>To configure your solution for code flow + PKCE you have to set the <code>responseType</code> to <code>code</code>:</p>
+<div><pre class="line-numbers"><code class="language-TypeScript">    import { AuthConfig } from &#39;angular-oauth2-oidc&#39;;
+
+    export const authCodeFlowConfig: AuthConfig = {
+      // Url of the Identity Provider
+      issuer: &#39;https://demo.identityserver.io&#39;,
+
+      // URL of the SPA to redirect the user to after login
+      redirectUri: window.location.origin + &#39;/index.html&#39;,
+
+      // The SPA&#39;s id. The SPA is registerd with this id at the auth-server
+      // clientId: &#39;server.code&#39;,
+      clientId: &#39;spa&#39;,
+
+      // Just needed if your auth server demands a secret. In general, this
+      // is a sign that the auth server is not configured with SPAs in mind
+      // and it might not enforce further best practices vital for security
+      // such applications.
+      // dummyClientSecret: &#39;secret&#39;,
+
+      responseType: &#39;code&#39;,
+
+      // set the scope for the permissions the client should request
+      // The first four are defined by OIDC. 
+      // Important: Request offline_access to get a refresh token
+      // The api scope is a usecase specific one
+      scope: &#39;openid profile email offline_access api&#39;,
+
+      showDebugInformation: true,
+
+      // Not recommented:
+      // disablePKCI: true,
+    };</code></pre></div><p>After this, you can initialize the code flow using:</p>
+<div><pre class="line-numbers"><code class="language-TypeScript">  this.oauthService.initCodeFlow();</code></pre></div><p>There is also a convenience method <code>initLoginFlow</code> which initializes either the code flow or the implicit flow depending on your configuration. </p>
+<div><pre class="line-numbers"><code class="language-TypeScript">  this.oauthService.initLoginFlow();</code></pre></div><p>Also -- as shown in the readme -- you have to execute the following code when bootstrapping to make the library to fetch the token:</p>
+<div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.configure(authCodeFlowConfig);
+this.oauthService.tokenValidationHandler = new JwksValidationHandler();
+this.oauthService.loadDiscoveryDocumentAndTryLogin();</code></pre></div>
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
+            var COMPODOC_CURRENT_PAGE_URL = 'code-flow-+-pcke.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

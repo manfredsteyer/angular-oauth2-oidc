@@ -14,14 +14,9 @@ import {
 import { DefaultOAuthInterceptor } from './interceptors/default-oauth.interceptor';
 import { ValidationHandler } from './token-validation/validation-handler';
 import { NullValidationHandler } from './token-validation/null-validation-handler';
-
-export function createDefaultLogger() {
-  return console;
-}
-
-export function createDefaultStorage() {
-  return typeof sessionStorage !== 'undefined' ? sessionStorage : null;
-}
+import { createDefaultLogger, createDefaultStorage } from './factories';
+import { CryptoHandler } from './token-validation/crypto-handler';
+import { JwksValidationHandler } from './token-validation/jwks-validation-handler';
 
 @NgModule({
   imports: [CommonModule],
@@ -41,6 +36,7 @@ export class OAuthModule {
         { provide: OAuthLogger, useFactory: createDefaultLogger },
         { provide: OAuthStorage, useFactory: createDefaultStorage },
         { provide: ValidationHandler, useClass: validationHandlerClass},
+        { provide: CryptoHandler, useClass: JwksValidationHandler },
         {
           provide: OAuthResourceServerErrorHandler,
           useClass: OAuthNoopResourceServerErrorHandler

@@ -8,16 +8,28 @@
         <div class="checkbox">
             <label><input type="checkbox" [(ngModel)]="requestAccessToken"> Request AccessToken</label>
         </div>
-        <button class="btn btn-default" (click)="login()">Login</button>
-        <button class="btn btn-default" (click)="logout()">Logout</button>
-
-        <button class="btn btn-default" *ngIf="access_token" (click)="loadUserProfile()">Load User Profile</button>
     </div>
 </div>
 
 <div class="panel panel-default">
     <div class="panel-body">
+        <h2>Login with Implicit Flow</h2>
+        <p>
+            <button class="btn btn-default" (click)="loginImplicit()">Login</button>
+            <button class="btn btn-default" (click)="logout()">Logout</button>
+        </p>
         <b>Username/Password:</b> max/geheim
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h2>Login with Code Flow</h2>
+        <p>
+            <button class="btn btn-default" (click)="loginCode()">Login</button>
+            <button class="btn btn-default" (click)="logout()">Logout</button>
+        </p>
+        <b>Username/Password:</b> alice/alice
     </div>
 </div>
 
@@ -33,19 +45,26 @@
 </div>
 
 <div class="panel panel-default">
-<div class="panel-body">
-    <p>
-        <b>access_token:</b> {{access_token}}
-    </p>
-    <p>
-        <b>id_token:</b> {{id_token}}
-    </p>
-    <div *ngIf="userProfile">
-        <b>user profile:</b>
-        <pre>{{userProfile | json}}</pre>
+    <div class="panel-body">
+        <p>
+            <b>access_token:</b> {{access_token}}
+        </p>
+        <p>
+            <b>id_token:</b> {{id_token}}
+        </p>
+        <div *ngIf="userProfile">
+            <b>user profile:</b>
+            <pre>{{userProfile | json}}</pre>
+        </div>
+
     </div>
-
-</div>
 </div>
 
-<button class="btn btn-default" (click)="testSilentRefresh()">Test silent refresh</button>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h2>Further Actions</h2>
+        <button class="btn btn-default" (click)="refresh()">Refresh</button>
+
+        <button class="btn btn-default" (click)="loadUserProfile()">Load User Profile</button>
+    </div>
+</div>
