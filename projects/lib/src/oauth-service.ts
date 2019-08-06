@@ -312,15 +312,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
 
     protected setupExpirationTimers(): void {
-        const idTokenExp = this.getIdTokenExpiration() || Number.MAX_VALUE;
-        const accessTokenExp = this.getAccessTokenExpiration() || Number.MAX_VALUE;
-        const useAccessTokenExp = accessTokenExp <= idTokenExp;
-
-        if (this.hasValidAccessToken() && useAccessTokenExp) {
+        if (this.hasValidAccessToken()) {
             this.setupAccessTokenTimer();
         }
 
-        if (this.hasValidIdToken() && !useAccessTokenExp) {
+        if (this.hasValidIdToken()) {
             this.setupIdTokenTimer();
         }
     }
