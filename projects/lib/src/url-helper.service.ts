@@ -11,13 +11,8 @@ export class UrlHelperService {
       return {};
     }
 
-    const questionMarkPosition = hash.indexOf('?');
+    hash = hash.substr(1);
 
-    if (questionMarkPosition > -1) {
-      hash = hash.substr(questionMarkPosition + 1);
-    } else {
-      hash = hash.substr(1);
-    }
 
     return this.parseQueryString(hash);
   }
