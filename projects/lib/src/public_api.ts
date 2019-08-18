@@ -1,4 +1,4 @@
-export * from './angular-oauth-oidic.module';
+export * from './nms-angular-oauth-oidic.module';
 export * from './oauth-service';
 export * from './token-validation/jwks-validation-handler';
 export * from './token-validation/null-validation-handler';

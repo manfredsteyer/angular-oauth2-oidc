@@ -1,11 +1,11 @@
 {
-  "name": "angular-oauth2-oidc",
+  "name": "nms-angular-oauth2-oidc",
   "license": "MIT",
   "author": {
-    "name": "Manfred Steyer"
+    "name": "Meysam Gheysaryan"
   },
-  "version": "8.0.1",
-  "repository": "manfredsteyer/angular-oauth2-oidc",
+  "version": "1.0.1",
+  "repository": "meysam7289/angular-oauth2-oidc",
   "dependencies": {
     "jsrsasign": "^8.0.12"
   },
