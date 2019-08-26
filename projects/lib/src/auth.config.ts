@@ -219,7 +219,7 @@ export class AuthConfig {
   /**
    * The window of time (in seconds) to allow the current time to deviate when validating id_token's iat and exp values.
    */
-  public clockSkewInSec?: 600;
+  public clockSkewInSec?: number;
 
   /**
    * Code Flow is by defauld used together with PKCI which is also higly recommented.
