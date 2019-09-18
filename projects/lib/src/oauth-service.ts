@@ -74,6 +74,7 @@ export class OAuthService extends AuthConfig {
     protected _storage: OAuthStorage;
     protected accessTokenTimeoutSubscription: Subscription;
     protected idTokenTimeoutSubscription: Subscription;
+    protected tokenReceivedSubscription: Subscription;
     protected sessionCheckEventListener: EventListener;
     protected jwksUri: string;
     protected sessionCheckTimer: any;
@@ -290,7 +291,10 @@ export class OAuthService extends AuthConfig {
             this.setupExpirationTimers();
         }
 
-        this.events.pipe(filter(e => e.type === 'token_received')).subscribe(_ => {
+        if (this.tokenReceivedSubscription)
+          this.tokenReceivedSubscription.unsubscribe();
+
+        this.tokenReceivedSubscription = this.events.pipe(filter(e => e.type === 'token_received')).subscribe(_ => {
             this.clearAccessTokenTimer();
             this.clearIdTokenTimer();
             this.setupExpirationTimers();
@@ -367,7 +371,7 @@ export class OAuthService extends AuthConfig {
     /**
      * DEPRECATED. Use a provider for OAuthStorage instead:
      *
-     * 
+     *
      * { provide: OAuthStorage, useFactory: oAuthStorageFactory }
      * export function oAuthStorageFactory(): OAuthStorage { return localStorage; }
      *
