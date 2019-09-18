@@ -778,8 +778,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                                 tap(result => this.storeIdToken(result)),
                                 map(_ => tokenResponse)
                             );
-                    }
-                    else {
+                    } else {
                         return of(tokenResponse);
                     }
                 }))
@@ -1264,7 +1263,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         }
 
         return url;
-        
+
     }
 
     initImplicitFlowInternal(
@@ -1374,8 +1373,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     public tryLogin(options: LoginOptions = null): Promise<boolean> {
         if (this.config.responseType === 'code') {
             return this.tryLoginCodeFlow().then(_ => true);
-        }
-        else {
+        } else {
             return this.tryLoginImplicitFlow(options);
         }
     }
@@ -1397,7 +1395,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
     public tryLoginCodeFlow(): Promise<void> {
 
-        const parts = this.parseQueryString(window.location.search)
+        const parts = this.parseQueryString(window.location.search);
 
         const code = parts['code'];
         const state = parts['state'];
@@ -1503,32 +1501,32 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                 (tokenResponse) => {
                     this.debug('refresh tokenResponse', tokenResponse);
                     this.storeAccessTokenResponse(
-                        tokenResponse.access_token, 
-                        tokenResponse.refresh_token, 
+                        tokenResponse.access_token,
+                        tokenResponse.refresh_token,
                         tokenResponse.expires_in,
                         tokenResponse.scope);
 
                     if (this.oidc && tokenResponse.id_token) {
-                        this.processIdToken(tokenResponse.id_token, tokenResponse.access_token).  
+                        this.processIdToken(tokenResponse.id_token, tokenResponse.access_token).
                         then(result => {
                             this.storeIdToken(result);
-            
+
                             this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
                             this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
-            
+
                             resolve(tokenResponse);
                         })
                         .catch(reason => {
                             this.eventsSubject.next(new OAuthErrorEvent('token_validation_error', reason));
                             console.error('Error validating tokens');
                             console.error(reason);
-            
+
                             reject(reason);
                         });
                     } else {
                         this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
                         this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
-            
+
                         resolve(tokenResponse);
                     }
                 },
@@ -1688,7 +1686,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     ): boolean {
         const savedNonce = this._storage.getItem('nonce');
         if (savedNonce !== nonceInState) {
-            
+
             const err = 'Validating access_token failed, wrong state/nonce.';
             console.error(err, savedNonce, nonceInState);
             return false;
@@ -2084,8 +2082,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             }
 
             /*
-             * This alphabet uses a-z A-Z 0-9 _- symbols.
-             * Symbols order was changed for better gzip compression.
+             * This alphabet is from:
+             * https://tools.ietf.org/html/rfc7636#section-4.1
+             *
+             * [A-Z] / [a-z] / [0-9] / "-" / "." / "_" / "~"
              */
             const unreserved = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
             let size = 45;
@@ -2093,13 +2093,13 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
             const crypto = self.crypto || self['msCrypto'];
             if (crypto) {
-                const bytes = crypto.getRandomValues(new Uint8Array(size));
-                while (0 < size--) {
-                    id += unreserved[bytes[size] & 63];
-                }
+                let bytes = new Uint8Array(size);
+                crypto.getRandomValues(bytes);
+                bytes = bytes.map(x => unreserved.charCodeAt(x % unreserved.length));
+                id = String.fromCharCode.apply(null, bytes);
             } else {
                 while (0 < size--) {
-                    id += unreserved[Math.random() * 64 | 0];
+                    id += unreserved[Math.random() * unreserved.length | 0];
                 }
             }
 
