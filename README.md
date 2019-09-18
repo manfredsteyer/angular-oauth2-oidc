@@ -37,11 +37,18 @@ Successfully tested with **Angular 7** and its Router, PathLocationStrategy as w
 ## Contributions
 - Feel free to file pull requests
 - The closed issues contain some ideas for PRs and enhancements (see labels)
+- If you want to contribute to the docs, you can do so in the `docs-src` folder. Make sure you update `summary.json` as well. Then generate the docs with the following commands:
+
+  ```
+  npm install -g @compodoc/compodoc
+  npm run docs
+  ```
 
 # Features 
-- Logging in via OAuth2 and OpenId Connect (OIDC) Implicit Flow (where a user is redirected to Identity Provider)
+- Logging in via Implicit Flow (where a user is redirected to Identity Provider)
+- Logging in via Code Flow + PKCE
 - "Logging in" via Password Flow (where a user enters their password into the client)
-- Token Refresh for Password Flow by using a Refresh Token
+- Token Refresh for all supported flows
 - Automatically refreshing a token when/some time before it expires
 - Querying Userinfo Endpoint
 - Querying Discovery Document to ease configuration
@@ -125,7 +132,7 @@ export const authConfig: AuthConfig = {
 }
 ```
 
-Configure the OAuthService with this config object when the application starts up:
+Configure the ``OAuthService`` with this config object when the application starts up:
 
 ```TypeScript
 import { OAuthService } from 'angular-oauth2-oidc';
@@ -140,10 +147,10 @@ import { Component } from '@angular/core';
 export class AppComponent {
 
     constructor(private oauthService: OAuthService) {
-      this.configureWithNewConfigApi();
+      this.configure();
     }
 
-    private configureWithNewConfigApi() {
+    private configure() {
       this.oauthService.configure(authConfig);
       this.oauthService.tokenValidationHandler = new JwksValidationHandler();
       this.oauthService.loadDiscoveryDocumentAndTryLogin();
@@ -168,7 +175,7 @@ export class HomeComponent {
     }
 
     public login() {
-        this.oauthService.initImplicitFlow();
+        this.oauthService.initLoginFlow();
     }
 
     public logoff() {
@@ -228,11 +235,19 @@ OAuthModule.forRoot({
 
 If you need more versatility, you can look in the [documentation](https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/working-with-httpinterceptors.html) how to setup a custom interceptor.
 
+## Code Flow + PKCE
+
+See docs: https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/code-flow-+-pcke.html
+
+## Token Refresh
+
+See docs: https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/refreshing-a-token.html
+
 ## Routing
 
 If you use the ``PathLocationStrategy`` (which is on by default) and have a general catch-all-route (``path: '**'``) you should be fine. Otherwise look up the section ``Routing with the HashStrategy`` in the [documentation](https://manfredsteyer.github.io/angular-oauth2-oidc/docs/).
 
-## More Documentation
+## More Documentation (!)
 
 See the [documentation](https://manfredsteyer.github.io/angular-oauth2-oidc/docs/) for more information about this library.
 

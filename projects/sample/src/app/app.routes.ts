@@ -1,9 +1,8 @@
 import { PasswordFlowLoginComponent } from './password-flow-login/password-flow-login.component';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { FlightHistoryComponent } from './flight-history/flight-history.component';
 import { CustomPreloadingStrategy } from './shared/preload/custom-preloading.strategy';
-import { FlightBookingModule } from './flight-booking/flight-booking.module';
 
 export let APP_ROUTES: Routes = [
   {

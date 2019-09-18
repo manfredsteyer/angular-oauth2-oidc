@@ -9,6 +9,7 @@ export type EventType =
   | 'user_profile_load_error'
   | 'token_received'
   | 'token_error'
+  | 'code_error'
   | 'token_refreshed'
   | 'token_refresh_error'
   | 'silent_refresh_error'

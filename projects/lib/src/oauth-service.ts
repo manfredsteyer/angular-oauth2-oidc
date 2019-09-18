@@ -1,7 +1,7 @@
-import { Injectable, NgZone, Optional } from '@angular/core';
+import { Injectable, NgZone, Optional, OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, Subject, Subscription, of, race } from 'rxjs';
-import { filter, take, delay, first, tap, map } from 'rxjs/operators';
+import { Observable, Subject, Subscription, of, race, from } from 'rxjs';
+import { filter, delay, first, tap, map, switchMap } from 'rxjs/operators';
 
 import {
     ValidationHandler,
@@ -23,9 +23,10 @@ import {
     TokenResponse,
     UserInfo
 } from './types';
-import { b64DecodeUnicode } from './base64-helper';
+import { b64DecodeUnicode, base64UrlEncode } from './base64-helper';
 import { AuthConfig } from './auth.config';
 import { WebHttpUrlEncodingCodec } from './encoder';
+import { CryptoHandler } from './token-validation/crypto-handler';
 
 /**
  * Service for logging in and logging out with
@@ -33,7 +34,7 @@ import { WebHttpUrlEncodingCodec } from './encoder';
  * password flow.
  */
 @Injectable()
-export class OAuthService extends AuthConfig {
+export class OAuthService extends AuthConfig implements OnDestroy {
     // Extending AuthConfig ist just for LEGACY reasons
     // to not break existing code.
 
@@ -89,8 +90,11 @@ export class OAuthService extends AuthConfig {
         @Optional() protected config: AuthConfig,
         protected urlHelper: UrlHelperService,
         protected logger: OAuthLogger,
+        @Optional() protected crypto: CryptoHandler,
     ) {
         super();
+
+        this.debug('angular-oauth2-oidc v8-beta');
 
         this.discoveryDocumentLoaded$ = this.discoveryDocumentLoadedSubject.asObservable();
         this.events = this.eventsSubject.asObservable();
@@ -139,7 +143,9 @@ export class OAuthService extends AuthConfig {
         this.configChanged();
     }
 
-    protected configChanged(): void { }
+    protected configChanged(): void {
+        this.setupRefreshTimer();
+    }
 
     public restartSessionChecksIfStillLoggedIn(): void {
         if (this.hasValidIdToken()) {
@@ -179,7 +185,8 @@ export class OAuthService extends AuthConfig {
       ).subscribe(e => {
         const event = e as OAuthInfoEvent;
         if ((listenTo == null || listenTo === 'any' || event.info === listenTo) && shouldRunSilentRefresh) {
-          this.silentRefresh(params, noPrompt).catch(_ => {
+          // this.silentRefresh(params, noPrompt).catch(_ => {
+          this.refreshInternal(params, noPrompt).catch(_ => {
             this.debug('Automatic silent refresh did not work');
           });
         }
@@ -188,6 +195,13 @@ export class OAuthService extends AuthConfig {
       this.restartRefreshTimerIfStillLoggedIn();
     }
 
+    protected refreshInternal(params, noPrompt) {
+        if (this.responseType === 'code') {
+            return this.refreshToken();
+        } else {
+            return this.silentRefresh(params, noPrompt);
+        }
+    }
 
     /**
      * Convenience method that first calls `loadDiscoveryDocument(...)` and
@@ -364,17 +378,16 @@ export class OAuthService extends AuthConfig {
     }
 
     protected calcTimeout(storedAt: number, expiration: number): number {
-        const delta = (expiration - storedAt) * this.timeoutFactor;
-        return delta;
+        const now = Date.now();
+        const delta = (expiration - storedAt) * this.timeoutFactor - (now - storedAt);
+        return Math.max(0, delta);
     }
 
     /**
      * DEPRECATED. Use a provider for OAuthStorage instead:
      *
-     *
      * { provide: OAuthStorage, useFactory: oAuthStorageFactory }
      * export function oAuthStorageFactory(): OAuthStorage { return localStorage; }
-     *
      * Sets a custom storage used to store the received
      * tokens on client side. By default, the browser's
      * sessionStorage is used.
@@ -595,7 +608,7 @@ export class OAuthService extends AuthConfig {
         }
         if (!this.validateUrlForHttps(this.userinfoEndpoint)) {
             throw new Error(
-                'userinfoEndpoint must use http, or config value for property requireHttps must allow http'
+                'userinfoEndpoint must use https, or config value for property requireHttps must allow http'
             );
         }
 
@@ -656,7 +669,7 @@ export class OAuthService extends AuthConfig {
     ): Promise<object> {
         if (!this.validateUrlForHttps(this.tokenEndpoint)) {
             throw new Error(
-                'tokenEndpoint must use http, or config value for property requireHttps must allow http'
+                'tokenEndpoint must use https, or config value for property requireHttps must allow http'
             );
         }
 
@@ -673,18 +686,18 @@ export class OAuthService extends AuthConfig {
                 .set('username', userName)
                 .set('password', password);
 
-            if (this.useHttpBasicAuthForPasswordFlow) {
+            if (this.useHttpBasicAuth) {
                 const header = btoa(`${this.clientId}:${this.dummyClientSecret}`);
                 headers = headers.set(
                     'Authorization',
                     'Basic ' + header);
             }
 
-            if (!this.useHttpBasicAuthForPasswordFlow) {
+            if (!this.useHttpBasicAuth) {
                 params = params.set('client_id', this.clientId);
             }
 
-            if (!this.useHttpBasicAuthForPasswordFlow && this.dummyClientSecret) {
+            if (!this.useHttpBasicAuth && this.dummyClientSecret) {
                 params = params.set('client_secret', this.dummyClientSecret);
             }
 
@@ -731,9 +744,10 @@ export class OAuthService extends AuthConfig {
      * method silentRefresh.
      */
     public refreshToken(): Promise<object> {
+
         if (!this.validateUrlForHttps(this.tokenEndpoint)) {
             throw new Error(
-                'tokenEndpoint must use http, or config value for property requireHttps must allow http'
+                'tokenEndpoint must use https, or config value for property requireHttps must allow http'
             );
         }
 
@@ -761,6 +775,18 @@ export class OAuthService extends AuthConfig {
 
             this.http
                 .post<TokenResponse>(this.tokenEndpoint, params, { headers })
+                .pipe(switchMap(tokenResponse => {
+                    if (tokenResponse.id_token) {
+                        return from(this.processIdToken(tokenResponse.id_token, tokenResponse.access_token, true))
+                            .pipe(
+                                tap(result => this.storeIdToken(result)),
+                                map(_ => tokenResponse)
+                            );
+                    }
+                    else {
+                        return of(tokenResponse);
+                    }
+                }))
                 .subscribe(
                     tokenResponse => {
                         this.debug('refresh tokenResponse', tokenResponse);
@@ -1141,7 +1167,7 @@ export class OAuthService extends AuthConfig {
         iframe.contentWindow.postMessage(message, this.issuer);
     }
 
-    protected createLoginUrl(
+    protected async createLoginUrl(
         state = '',
         loginHint = '',
         customRedirectUri = '',
@@ -1158,83 +1184,91 @@ export class OAuthService extends AuthConfig {
             redirectUri = this.redirectUri;
         }
 
-        return this.createAndSaveNonce().then((nonce: any) => {
-            if (state) {
-                state = nonce + this.config.nonceStateSeparator + state;
+        const nonce = await this.createAndSaveNonce();
+
+        if (state) {
+            state = nonce + this.config.nonceStateSeparator + state;
+        } else {
+            state = nonce;
+        }
+
+        if (!this.requestAccessToken && !this.oidc) {
+            throw new Error(
+                'Either requestAccessToken or oidc or both must be true'
+            );
+        }
+
+        if (this.config.responseType) {
+            this.responseType = this.config.responseType;
+        } else {
+            if (this.oidc && this.requestAccessToken) {
+                this.responseType = 'id_token token';
+            } else if (this.oidc && !this.requestAccessToken) {
+                this.responseType = 'id_token';
             } else {
-                state = nonce;
+                this.responseType = 'token';
             }
+        }
 
-            if (!this.requestAccessToken && !this.oidc) {
-                throw new Error(
-                    'Either requestAccessToken or oidc or both must be true'
-                );
-            }
+        const seperationChar = that.loginUrl.indexOf('?') > -1 ? '&' : '?';
 
-            if (this.config.responseType) {
-              this.responseType = this.config.responseType;
-            } else {
-              if (this.oidc && this.requestAccessToken) {
-                  this.responseType = 'id_token token';
-              } else if (this.oidc && !this.requestAccessToken) {
-                  this.responseType = 'id_token';
-              } else {
-                  this.responseType = 'token';
-              }
-            }
+        let scope = that.scope;
 
-            const seperationChar = that.loginUrl.indexOf('?') > -1 ? '&' : '?';
+        if (this.oidc && !scope.match(/(^|\s)openid($|\s)/)) {
+            scope = 'openid ' + scope;
+        }
 
-            let scope = that.scope;
+        let url =
+            that.loginUrl +
+            seperationChar +
+            'response_type=' +
+            encodeURIComponent(that.responseType) +
+            '&client_id=' +
+            encodeURIComponent(that.clientId) +
+            '&state=' +
+            encodeURIComponent(state) +
+            '&redirect_uri=' +
+            encodeURIComponent(redirectUri) +
+            '&scope=' +
+            encodeURIComponent(scope);
 
-            if (this.oidc && !scope.match(/(^|\s)openid($|\s)/)) {
-                scope = 'openid ' + scope;
-            }
+        if (this.responseType === 'code' && !this.disablePKCE) {
+            const [challenge, verifier] = await this.createChallangeVerifierPairForPKCE();
+            this._storage.setItem('PKCI_verifier', verifier);
+            url += '&code_challenge=' + challenge;
+            url += '&code_challenge_method=S256';
+        }
 
-            let url =
-                that.loginUrl +
-                seperationChar +
-                'response_type=' +
-                encodeURIComponent(that.responseType) +
-                '&client_id=' +
-                encodeURIComponent(that.clientId) +
-                '&state=' +
-                encodeURIComponent(state) +
-                '&redirect_uri=' +
-                encodeURIComponent(redirectUri) +
-                '&scope=' +
-                encodeURIComponent(scope);
+        if (loginHint) {
+            url += '&login_hint=' + encodeURIComponent(loginHint);
+        }
 
-            if (loginHint) {
-                url += '&login_hint=' + encodeURIComponent(loginHint);
-            }
+        if (that.resource) {
+            url += '&resource=' + encodeURIComponent(that.resource);
+        }
 
-            if (that.resource) {
-                url += '&resource=' + encodeURIComponent(that.resource);
-            }
+        if (that.oidc) {
+            url += '&nonce=' + encodeURIComponent(nonce);
+        }
 
-            if (that.oidc) {
-                url += '&nonce=' + encodeURIComponent(nonce);
-            }
+        if (noPrompt) {
+            url += '&prompt=none';
+        }
 
-            if (noPrompt) {
-                url += '&prompt=none';
-            }
+        for (const key of Object.keys(params)) {
+            url +=
+                '&' + encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+        }
 
-            for (const key of Object.keys(params)) {
+        if (this.customQueryParams) {
+            for (const key of Object.getOwnPropertyNames(this.customQueryParams)) {
                 url +=
-                    '&' + encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
+                    '&' + key + '=' + encodeURIComponent(this.customQueryParams[key]);
             }
+        }
 
-            if (this.customQueryParams) {
-                for (const key of Object.getOwnPropertyNames(this.customQueryParams)) {
-                    url +=
-                        '&' + key + '=' + encodeURIComponent(this.customQueryParams[key]);
-                }
-            }
-
-            return url;
-        });
+        return url;
+        
     }
 
     initImplicitFlowInternal(
@@ -1249,7 +1283,7 @@ export class OAuthService extends AuthConfig {
 
         if (!this.validateUrlForHttps(this.loginUrl)) {
             throw new Error(
-                'loginUrl must use http, or config value for property requireHttps must allow http'
+                'loginUrl must use https, or config value for property requireHttps must allow http'
             );
         }
 
@@ -1263,9 +1297,7 @@ export class OAuthService extends AuthConfig {
         }
 
         this.createLoginUrl(additionalState, loginHint, null, false, addParams)
-            .then(function (url) {
-                location.href = url;
-            })
+            .then(this.config.openUri)
             .catch(error => {
                 console.error('Error in initImplicitFlow', error);
                 this.inImplicitFlow = false;
@@ -1340,6 +1372,180 @@ export class OAuthService extends AuthConfig {
     }
 
     /**
+     * Delegates to tryLoginImplicitFlow for the sake of competability
+     * @param options Optional options.
+     */
+    public tryLogin(options: LoginOptions = null): Promise<boolean> {
+        if (this.config.responseType === 'code') {
+            return this.tryLoginCodeFlow().then(_ => true);
+        }
+        else {
+            return this.tryLoginImplicitFlow(options);
+        }
+    }
+
+
+    private parseQueryString(queryString: string): object {
+        if (!queryString || queryString.length === 0) {
+            return {};
+        }
+
+        if (queryString.charAt(0) === '?') {
+            queryString = queryString.substr(1);
+        }
+
+        return this.urlHelper.parseQueryString(queryString);
+
+
+    }
+
+    public tryLoginCodeFlow(): Promise<void> {
+
+        const parts = this.parseQueryString(window.location.search)
+
+        const code = parts['code'];
+        const state = parts['state'];
+
+        const href = location.href
+                        .replace(/[&\?]code=[^&\$]*/, '')
+                        .replace(/[&\?]scope=[^&\$]*/, '')
+                        .replace(/[&\?]state=[^&\$]*/, '')
+                        .replace(/[&\?]session_state=[^&\$]*/, '');
+
+        history.replaceState(null, window.name, href);
+
+        let [nonceInState, userState] = this.parseState(state);
+        this.state = userState;
+
+        if (parts['error']) {
+            this.debug('error trying to login');
+            this.handleLoginError({}, parts);
+            const err = new OAuthErrorEvent('code_error', {}, parts);
+            this.eventsSubject.next(err);
+            return Promise.reject(err);
+        }
+
+        if (!nonceInState) {
+            return Promise.resolve();
+        }
+
+        const success = this.validateNonce(nonceInState);
+        if (!success) {
+            const event = new OAuthErrorEvent('invalid_nonce_in_state', null);
+            this.eventsSubject.next(event);
+            return Promise.reject(event);
+        }
+
+        if (code) {
+            return new Promise((resolve, reject) => {
+                this.getTokenFromCode(code).then(result => {
+                    resolve();
+                }).catch(err => {
+                    reject(err);
+                });
+            });
+        } else {
+            return Promise.resolve();
+        }
+    }
+
+    /**
+     * Get token using an intermediate code. Works for the Authorization Code flow.
+     */
+    private getTokenFromCode(code: string): Promise<object> {
+        let params = new HttpParams()
+            .set('grant_type', 'authorization_code')
+            .set('code', code)
+            .set('redirect_uri', this.redirectUri);
+
+        if (!this.disablePKCE) {
+            const pkciVerifier = this._storage.getItem('PKCI_verifier');
+
+            if (!pkciVerifier) {
+                console.warn('No PKCI verifier found in oauth storage!');
+            } else {
+                params = params.set('code_verifier', pkciVerifier);
+            }
+        }
+
+        return this.fetchAndProcessToken(params);
+    }
+
+    private fetchAndProcessToken(params: HttpParams): Promise<object> {
+
+        let headers = new HttpHeaders()
+                                .set('Content-Type', 'application/x-www-form-urlencoded');
+
+        if (!this.validateUrlForHttps(this.tokenEndpoint)) {
+            throw new Error('tokenEndpoint must use Http. Also check property requireHttps.');
+        }
+
+        if (this.useHttpBasicAuth) {
+            const header = btoa(`${this.clientId}:${this.dummyClientSecret}`);
+            headers = headers.set(
+                'Authorization',
+                'Basic ' + header);
+        }
+
+        if (!this.useHttpBasicAuth) {
+            params = params.set('client_id', this.clientId);
+        }
+
+        if (!this.useHttpBasicAuth && this.dummyClientSecret) {
+            params = params.set('client_secret', this.dummyClientSecret);
+        }
+
+        return new Promise((resolve, reject) => {
+
+            if (this.customQueryParams) {
+                for (let key of Object.getOwnPropertyNames(this.customQueryParams)) {
+                    params = params.set(key, this.customQueryParams[key]);
+                }
+            }
+
+            this.http.post<TokenResponse>(this.tokenEndpoint, params, { headers }).subscribe(
+                (tokenResponse) => {
+                    this.debug('refresh tokenResponse', tokenResponse);
+                    this.storeAccessTokenResponse(
+                        tokenResponse.access_token, 
+                        tokenResponse.refresh_token, 
+                        tokenResponse.expires_in,
+                        tokenResponse.scope);
+
+                    if (this.oidc && tokenResponse.id_token) {
+                        this.processIdToken(tokenResponse.id_token, tokenResponse.access_token).  
+                        then(result => {
+                            this.storeIdToken(result);
+            
+                            this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
+                            this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
+            
+                            resolve(tokenResponse);
+                        })
+                        .catch(reason => {
+                            this.eventsSubject.next(new OAuthErrorEvent('token_validation_error', reason));
+                            console.error('Error validating tokens');
+                            console.error(reason);
+            
+                            reject(reason);
+                        });
+                    } else {
+                        this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
+                        this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
+            
+                        resolve(tokenResponse);
+                    }
+                },
+                (err) => {
+                    console.error('Error getting token', err);
+                    this.eventsSubject.next(new OAuthErrorEvent('token_refresh_error', err));
+                    reject(err);
+                }
+            );
+        });
+    }
+
+    /**
      * Checks whether there are tokens in the hash fragment
      * as a result of the implicit flow. These tokens are
      * parsed, validated and used to sign the user in to the
@@ -1347,7 +1553,7 @@ export class OAuthService extends AuthConfig {
      *
      * @param options Optional options.
      */
-    public tryLogin(options: LoginOptions = null): Promise<boolean> {
+    public tryLoginImplicitFlow(options: LoginOptions = null): Promise<boolean> {
         options = options || {};
 
         let parts: object;
@@ -1361,16 +1567,9 @@ export class OAuthService extends AuthConfig {
         this.debug('parsed url', parts);
 
         const state = parts['state'];
-        let nonceInState = state;
 
-        if (state) {
-            const idx = state.indexOf(this.config.nonceStateSeparator);
-
-            if (idx > -1) {
-                nonceInState = state.substr(0, idx);
-                this.state = state.substr(idx + this.config.nonceStateSeparator.length);
-            }
-        }
+        let [nonceInState, userState] = this.parseState(state);
+        this.state = userState;
 
         if (parts['error']) {
             this.debug('error trying to login');
@@ -1410,10 +1609,8 @@ export class OAuthService extends AuthConfig {
         }
 
         if (this.requestAccessToken && !options.disableOAuth2StateCheck) {
-            const success = this.validateNonceForAccessToken(
-                accessToken,
-                nonceInState
-            );
+            const success = this.validateNonce(nonceInState);
+
             if (!success) {
                 const event = new OAuthErrorEvent('invalid_nonce_in_state', null);
                 this.eventsSubject.next(event);
@@ -1476,12 +1673,26 @@ export class OAuthService extends AuthConfig {
             });
     }
 
-    protected validateNonceForAccessToken(
-        accessToken: string,
+    private parseState(state: string): [string, string] {
+        let nonce = state;
+        let userState = '';
+
+        if (state) {
+            const idx = state.indexOf(this.config.nonceStateSeparator);
+            if (idx > -1) {
+                nonce = state.substr(0, idx);
+                userState = state.substr(idx + this.config.nonceStateSeparator.length);
+            }
+        }
+        return [nonce, userState];
+    }
+
+    protected validateNonce(
         nonceInState: string
     ): boolean {
         const savedNonce = this._storage.getItem('nonce');
         if (savedNonce !== nonceInState) {
+            
             const err = 'Validating access_token failed, wrong state/nonce.';
             console.error(err, savedNonce, nonceInState);
             return false;
@@ -1518,7 +1729,8 @@ export class OAuthService extends AuthConfig {
      */
     public processIdToken(
         idToken: string,
-        accessToken: string
+        accessToken: string,
+        skipNonceCheck = false
     ): Promise<ParsedIdToken> {
         const tokenParts = idToken.split('.');
         const headerBase64 = this.padBase64(tokenParts[0]);
@@ -1581,7 +1793,7 @@ export class OAuthService extends AuthConfig {
             return Promise.reject(err);
         }
 
-        if (claims.nonce !== savedNonce) {
+        if (!skipNonceCheck && claims.nonce !== savedNonce) {
             const err = 'Wrong nonce: ' + claims.nonce;
             this.logger.warn(err);
             return Promise.reject(err);
@@ -1695,11 +1907,15 @@ export class OAuthService extends AuthConfig {
      * Returns the current access_token.
      */
     public getAccessToken(): string {
-        return this._storage.getItem('access_token');
+        return this._storage
+            ? this._storage.getItem('access_token')
+            : null;
     }
 
     public getRefreshToken(): string {
-        return this._storage.getItem('refresh_token');
+        return this._storage
+            ? this._storage.getItem('refresh_token')
+            : null;
     }
 
     /**
@@ -1814,7 +2030,7 @@ export class OAuthService extends AuthConfig {
 
         if (!this.validateUrlForHttps(this.logoutUrl)) {
             throw new Error(
-                'logoutUrl must use http, or config value for property requireHttps must allow http'
+                'logoutUrl must use https, or config value for property requireHttps must allow http'
             );
         }
 
@@ -1841,7 +2057,7 @@ export class OAuthService extends AuthConfig {
                 (this.logoutUrl.indexOf('?') > -1 ? '&' : '?') +
                 params.toString();
         }
-        location.href = logoutUrl;
+        this.config.openUri(logoutUrl);
     }
 
     /**
@@ -1853,6 +2069,14 @@ export class OAuthService extends AuthConfig {
             that._storage.setItem('nonce', nonce);
             return nonce;
         });
+    }
+
+    /**
+     * @ignore
+     */
+    public ngOnDestroy() {
+        this.clearAccessTokenTimer();
+        this.clearIdTokenTimer();
     }
 
     protected createNonce(): Promise<string> {
@@ -1868,10 +2092,10 @@ export class OAuthService extends AuthConfig {
              * Symbols order was changed for better gzip compression.
              */
             const url = 'Uint8ArdomValuesObj012345679BCDEFGHIJKLMNPQRSTWXYZ_cfghkpqvwxyz-';
-            let size = 40;
+            let size = 45;
             let id = '';
 
-            const crypto = self.crypto || self.msCrypto;
+            const crypto = self.crypto || self['msCrypto'];
             if (crypto) {
                 const bytes = crypto.getRandomValues(new Uint8Array(size));
                 while (0 < size--) {
@@ -1905,5 +2129,69 @@ export class OAuthService extends AuthConfig {
             return Promise.resolve(null);
         }
         return this.tokenValidationHandler.validateSignature(params);
+    }
+
+
+    /**
+     * Start the implicit flow or the code flow,
+     * depending on your configuration.
+     */
+    public initLoginFlow(
+        additionalState = '',
+        params = {}
+    ) {
+        if (this.responseType === 'code') {
+            return this.initCodeFlow(additionalState, params);
+        } else {
+            return this.initImplicitFlow(additionalState, params);
+        }
+    }
+
+    /**
+     * Starts the authorization code flow and redirects to user to
+     * the auth servers login url.
+     */
+    public initCodeFlow(
+        additionalState = '',
+        params = {}
+    ): void {
+        if (this.loginUrl !== '') {
+            this.initCodeFlowInternal(additionalState, params);
+        } else {
+            this.events.pipe(filter(e => e.type === 'discovery_document_loaded'))
+            .subscribe(_ => this.initCodeFlowInternal(additionalState, params));
+        }
+    }
+
+    private initCodeFlowInternal(
+        additionalState = '',
+        params = {}
+    ): void {
+
+        if (!this.validateUrlForHttps(this.loginUrl)) {
+            throw new Error('loginUrl must use Http. Also check property requireHttps.');
+        }
+
+        this.createLoginUrl(additionalState, '', null, false, params).then(function (url) {
+            location.href = url;
+        })
+        .catch(error => {
+            console.error('Error in initAuthorizationCodeFlow');
+            console.error(error);
+        });
+    }
+
+    protected async createChallangeVerifierPairForPKCE(): Promise<[string, string]> {
+
+        if (!this.crypto) {
+            throw new Error('PKCI support for code flow needs a CryptoHander. Did you import the OAuthModule using forRoot() ?');
+        }
+
+
+        const verifier = await this.createNonce();
+        const challengeRaw = await this.crypto.calcHash(verifier, 'sha-256');
+        const challange = base64UrlEncode(challengeRaw);
+
+        return [challange, verifier];
     }
 }

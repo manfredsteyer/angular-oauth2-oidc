@@ -214,12 +214,19 @@ export class AuthConfig {
   /**
    * Set this to true to use HTTP BASIC auth for password flow
    */
-  public useHttpBasicAuthForPasswordFlow? = false;
+  public useHttpBasicAuth? = false;
 
   /**
    * The window of time (in seconds) to allow the current time to deviate when validating id_token's iat and exp values.
    */
   public clockSkewInSec?: 600;
+
+  /**
+   * Code Flow is by defauld used together with PKCI which is also higly recommented.
+   * You can disbale it here by setting this flag to true.
+   * https://tools.ietf.org/html/rfc7636#section-1.1
+   */
+  public disablePKCE? = false;
 
   constructor(json?: Partial<AuthConfig>) {
     if (json) {
