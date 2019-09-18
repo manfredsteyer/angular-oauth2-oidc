@@ -2087,7 +2087,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
              * This alphabet uses a-z A-Z 0-9 _- symbols.
              * Symbols order was changed for better gzip compression.
              */
-            const url = 'Uint8ArdomValuesObj012345679BCDEFGHIJKLMNPQRSTWXYZ_cfghkpqvwxyz-';
+            const unreserved = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
             let size = 45;
             let id = '';
 
@@ -2095,15 +2095,15 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             if (crypto) {
                 const bytes = crypto.getRandomValues(new Uint8Array(size));
                 while (0 < size--) {
-                    id += url[bytes[size] & 63];
+                    id += unreserved[bytes[size] & 63];
                 }
             } else {
                 while (0 < size--) {
-                    id += url[Math.random() * 64 | 0];
+                    id += unreserved[Math.random() * 64 | 0];
                 }
             }
 
-            resolve(id);
+            resolve(base64UrlEncode(id));
         });
     }
 
