@@ -929,11 +929,13 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         if (this.silentRefreshRace)
             return this.silentRefreshRace;
 
-        this.silentRefreshRace = this.getSilentRefreshRace(params, noPrompt).then(
+        this.silentRefreshRace = this.getSilentRefreshRace(params, noPrompt);
+        // subscribe to the race here in order to clean it up afterwards
+        this.silentRefreshRace.then(
             () => this.silentRefreshRace = null,
             () => this.silentRefreshRace = null
         );
-
+        // the caller will receive the race itself
         return this.silentRefreshRace;
     }
 
