@@ -1380,24 +1380,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         }
     }
 
-
-    private parseQueryString(queryString: string): object {
-        if (!queryString || queryString.length === 0) {
-            return {};
-        }
-
-        if (queryString.charAt(0) === '?') {
-            queryString = queryString.substr(1);
-        }
-
-        return this.urlHelper.parseQueryString(queryString);
-
-
-    }
-
     public tryLoginCodeFlow(): Promise<void> {
-
-        const parts = this.parseQueryString(window.location.search)
+        const parts = this.getCodePartsFromUrl(window.location.search);
 
         const code = parts['code'];
         const state = parts['state'];
@@ -1443,6 +1427,23 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         } else {
             return Promise.resolve();
         }
+    }
+
+   /**
+   * Retrieve the returned auth code from the redirect uri that has been called.
+   * If required also check hash, as we could use hash location strategy.
+   */
+    private getCodePartsFromUrl(queryString: string): object {
+        if (!queryString || queryString.length === 0) {
+            return this.urlHelper.getHashFragmentParams();
+        }
+
+        // normalize query string
+        if (queryString.charAt(0) === '?') {
+            queryString = queryString.substr(1);
+        }
+
+        return this.urlHelper.parseQueryString(queryString);
     }
 
     /**
