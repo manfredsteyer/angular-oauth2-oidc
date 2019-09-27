@@ -81,6 +81,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     protected sessionCheckTimer: any;
     protected silentRefreshSubject: string;
     protected inImplicitFlow = false;
+    private callRefreshTokenSeconds = 0;
 
     constructor(
         protected ngZone: NgZone,
@@ -185,6 +186,12 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             filter(e => e.type === 'token_expires')
         ).subscribe(e => {
             const event = e as OAuthInfoEvent;
+            if(event.type==='token_expires' && event.info==='access_token'){
+                var currentSeconds = new Date().getTime() / 1000;
+                if(currentSeconds-this.callRefreshTokenSeconds<2)
+                    return;
+                this.callRefreshTokenSeconds = currentSeconds;
+            }
             if ((listenTo == null || listenTo === 'any' || event.info === listenTo) && shouldRunSilentRefresh) {
                 // this.silentRefresh(params, noPrompt).catch(_ => {
                 this.refreshInternal(params, noPrompt).catch(_ => {
