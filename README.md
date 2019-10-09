@@ -217,8 +217,45 @@ The following snippet contains the template for the login page:
 
 If you don't want to display a login form that tells the user that they are redirected to the identity server, you can use the convenience function ``this.oauthService.loadDiscoveryDocumentAndLogin();`` instead of ``this.oauthService.loadDiscoveryDocumentAndTryLogin();`` when setting up the library. 
 
-This directly redirects the user to the identity server if there are no valid tokens. 
+This directly redirects the user to the identity server if there are no valid tokens. Ensure you have your `issuer` set to your discovery document endpoint!
 
+
+#### Manually skipping
+
+This is sort of what ``this.oauthService.loadDiscoveryDocumentAndLogin();`` is doing under the hood. But this gives you a fair bit more control
+
+```TypeScript
+this.oauthService
+    .loadDiscoveryDocumentAndTryLogin(/* { your LoginOptions }*/) // checks to see if the current url contains id token and access token
+    .(hasReceivedTokens => {
+        // this would have stored all the tokens needed
+        if (hasReceivedTokens) {
+            // carry on with your app
+            return Promise.resolve();
+
+            /* if you wish to do something when the user receives tokens from the identity server,
+             * use the event stream or the `onTokenReceived` callback in LoginOptions.
+             *
+             * this.oauthService.events(filter(e => e.type === 'token_received')).subscribe()
+             */
+        } else {
+            // may want to check if you were previously authenticated
+            if (this.oauthService.hasValidAccessToken() && this.oauthService.hasValidIdToken()) {
+                return Promise.resolve();
+            } else {
+                // to safe guard this from progressing through the calling promise,
+                // resolve it when it directed to the sign up page
+                return new Promise(resolve => {
+                    this.oauthService.initLoginFlow();
+                    // example if you are using explicit flow
+                    this.window.addEventListener('unload', () => {
+                        resolve(true);
+                    });
+                });
+            }
+        }
+    })
+```
 
 ### Calling a Web API with an Access Token
 
