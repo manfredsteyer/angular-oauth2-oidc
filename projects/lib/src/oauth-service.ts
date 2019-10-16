@@ -929,41 +929,46 @@ export class OAuthService extends AuthConfig implements OnDestroy {
               /**
                * Error handling section
                */
-                const CheckForPopupClosedInterval = 500;
+                const checkForPopupClosedInterval = 500;
                 let windowRef = window.open(url, '_blank', this.calculatePopupFeatures(options));
                 let checkForPopupClosedTimer: any;
                 const checkForPopupClosed = () => {
                   if (!windowRef || windowRef.closed) {
                     cleanup();
-                    reject(new OAuthErrorEvent('popup_closed',{}));
+                    reject(new OAuthErrorEvent('popup_closed', {}));
                   }
                 };
                 if (!windowRef) {
                   reject(new OAuthErrorEvent('popup_blocked', {}));
                 } else {
-                  checkForPopupClosedTimer = window.setInterval(checkForPopupClosed, CheckForPopupClosedInterval);
+                  checkForPopupClosedTimer = window.setInterval(checkForPopupClosed, checkForPopupClosedInterval);
                 }
 
                 const cleanup = () => {
                     window.clearInterval(checkForPopupClosedTimer);
                     window.removeEventListener('message', listener);
-                    windowRef.close();
+                    if (windowRef !== null) {
+                      windowRef.close();
+                    }
                     windowRef = null;
                 };
 
                 const listener = (e: MessageEvent) => {
                     const message = this.processMessageEventMessage(e);
-
-                    this.tryLogin({
-                        customHashFragment: message,
-                        preventClearHashAfterLogin: true,
-                    }).then(() => {
-                        cleanup();
-                        resolve();
-                    }, err => {
-                        cleanup();
-                        reject(err);
-                    });
+                    if (message && message !== null) {
+                      this.tryLogin({
+                          customHashFragment: message,
+                          preventClearHashAfterLogin: true,
+                      }).then(() => {
+                          cleanup();
+                          resolve();
+                      }, err => {
+                          cleanup();
+                          reject(err);
+                      });
+                    } else {
+                      console.log('false event firing');
+                    }
                 };
 
                 window.addEventListener('message', listener);
