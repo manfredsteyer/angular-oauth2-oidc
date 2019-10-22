@@ -1,0 +1,8 @@
+{
+  "upgrade": true,
+  "reject": [
+    "@types/node",
+    "typescript",
+    "zone.js"
+  ]
+}
