@@ -1229,7 +1229,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             encodeURIComponent(scope);
 
         if (this.responseType === 'code' && !this.disablePKCE) {
-            const [challenge, verifier] = await this.createChallangeVerifierPairForPKCE();
+            const [challenge, verifier] = await this.createChallengeVerifierPairForPKCE();
             this._storage.setItem('PKCI_verifier', verifier);
             url += '&code_challenge=' + challenge;
             url += '&code_challenge_method=S256';
@@ -2177,7 +2177,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         });
     }
 
-    protected async createChallangeVerifierPairForPKCE(): Promise<[string, string]> {
+    protected async createChallengeVerifierPairForPKCE(): Promise<[string, string]> {
 
         if (!this.crypto) {
             throw new Error('PKCI support for code flow needs a CryptoHander. Did you import the OAuthModule using forRoot() ?');
@@ -2186,8 +2186,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
         const verifier = await this.createNonce();
         const challengeRaw = await this.crypto.calcHash(verifier, 'sha-256');
-        const challange = base64UrlEncode(challengeRaw);
+        const challenge = base64UrlEncode(challengeRaw);
 
-        return [challange, verifier];
+        return [challenge, verifier];
     }
 }
