@@ -955,11 +955,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
 
     protected calculatePopupFeatures(options: { height?: number, width?: number }) {
-        // Specify an static height and width and calculate centered position
+        // Specify an static height and width and calculate centered position relative to the current window
         const height = options.height || 470;
         const width = options.width || 500;
-        const left = (screen.width / 2) - (width / 2);
-        const top = (screen.height / 2) - (height / 2);
+        const left = window.screenLeft + ((window.outerWidth - width) / 2);
+        const top = window.screenTop + ((window.outerHeight - height) / 2);
         return `location=no,toolbar=no,width=${width},height=${height},top=${top},left=${left}`;
     }
 
