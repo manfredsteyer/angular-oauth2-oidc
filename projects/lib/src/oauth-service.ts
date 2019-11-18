@@ -1651,7 +1651,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             .then(result => {
                 this.storeIdToken(result);
                 this.storeSessionState(sessionState);
-                if (this.clearHashAfterLogin) {
+                if (this.clearHashAfterLogin && !options.preventClearHashAfterLogin) {
                     location.hash = '';
                 }
                 this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
