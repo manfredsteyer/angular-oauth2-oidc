@@ -1715,7 +1715,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         if (options.onLoginError) {
             options.onLoginError(parts);
         }
-        if (this.clearHashAfterLogin) {
+        if (this.clearHashAfterLogin && !options.preventClearHashAfterLogin) {
             location.hash = '';
         }
     }
