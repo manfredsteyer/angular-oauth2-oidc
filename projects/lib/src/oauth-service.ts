@@ -1721,6 +1721,13 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
 
     /**
+     * Returns the decoded JWT token part.
+     */
+    public decodeTokenPart(part: string): string {
+      return b64DecodeUnicode(this.padBase64(part));
+    }
+
+    /**
      * @ignore
      */
     public processIdToken(
@@ -1729,11 +1736,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         skipNonceCheck = false
     ): Promise<ParsedIdToken> {
         const tokenParts = idToken.split('.');
-        const headerBase64 = this.padBase64(tokenParts[0]);
-        const headerJson = b64DecodeUnicode(headerBase64);
+        const headerJson = this.decodeTokenPart(tokenParts[0]);
         const header = JSON.parse(headerJson);
-        const claimsBase64 = this.padBase64(tokenParts[1]);
-        const claimsJson = b64DecodeUnicode(claimsBase64);
+        const claimsJson = this.decodeTokenPart(tokenParts[1]);
         const claims = JSON.parse(claimsJson);
         const savedNonce = this._storage.getItem('nonce');
 
