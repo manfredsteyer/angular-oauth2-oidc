@@ -106,6 +106,7 @@ export interface ParsedIdToken {
 export interface TokenResponse {
   id_token?: string;
   access_token: string;
+  id_token: string; 
   token_type: string;
   expires_in: number;
   refresh_token: string;

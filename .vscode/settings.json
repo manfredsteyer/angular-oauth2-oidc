@@ -25,9 +25,12 @@
         "typescriptreact",
         "yml"
     ],
-    "spellright.language": "de",
+    "spellright.language": [
+        "en"
+    ],
     "spellright.documentTypes": [
         "latex",
-        "plaintext"
+        "plaintext",
+        "markdown"
     ]
 }
