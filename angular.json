@@ -17,9 +17,9 @@
           },
           "configurations": {
             "production": {
-              "project": "projects/lib/ng-package.prod.json"
-            ,              "tsConfig": "projects/lib/tsconfig.lib.prod.json"
-}
+              "project": "projects/lib/ng-package.prod.json",
+              "tsConfig": "projects/lib/tsconfig.lib.prod.json"
+            }
           }
         },
         "lint": {
@@ -165,5 +165,8 @@
     "@schematics/angular:component": {
       "styleext": "css"
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
