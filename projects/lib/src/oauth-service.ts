@@ -1864,6 +1864,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             idTokenHeader: header,
             loadKeys: () => this.loadJwks()
         };
+
         if(this.disableAtHashCheck){
             return this.checkSignature(validationParams).then(_ => {
                 const result: ParsedIdToken = {
@@ -1890,7 +1891,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
               return Promise.reject(err);
           }
 
+
           return this.checkSignature(validationParams).then(_ => {
+          const atHashCheckEnabled = !this.disableAtHashCheck;
               const result: ParsedIdToken = {
                   idToken: idToken,
                   idTokenClaims: claims,
@@ -1899,9 +1902,19 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                   idTokenHeaderJson: headerJson,
                   idTokenExpiresAt: expiresAtMSec
               };
+          if(atHashCheckEnabled) {
+            return this.checkAtHash(validationParams).then(atHashValid => {
+              if(this.requestAccessToken && !atHashValid) {
+                const err = 'Wrong at_hash';
+                this.logger.warn(err);
+                return Promise.reject(err);
+              } else {
               return result;
+              }
           });
-
+          } else {
+            return result;
+          }
         });
     }
 
