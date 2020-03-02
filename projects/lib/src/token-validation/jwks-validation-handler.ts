@@ -1,7 +1,4 @@
-import {
-  AbstractValidationHandler,
-  ValidationParams
-} from './validation-handler';
+import { NullValidationHandler } from './null-validation-handler';
 
 const err = `PLEASE READ THIS CAREFULLY:
 
@@ -25,19 +22,11 @@ This also results in smaller bundle sizes.
  * telling the users that the real one has been moved
  * to an library of its own, namely angular-oauth2-oidc-utils
  */
-export class JwksValidationHandler extends AbstractValidationHandler {
+export class JwksValidationHandler extends NullValidationHandler {
 
   constructor() {
     super();
     console.error(err);
-  }
-
-  validateSignature(params: ValidationParams, retry = false): Promise<any> {
-    throw new Error(err);
-  }
-
-  calcHash(valueToHash: string, algorithm: string): Promise<string> {
-    throw new Error(err);
   }
 
 }
