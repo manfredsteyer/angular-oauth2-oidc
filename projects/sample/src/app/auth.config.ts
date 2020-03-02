@@ -7,7 +7,10 @@ export const authConfig: AuthConfig = {
   issuer: 'https://steyer-identity-server.azurewebsites.net/identity',
 
   // URL of the SPA to redirect the user to after login
-  redirectUri: window.location.origin + '/index.html',
+  redirectUri: window.location.origin
+    + ((localStorage.getItem('useHashLocationStrategy') === 'true')
+      ? '/#/index.html'
+      : '/index.html'),
 
   // URL of the SPA to redirect the user after silent refresh
   silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
