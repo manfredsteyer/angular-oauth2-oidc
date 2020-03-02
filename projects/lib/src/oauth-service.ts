@@ -2204,13 +2204,12 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             throw new Error('loginUrl must use Http. Also check property requireHttps.');
         }
 
-        this.createLoginUrl(additionalState, '', null, false, params).then(function (url) {
-            location.href = url;
-        })
-        .catch(error => {
-            console.error('Error in initAuthorizationCodeFlow');
-            console.error(error);
-        });
+        this.createLoginUrl(additionalState, '', null, false, params)
+            .then(this.config.openUri)
+            .catch(error => {
+                console.error('Error in initAuthorizationCodeFlow');
+                console.error(error);
+            });
     }
 
     protected async createChallangeVerifierPairForPKCE(): Promise<[string, string]> {
