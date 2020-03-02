@@ -225,7 +225,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     public loadDiscoveryDocumentAndLogin(options: LoginOptions = null): Promise<boolean> {
         return this.loadDiscoveryDocumentAndTryLogin(options).then(_ => {
             if (!this.hasValidIdToken() || !this.hasValidAccessToken()) {
-                this.initImplicitFlow();
+                if(this.responseType === 'code'){
+                    this.initCodeFlow();
+                } else {
+                    this.initImplicitFlow();
+                }
                 return false;
             } else {
                 return true;
@@ -1794,7 +1798,13 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             this.logger.warn(err);
             return Promise.reject(err);
         }
-
+        // at_hash is not applicable to authorization code flow
+        // addressing https://github.com/manfredsteyer/angular-oauth2-oidc/issues/661
+        // i.e. Based on spec the at_hash check is only true for implicit code flow on Ping Federate
+        // https://www.pingidentity.com/developer/en/resources/openid-connect-developers-guide.html
+        if(this.hasOwnProperty('responseType') && this.responseType === 'code'){
+            this.disableAtHashCheck = true;
+        }
         if (
             !this.disableAtHashCheck &&
             this.requestAccessToken &&
@@ -1832,7 +1842,19 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             idTokenHeader: header,
             loadKeys: () => this.loadJwks()
         };
-
+        if(this.disableAtHashCheck){
+            return this.checkSignature(validationParams).then(_ => {
+                const result: ParsedIdToken = {
+                    idToken: idToken,
+                    idTokenClaims: claims,
+                    idTokenClaimsJson: claimsJson,
+                    idTokenHeader: header,
+                    idTokenHeaderJson: headerJson,
+                    idTokenExpiresAt: expiresAtMSec
+                };
+                return result;
+            });
+        }
 
         return this.checkAtHash(validationParams)
           .then(atHashValid => {
