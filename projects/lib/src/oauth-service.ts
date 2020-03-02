@@ -75,6 +75,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     protected _storage: OAuthStorage;
     protected accessTokenTimeoutSubscription: Subscription;
     protected idTokenTimeoutSubscription: Subscription;
+    protected tokenReceivedSubscription: Subscription;
     protected sessionCheckEventListener: EventListener;
     protected jwksUri: string;
     protected sessionCheckTimer: any;
@@ -317,7 +318,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             this.setupExpirationTimers();
         }
 
-        this.events.pipe(filter(e => e.type === 'token_received')).subscribe(_ => {
+        if (this.tokenReceivedSubscription)
+          this.tokenReceivedSubscription.unsubscribe();
+
+        this.tokenReceivedSubscription = this.events.pipe(filter(e => e.type === 'token_received')).subscribe(_ => {
             this.clearAccessTokenTimer();
             this.clearIdTokenTimer();
             this.setupExpirationTimers();
