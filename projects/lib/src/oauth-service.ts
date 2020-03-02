@@ -286,6 +286,15 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         return lcUrl.startsWith('https://');
     }
 
+    protected assertUrlNotNullAndCorrectProtocol(url: string | undefined, description: string) {
+      if (!url) {
+        throw new Error(`'${description}' should not be null`);
+      }
+      if (!this.validateUrlForHttps(url)) {
+        throw new Error(`'${description}' must use HTTPS (with TLS), or config value for property 'requireHttps' must be set to 'false' and allow HTTP (without TLS).`);
+      }
+    }
+
     protected validateUrlAgainstIssuer(url: string) {
         if (!this.strictDiscoveryDocumentValidation) {
             return true;
@@ -420,7 +429,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             }
 
             if (!this.validateUrlForHttps(fullUrl)) {
-                reject('issuer must use https, or config value for property requireHttps must allow http');
+                reject('issuer  must use HTTPS (with TLS), or config value for property \'requireHttps\' must be set to \'false\' and allow HTTP (without TLS).');
                 return;
             }
 
@@ -607,9 +616,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             throw new Error('Can not load User Profile without access_token');
         }
         if (!this.validateUrlForHttps(this.userinfoEndpoint)) {
-            throw new Error(
-                'userinfoEndpoint must use https, or config value for property requireHttps must allow http'
-            );
+            throw new Error('userinfoEndpoint must use HTTPS (with TLS), or config value for property \'requireHttps\' must be set to \'false\' and allow HTTP (without TLS).');
         }
 
         return new Promise((resolve, reject) => {
@@ -666,12 +673,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         userName: string,
         password: string,
         headers: HttpHeaders = new HttpHeaders()
+
     ): Promise<TokenResponse> {
-        if (!this.validateUrlForHttps(this.tokenEndpoint)) {
-            throw new Error(
-                'tokenEndpoint must use https, or config value for property requireHttps must allow http'
-            );
-        }
+        this.assertUrlNotNullAndCorrectProtocol(this.tokenEndpoint, 'tokenEndpoint');
 
         return new Promise((resolve, reject) => {
             /**
@@ -744,12 +748,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
      * method silentRefresh.
      */
     public refreshToken(): Promise<TokenResponse> {
-
-        if (!this.validateUrlForHttps(this.tokenEndpoint)) {
-            throw new Error(
-                'tokenEndpoint must use https, or config value for property requireHttps must allow http'
-            );
-        }
+        this.assertUrlNotNullAndCorrectProtocol(this.tokenEndpoint, 'tokenEndpoint');
 
         return new Promise((resolve, reject) => {
             let params = new HttpParams()
@@ -861,9 +860,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         }
 
         if (!this.validateUrlForHttps(this.loginUrl)) {
-            throw new Error(
-                'tokenEndpoint must use https, or config value for property requireHttps must allow http'
-            );
+            throw new Error('loginUrl  must use HTTPS (with TLS), or config value for property \'requireHttps\' must be set to \'false\' and allow HTTP (without TLS).');
         }
 
         if (typeof document === 'undefined') {
@@ -1284,7 +1281,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
         if (!this.validateUrlForHttps(this.loginUrl)) {
             throw new Error(
-                'loginUrl must use https, or config value for property requireHttps must allow http'
+                'loginUrl  must use HTTPS (with TLS), or config value for property \'requireHttps\' must be set to \'false\' and allow HTTP (without TLS).'
             );
         }
 
@@ -1474,12 +1471,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
     private fetchAndProcessToken(params: HttpParams): Promise<TokenResponse> {
 
+        this.assertUrlNotNullAndCorrectProtocol(this.tokenEndpoint, 'tokenEndpoint');
         let headers = new HttpHeaders()
                                 .set('Content-Type', 'application/x-www-form-urlencoded');
-
-        if (!this.validateUrlForHttps(this.tokenEndpoint)) {
-            throw new Error('tokenEndpoint must use Http. Also check property requireHttps.');
-        }
 
         if (this.useHttpBasicAuth) {
             const header = btoa(`${this.clientId}:${this.dummyClientSecret}`);
@@ -2049,7 +2043,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
         if (!this.validateUrlForHttps(this.logoutUrl)) {
             throw new Error(
-                'logoutUrl must use https, or config value for property requireHttps must allow http'
+                'logoutUrl  must use HTTPS (with TLS), or config value for property \'requireHttps\' must be set to \'false\' and allow HTTP (without TLS).'
             );
         }
 
@@ -2201,7 +2195,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     ): void {
 
         if (!this.validateUrlForHttps(this.loginUrl)) {
-            throw new Error('loginUrl must use Http. Also check property requireHttps.');
+            throw new Error('loginUrl  must use HTTPS (with TLS), or config value for property \'requireHttps\' must be set to \'false\' and allow HTTP (without TLS).');
         }
 
         this.createLoginUrl(additionalState, '', null, false, params)
