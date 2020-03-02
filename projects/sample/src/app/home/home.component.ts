@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
       this.oauthService.configure(authCodeFlowConfig);
       await this.oauthService.loadDiscoveryDocument();
       sessionStorage.setItem('flow', 'code');
-  
+
       this.oauthService.initLoginFlow('/some-state;p1=1;p2=2');
        // the parameter here is optional. It's passed around and can be used after logging in
   }
@@ -88,6 +88,18 @@ export class HomeComponent implements OnInit {
 
   get requestAccessToken() {
     return this.oauthService.requestAccessToken;
+  }
+
+  set useHashLocationStrategy(value: boolean) {
+    const oldValue = localStorage.getItem('useHashLocationStrategy') === 'true';
+    if (value !== oldValue) {
+      localStorage.setItem('useHashLocationStrategy', value ? 'true' : 'false');
+      window.location.reload();
+    }
+  }
+
+  get useHashLocationStrategy() {
+    return localStorage.getItem('useHashLocationStrategy') === 'true';
   }
 
   get id_token() {
