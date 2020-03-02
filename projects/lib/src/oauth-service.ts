@@ -785,8 +785,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                                 tap(result => this.storeIdToken(result)),
                                 map(_ => tokenResponse)
                             );
-                    }
-                    else {
+                    } else {
                         return of(tokenResponse);
                     }
                 }))
@@ -1402,8 +1401,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     public tryLogin(options: LoginOptions = null): Promise<boolean> {
         if (this.config.responseType === 'code') {
             return this.tryLoginCodeFlow().then(_ => true);
-        }
-        else {
+        } else {
             return this.tryLoginImplicitFlow(options);
         }
     }
@@ -2141,26 +2139,28 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             }
 
             /*
-             * This alphabet uses a-z A-Z 0-9 _- symbols.
-             * Symbols order was changed for better gzip compression.
+             * This alphabet is from:
+             * https://tools.ietf.org/html/rfc7636#section-4.1
+             *
+             * [A-Z] / [a-z] / [0-9] / "-" / "." / "_" / "~"
              */
-            const url = 'Uint8ArdomValuesObj012345679BCDEFGHIJKLMNPQRSTWXYZ_cfghkpqvwxyz-';
+            const unreserved = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
             let size = 45;
             let id = '';
 
             const crypto = self.crypto || self['msCrypto'];
             if (crypto) {
-                const bytes = crypto.getRandomValues(new Uint8Array(size));
-                while (0 < size--) {
-                    id += url[bytes[size] & 63];
-                }
+                let bytes = new Uint8Array(size);
+                crypto.getRandomValues(bytes);
+                bytes = bytes.map(x => unreserved.charCodeAt(x % unreserved.length));
+                id = String.fromCharCode.apply(null, bytes);
             } else {
                 while (0 < size--) {
-                    id += url[Math.random() * 64 | 0];
+                    id += unreserved[Math.random() * unreserved.length | 0];
                 }
             }
 
-            resolve(id);
+            resolve(base64UrlEncode(id));
         });
     }
 
