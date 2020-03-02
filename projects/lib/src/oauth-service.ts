@@ -2095,6 +2095,19 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     public ngOnDestroy(): void {
         this.clearAccessTokenTimer();
         this.clearIdTokenTimer();
+
+        this.removeSilentRefreshEventListener();
+        const silentRefreshFrame = document.getElementById(this.silentRefreshIFrameName);
+        if(silentRefreshFrame) {
+            silentRefreshFrame.remove();
+        }
+
+        this.stopSessionCheckTimer();
+        this.removeSessionCheckEventListener();
+        const sessionCheckFrame = document.getElementById(this.sessionCheckIFrameName);
+        if(sessionCheckFrame) {
+            sessionCheckFrame.remove();
+        }
     }
 
     protected createNonce(): Promise<string> {
