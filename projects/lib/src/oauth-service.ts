@@ -1051,6 +1051,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                     'expected',
                     issuer
                 );
+              
+              return;
             }
 
             // only run in Angular zone if it is 'changed' or 'error'
