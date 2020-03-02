@@ -196,7 +196,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
 
     protected refreshInternal(params, noPrompt): Promise<TokenResponse|OAuthEvent> {
-        if (this.responseType === 'code') {
+
+        if (!this.silentRefreshRedirectUri && this.responseType === 'code') {
             return this.refreshToken();
         } else {
             return this.silentRefresh(params, noPrompt);
@@ -833,14 +834,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             this.tryLogin({
                 customHashFragment: message,
                 preventClearHashAfterLogin: true,
-                onLoginError: err => {
-                    this.eventsSubject.next(
-                        new OAuthErrorEvent('silent_refresh_error', err)
-                    );
-                },
-                onTokenReceived: () => {
-                    this.eventsSubject.next(new OAuthSuccessEvent('silently_refreshed'));
-                }
+                customRedirectUri: this.silentRefreshRedirectUri || this.redirectUri
             }).catch(err => this.debug('tryLogin during silent refresh failed', err));
         };
 
@@ -900,7 +894,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             first()
         );
         const success = this.events.pipe(
-            filter(e => e.type === 'silently_refreshed'),
+            filter(e => e.type === 'token_received'),
             first()
         );
         const timeout = of(
@@ -909,14 +903,18 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
         return race([errors, success, timeout])
             .pipe(
-                tap(e => {
-                    if (e.type === 'silent_refresh_timeout') {
-                        this.eventsSubject.next(e);
-                    }
-                }),
                 map(e => {
                     if (e instanceof OAuthErrorEvent) {
+                        if (e.type === 'silent_refresh_timeout') {
+                            this.eventsSubject.next(e);
+                        } else {
+                            e = new OAuthErrorEvent('silent_refresh_error', e);
+                            this.eventsSubject.next(e);
+                        }
                         throw e;
+                    } else if (e.type === 'token_received') {
+                        e = new OAuthSuccessEvent('silently_refreshed');
+                        this.eventsSubject.next(e);
                     }
                     return e;
                 })
@@ -924,7 +922,16 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             .toPromise();
     }
 
+    /**
+     * This method exists for backwards compatibility.
+     * {@link OAuthService#initLoginFlowInPopup} handles both code
+     * and implicit flows.
+     */
     public initImplicitFlowInPopup(options?: { height?: number, width?: number }) {
+        return this.initLoginFlowInPopup(options);
+    }
+
+    public initLoginFlowInPopup(options?: { height?: number, width?: number }) {
         options = options || {};
         return this.createLoginUrl(null, null, this.silentRefreshRedirectUri, false, {
             display: 'popup'
@@ -959,10 +966,12 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
                 const listener = (e: MessageEvent) => {
                     const message = this.processMessageEventMessage(e);
+
                     if (message && message !== null) {
                       this.tryLogin({
                           customHashFragment: message,
                           preventClearHashAfterLogin: true,
+                        customRedirectUri: this.silentRefreshRedirectUri,
                       }).then(() => {
                           cleanup();
                           resolve();
@@ -973,6 +982,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                     } else {
                       console.log('false event firing');
                     }
+
                 };
 
                 window.addEventListener('message', listener);
@@ -1402,25 +1412,50 @@ export class OAuthService extends AuthConfig implements OnDestroy {
      */
     public tryLogin(options: LoginOptions = null): Promise<boolean> {
         if (this.config.responseType === 'code') {
-            return this.tryLoginCodeFlow().then(_ => true);
-        } else {
+            return this.tryLoginCodeFlow(options).then(_ => true);
+        }
+        else {
             return this.tryLoginImplicitFlow(options);
         }
     }
 
-    public tryLoginCodeFlow(): Promise<void> {
+
+
+    private parseQueryString(queryString: string): object {
+        if (!queryString || queryString.length === 0) {
+            return {};
+        }
+
+        if (queryString.charAt(0) === '?') {
+            queryString = queryString.substr(1);
+        }
+
+        return this.urlHelper.parseQueryString(queryString);
+
+
+    }
+
+    public tryLoginCodeFlow(options: LoginOptions = null): Promise<void> {
+        options = options || {};
+
+        const querySource = options.customHashFragment ?
+            options.customHashFragment.substring(1) :
+            window.location.search;
+
         const parts = this.getCodePartsFromUrl(window.location.search);
 
         const code = parts['code'];
         const state = parts['state'];
 
-        const href = location.href
-                        .replace(/[&\?]code=[^&\$]*/, '')
-                        .replace(/[&\?]scope=[^&\$]*/, '')
-                        .replace(/[&\?]state=[^&\$]*/, '')
-                        .replace(/[&\?]session_state=[^&\$]*/, '');
+        if (!options.preventClearHashAfterLogin) {
+            const href = location.href
+                            .replace(/[&\?]code=[^&\$]*/, '')
+                            .replace(/[&\?]scope=[^&\$]*/, '')
+                            .replace(/[&\?]state=[^&\$]*/, '')
+                            .replace(/[&\?]session_state=[^&\$]*/, '');
 
-        history.replaceState(null, window.name, href);
+            history.replaceState(null, window.name, href);
+        }
 
         let [nonceInState, userState] = this.parseState(state);
         this.state = userState;
@@ -1446,7 +1481,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
         if (code) {
             return new Promise((resolve, reject) => {
-                this.getTokenFromCode(code).then(result => {
+                this.getTokenFromCode(code, options).then(result => {
                     resolve();
                 }).catch(err => {
                     reject(err);
@@ -1477,11 +1512,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     /**
      * Get token using an intermediate code. Works for the Authorization Code flow.
      */
-    private getTokenFromCode(code: string): Promise<TokenResponse> {
+    private getTokenFromCode(code: string, options: LoginOptions): Promise<object> {
         let params = new HttpParams()
             .set('grant_type', 'authorization_code')
             .set('code', code)
-            .set('redirect_uri', this.redirectUri);
+            .set('redirect_uri', options.customRedirectUri || this.redirectUri);
 
         if (!this.disablePKCE) {
             const pkciVerifier = this._storage.getItem('PKCI_verifier');
