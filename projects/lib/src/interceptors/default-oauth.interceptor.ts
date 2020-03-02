@@ -13,8 +13,6 @@ import { OAuthModuleConfig } from '../oauth-module.config';
 import { OAuthStorage } from '../types';
 import { OAuthService } from '../oauth-service';
 
-const WAIT_FOR_TOKEN_RECEIVED = 1000;
-
 @Injectable()
 export class DefaultOAuthInterceptor implements HttpInterceptor {
 
@@ -68,7 +66,8 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
       ),
       this.oAuthService.events.pipe(
         filter(e => e.type === 'token_received'),
-        timeout(WAIT_FOR_TOKEN_RECEIVED),
+        timeout(this.oAuthService.waitForTokenInMsec || 0),
+        catchError(_ => of(null)), // timeout is not an error
         map(_ => this.oAuthService.getAccessToken()),
       ),
     ).pipe(

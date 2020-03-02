@@ -41,7 +41,7 @@ export class AppComponent {
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
 
     // Optional
-    // this.oauthService.setupAutomaticSilentRefresh();
+    this.oauthService.setupAutomaticSilentRefresh();
 
   }
 
