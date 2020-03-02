@@ -8,6 +8,7 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "downlevelIteration": true,
     "module": "esnext",
     "target": "es5",
     "typeRoots": [
@@ -21,12 +22,15 @@
       "sample": [
         "dist/sample"
       ],
-      
       "angular-oauth2-oidc": [
         "projects/lib/src/public_api"
-        //"dist/lib"
+      ],
+
+      "angular-oauth2-oidc-jwks": [
+        "projects/angular-oauth2-oidc-jwks/src/public-api"
       ]
-      
+
+
     }
   }
 }
