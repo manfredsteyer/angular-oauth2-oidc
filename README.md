@@ -7,21 +7,23 @@ Support for OAuth 2 and OpenId Connect (OIDC) in Angular.
 ## Credits
 
 - [generator-angular2-library](https://github.com/jvandemo/generator-angular2-library) for scaffolding an Angular library
-- [jsrasign](https://kjur.github.io/jsrsasign/) until version 5: For validating token signature and for hashing; beginning with version 6, we are using browser APIs to minimize our bundle size
-- [Identity Server](https://github.com/identityserver) (used for testing with an .NET/.NET Core Backend)
+- [jsrasign](https://kjur.github.io/jsrsasign/) for validating token signature and for hashing
+- [Identity Server](https://github.com/identityserver) for testing with an .NET/.NET Core Backend
 - [Keycloak (Redhat)](http://www.keycloak.org/) for testing with Java
 
 ## Resources
 
-- Sources and Sample:
-https://github.com/manfredsteyer/angular-oauth2-oidc
-
-- Source Code Documentation
-https://manfredsteyer.github.io/angular-oauth2-oidc/docs
+- Sources and Sample: [https://github.com/manfredsteyer/angular-oauth2-oidc](https://github.com/manfredsteyer/angular-oauth2-oidc)
+- Source Code Documentation: [https://manfredsteyer.github.io/angular-oauth2-oidc/docs](https://manfredsteyer.github.io/angular-oauth2-oidc/docs)
+- Community-provided sample implementation: [https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/](https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/)
 
 ## Tested Environment
 
-Successfully tested with **Angular 7** and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we've used IdentityServer (.NET/ .NET Core) and Redhat's Keycloak (Java).
+Successfully tested with **Angular 9** and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we've used IdentityServer (.NET / .NET Core) and Redhat's Keycloak (Java).
+
+**Angular 8**: Use 8.x versions of this library.
+
+**Angular 7**: Use 7.x versions of this library.
 
 **Angular 6**: Use Version 4.x of this library. Version 4.x was tested with Angular 6. You can also try the newer version 5.x of this library which has a much smaller bundle size.
 
@@ -30,21 +32,23 @@ Successfully tested with **Angular 7** and its Router, PathLocationStrategy as w
 ## Release Cycle
 
 - We plan one major release for each Angular version
-    - Will contain new features
-    - Will contain bug fixes and PRs
+  - Will contain new features
+  - Will contain bug fixes and PRs
 - Critical Bugfixes on demand
 
 ## Contributions
+
 - Feel free to file pull requests
 - The closed issues contain some ideas for PRs and enhancements (see labels)
 - If you want to contribute to the docs, you can do so in the `docs-src` folder. Make sure you update `summary.json` as well. Then generate the docs with the following commands:
 
-  ```
+  ``` sh
   npm install -g @compodoc/compodoc
   npm run docs
   ```
 
-# Features 
+## Features
+
 - Logging in via Implicit Flow (where a user is redirected to Identity Provider)
 - Logging in via Code Flow + PKCE
 - "Logging in" via Password Flow (where a user enters their password into the client)
@@ -58,22 +62,24 @@ Successfully tested with **Angular 7** and its Router, PathLocationStrategy as w
 
 ## Sample-Auth-Server
 
-You can use the OIDC-Sample-Server mentioned in the samples for Testing. It assumes, that your Web-App runs on http://localhost:8080.
+You can use the OIDC-Sample-Server mentioned in the samples for Testing. It assumes, that your Web-App runs on http://localhost:8080
 
 Username/Password: max/geheim
 
-*clientIds:* 
+*clientIds:*
+
 - spa-demo (implicit flow)
 - demo-resource-owner (resource owner password flow)
 
 *redirectUris:*
+
 - localhost:[8080-8089|4200-4202]
 - localhost:[8080-8089|4200-4202]/index.html
 - localhost:[8080-8089|4200-4202]/silent-refresh.html
 
 ## Installing
 
-```
+```sh
 npm i angular-oauth2-oidc --save
 ```
 
@@ -85,7 +91,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 // etc.
 
 @NgModule({
-  imports: [ 
+  imports: [
     // etc.
     HttpClientModule,
     OAuthModule.forRoot()
@@ -96,12 +102,12 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     // etc.
   ],
   bootstrap: [
-    AppComponent 
+    AppComponent
   ]
 })
 export class AppModule {
 }
-``` 
+```
 
 ## Configuring for Implicit Flow
 
@@ -116,7 +122,6 @@ Hence, the original API is still supported.
 import { AuthConfig } from 'angular-oauth2-oidc';
 
 export const authConfig: AuthConfig = {
-
   // Url of the Identity Provider
   issuer: 'https://steyer-identity-server.azurewebsites.net/identity',
 
@@ -215,7 +220,7 @@ The following snippet contains the template for the login page:
 
 ### Skipping the Login Form
 
-If you don't want to display a login form that tells the user that they are redirected to the identity server, you can use the convenience function ``this.oauthService.loadDiscoveryDocumentAndLogin();`` instead of ``this.oauthService.loadDiscoveryDocumentAndTryLogin();`` when setting up the library. 
+If you don't want to display a login form that tells the user that they are redirected to the identity server, you can use the convenience function ``this.oauthService.loadDiscoveryDocumentAndLogin();`` instead of ``this.oauthService.loadDiscoveryDocumentAndTryLogin();`` when setting up the library.
 
 This directly redirects the user to the identity server if there are no valid tokens. Ensure you have your `issuer` set to your discovery document endpoint!
 
@@ -257,6 +262,7 @@ this.oauthService
     })
 ```
 
+
 ### Calling a Web API with an Access Token
 
 You can automate this task by switching ``sendAccessToken`` on and by setting ``allowedUrls`` to an array with prefixes for the respective URLs. Use lower case for the prefixes.
@@ -290,16 +296,9 @@ See the [documentation](https://manfredsteyer.github.io/angular-oauth2-oidc/docs
 
 ## Tutorials
 
-* [Tutorial with Demo Servers available online](https://www.softwarearchitekt.at/post/2016/07/03/authentication-in-angular-2-with-oauth2-oidc-and-guards-for-the-newest-new-router-english-version.aspx)
-* [Angular Authentication with OpenID Connect and Okta in 20 Minutes](https://developer.okta.com/blog/2017/04/17/angular-authentication-with-oidc)
-* [Add Authentication to Your Angular PWA](https://developer.okta.com/blog/2017/06/13/add-authentication-angular-pwa)
-* [Build an Ionic App with User Authentication](https://developer.okta.com/blog/2017/08/22/build-an-ionic-app-with-user-authentication)
-* [On-Site Workshops](https://www.softwarearchitekt.at)
-
-
-
-
-
-
-
-
+- [Tutorial with Demo Servers available online](https://www.softwarearchitekt.at/post/2016/07/03/authentication-in-angular-2-with-oauth2-oidc-and-guards-for-the-newest-new-router-english-version.aspx)
+- [Angular Authentication with OpenID Connect and Okta in 20 Minutes](https://developer.okta.com/blog/2017/04/17/angular-authentication-with-oidc)
+- [Add Authentication to Your Angular PWA](https://developer.okta.com/blog/2017/06/13/add-authentication-angular-pwa)
+- [Build an Ionic App with User Authentication](https://developer.okta.com/blog/2017/08/22/build-an-ionic-app-with-user-authentication)
+- [On-Site Workshops](https://www.softwarearchitekt.at)
+- [Angular 6 with Auth0 using this library](https://github.com/jeroenheijmans/sample-auth0-angular-oauth2-oidc)
