@@ -27,7 +27,7 @@ export class OAuthModule {
   static forRoot(
     config: OAuthModuleConfig = null,
     validationHandlerClass = NullValidationHandler
-  ): ModuleWithProviders {
+  ): ModuleWithProviders<OAuthModule> {
     return {
       ngModule: OAuthModule,
       providers: [
