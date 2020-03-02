@@ -1268,6 +1268,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         }
 
         return url;
+
     }
 
     initImplicitFlowInternal(
@@ -1506,32 +1507,32 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                 (tokenResponse) => {
                     this.debug('refresh tokenResponse', tokenResponse);
                     this.storeAccessTokenResponse(
-                        tokenResponse.access_token, 
-                        tokenResponse.refresh_token, 
+                        tokenResponse.access_token,
+                        tokenResponse.refresh_token,
                         tokenResponse.expires_in,
                         tokenResponse.scope);
 
                     if (this.oidc && tokenResponse.id_token) {
-                        this.processIdToken(tokenResponse.id_token, tokenResponse.access_token).  
+                        this.processIdToken(tokenResponse.id_token, tokenResponse.access_token).
                         then(result => {
                             this.storeIdToken(result);
-            
+
                             this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
                             this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
-            
+
                             resolve(tokenResponse);
                         })
                         .catch(reason => {
                             this.eventsSubject.next(new OAuthErrorEvent('token_validation_error', reason));
                             console.error('Error validating tokens');
                             console.error(reason);
-            
+
                             reject(reason);
                         });
                     } else {
                         this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
                         this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
-            
+
                         resolve(tokenResponse);
                     }
                 },
@@ -1654,7 +1655,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             .then(result => {
                 this.storeIdToken(result);
                 this.storeSessionState(sessionState);
-                if (this.clearHashAfterLogin) {
+                if (this.clearHashAfterLogin && !options.preventClearHashAfterLogin) {
                     location.hash = '';
                 }
                 this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
@@ -1691,7 +1692,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     ): boolean {
         const savedNonce = this._storage.getItem('nonce');
         if (savedNonce !== nonceInState) {
-            
+
             const err = 'Validating access_token failed, wrong state/nonce.';
             console.error(err, savedNonce, nonceInState);
             return false;
@@ -1718,7 +1719,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         if (options.onLoginError) {
             options.onLoginError(parts);
         }
-        if (this.clearHashAfterLogin) {
+        if (this.clearHashAfterLogin && !options.preventClearHashAfterLogin) {
             location.hash = '';
         }
     }
