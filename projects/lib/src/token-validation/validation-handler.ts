@@ -1,4 +1,4 @@
-import { base64UrlEncode } from "../base64-helper";
+import { base64UrlEncode } from '../base64-helper';
 
 export interface ValidationParams {
   idToken: string;
