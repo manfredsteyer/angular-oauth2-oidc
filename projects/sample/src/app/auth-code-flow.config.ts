@@ -1,9 +1,7 @@
 import { AuthConfig } from 'angular-oauth2-oidc';
 
 export const authCodeFlowConfig: AuthConfig = {
-  // Url of the Identity Provider
-  // issuer: 'https://demo.identityserver.io',
-  issuer: 'http://localhost:5000',
+  issuer: 'https://idsvr4.azurewebsites.net',
 
   // URL of the SPA to redirect the user to after login
   redirectUri: window.location.origin + '/index.html',

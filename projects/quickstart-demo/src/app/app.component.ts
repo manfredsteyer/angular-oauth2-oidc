@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { authCodeFlowConfig } from 'projects/sample/src/app/auth-code-flow.config';
 import { filter } from 'rxjs/operators';
-import { JwksValidationHandler } from 'angular-oauth2-oidc';
+import { authCodeFlowConfig } from './auth.config';
 
 @Component({
   selector: 'app-root',
@@ -15,8 +14,6 @@ export class AppComponent {
   constructor(private oauthService: OAuthService) {
     this.oauthService.configure(authCodeFlowConfig);
     this.oauthService.loadDiscoveryDocumentAndLogin();
-
-    this.oauthService.tokenValidationHandler = new JwksValidationHandler();
 
     // Automatically load user profile
     this.oauthService

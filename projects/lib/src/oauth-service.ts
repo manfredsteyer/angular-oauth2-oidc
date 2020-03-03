@@ -223,6 +223,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
      * @param options LoginOptions to pass through to `tryLogin(...)`
      */
     public loadDiscoveryDocumentAndLogin(options: LoginOptions & { state?: string } = null): Promise<boolean> {
+        if (!options) {
+            options = { state: '' };
+        }
         return this.loadDiscoveryDocumentAndTryLogin(options).then(_ => {
             if (!this.hasValidIdToken() || !this.hasValidAccessToken()) {
                 this.initLoginFlow(options.state);
