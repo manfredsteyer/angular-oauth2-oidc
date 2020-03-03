@@ -4,7 +4,10 @@ export const authCodeFlowConfig: AuthConfig = {
   issuer: 'https://idsvr4.azurewebsites.net',
 
   // URL of the SPA to redirect the user to after login
-  redirectUri: window.location.origin + '/index.html',
+  redirectUri: window.location.origin
+    + ((localStorage.getItem('useHashLocationStrategy') === 'true')
+      ? '/#/index.html'
+      : '/index.html'),
 
   // The SPA's id. The SPA is registerd with this id at the auth-server
   // clientId: 'server.code',
@@ -19,7 +22,7 @@ export const authCodeFlowConfig: AuthConfig = {
   responseType: 'code',
 
   // set the scope for the permissions the client should request
-  // The first four are defined by OIDC. 
+  // The first four are defined by OIDC.
   // Important: Request offline_access to get a refresh token
   // The api scope is a usecase specific one
   scope: 'openid profile email offline_access api',

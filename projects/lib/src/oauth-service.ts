@@ -54,7 +54,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
      * @internal
      * Deprecated:  use property events instead
      */
-    public discoveryDocumentLoaded$: Observable<object>;
+    public discoveryDocumentLoaded$: Observable<OidcDiscoveryDoc>;
 
     /**
      * Informs about events, like token_received or token_expires.
@@ -69,12 +69,13 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     public state? = '';
 
     protected eventsSubject: Subject<OAuthEvent> = new Subject<OAuthEvent>();
-    protected discoveryDocumentLoadedSubject: Subject<object> = new Subject<object>();
+    protected discoveryDocumentLoadedSubject: Subject<OidcDiscoveryDoc> = new Subject<OidcDiscoveryDoc>();
     protected silentRefreshPostMessageEventListener: EventListener;
     protected grantTypesSupported: Array<string> = [];
     protected _storage: OAuthStorage;
     protected accessTokenTimeoutSubscription: Subscription;
     protected idTokenTimeoutSubscription: Subscription;
+    protected tokenReceivedSubscription: Subscription;
     protected sessionCheckEventListener: EventListener;
     protected jwksUri: string;
     protected sessionCheckTimer: any;
@@ -128,7 +129,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
      * Use this method to configure the service
      * @param config the configuration
      */
-    public configure(config: AuthConfig) {
+    public configure(config: AuthConfig): void {
         // For the sake of downward compatibility with
         // original configuration API
         Object.assign(this, new AuthConfig(), config);
@@ -156,7 +157,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         this.setupExpirationTimers();
     }
 
-    protected setupSessionCheck() {
+    protected setupSessionCheck(): void {
         this.events.pipe(filter(e => e.type === 'token_received')).subscribe(e => {
             this.initSessionCheck();
         });
@@ -170,7 +171,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
      * @param params Additional parameter to pass
      * @param listenTo Setup automatic refresh of a specific token type
      */
-    public setupAutomaticSilentRefresh(params: object = {}, listenTo?: 'access_token' | 'id_token' | 'any', noPrompt = true) {
+    public setupAutomaticSilentRefresh(params: object = {}, listenTo?: 'access_token' | 'id_token' | 'any', noPrompt = true): void {
       let shouldRunSilentRefresh = true;
       this.events.pipe(
         tap((e) => {
@@ -194,8 +195,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       this.restartRefreshTimerIfStillLoggedIn();
     }
 
-    protected refreshInternal(params, noPrompt) {
-        if (this.responseType === 'code') {
+    protected refreshInternal(params, noPrompt): Promise<TokenResponse|OAuthEvent> {
+
+        if (!this.silentRefreshRedirectUri && this.responseType === 'code') {
             return this.refreshToken();
         } else {
             return this.silentRefresh(params, noPrompt);
@@ -228,7 +230,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         }
         return this.loadDiscoveryDocumentAndTryLogin(options).then(_ => {
             if (!this.hasValidIdToken() || !this.hasValidAccessToken()) {
-                this.initLoginFlow(options.state);
+                if(this.responseType === 'code'){
+                    this.initCodeFlow();
+                } else {
+                    this.initImplicitFlow();
+                }
                 return false;
             } else {
                 return true;
@@ -285,6 +291,15 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         return lcUrl.startsWith('https://');
     }
 
+    protected assertUrlNotNullAndCorrectProtocol(url: string | undefined, description: string) {
+      if (!url) {
+        throw new Error(`'${description}' should not be null`);
+      }
+      if (!this.validateUrlForHttps(url)) {
+        throw new Error(`'${description}' must use HTTPS (with TLS), or config value for property 'requireHttps' must be set to 'false' and allow HTTP (without TLS).`);
+      }
+    }
+
     protected validateUrlAgainstIssuer(url: string) {
         if (!this.strictDiscoveryDocumentValidation) {
             return true;
@@ -307,7 +322,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             this.setupExpirationTimers();
         }
 
-        this.events.pipe(filter(e => e.type === 'token_received')).subscribe(_ => {
+        if (this.tokenReceivedSubscription)
+          this.tokenReceivedSubscription.unsubscribe();
+
+        this.tokenReceivedSubscription = this.events.pipe(filter(e => e.type === 'token_received')).subscribe(_ => {
             this.clearAccessTokenTimer();
             this.clearIdTokenTimer();
             this.setupExpirationTimers();
@@ -315,15 +333,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
 
     protected setupExpirationTimers(): void {
-        const idTokenExp = this.getIdTokenExpiration() || Number.MAX_VALUE;
-        const accessTokenExp = this.getAccessTokenExpiration() || Number.MAX_VALUE;
-        const useAccessTokenExp = accessTokenExp <= idTokenExp;
-
-        if (this.hasValidAccessToken() && useAccessTokenExp) {
+        if (this.hasValidAccessToken()) {
             this.setupAccessTokenTimer();
         }
 
-        if (this.hasValidIdToken() && !useAccessTokenExp) {
+        if (this.hasValidIdToken()) {
             this.setupIdTokenTimer();
         }
     }
@@ -408,7 +422,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
      *
      * @param fullUrl
      */
-    public loadDiscoveryDocument(fullUrl: string = null): Promise<object> {
+    public loadDiscoveryDocument(fullUrl: string = null): Promise<OAuthSuccessEvent> {
         return new Promise((resolve, reject) => {
             if (!fullUrl) {
                 fullUrl = this.issuer || '';
@@ -419,7 +433,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             }
 
             if (!this.validateUrlForHttps(fullUrl)) {
-                reject('issuer must use https, or config value for property requireHttps must allow http');
+                reject('issuer  must use HTTPS (with TLS), or config value for property \'requireHttps\' must be set to \'false\' and allow HTTP (without TLS).');
                 return;
             }
 
@@ -438,7 +452,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                     this.grantTypesSupported = doc.grant_types_supported;
                     this.issuer = doc.issuer;
                     this.tokenEndpoint = doc.token_endpoint;
-                    this.userinfoEndpoint = doc.userinfo_endpoint;
+                    this.userinfoEndpoint = doc.userinfo_endpoint || this.userinfoEndpoint;
                     this.jwksUri = doc.jwks_uri;
                     this.sessionCheckIFrameUrl = doc.check_session_iframe || this.sessionCheckIFrameUrl;
 
@@ -589,7 +603,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         userName: string,
         password: string,
         headers: HttpHeaders = new HttpHeaders()
-    ): Promise<object> {
+    ): Promise<UserInfo> {
         return this.fetchTokenUsingPasswordFlow(userName, password, headers).then(
             () => this.loadUserProfile()
         );
@@ -601,14 +615,12 @@ export class OAuthService extends AuthConfig implements OnDestroy {
      * When using this with OAuth2 password flow, make sure that the property oidc is set to false.
      * Otherwise stricter validations take place that make this operation fail.
      */
-    public loadUserProfile(): Promise<object> {
+    public loadUserProfile(): Promise<UserInfo> {
         if (!this.hasValidAccessToken()) {
             throw new Error('Can not load User Profile without access_token');
         }
         if (!this.validateUrlForHttps(this.userinfoEndpoint)) {
-            throw new Error(
-                'userinfoEndpoint must use https, or config value for property requireHttps must allow http'
-            );
+            throw new Error('userinfoEndpoint must use HTTPS (with TLS), or config value for property \'requireHttps\' must be set to \'false\' and allow HTTP (without TLS).');
         }
 
         return new Promise((resolve, reject) => {
@@ -665,12 +677,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         userName: string,
         password: string,
         headers: HttpHeaders = new HttpHeaders()
-    ): Promise<object> {
-        if (!this.validateUrlForHttps(this.tokenEndpoint)) {
-            throw new Error(
-                'tokenEndpoint must use https, or config value for property requireHttps must allow http'
-            );
-        }
+
+    ): Promise<TokenResponse> {
+        this.assertUrlNotNullAndCorrectProtocol(this.tokenEndpoint, 'tokenEndpoint');
 
         return new Promise((resolve, reject) => {
             /**
@@ -742,13 +751,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
      * A solution for this is provided by the
      * method silentRefresh.
      */
-    public refreshToken(): Promise<object> {
-
-        if (!this.validateUrlForHttps(this.tokenEndpoint)) {
-            throw new Error(
-                'tokenEndpoint must use https, or config value for property requireHttps must allow http'
-            );
-        }
+    public refreshToken(): Promise<TokenResponse> {
+        this.assertUrlNotNullAndCorrectProtocol(this.tokenEndpoint, 'tokenEndpoint');
 
         return new Promise((resolve, reject) => {
             let params = new HttpParams()
@@ -781,8 +785,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                                 tap(result => this.storeIdToken(result)),
                                 map(_ => tokenResponse)
                             );
-                    }
-                    else {
+                    } else {
                         return of(tokenResponse);
                     }
                 }))
@@ -830,14 +833,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             this.tryLogin({
                 customHashFragment: message,
                 preventClearHashAfterLogin: true,
-                onLoginError: err => {
-                    this.eventsSubject.next(
-                        new OAuthErrorEvent('silent_refresh_error', err)
-                    );
-                },
-                onTokenReceived: () => {
-                    this.eventsSubject.next(new OAuthSuccessEvent('silently_refreshed'));
-                }
+                customRedirectUri: this.silentRefreshRedirectUri || this.redirectUri
             }).catch(err => this.debug('tryLogin during silent refresh failed', err));
         };
 
@@ -860,9 +856,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         }
 
         if (!this.validateUrlForHttps(this.loginUrl)) {
-            throw new Error(
-                'tokenEndpoint must use https, or config value for property requireHttps must allow http'
-            );
+            throw new Error('loginUrl  must use HTTPS (with TLS), or config value for property \'requireHttps\' must be set to \'false\' and allow HTTP (without TLS).');
         }
 
         if (typeof document === 'undefined') {
@@ -899,7 +893,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             first()
         );
         const success = this.events.pipe(
-            filter(e => e.type === 'silently_refreshed'),
+            filter(e => e.type === 'token_received'),
             first()
         );
         const timeout = of(
@@ -908,14 +902,18 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
         return race([errors, success, timeout])
             .pipe(
-                tap(e => {
-                    if (e.type === 'silent_refresh_timeout') {
-                        this.eventsSubject.next(e);
-                    }
-                }),
                 map(e => {
                     if (e instanceof OAuthErrorEvent) {
+                        if (e.type === 'silent_refresh_timeout') {
+                            this.eventsSubject.next(e);
+                        } else {
+                            e = new OAuthErrorEvent('silent_refresh_error', e);
+                            this.eventsSubject.next(e);
+                        }
                         throw e;
+                    } else if (e.type === 'token_received') {
+                        e = new OAuthSuccessEvent('silently_refreshed');
+                        this.eventsSubject.next(e);
                     }
                     return e;
                 })
@@ -923,33 +921,67 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             .toPromise();
     }
 
+    /**
+     * This method exists for backwards compatibility.
+     * {@link OAuthService#initLoginFlowInPopup} handles both code
+     * and implicit flows.
+     */
     public initImplicitFlowInPopup(options?: { height?: number, width?: number }) {
+        return this.initLoginFlowInPopup(options);
+    }
+
+    public initLoginFlowInPopup(options?: { height?: number, width?: number }) {
         options = options || {};
         return this.createLoginUrl(null, null, this.silentRefreshRedirectUri, false, {
             display: 'popup'
         }).then(url => {
             return new Promise((resolve, reject) => {
+              /**
+               * Error handling section
+               */
+                const checkForPopupClosedInterval = 500;
                 let windowRef = window.open(url, '_blank', this.calculatePopupFeatures(options));
+                let checkForPopupClosedTimer: any;
+                const checkForPopupClosed = () => {
+                  if (!windowRef || windowRef.closed) {
+                    cleanup();
+                    reject(new OAuthErrorEvent('popup_closed', {}));
+                  }
+                };
+                if (!windowRef) {
+                  reject(new OAuthErrorEvent('popup_blocked', {}));
+                } else {
+                  checkForPopupClosedTimer = window.setInterval(checkForPopupClosed, checkForPopupClosedInterval);
+                }
 
                 const cleanup = () => {
+                    window.clearInterval(checkForPopupClosedTimer);
                     window.removeEventListener('message', listener);
-                    windowRef.close();
+                    if (windowRef !== null) {
+                      windowRef.close();
+                    }
                     windowRef = null;
                 };
 
                 const listener = (e: MessageEvent) => {
                     const message = this.processMessageEventMessage(e);
 
-                    this.tryLogin({
-                        customHashFragment: message,
-                        preventClearHashAfterLogin: true,
-                    }).then(() => {
-                        cleanup();
-                        resolve();
-                    }, err => {
-                        cleanup();
-                        reject(err);
-                    });
+                    if (message && message !== null) {
+                      this.tryLogin({
+                          customHashFragment: message,
+                          preventClearHashAfterLogin: true,
+                        customRedirectUri: this.silentRefreshRedirectUri,
+                      }).then(() => {
+                          cleanup();
+                          resolve();
+                      }, err => {
+                          cleanup();
+                          reject(err);
+                      });
+                    } else {
+                      console.log('false event firing');
+                    }
+
                 };
 
                 window.addEventListener('message', listener);
@@ -957,16 +989,17 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         });
     }
 
-    protected calculatePopupFeatures(options: { height?: number, width?: number }) {
+    protected calculatePopupFeatures(options: { height?: number, width?: number }): string {
         // Specify an static height and width and calculate centered position
+
         const height = options.height || 470;
         const width = options.width || 500;
-        const left = (screen.width / 2) - (width / 2);
-        const top = (screen.height / 2) - (height / 2);
+        const left = window.screenLeft + ((window.outerWidth - width) / 2);
+        const top = window.screenTop + ((window.outerHeight - height) / 2);
         return `location=no,toolbar=no,width=${width},height=${height},top=${top},left=${left}`;
     }
 
-    protected processMessageEventMessage(e: MessageEvent) {
+    protected processMessageEventMessage(e: MessageEvent): string {
         let expectedPrefix = '#';
 
         if (this.silentRefreshMessagePrefix) {
@@ -1027,6 +1060,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                     'expected',
                     issuer
                 );
+              
+              return;
             }
 
             // only run in Angular zone if it is 'changed' or 'error'
@@ -1074,7 +1109,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         }
     }
 
-    protected waitForSilentRefreshAfterSessionChange() {
+    protected waitForSilentRefreshAfterSessionChange(): void {
         this.events
             .pipe(
                 filter(
@@ -1172,7 +1207,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         customRedirectUri = '',
         noPrompt = false,
         params: object = {}
-    ) {
+    ): Promise<string> {
         const that = this;
 
         let redirectUri: string;
@@ -1267,7 +1302,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         }
 
         return url;
-        
+
     }
 
     initImplicitFlowInternal(
@@ -1282,7 +1317,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
         if (!this.validateUrlForHttps(this.loginUrl)) {
             throw new Error(
-                'loginUrl must use https, or config value for property requireHttps must allow http'
+                'loginUrl  must use HTTPS (with TLS), or config value for property \'requireHttps\' must be set to \'false\' and allow HTTP (without TLS).'
             );
         }
 
@@ -1376,12 +1411,13 @@ export class OAuthService extends AuthConfig implements OnDestroy {
      */
     public tryLogin(options: LoginOptions = null): Promise<boolean> {
         if (this.config.responseType === 'code') {
-            return this.tryLoginCodeFlow().then(_ => true);
+            return this.tryLoginCodeFlow(options).then(_ => true);
         }
         else {
             return this.tryLoginImplicitFlow(options);
         }
     }
+
 
 
     private parseQueryString(queryString: string): object {
@@ -1398,20 +1434,27 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
     }
 
-    public tryLoginCodeFlow(): Promise<void> {
+    public tryLoginCodeFlow(options: LoginOptions = null): Promise<void> {
+        options = options || {};
 
-        const parts = this.parseQueryString(window.location.search)
+        const querySource = options.customHashFragment ?
+            options.customHashFragment.substring(1) :
+            window.location.search;
+
+        const parts = this.getCodePartsFromUrl(window.location.search);
 
         const code = parts['code'];
         const state = parts['state'];
 
-        const href = location.href
-                        .replace(/[&\?]code=[^&\$]*/, '')
-                        .replace(/[&\?]scope=[^&\$]*/, '')
-                        .replace(/[&\?]state=[^&\$]*/, '')
-                        .replace(/[&\?]session_state=[^&\$]*/, '');
+        if (!options.preventClearHashAfterLogin) {
+            const href = location.href
+                            .replace(/[&\?]code=[^&\$]*/, '')
+                            .replace(/[&\?]scope=[^&\$]*/, '')
+                            .replace(/[&\?]state=[^&\$]*/, '')
+                            .replace(/[&\?]session_state=[^&\$]*/, '');
 
-        history.replaceState(null, window.name, href);
+            history.replaceState(null, window.name, href);
+        }
 
         let [nonceInState, userState] = this.parseState(state);
         this.state = userState;
@@ -1437,7 +1480,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
         if (code) {
             return new Promise((resolve, reject) => {
-                this.getTokenFromCode(code).then(result => {
+                this.getTokenFromCode(code, options).then(result => {
                     resolve();
                 }).catch(err => {
                     reject(err);
@@ -1448,14 +1491,31 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         }
     }
 
+   /**
+   * Retrieve the returned auth code from the redirect uri that has been called.
+   * If required also check hash, as we could use hash location strategy.
+   */
+    private getCodePartsFromUrl(queryString: string): object {
+        if (!queryString || queryString.length === 0) {
+            return this.urlHelper.getHashFragmentParams();
+        }
+
+        // normalize query string
+        if (queryString.charAt(0) === '?') {
+            queryString = queryString.substr(1);
+        }
+
+        return this.urlHelper.parseQueryString(queryString);
+    }
+
     /**
      * Get token using an intermediate code. Works for the Authorization Code flow.
      */
-    private getTokenFromCode(code: string): Promise<object> {
+    private getTokenFromCode(code: string, options: LoginOptions): Promise<object> {
         let params = new HttpParams()
             .set('grant_type', 'authorization_code')
             .set('code', code)
-            .set('redirect_uri', this.redirectUri);
+            .set('redirect_uri', options.customRedirectUri || this.redirectUri);
 
         if (!this.disablePKCE) {
             const pkciVerifier = this._storage.getItem('PKCI_verifier');
@@ -1470,14 +1530,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         return this.fetchAndProcessToken(params);
     }
 
-    private fetchAndProcessToken(params: HttpParams): Promise<object> {
+    private fetchAndProcessToken(params: HttpParams): Promise<TokenResponse> {
 
+        this.assertUrlNotNullAndCorrectProtocol(this.tokenEndpoint, 'tokenEndpoint');
         let headers = new HttpHeaders()
                                 .set('Content-Type', 'application/x-www-form-urlencoded');
-
-        if (!this.validateUrlForHttps(this.tokenEndpoint)) {
-            throw new Error('tokenEndpoint must use Http. Also check property requireHttps.');
-        }
 
         if (this.useHttpBasicAuth) {
             const header = btoa(`${this.clientId}:${this.dummyClientSecret}`);
@@ -1506,32 +1563,32 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                 (tokenResponse) => {
                     this.debug('refresh tokenResponse', tokenResponse);
                     this.storeAccessTokenResponse(
-                        tokenResponse.access_token, 
-                        tokenResponse.refresh_token, 
+                        tokenResponse.access_token,
+                        tokenResponse.refresh_token,
                         tokenResponse.expires_in,
                         tokenResponse.scope);
 
                     if (this.oidc && tokenResponse.id_token) {
-                        this.processIdToken(tokenResponse.id_token, tokenResponse.access_token).  
+                        this.processIdToken(tokenResponse.id_token, tokenResponse.access_token).
                         then(result => {
                             this.storeIdToken(result);
-            
+
                             this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
                             this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
-            
+
                             resolve(tokenResponse);
                         })
                         .catch(reason => {
                             this.eventsSubject.next(new OAuthErrorEvent('token_validation_error', reason));
                             console.error('Error validating tokens');
                             console.error(reason);
-            
+
                             reject(reason);
                         });
                     } else {
                         this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
                         this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
-            
+
                         resolve(tokenResponse);
                     }
                 },
@@ -1654,7 +1711,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             .then(result => {
                 this.storeIdToken(result);
                 this.storeSessionState(sessionState);
-                if (this.clearHashAfterLogin) {
+                if (this.clearHashAfterLogin && !options.preventClearHashAfterLogin) {
                     location.hash = '';
                 }
                 this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
@@ -1691,7 +1748,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     ): boolean {
         const savedNonce = this._storage.getItem('nonce');
         if (savedNonce !== nonceInState) {
-            
+
             const err = 'Validating access_token failed, wrong state/nonce.';
             console.error(err, savedNonce, nonceInState);
             return false;
@@ -1699,7 +1756,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         return true;
     }
 
-    protected storeIdToken(idToken: ParsedIdToken) {
+    protected storeIdToken(idToken: ParsedIdToken): void {
         this._storage.setItem('id_token', idToken.idToken);
         this._storage.setItem('id_token_claims_obj', idToken.idTokenClaimsJson);
         this._storage.setItem('id_token_expires_at', '' + idToken.idTokenExpiresAt);
@@ -1718,7 +1775,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         if (options.onLoginError) {
             options.onLoginError(parts);
         }
-        if (this.clearHashAfterLogin) {
+        if (this.clearHashAfterLogin && !options.preventClearHashAfterLogin) {
             location.hash = '';
         }
     }
@@ -1797,7 +1854,13 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             this.logger.warn(err);
             return Promise.reject(err);
         }
-
+        // at_hash is not applicable to authorization code flow
+        // addressing https://github.com/manfredsteyer/angular-oauth2-oidc/issues/661
+        // i.e. Based on spec the at_hash check is only true for implicit code flow on Ping Federate
+        // https://www.pingidentity.com/developer/en/resources/openid-connect-developers-guide.html
+        if(this.hasOwnProperty('responseType') && this.responseType === 'code'){
+            this.disableAtHashCheck = true;
+        }
         if (
             !this.disableAtHashCheck &&
             this.requestAccessToken &&
@@ -1836,6 +1899,19 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             loadKeys: () => this.loadJwks()
         };
 
+        if(this.disableAtHashCheck){
+            return this.checkSignature(validationParams).then(_ => {
+                const result: ParsedIdToken = {
+                    idToken: idToken,
+                    idTokenClaims: claims,
+                    idTokenClaimsJson: claimsJson,
+                    idTokenHeader: header,
+                    idTokenHeaderJson: headerJson,
+                    idTokenExpiresAt: expiresAtMSec
+                };
+                return result;
+            });
+        }
 
         return this.checkAtHash(validationParams)
           .then(atHashValid => {
@@ -1849,7 +1925,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
               return Promise.reject(err);
           }
 
+
           return this.checkSignature(validationParams).then(_ => {
+          const atHashCheckEnabled = !this.disableAtHashCheck;
               const result: ParsedIdToken = {
                   idToken: idToken,
                   idTokenClaims: claims,
@@ -1858,9 +1936,19 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                   idTokenHeaderJson: headerJson,
                   idTokenExpiresAt: expiresAtMSec
               };
+          if(atHashCheckEnabled) {
+            return this.checkAtHash(validationParams).then(atHashValid => {
+              if(this.requestAccessToken && !atHashValid) {
+                const err = 'Wrong at_hash';
+                this.logger.warn(err);
+                return Promise.reject(err);
+              } else {
               return result;
+              }
           });
-
+          } else {
+            return result;
+          }
         });
     }
 
@@ -2029,7 +2117,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
         if (!this.validateUrlForHttps(this.logoutUrl)) {
             throw new Error(
-                'logoutUrl must use https, or config value for property requireHttps must allow http'
+                'logoutUrl  must use HTTPS (with TLS), or config value for property \'requireHttps\' must be set to \'false\' and allow HTTP (without TLS).'
             );
         }
 
@@ -2073,9 +2161,22 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     /**
      * @ignore
      */
-    public ngOnDestroy() {
+    public ngOnDestroy(): void {
         this.clearAccessTokenTimer();
         this.clearIdTokenTimer();
+
+        this.removeSilentRefreshEventListener();
+        const silentRefreshFrame = document.getElementById(this.silentRefreshIFrameName);
+        if(silentRefreshFrame) {
+            silentRefreshFrame.remove();
+        }
+
+        this.stopSessionCheckTimer();
+        this.removeSessionCheckEventListener();
+        const sessionCheckFrame = document.getElementById(this.sessionCheckIFrameName);
+        if(sessionCheckFrame) {
+            sessionCheckFrame.remove();
+        }
     }
 
     protected createNonce(): Promise<string> {
@@ -2087,26 +2188,28 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             }
 
             /*
-             * This alphabet uses a-z A-Z 0-9 _- symbols.
-             * Symbols order was changed for better gzip compression.
+             * This alphabet is from:
+             * https://tools.ietf.org/html/rfc7636#section-4.1
+             *
+             * [A-Z] / [a-z] / [0-9] / "-" / "." / "_" / "~"
              */
-            const url = 'Uint8ArdomValuesObj012345679BCDEFGHIJKLMNPQRSTWXYZ_cfghkpqvwxyz-';
+            const unreserved = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
             let size = 45;
             let id = '';
 
-            const crypto = self.crypto || self['msCrypto'];
+            const crypto = typeof self === 'undefined' ? null : (self.crypto || self['msCrypto']);
             if (crypto) {
-                const bytes = crypto.getRandomValues(new Uint8Array(size));
-                while (0 < size--) {
-                    id += url[bytes[size] & 63];
-                }
+                let bytes = new Uint8Array(size);
+                crypto.getRandomValues(bytes);
+                bytes = bytes.map(x => unreserved.charCodeAt(x % unreserved.length));
+                id = String.fromCharCode.apply(null, bytes);
             } else {
                 while (0 < size--) {
-                    id += url[Math.random() * 64 | 0];
+                    id += unreserved[Math.random() * unreserved.length | 0];
                 }
             }
 
-            resolve(id);
+            resolve(base64UrlEncode(id));
         });
     }
 
@@ -2138,7 +2241,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     public initLoginFlow(
         additionalState = '',
         params = {}
-    ) {
+    ): void {
         if (this.responseType === 'code') {
             return this.initCodeFlow(additionalState, params);
         } else {
@@ -2168,16 +2271,15 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     ): void {
 
         if (!this.validateUrlForHttps(this.loginUrl)) {
-            throw new Error('loginUrl must use Http. Also check property requireHttps.');
+            throw new Error('loginUrl  must use HTTPS (with TLS), or config value for property \'requireHttps\' must be set to \'false\' and allow HTTP (without TLS).');
         }
 
-        this.createLoginUrl(additionalState, '', null, false, params).then(function (url) {
-            location.href = url;
-        })
-        .catch(error => {
-            console.error('Error in initAuthorizationCodeFlow');
-            console.error(error);
-        });
+        this.createLoginUrl(additionalState, '', null, false, params)
+            .then(this.config.openUri)
+            .catch(error => {
+                console.error('Error in initAuthorizationCodeFlow');
+                console.error(error);
+            });
     }
 
     protected async createChallangeVerifierPairForPKCE(): Promise<[string, string]> {

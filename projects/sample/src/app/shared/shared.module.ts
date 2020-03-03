@@ -32,7 +32,7 @@ import { CustomPreloadingStrategy } from './preload/custom-preloading.strategy';
   ]
 })
 export class SharedModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<SharedModule> {
     return {
       providers: [AuthGuard, LeaveComponentGuard, CustomPreloadingStrategy],
       ngModule: SharedModule

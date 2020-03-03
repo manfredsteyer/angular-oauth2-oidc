@@ -42,13 +42,7 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
     const url = req.url.toLowerCase();
 
 
-    if (!this.moduleConfig) {
-      return next.handle(req);
-    }
-    if (!this.moduleConfig.resourceServer) {
-      return next.handle(req);
-    }
-    if (this.moduleConfig.resourceServer.allowedUrls && !this.checkUrl(url)) {
+    if (!this.moduleConfig || !this.moduleConfig.resourceServer || !this.checkUrl(url)) {
       return next.handle(req);
     }
 

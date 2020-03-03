@@ -1,4 +1,0 @@
-## Breaking Changes
-
-- Config Property useHttpBasicAuthForPasswordFlow was renamed to useHttpBasicAuth b/c it's now also used for code useHttpBasicAuthForPasswordFlow
-- The protected method validateNonceForAccessToken was renamend to validateNonce. The parameter accessToken was removed b/c it has not been used
