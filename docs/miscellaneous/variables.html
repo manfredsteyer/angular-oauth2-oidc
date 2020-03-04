@@ -60,6 +60,9 @@
                         <li>
                             <a href="#AUTH_CONFIG" title="projects/lib/src/tokens.ts"><b>AUTH_CONFIG</b>&nbsp;&nbsp;&nbsp;(projects/.../tokens.ts)</a>
                         </li>
+                        <li>
+                            <a href="#err" title="projects/lib/src/token-validation/jwks-validation-handler.ts"><b>err</b>&nbsp;&nbsp;&nbsp;(projects/.../jwks-validation-handler.ts)</a>
+                        </li>
                     </ul>
                 </td>
             </tr>
@@ -84,6 +87,45 @@
                     <tr>
                         <td class="col-md-4">
                             <i>Default value : </i><code>new InjectionToken&lt;AuthConfig&gt;(&#x27;AUTH_CONFIG&#x27;)</code>
+                        </td>
+                    </tr>
+
+
+            </tbody>
+        </table>
+</section>
+    <h3>projects/lib/src/token-validation/jwks-validation-handler.ts</h3>
+    <section>
+    <h3></h3>        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="err"></a>
+                        <span class="name">
+                            <b>
+                            err</b>
+                            <a href="#err"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>&#x60;PLEASE READ THIS CAREFULLY:
+
+Beginning with angular-oauth2-oidc version 9, the JwksValidationHandler
+has been moved to an library of its own. If you need it for implementing
+OAuth2/OIDC **implicit flow**, please install it using npm:
+
+  npm i angular-oauth2-oidc-jwks --save
+
+After that, you can import it into your application:
+
+  import { JwksValidationHandler } from &#x27;angular-oauth2-oidc-jwks&#x27;;
+
+Please note, that this dependency is not needed for the **code flow**,
+which is nowadays the **recommented** one for single page applications.
+This also results in smaller bundle sizes.
+&#x60;</code>
                         </td>
                     </tr>
 

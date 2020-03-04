@@ -1,6 +1,5 @@
 export type EventType =
   | 'discovery_document_loaded'
-  | 'received_first_token'
   | 'jwks_load_error'
   | 'invalid_nonce_in_state'
   | 'discovery_document_load_error'

@@ -56,7 +56,6 @@ Also -- as shown in the readme -- you have to execute the following code when bo
 
 ```TypeScript
 this.oauthService.configure(authCodeFlowConfig);
-this.oauthService.tokenValidationHandler = new JwksValidationHandler();
 this.oauthService.loadDiscoveryDocumentAndTryLogin();
 ```
 

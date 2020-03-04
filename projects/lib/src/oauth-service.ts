@@ -1,7 +1,7 @@
 import { Injectable, NgZone, Optional, OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, Subject, Subscription, of, race, from } from 'rxjs';
-import { filter, delay, first, tap, map, switchMap } from 'rxjs/operators';
+import { filter, delay, first, tap, map, switchMap, debounceTime } from 'rxjs/operators';
 
 import {
     ValidationHandler,
@@ -181,7 +181,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                     shouldRunSilentRefresh = false;
                 }
             }),
-            filter(e => e.type === 'token_expires')
+            filter(e => e.type === 'token_expires'),
+            debounceTime(1000),
         ).subscribe(e => {
             const event = e as OAuthInfoEvent;
             if ((listenTo == null || listenTo === 'any' || event.info === listenTo) && shouldRunSilentRefresh) {
@@ -244,7 +245,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
     protected debug(...args): void {
         if (this.showDebugInformation) {
-            this.logger.debug.apply(console, args);
+            this.logger.debug.apply(this.logger, args);
         }
     }
 
@@ -316,7 +317,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             return;
         }
 
-        if (this.hasValidIdToken()) {
+        if (this.hasValidIdToken() || this.hasValidAccessToken()) {
             this.clearAccessTokenTimer();
             this.clearIdTokenTimer();
             this.setupExpirationTimers();
@@ -337,12 +338,14 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             this.setupAccessTokenTimer();
         }
 
+
         if (this.hasValidIdToken()) {
             this.setupIdTokenTimer();
         }
     }
 
     protected setupAccessTokenTimer(): void {
+
         const expiration = this.getAccessTokenExpiration();
         const storedAt = this.getAccessTokenStoredAt();
         const timeout = this.calcTimeout(storedAt, expiration);
@@ -361,6 +364,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
 
     protected setupIdTokenTimer(): void {
+
         const expiration = this.getIdTokenExpiration();
         const storedAt = this.getIdTokenStoredAt();
         const timeout = this.calcTimeout(storedAt, expiration);
@@ -757,11 +761,26 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         return new Promise((resolve, reject) => {
             let params = new HttpParams()
                 .set('grant_type', 'refresh_token')
-                .set('client_id', this.clientId)
                 .set('scope', this.scope)
                 .set('refresh_token', this._storage.getItem('refresh_token'));
 
-            if (this.dummyClientSecret) {
+            let headers = new HttpHeaders().set(
+                'Content-Type',
+                'application/x-www-form-urlencoded'
+            );
+
+            if (this.useHttpBasicAuth) {
+                const header = btoa(`${this.clientId}:${this.dummyClientSecret}`);
+                headers = headers.set(
+                    'Authorization',
+                    'Basic ' + header);
+            }
+
+            if (!this.useHttpBasicAuth) {
+                params = params.set('client_id', this.clientId);
+            }
+
+            if (!this.useHttpBasicAuth && this.dummyClientSecret) {
                 params = params.set('client_secret', this.dummyClientSecret);
             }
 
@@ -770,11 +789,6 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                     params = params.set(key, this.customQueryParams[key]);
                 }
             }
-
-            const headers = new HttpHeaders().set(
-                'Content-Type',
-                'application/x-www-form-urlencoded'
-            );
 
             this.http
                 .post<TokenResponse>(this.tokenEndpoint, params, { headers })
@@ -804,7 +818,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                         resolve(tokenResponse);
                     },
                     err => {
-                        this.logger.error('Error performing password flow', err);
+                        this.logger.error('Error refreshing token', err);
                         this.eventsSubject.next(
                             new OAuthErrorEvent('token_refresh_error', err)
                         );
@@ -1925,7 +1939,6 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                     return Promise.reject(err);
                 }
 
-
                 return this.checkSignature(validationParams).then(_ => {
                     const atHashCheckEnabled = !this.disableAtHashCheck;
                     const result: ParsedIdToken = {
@@ -1957,35 +1970,35 @@ export class OAuthService extends AuthConfig implements OnDestroy {
      * Returns the received claims about the user.
      */
     public getIdentityClaims(): object {
-                const claims = this._storage.getItem('id_token_claims_obj');
-                if (!claims) {
-                    return null;
-                }
+        const claims = this._storage.getItem('id_token_claims_obj');
+        if (!claims) {
+            return null;
+        }
         return JSON.parse(claims);
-            }
+    }
 
     /**
      * Returns the granted scopes from the server.
      */
     public getGrantedScopes(): object {
-                const scopes = this._storage.getItem('granted_scopes');
-                if(!scopes) {
-                    return null;
-                }
+        const scopes = this._storage.getItem('granted_scopes');
+        if (!scopes) {
+            return null;
+        }
         return JSON.parse(scopes);
-            }
+    }
 
     /**
      * Returns the current id_token.
      */
     public getIdToken(): string {
-                return this._storage
-                    ? this._storage.getItem('id_token')
-                    : null;
-            }
+        return this._storage
+            ? this._storage.getItem('id_token')
+            : null;
+    }
 
     protected padBase64(base64data): string {
-                while(base64data.length % 4 !== 0) {
+        while (base64data.length % 4 !== 0) {
             base64data += '=';
         }
         return base64data;

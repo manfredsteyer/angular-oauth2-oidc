@@ -27,7 +27,7 @@
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
-               <div class="content miscellaneous-typealiases">
+               <div class="content additional-page">
                    <div class="content-data">
 
 
@@ -45,49 +45,41 @@
 
                    
 
-<ol class="breadcrumb">
-  <li>Miscellaneous</li>
-  <li>Type aliases</li>
-</ol>
-
-<section>
-    <h3 id="index">Index</h3>
-    <table class="table table-sm table-bordered index-table">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <ul class="index-list">
-                        <li>
-                            <a href="#EventType" title="projects/lib/src/events.ts"><b>EventType</b>&nbsp;&nbsp;&nbsp;(projects/.../events.ts)</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</section>
-
-    <h3>projects/lib/src/events.ts</h3>
-    <section>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="EventType"></a>
-                    <span class="name"><b>EventType</b><a href="#EventType"><span class="icon ion-ios-link"></span></a></span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <code>        <code><a href="../miscellaneous/variables.html#err" target="_self" >&quot;discovery_document_loaded&quot; | &quot;jwks_load_error&quot; | &quot;invalid_nonce_in_state&quot; | &quot;discovery_document_load_error&quot; | &quot;discovery_document_validation_error&quot; | &quot;user_profile_loaded&quot; | &quot;user_profile_load_error&quot; | &quot;token_received&quot; | &quot;token_error&quot; | &quot;code_error&quot; | &quot;token_refreshed&quot; | &quot;token_refresh_error&quot; | &quot;silent_refresh_error&quot; | &quot;silently_refreshed&quot; | &quot;silent_refresh_timeout&quot; | &quot;token_validation_error&quot; | &quot;token_expires&quot; | &quot;session_changed&quot; | &quot;session_error&quot; | &quot;session_terminated&quot; | &quot;logout&quot; | &quot;popup_closed&quot; | &quot;popup_blocked&quot;</a></code>
-</code>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</section>
 
 
+
+<h1 id="manually-skipping-the-login-form">Manually Skipping the Login Form</h1>
+<p>First, try to use the <code>loadDiscoveryDocumentAndLogin</code> method instead of <code>loadDiscoveryDocumentAndTryLogin</code>. If you need more control, the following could be interesting for you.</p>
+<div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService
+    .loadDiscoveryDocumentAndTryLogin(/* { your LoginOptions }*/) // checks to see if the current url contains id token and access token
+    .(hasReceivedTokens =&gt; {
+        // this would have stored all the tokens needed
+        if (hasReceivedTokens) {
+            // carry on with your app
+            return Promise.resolve();
+
+            /* if you wish to do something when the user receives tokens from the identity server,
+             * use the event stream or the `onTokenReceived` callback in LoginOptions.
+             *
+             * this.oauthService.events(filter(e =&gt; e.type === &#39;token_received&#39;)).subscribe()
+             */
+        } else {
+            // may want to check if you were previously authenticated
+            if (this.oauthService.hasValidAccessToken() &amp;&amp; this.oauthService.hasValidIdToken()) {
+                return Promise.resolve();
+            } else {
+                // to safe guard this from progressing through the calling promise,
+                // resolve it when it directed to the sign up page
+                return new Promise(resolve =&gt; {
+                    this.oauthService.initLoginFlow();
+                    // example if you are using explicit flow
+                    this.window.addEventListener(&#39;unload&#39;, () =&gt; {
+                        resolve(true);
+                    });
+                });
+            }
+        }
+    })</code></pre></div>
                    </div><div class="search-results">
     <div class="has-results">
         <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
@@ -104,8 +96,8 @@
 
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
-            var COMPODOC_CURRENT_PAGE_CONTEXT = 'miscellaneous-typealiases';
-            var COMPODOC_CURRENT_PAGE_URL = 'typealiases.html';
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
+            var COMPODOC_CURRENT_PAGE_URL = 'manually-skipping-login-form.html';
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

@@ -66,9 +66,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                         <a href="additional-documentation/preserving-state-(like-the-requested-url).html" data-type="entity-link" data-context-id="additional">Preserving State (like the Requested URL)</a>
                                     </li>
                                     <li class="link ">
-                                        <a href="additional-documentation/code-flow-+-pcke.html" data-type="entity-link" data-context-id="additional">Code Flow + PCKE</a>
-                                    </li>
-                                    <li class="link ">
                                         <a href="additional-documentation/refreshing-a-token.html" data-type="entity-link" data-context-id="additional">Refreshing a Token</a>
                                     </li>
                                     <li class="link ">
@@ -105,13 +102,19 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                         <a href="additional-documentation/using-systemjs.html" data-type="entity-link" data-context-id="additional">Using SystemJS</a>
                                     </li>
                                     <li class="link ">
-                                        <a href="additional-documentation/original-config-api.html" data-type="entity-link" data-context-id="additional">Original Config API</a>
+                                        <a href="additional-documentation/using-implicit-flow.html" data-type="entity-link" data-context-id="additional">Using Implicit Flow</a>
                                     </li>
                                     <li class="link ">
                                         <a href="additional-documentation/using-password-flow.html" data-type="entity-link" data-context-id="additional">Using Password Flow</a>
                                     </li>
                                     <li class="link ">
                                         <a href="additional-documentation/configure-custom-oauthstorage.html" data-type="entity-link" data-context-id="additional">Configure custom OAuthStorage</a>
+                                    </li>
+                                    <li class="link ">
+                                        <a href="additional-documentation/manually-skipping-login-form.html" data-type="entity-link" data-context-id="additional">Manually Skipping Login Form</a>
+                                    </li>
+                                    <li class="link ">
+                                        <a href="additional-documentation/original-config-api.html" data-type="entity-link" data-context-id="additional">Original Config API</a>
                                     </li>
                         </ul>
                     </li>
@@ -145,7 +148,7 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/AuthConfig.html" data-type="entity-link">AuthConfig</a>
                             </li>
                             <li class="link">
-                                <a href="classes/CryptoHandler.html" data-type="entity-link">CryptoHandler</a>
+                                <a href="classes/HashHandler.html" data-type="entity-link">HashHandler</a>
                             </li>
                             <li class="link">
                                 <a href="classes/JwksValidationHandler.html" data-type="entity-link">JwksValidationHandler</a>
@@ -205,6 +208,12 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <span class="icon ion-ios-arrow-down"></span>
                             </div>
                             <ul class="links collapse " ${ isNormalMode ? 'id="injectables-links"' : 'id="xs-injectables-links"' }>
+                                <li class="link">
+                                    <a href="injectables/DefaultHashHandler.html" data-type="entity-link">DefaultHashHandler</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/MemoryStorage.html" data-type="entity-link">MemoryStorage</a>
+                                </li>
                                 <li class="link">
                                     <a href="injectables/OAuthService.html" data-type="entity-link">OAuthService</a>
                                 </li>

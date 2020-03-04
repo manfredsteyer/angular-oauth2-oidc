@@ -27,7 +27,7 @@
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
-               <div class="content class">
+               <div class="content injectable">
                    <div class="content-data">
 
 
@@ -36,13 +36,9 @@
 
 
 
-
-
-
-
 <ol class="breadcrumb">
-  <li>Classes</li>
-  <li>JwksValidationHandler</li>
+  <li>Injectables</li>
+  <li>DefaultHashHandler</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -60,25 +56,9 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/lib/src/token-validation/jwks-validation-handler.ts</code>
+            <code>projects/lib/src/token-validation/hash-handler.ts</code>
         </p>
 
-            <p class="comment">
-                <h3>Description</h3>
-            </p>
-            <p class="comment">
-                <p>This is just a dummy of the JwksValidationHandler
-telling the users that the real one has been moved
-to an library of its own, namely angular-oauth2-oidc-utils</p>
-
-            </p>
-
-            <p class="comment">
-                <h3>Extends</h3>
-            </p>
-            <p class="comment">
-                        <code><a href="../classes/NullValidationHandler.html" target="_self" >NullValidationHandler</a></code>
-            </p>
 
 
 
@@ -96,10 +76,11 @@ to an library of its own, namely angular-oauth2-oidc-utils</p>
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#validateAtHash">validateAtHash</a>
+                                    <span class="modifier">Async</span>
+                                <a href="#calcHash">calcHash</a>
                             </li>
                             <li>
-                                <a href="#validateSignature">validateSignature</a>
+                                <a href="#toHashString">toHashString</a>
                             </li>
                         </ul>
                     </td>
@@ -113,25 +94,6 @@ to an library of its own, namely angular-oauth2-oidc-utils</p>
     </table>
 </section>
 
-            <section>
-    <h3 id="constructor">Constructor</h3>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-<code>constructor()</code>
-                    </td>
-                </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">projects/lib/src/token-validation/jwks-validation-handler.ts:25</a></div>
-                            </td>
-                        </tr>
-
-            </tbody>
-        </table>
-</section>
-
 
             <section>
     
@@ -142,32 +104,28 @@ to an library of its own, namely angular-oauth2-oidc-utils</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="validateAtHash"></a>
+                    <a name="calcHash"></a>
                     <span class="name">
                         <b>
-                            validateAtHash
+                            <span class="modifier">Async</span>
+                            calcHash
                         </b>
-                        <a href="#validateAtHash"><span class="icon ion-ios-link"></span></a>
+                        <a href="#calcHash"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>validateAtHash(validationParams: <a href="../interfaces/ValidationParams.html">ValidationParams</a>)</code>
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>calcHash(valueToHash: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, algorithm: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../classes/NullValidationHandler.html" target="_self" >NullValidationHandler</a></code>
-</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/NullValidationHandler.html#source" target="_self" >NullValidationHandler:11</a></code>
-</div>
+                    <div class="io-line">Defined in <a href="" data-line="13"
+                            class="link-to-prism">projects/lib/src/token-validation/hash-handler.ts:13</a></div>
                 </td>
             </tr>
 
@@ -187,9 +145,21 @@ to an library of its own, namely angular-oauth2-oidc-utils</p>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>validationParams</td>
+                                    <td>valueToHash</td>
                                     <td>
-                                                <code><a href="../interfaces/ValidationParams.html" target="_self" >ValidationParams</a></code>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>algorithm</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
                                     </td>
 
                                     <td>
@@ -204,7 +174,7 @@ to an library of its own, namely angular-oauth2-oidc-utils</p>
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;boolean&gt;</code>
+                        <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
 
                     </div>
                     <div class="io-description">
@@ -218,32 +188,26 @@ to an library of its own, namely angular-oauth2-oidc-utils</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="validateSignature"></a>
+                    <a name="toHashString"></a>
                     <span class="name">
                         <b>
-                            validateSignature
+                            toHashString
                         </b>
-                        <a href="#validateSignature"><span class="icon ion-ios-link"></span></a>
+                        <a href="#toHashString"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>validateSignature(validationParams: <a href="../interfaces/ValidationParams.html">ValidationParams</a>)</code>
+<code>toHashString(buffer: ArrayBuffer)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Inherited from         <code><a href="../classes/NullValidationHandler.html" target="_self" >NullValidationHandler</a></code>
-</div>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <div class="io-line">Defined in         <code><a href="../classes/NullValidationHandler.html#source" target="_self" >NullValidationHandler:8</a></code>
-</div>
+                    <div class="io-line">Defined in <a href="" data-line="20"
+                            class="link-to-prism">projects/lib/src/token-validation/hash-handler.ts:20</a></div>
                 </td>
             </tr>
 
@@ -263,9 +227,9 @@ to an library of its own, namely angular-oauth2-oidc-utils</p>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>validationParams</td>
+                                    <td>buffer</td>
                                     <td>
-                                                <code><a href="../interfaces/ValidationParams.html" target="_self" >ValidationParams</a></code>
+                                            <code>ArrayBuffer</code>
                                     </td>
 
                                     <td>
@@ -280,7 +244,7 @@ to an library of its own, namely angular-oauth2-oidc-utils</p>
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;any&gt;</code>
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                     </div>
                     <div class="io-description">
@@ -292,48 +256,67 @@ to an library of its own, namely angular-oauth2-oidc-utils</p>
     </table>
 </section>
 
-
-
-
-
     </div>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { NullValidationHandler } from &#x27;./null-validation-handler&#x27;;
-
-const err &#x3D; &#x60;PLEASE READ THIS CAREFULLY:
-
-Beginning with angular-oauth2-oidc version 9, the JwksValidationHandler
-has been moved to an library of its own. If you need it for implementing
-OAuth2/OIDC **implicit flow**, please install it using npm:
-
-  npm i angular-oauth2-oidc-jwks --save
-
-After that, you can import it into your application:
-
-  import { JwksValidationHandler } from &#x27;angular-oauth2-oidc-jwks&#x27;;
-
-Please note, that this dependency is not needed for the **code flow**,
-which is nowadays the **recommented** one for single page applications.
-This also results in smaller bundle sizes.
-&#x60;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
 
 /**
- * This is just a dummy of the JwksValidationHandler
- * telling the users that the real one has been moved
- * to an library of its own, namely angular-oauth2-oidc-utils
- */
-export class JwksValidationHandler extends NullValidationHandler {
+ * Abstraction for crypto algorithms
+*/
+export abstract class HashHandler {
+    abstract calcHash(valueToHash: string, algorithm: string): Promise&lt;string&gt;;
+}
 
-  constructor() {
-    super();
-    console.error(err);
-  }
+@Injectable()
+export class DefaultHashHandler implements HashHandler {
+
+    async calcHash(valueToHash: string, algorithm: string): Promise&lt;string&gt; {
+        const encoder &#x3D; new TextEncoder();
+        const data &#x3D; encoder.encode(valueToHash);
+        const hashArray &#x3D; await window.crypto.subtle.digest(algorithm, data);
+        return this.toHashString(hashArray);
+    }
+
+    toHashString(buffer: ArrayBuffer) {
+      const byteArray &#x3D; new Uint8Array(buffer);
+      let result &#x3D; &#x27;&#x27;;
+      for (let e of byteArray) {
+        result +&#x3D; String.fromCharCode(e);
+      }
+      return result;
+    }
+
+    // hexString(buffer) {
+    //     const byteArray &#x3D; new Uint8Array(buffer);
+    //     const hexCodes &#x3D; [...byteArray].map(value &#x3D;&gt; {
+    //       const hexCode &#x3D; value.toString(16);
+    //       const paddedHexCode &#x3D; hexCode.padStart(2, &#x27;0&#x27;);
+    //       return paddedHexCode;
+    //     });
+      
+    //     return hexCodes.join(&#x27;&#x27;);
+    //   }
+    
+      // toHashString(hexString: string) {
+      //   let result &#x3D; &#x27;&#x27;;
+      //   for (let i &#x3D; 0; i &lt; hexString.length; i +&#x3D; 2) {
+      //     let hexDigit &#x3D; hexString.charAt(i) + hexString.charAt(i + 1);
+      //     let num &#x3D; parseInt(hexDigit, 16);
+      //     result +&#x3D; String.fromCharCode(num);
+      //   }
+      //   return result;
+      // }
 
 }</code></pre>
     </div>
+
 </div>
+
+
+
+
 
 
 
@@ -358,8 +341,8 @@ export class JwksValidationHandler extends NullValidationHandler {
 
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
-            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
-            var COMPODOC_CURRENT_PAGE_URL = 'JwksValidationHandler.html';
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'DefaultHashHandler.html';
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

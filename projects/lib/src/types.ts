@@ -1,3 +1,5 @@
+import { Injectable } from "@angular/core";
+
 /**
  * Additional options that can be passed to tryLogin.
  */
@@ -87,6 +89,24 @@ export abstract class OAuthStorage {
   abstract getItem(key: string): string | null;
   abstract removeItem(key: string): void;
   abstract setItem(key: string, data: string): void;
+}
+
+@Injectable()
+export class MemoryStorage implements OAuthStorage {
+  private data = new Map<string, string>();
+
+  getItem(key: string): string {
+    return this.data.get(key);
+  }
+
+  removeItem(key: string): void {
+    this.data.delete(key);
+  }
+
+  setItem(key: string, data: string): void {
+    this.data.set(key, data);
+  }
+
 }
 
 /**

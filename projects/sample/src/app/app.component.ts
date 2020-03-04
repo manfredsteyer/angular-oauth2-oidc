@@ -5,7 +5,7 @@ import { OAuthService, NullValidationHandler } from 'angular-oauth2-oidc';
 import { Router } from '@angular/router';
 import { filter} from 'rxjs/operators';
 import { authCodeFlowConfig } from './auth-code-flow.config';
-import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
+import { JwksValidationHandler } from 'angular-oauth2-oidc';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -34,7 +34,6 @@ export class AppComponent {
   private configureCodeFlow() {
 
     this.oauthService.configure(authCodeFlowConfig);
-    this.oauthService.tokenValidationHandler = new JwksValidationHandler();
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
 
     // Optional
