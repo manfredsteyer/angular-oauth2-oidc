@@ -1,5 +1,7 @@
+import { Injectable } from "@angular/core";
+
 /**
- * Additional options that can be passt to tryLogin.
+ * Additional options that can be passed to tryLogin.
  */
 export class LoginOptions {
   /**
@@ -28,7 +30,12 @@ export class LoginOptions {
   /**
    * A custom hash fragment to be used instead of the
    * actual one. This is used for silent refreshes, to
-   * pass the iframes hash fragment to this method.
+   * pass the iframes hash fragment to this method, and
+   * is also used by popup flows in the same manner.
+   * This can be used with code flow, where is must be set
+   * to a hash symbol followed by the querystring. The
+   * question mark is optional, but may be present following
+   * the hash symbol.
    */
   customHashFragment?: string;
 
@@ -45,9 +52,17 @@ export class LoginOptions {
   /**
    * Normally, you want to clear your hash fragment after
    * the lib read the token(s) so that they are not displayed
-   * anymore in the url. If not, set this to true.
+   * anymore in the url. If not, set this to true. For code flow
+   * this controls removing query string values.
    */
   preventClearHashAfterLogin? = false;
+
+  /**
+   * Set this for code flow if you used a custom redirect Uri
+   * when retrieving the code. This is used internally for silent
+   * refresh and popup flows.
+   */
+  customRedirectUri?: string;
 }
 
 /**
@@ -74,6 +89,24 @@ export abstract class OAuthStorage {
   abstract getItem(key: string): string | null;
   abstract removeItem(key: string): void;
   abstract setItem(key: string, data: string): void;
+}
+
+@Injectable()
+export class MemoryStorage implements OAuthStorage {
+  private data = new Map<string, string>();
+
+  getItem(key: string): string {
+    return this.data.get(key);
+  }
+
+  removeItem(key: string): void {
+    this.data.delete(key);
+  }
+
+  setItem(key: string, data: string): void {
+    this.data.set(key, data);
+  }
+
 }
 
 /**

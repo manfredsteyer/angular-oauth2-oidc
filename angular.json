@@ -17,7 +17,8 @@
           },
           "configurations": {
             "production": {
-              "project": "projects/lib/ng-package.prod.json"
+              "project": "projects/lib/ng-package.prod.json",
+              "tsConfig": "projects/lib/tsconfig.lib.prod.json"
             }
           }
         },
@@ -45,6 +46,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/sample",
             "index": "projects/sample/src/index.html",
             "main": "projects/sample/src/main.ts",
@@ -63,6 +65,12 @@
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "projects/sample/src/environments/environment.ts",
@@ -130,21 +138,149 @@
         }
       }
     },
-    "sample-e2e": {
-      "root": "projects/sample-e2e/",
+
+    "quickstart-demo": {
       "projectType": "application",
+      "schematics": {},
+      "root": "projects/quickstart-demo",
+      "sourceRoot": "projects/quickstart-demo/src",
+      "prefix": "app",
       "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "protractorConfig": "projects/sample-e2e/protractor.conf.js",
-            "devServerTarget": "sample:serve"
+            "outputPath": "dist/quickstart-demo",
+            "index": "projects/quickstart-demo/src/index.html",
+            "main": "projects/quickstart-demo/src/main.ts",
+            "polyfills": "projects/quickstart-demo/src/polyfills.ts",
+            "tsConfig": "projects/quickstart-demo/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "projects/quickstart-demo/src/favicon.ico",
+              "projects/quickstart-demo/src/assets"
+            ],
+            "styles": [
+              "projects/quickstart-demo/src/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/quickstart-demo/src/environments/environment.ts",
+                  "with": "projects/quickstart-demo/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "quickstart-demo:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "quickstart-demo:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "quickstart-demo:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/quickstart-demo/src/test.ts",
+            "polyfills": "projects/quickstart-demo/src/polyfills.ts",
+            "tsConfig": "projects/quickstart-demo/tsconfig.spec.json",
+            "karmaConfig": "projects/quickstart-demo/karma.conf.js",
+            "assets": [
+              "projects/quickstart-demo/src/favicon.ico",
+              "projects/quickstart-demo/src/assets"
+            ],
+            "styles": [
+              "projects/quickstart-demo/src/styles.css"
+            ],
+            "scripts": []
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": "projects/sample-e2e/tsconfig.e2e.json",
+            "tsConfig": [
+              "projects/quickstart-demo/tsconfig.app.json",
+              "projects/quickstart-demo/tsconfig.spec.json",
+              "projects/quickstart-demo/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/quickstart-demo/e2e/protractor.conf.js",
+            "devServerTarget": "quickstart-demo:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "quickstart-demo:serve:production"
+            }
+          }
+        }
+      }
+    },
+
+    "angular-oauth2-oidc-jwks": {
+      "projectType": "library",
+      "root": "projects/angular-oauth2-oidc-jwks",
+      "sourceRoot": "projects/angular-oauth2-oidc-jwks/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/angular-oauth2-oidc-jwks/tsconfig.lib.json",
+            "project": "projects/angular-oauth2-oidc-jwks/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/angular-oauth2-oidc-jwks/src/test.ts",
+            "tsConfig": "projects/angular-oauth2-oidc-jwks/tsconfig.spec.json",
+            "karmaConfig": "projects/angular-oauth2-oidc-jwks/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/angular-oauth2-oidc-jwks/tsconfig.lib.json",
+              "projects/angular-oauth2-oidc-jwks/tsconfig.spec.json"
+            ],
             "exclude": [
               "**/node_modules/**"
             ]
@@ -157,5 +293,8 @@
     "@schematics/angular:component": {
       "styleext": "css"
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

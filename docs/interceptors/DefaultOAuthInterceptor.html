@@ -102,7 +102,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">projects/lib/src/interceptors/default-oauth.interceptor.ts:19</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">projects/lib/src/interceptors/default-oauth.interceptor.ts:17</a></div>
                             </td>
                         </tr>
 
@@ -205,8 +205,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="40"
-                            class="link-to-prism">projects/lib/src/interceptors/default-oauth.interceptor.ts:40</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="38"
+                            class="link-to-prism">projects/lib/src/interceptors/default-oauth.interceptor.ts:38</a></div>
                 </td>
             </tr>
 
@@ -286,8 +286,6 @@ import { OAuthModuleConfig } from &#x27;../oauth-module.config&#x27;;
 import { OAuthStorage } from &#x27;../types&#x27;;
 import { OAuthService } from &#x27;../oauth-service&#x27;;
 
-const WAIT_FOR_TOKEN_RECEIVED &#x3D; 1000;
-
 @Injectable()
 export class DefaultOAuthInterceptor implements HttpInterceptor {
 
@@ -317,13 +315,7 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
     const url &#x3D; req.url.toLowerCase();
 
 
-    if (!this.moduleConfig) {
-      return next.handle(req);
-    }
-    if (!this.moduleConfig.resourceServer) {
-      return next.handle(req);
-    }
-    if (this.moduleConfig.resourceServer.allowedUrls &amp;&amp; !this.checkUrl(url)) {
+    if (!this.moduleConfig || !this.moduleConfig.resourceServer || !this.checkUrl(url)) {
       return next.handle(req);
     }
 
@@ -341,7 +333,8 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
       ),
       this.oAuthService.events.pipe(
         filter(e &#x3D;&gt; e.type &#x3D;&#x3D;&#x3D; &#x27;token_received&#x27;),
-        timeout(WAIT_FOR_TOKEN_RECEIVED),
+        timeout(this.oAuthService.waitForTokenInMsec || 0),
+        catchError(_ &#x3D;&gt; of(null)), // timeout is not an error
         map(_ &#x3D;&gt; this.oAuthService.getAccessToken()),
       ),
     ).pipe(

@@ -140,7 +140,7 @@ and the parsed claims from the id-token.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">projects/lib/src/types.ts:85</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="118" class="link-to-prism">projects/lib/src/types.ts:118</a></div>
                             </td>
                         </tr>
 
@@ -168,7 +168,7 @@ and the parsed claims from the id-token.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="86" class="link-to-prism">projects/lib/src/types.ts:86</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="119" class="link-to-prism">projects/lib/src/types.ts:119</a></div>
                             </td>
                         </tr>
 
@@ -195,7 +195,7 @@ and the parsed claims from the id-token.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="84" class="link-to-prism">projects/lib/src/types.ts:84</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="117" class="link-to-prism">projects/lib/src/types.ts:117</a></div>
                             </td>
                         </tr>
 
@@ -223,7 +223,7 @@ and the parsed claims from the id-token.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="87" class="link-to-prism">projects/lib/src/types.ts:87</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="120" class="link-to-prism">projects/lib/src/types.ts:120</a></div>
                             </td>
                         </tr>
 
@@ -242,7 +242,12 @@ and the parsed claims from the id-token.</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export class LoginOptions {
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &quot;@angular/core&quot;;
+
+/**
+ * Additional options that can be passed to tryLogin.
+ */
+export class LoginOptions {
   /**
    * Is called, after a token has been received and
    * successfully validated.
@@ -269,7 +274,12 @@ and the parsed claims from the id-token.</p>
   /**
    * A custom hash fragment to be used instead of the
    * actual one. This is used for silent refreshes, to
-   * pass the iframes hash fragment to this method.
+   * pass the iframes hash fragment to this method, and
+   * is also used by popup flows in the same manner.
+   * This can be used with code flow, where is must be set
+   * to a hash symbol followed by the querystring. The
+   * question mark is optional, but may be present following
+   * the hash symbol.
    */
   customHashFragment?: string;
 
@@ -286,9 +296,17 @@ and the parsed claims from the id-token.</p>
   /**
    * Normally, you want to clear your hash fragment after
    * the lib read the token(s) so that they are not displayed
-   * anymore in the url. If not, set this to true.
+   * anymore in the url. If not, set this to true. For code flow
+   * this controls removing query string values.
    */
   preventClearHashAfterLogin? &#x3D; false;
+
+  /**
+   * Set this for code flow if you used a custom redirect Uri
+   * when retrieving the code. This is used internally for silent
+   * refresh and popup flows.
+   */
+  customRedirectUri?: string;
 }
 
 /**
@@ -315,6 +333,24 @@ export abstract class OAuthStorage {
   abstract getItem(key: string): string | null;
   abstract removeItem(key: string): void;
   abstract setItem(key: string, data: string): void;
+}
+
+@Injectable()
+export class MemoryStorage implements OAuthStorage {
+  private data &#x3D; new Map&lt;string, string&gt;();
+
+  getItem(key: string): string {
+    return this.data.get(key);
+  }
+
+  removeItem(key: string): void {
+    this.data.delete(key);
+  }
+
+  setItem(key: string, data: string): void {
+    this.data.set(key, data);
+  }
+
 }
 
 /**

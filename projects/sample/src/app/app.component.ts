@@ -1,14 +1,11 @@
 import { noDiscoveryAuthConfig } from './auth-no-discovery.config';
-import { googleAuthConfig } from './auth.google.config';
 import { authConfig } from './auth.config';
-import { FlightHistoryComponent } from './flight-history/flight-history.component';
 import { Component } from '@angular/core';
-import { OAuthService, AuthConfig, NullValidationHandler, JwksValidationHandler } from 'angular-oauth2-oidc';
-// import { JwksValidationHandler } from 'angular-oauth2-oidc';
+import { OAuthService, NullValidationHandler } from 'angular-oauth2-oidc';
 import { Router } from '@angular/router';
-import { filter, delay } from 'rxjs/operators';
-import { of, race } from 'rxjs';
+import { filter} from 'rxjs/operators';
 import { authCodeFlowConfig } from './auth-code-flow.config';
+import { JwksValidationHandler } from 'angular-oauth2-oidc';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -37,11 +34,10 @@ export class AppComponent {
   private configureCodeFlow() {
 
     this.oauthService.configure(authCodeFlowConfig);
-    this.oauthService.tokenValidationHandler = new JwksValidationHandler();
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
 
     // Optional
-    // this.oauthService.setupAutomaticSilentRefresh();
+    this.oauthService.setupAutomaticSilentRefresh();
 
   }
 

@@ -1,5 +1,7 @@
 # Original Config API
 
+> This describes the older config API which is nowadays only supported for the sake of backwards compatibility. 
+
 To configure the library you just have to set some properties on startup. For this, the following sample uses the constructor of the AppComponent which is called before routing kicks in.
 
 Please note that the following sample uses the original config API. For information about the new config API have a look to the project's README above.
