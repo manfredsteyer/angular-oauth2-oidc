@@ -2094,12 +2094,12 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
 
     /**
-     * Retreive a saved custom property of the TokenReponse object. Only if predefined in authconfig.
+     * Retrieve a saved custom property of the TokenReponse object. Only if predefined in authconfig.
      */
-    public getCustomTokenResponseProperty(property_name): any {
+    public getCustomTokenResponseProperty(requestedProperty: string): any {
       return this._storage && this.config.customTokenParameters
-          && (this.config.customTokenParameters.indexOf(property_name) >= 0)
-            ? this._storage.getItem(property_name) : null;
+          && (this.config.customTokenParameters.indexOf(requestedProperty) >= 0)
+            ? this._storage.getItem(requestedProperty) : null;
     }
 
     /**
@@ -2323,9 +2323,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
         const verifier = await this.createNonce();
         const challengeRaw = await this.crypto.calcHash(verifier, 'sha-256');
-        const challange = base64UrlEncode(challengeRaw);
+        const challenge = base64UrlEncode(challengeRaw);
 
-        return [challange, verifier];
+        return [challenge, verifier];
     }
 
     private extractRecognizedCustomParameters(tokenResponse: TokenResponse): any {
@@ -2333,7 +2333,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
           return {};
       }
       let foundParameters: any = {};
-      this.config.customTokenParameters.forEach(recognizedParameter => {
+      this.config.customTokenParameters.forEach((recognizedParameter: string) => {
           if (tokenResponse[recognizedParameter]) {
             foundParameters[recognizedParameter] = tokenResponse[recognizedParameter];
           }
