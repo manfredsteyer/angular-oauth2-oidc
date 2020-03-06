@@ -733,7 +733,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                             tokenResponse.access_token,
                             tokenResponse.refresh_token,
                             tokenResponse.expires_in,
-                            tokenResponse.scope
+                            tokenResponse.scope,
+                            this.extractRecognizedCustomParameters(tokenResponse)
                         );
 
                         this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
@@ -810,7 +811,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                             tokenResponse.access_token,
                             tokenResponse.refresh_token,
                             tokenResponse.expires_in,
-                            tokenResponse.scope
+                            tokenResponse.scope,
+                            this.extractRecognizedCustomParameters(tokenResponse)
                         );
 
                         this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
@@ -1400,7 +1402,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         accessToken: string,
         refreshToken: string,
         expiresIn: number,
-        grantedScopes: String
+        grantedScopes: String,
+        customParameters?: any
     ): void {
         this._storage.setItem('access_token', accessToken);
         if (grantedScopes) {
@@ -1416,6 +1419,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
         if (refreshToken) {
             this._storage.setItem('refresh_token', refreshToken);
+        }
+        if (customParameters) {
+            Object.keys(customParameters).forEach(key => {
+              this._storage.setItem(key, customParameters[key]);
+            });
         }
     }
 
@@ -1580,7 +1588,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                         tokenResponse.access_token,
                         tokenResponse.refresh_token,
                         tokenResponse.expires_in,
-                        tokenResponse.scope);
+                        tokenResponse.scope,
+                        this.extractRecognizedCustomParameters(tokenResponse));
 
                     if (this.oidc && tokenResponse.id_token) {
                         this.processIdToken(tokenResponse.id_token, tokenResponse.access_token).
@@ -2085,6 +2094,15 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
 
     /**
+     * Retreive a saved custom property of the TokenReponse object. Only if predefined in authconfig.
+     */
+    public getCustomTokenResponseProperty(property_name): any {
+      return this._storage && this.config.customTokenParameters
+          && (this.config.customTokenParameters.indexOf(property_name) >= 0)
+            ? this._storage.getItem(property_name) : null;
+    }
+
+    /**
      * Returns the auth-header that can be used
      * to transmit the access_token to a service
      */
@@ -2308,5 +2326,18 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         const challange = base64UrlEncode(challengeRaw);
 
         return [challange, verifier];
+    }
+
+    private extractRecognizedCustomParameters(tokenResponse: TokenResponse): any {
+      if (!this.config.customTokenParameters) {
+          return {};
+      }
+      let foundParameters: any = {};
+      this.config.customTokenParameters.forEach(recognizedParameter => {
+          if (tokenResponse[recognizedParameter]) {
+            foundParameters[recognizedParameter] = tokenResponse[recognizedParameter];
+          }
+      });
+      return foundParameters;
     }
 }
