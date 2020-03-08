@@ -2130,7 +2130,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         this._storage.removeItem('access_token_stored_at');
         this._storage.removeItem('granted_scopes');
         this._storage.removeItem('session_state');
-
+        if (this.config.customTokenParameters) {
+            return this.config.customTokenParameters.forEach(customParam => this._storage.removeItem(customParam));
+        }
         this.silentRefreshSubject = null;
 
         this.eventsSubject.next(new OAuthInfoEvent('logout'));
