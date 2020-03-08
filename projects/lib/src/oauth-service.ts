@@ -1403,7 +1403,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         refreshToken: string,
         expiresIn: number,
         grantedScopes: String,
-        customParameters?: Map<String, String>
+        customParameters?: Map<string, string>
     ): void {
         this._storage.setItem('access_token', accessToken);
         if (grantedScopes) {
@@ -2331,8 +2331,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         return [challenge, verifier];
     }
 
-    private extractRecognizedCustomParameters(tokenResponse: TokenResponse): Map<String, String> {
-      let foundParameters: Map<String, String> = new Map<String, String>();
+    private extractRecognizedCustomParameters(tokenResponse: TokenResponse): Map<string, string> {
+      let foundParameters: Map<string, string> = new Map<string, string>();
       if (!this.config.customTokenParameters) {
         return foundParameters;
       }
