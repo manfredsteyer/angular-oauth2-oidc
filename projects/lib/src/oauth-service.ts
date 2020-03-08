@@ -1403,7 +1403,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         refreshToken: string,
         expiresIn: number,
         grantedScopes: String,
-        customParameters?: any
+        customParameters?: Map<String, String>
     ): void {
         this._storage.setItem('access_token', accessToken);
         if (grantedScopes) {
@@ -1421,8 +1421,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             this._storage.setItem('refresh_token', refreshToken);
         }
         if (customParameters) {
-            Object.keys(customParameters).forEach(key => {
-              this._storage.setItem(key, customParameters[key]);
+            customParameters.forEach((value : string, key: string) => {
+              this._storage.setItem(key, value);
             });
         }
     }
@@ -2099,7 +2099,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     public getCustomTokenResponseProperty(requestedProperty: string): any {
       return this._storage && this.config.customTokenParameters
           && (this.config.customTokenParameters.indexOf(requestedProperty) >= 0)
-            ? this._storage.getItem(requestedProperty) : null;
+            && this._storage.getItem(requestedProperty) !== null
+            ? JSON.parse(this._storage.getItem(requestedProperty)) : null;
     }
 
     /**
@@ -2328,14 +2329,14 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         return [challenge, verifier];
     }
 
-    private extractRecognizedCustomParameters(tokenResponse: TokenResponse): any {
+    private extractRecognizedCustomParameters(tokenResponse: TokenResponse): Map<String, String> {
+      let foundParameters: Map<String, String> = new Map<String, String>();
       if (!this.config.customTokenParameters) {
-          return {};
+        return foundParameters;
       }
-      let foundParameters: any = {};
       this.config.customTokenParameters.forEach((recognizedParameter: string) => {
           if (tokenResponse[recognizedParameter]) {
-            foundParameters[recognizedParameter] = tokenResponse[recognizedParameter];
+            foundParameters.set(recognizedParameter, JSON.stringify(tokenResponse[recognizedParameter]));
           }
       });
       return foundParameters;
