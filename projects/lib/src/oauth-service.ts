@@ -1455,7 +1455,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             options.customHashFragment.substring(1) :
             window.location.search;
 
-        const parts = this.getCodePartsFromUrl(window.location.search);
+        // const parts = this.getCodePartsFromUrl(window.location.search);
+        const parts = this.getCodePartsFromUrl(querySource);
 
         const code = parts['code'];
         const state = parts['state'];
