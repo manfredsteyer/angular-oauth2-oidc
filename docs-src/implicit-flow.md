@@ -154,7 +154,7 @@ This file is loaded into the hidden iframe after getting new tokens. Its only ta
 <html>
 <body>
     <script>
-    window.parent.postMessage(location.hash || ('#' + location.search), location.origin);
+        (window.opener || window.parent).postMessage(location.hash || ('#' + location.search), location.origin);
     </script>
 </body>
 </html>
