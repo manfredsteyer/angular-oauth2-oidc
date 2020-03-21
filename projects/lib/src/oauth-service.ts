@@ -2095,10 +2095,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     /**
      * Removes all tokens and logs the user out.
      * If a logout url is configured, the user is
-     * redirected to it.
+     * redirected to it with optional state parameter.
      * @param noRedirectToLogoutUrl
+     * @param state
      */
-    public logOut(noRedirectToLogoutUrl = false): void {
+    public logOut(noRedirectToLogoutUrl = false, state = ''): void {
         const id_token = this.getIdToken();
         this._storage.removeItem('access_token');
         this._storage.removeItem('id_token');
@@ -2151,6 +2152,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             const postLogoutUrl = this.postLogoutRedirectUri || this.redirectUri;
             if (postLogoutUrl) {
                 params = params.set('post_logout_redirect_uri', postLogoutUrl);
+
+                if (state) {
+                    params = params.set('state', state);
+                }
             }
 
             logoutUrl =
