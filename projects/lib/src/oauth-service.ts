@@ -1,7 +1,8 @@
-import { Injectable, NgZone, Optional, OnDestroy } from '@angular/core';
+import { Injectable, NgZone, Optional, OnDestroy, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, Subject, Subscription, of, race, from } from 'rxjs';
 import { filter, delay, first, tap, map, switchMap, debounceTime } from 'rxjs/operators';
+import { DOCUMENT } from '@angular/common';
 
 import {
     ValidationHandler,
@@ -91,6 +92,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         protected urlHelper: UrlHelperService,
         protected logger: OAuthLogger,
         @Optional() protected crypto: HashHandler,
+        @Inject(DOCUMENT) private document: Document,
     ) {
         super();
 
@@ -733,7 +735,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                             tokenResponse.access_token,
                             tokenResponse.refresh_token,
                             tokenResponse.expires_in,
-                            tokenResponse.scope
+                            tokenResponse.scope,
+                            this.extractRecognizedCustomParameters(tokenResponse)
                         );
 
                         this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
@@ -810,7 +813,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                             tokenResponse.access_token,
                             tokenResponse.refresh_token,
                             tokenResponse.expires_in,
-                            tokenResponse.scope
+                            tokenResponse.scope,
+                            this.extractRecognizedCustomParameters(tokenResponse)
                         );
 
                         this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
@@ -1400,7 +1404,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         accessToken: string,
         refreshToken: string,
         expiresIn: number,
-        grantedScopes: String
+        grantedScopes: String,
+        customParameters?: Map<string, string>
     ): void {
         this._storage.setItem('access_token', accessToken);
         if (grantedScopes) {
@@ -1416,6 +1421,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
         if (refreshToken) {
             this._storage.setItem('refresh_token', refreshToken);
+        }
+        if (customParameters) {
+            customParameters.forEach((value : string, key: string) => {
+              this._storage.setItem(key, value);
+            });
         }
     }
 
@@ -1455,7 +1465,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             options.customHashFragment.substring(1) :
             window.location.search;
 
-        const parts = this.getCodePartsFromUrl(window.location.search);
+        const parts = this.getCodePartsFromUrl(querySource);
 
         const code = parts['code'];
         const state = parts['state'];
@@ -1580,7 +1590,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                         tokenResponse.access_token,
                         tokenResponse.refresh_token,
                         tokenResponse.expires_in,
-                        tokenResponse.scope);
+                        tokenResponse.scope,
+                        this.extractRecognizedCustomParameters(tokenResponse));
 
                     if (this.oidc && tokenResponse.id_token) {
                         this.processIdToken(tokenResponse.id_token, tokenResponse.access_token).
@@ -2085,6 +2096,16 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
 
     /**
+     * Retrieve a saved custom property of the TokenReponse object. Only if predefined in authconfig.
+     */
+    public getCustomTokenResponseProperty(requestedProperty: string): any {
+      return this._storage && this.config.customTokenParameters
+          && (this.config.customTokenParameters.indexOf(requestedProperty) >= 0)
+            && this._storage.getItem(requestedProperty) !== null
+            ? JSON.parse(this._storage.getItem(requestedProperty)) : null;
+    }
+
+    /**
      * Returns the auth-header that can be used
      * to transmit the access_token to a service
      */
@@ -2095,10 +2116,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     /**
      * Removes all tokens and logs the user out.
      * If a logout url is configured, the user is
-     * redirected to it.
+     * redirected to it with optional state parameter.
      * @param noRedirectToLogoutUrl
+     * @param state
      */
-    public logOut(noRedirectToLogoutUrl = false): void {
+    public logOut(noRedirectToLogoutUrl = false, state = ''): void {
         const id_token = this.getIdToken();
         this._storage.removeItem('access_token');
         this._storage.removeItem('id_token');
@@ -2111,7 +2133,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         this._storage.removeItem('access_token_stored_at');
         this._storage.removeItem('granted_scopes');
         this._storage.removeItem('session_state');
-
+        if (this.config.customTokenParameters) {
+          this.config.customTokenParameters.forEach(customParam => this._storage.removeItem(customParam));
+        }
         this.silentRefreshSubject = null;
 
         this.eventsSubject.next(new OAuthInfoEvent('logout'));
@@ -2151,6 +2175,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             const postLogoutUrl = this.postLogoutRedirectUri || this.redirectUri;
             if (postLogoutUrl) {
                 params = params.set('post_logout_redirect_uri', postLogoutUrl);
+
+                if (state) {
+                    params = params.set('state', state);
+                }
             }
 
             logoutUrl =
@@ -2180,14 +2208,14 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         this.clearIdTokenTimer();
 
         this.removeSilentRefreshEventListener();
-        const silentRefreshFrame = document.getElementById(this.silentRefreshIFrameName);
+        const silentRefreshFrame = this.document.getElementById(this.silentRefreshIFrameName);
         if (silentRefreshFrame) {
             silentRefreshFrame.remove();
         }
 
         this.stopSessionCheckTimer();
         this.removeSessionCheckEventListener();
-        const sessionCheckFrame = document.getElementById(this.sessionCheckIFrameName);
+        const sessionCheckFrame = this.document.getElementById(this.sessionCheckIFrameName);
         if (sessionCheckFrame) {
             sessionCheckFrame.remove();
         }
@@ -2305,8 +2333,21 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
         const verifier = await this.createNonce();
         const challengeRaw = await this.crypto.calcHash(verifier, 'sha-256');
-        const challange = base64UrlEncode(challengeRaw);
+        const challenge = base64UrlEncode(challengeRaw);
 
-        return [challange, verifier];
+        return [challenge, verifier];
+    }
+
+    private extractRecognizedCustomParameters(tokenResponse: TokenResponse): Map<string, string> {
+      let foundParameters: Map<string, string> = new Map<string, string>();
+      if (!this.config.customTokenParameters) {
+        return foundParameters;
+      }
+      this.config.customTokenParameters.forEach((recognizedParameter: string) => {
+          if (tokenResponse[recognizedParameter]) {
+            foundParameters.set(recognizedParameter, JSON.stringify(tokenResponse[recognizedParameter]));
+          }
+      });
+      return foundParameters;
     }
 }

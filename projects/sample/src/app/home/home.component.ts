@@ -34,6 +34,19 @@ export class HomeComponent implements OnInit {
       // the parameter here is optional. It's passed around and can be used after logging in
   }
 
+  async loginImplicitInPopup() {
+
+    // Tweak config for implicit flow
+    this.oauthService.configure(authConfig);
+    await this.oauthService.loadDiscoveryDocument();
+    sessionStorage.setItem('flow', 'implicit');
+
+    this.oauthService.initLoginFlowInPopup().then(() => {
+      this.loadUserProfile();
+    });
+      // the parameter here is optional. It's passed around and can be used after logging in
+  }
+
   async loginCode() {
       // Tweak config for code flow
       this.oauthService.configure(authCodeFlowConfig);
@@ -42,6 +55,17 @@ export class HomeComponent implements OnInit {
 
       this.oauthService.initLoginFlow('/some-state;p1=1;p2=2');
        // the parameter here is optional. It's passed around and can be used after logging in
+  }
+
+  async loginCodeInPopup() {
+      // Tweak config for code flow
+      this.oauthService.configure(authCodeFlowConfig);
+      await this.oauthService.loadDiscoveryDocument();
+      sessionStorage.setItem('flow', 'code');
+
+      this.oauthService.initLoginFlowInPopup().then(() => {
+        this.loadUserProfile();
+      });
   }
 
   logout() {
