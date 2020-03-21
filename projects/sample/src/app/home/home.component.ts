@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit {
 
     this.oauthService.oidc = true;
 
-    if (this.oauthService.responseType === 'code') {
+    if (!this.oauthService.silentRefreshRedirectUri && this.oauthService.responseType === 'code') {
       this.oauthService
         .refreshToken()
         .then(info => console.debug('refresh ok', info))

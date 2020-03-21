@@ -29,6 +29,12 @@ export const authCodeFlowConfig: AuthConfig = {
 
   showDebugInformation: true,
 
+  // If you specify this property, the lib tries to refresh the 
+  // token via a silet refresh; otherwise it sends over a refresh_token
+  // via an AJAX call to get new tokens.
+  silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
+
+
   timeoutFactor: 0.01
   // disablePKCI: true,
 };
