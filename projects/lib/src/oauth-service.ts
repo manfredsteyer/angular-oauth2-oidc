@@ -1489,6 +1489,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         const code = parts['code'];
         const state = parts['state'];
 
+        const sessionState = parts['session_state'];
+
         if (!options.preventClearHashAfterLogin) {
             const href = location.href
                 .replace(/[&\?]code=[^&\$]*/, '')
@@ -1524,6 +1526,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         if (code) {
             return new Promise((resolve, reject) => {
                 this.getTokenFromCode(code, options).then(result => {
+                    this.storeSessionState(sessionState);
                     resolve();
                 }).catch(err => {
                     reject(err);
