@@ -1436,8 +1436,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     public tryLogin(options: LoginOptions = null): Promise<boolean> {
         if (this.config.responseType === 'code') {
             return this.tryLoginCodeFlow(options).then(_ => true);
-        }
-        else {
+        } else {
             return this.tryLoginImplicitFlow(options);
         }
     }
@@ -2243,6 +2242,12 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             if (crypto) {
                 let bytes = new Uint8Array(size);
                 crypto.getRandomValues(bytes);
+
+                // Needed for IE
+                if (!bytes.map) {
+                    (bytes as any).map = Array.prototype.map;
+                }
+
                 bytes = bytes.map(x => unreserved.charCodeAt(x % unreserved.length));
                 id = String.fromCharCode.apply(null, bytes);
             } else {

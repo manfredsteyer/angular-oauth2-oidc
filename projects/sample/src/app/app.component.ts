@@ -14,7 +14,7 @@ import { JwksValidationHandler } from 'angular-oauth2-oidc';
 })
 export class AppComponent {
   constructor(private router: Router, private oauthService: OAuthService) {
-    
+
     // Remember the selected configuration
     if (sessionStorage.getItem('flow') === 'code') {
       this.configureCodeFlow();
@@ -43,14 +43,16 @@ export class AppComponent {
 
 
   private configureImplicitFlow() {
+
     this.oauthService.configure(authConfig);
     // this.oauthService.setStorage(localStorage);
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
-    this.oauthService.loadDiscoveryDocumentAndTryLogin();
 
+    this.oauthService.loadDiscoveryDocumentAndTryLogin();
 
     // Optional
     this.oauthService.setupAutomaticSilentRefresh();
+
 
     // Display all events
     this.oauthService.events.subscribe(e => {
