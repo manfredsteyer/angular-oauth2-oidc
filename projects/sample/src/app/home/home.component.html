@@ -30,9 +30,31 @@
 
 <div class="panel panel-default">
     <div class="panel-body">
+        <h2>Login with Implicit Flow in popup</h2>
+        <p>
+            <button class="btn btn-default" (click)="loginImplicitInPopup()">Login</button>
+            <button class="btn btn-default" (click)="logout()">Logout</button>
+        </p>
+        <b>Username/Password:</b> max/geheim
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body">
         <h2>Login with Code Flow</h2>
         <p>
             <button class="btn btn-default" (click)="loginCode()">Login</button>
+            <button class="btn btn-default" (click)="logout()">Logout</button>
+        </p>
+        <b>Username/Password:</b> alice/alice
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <h2>Login with Code Flow in popup</h2>
+        <p>
+            <button class="btn btn-default" (click)="loginCodeInPopup()">Login</button>
             <button class="btn btn-default" (click)="logout()">Logout</button>
         </p>
         <b>Username/Password:</b> alice/alice
