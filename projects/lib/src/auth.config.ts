@@ -65,6 +65,11 @@ export class AuthConfig {
   public tokenEndpoint?: string = null;
 
   /**
+   * Names of known parameters sent out in the TokenResponse. https://tools.ietf.org/html/rfc6749#section-5.1
+   */
+  public customTokenParameters?: string[] = [];
+
+  /**
    * Url of the userinfo endpoint as defined by OpenId Connect.
    */
   public userinfoEndpoint?: string = null;
