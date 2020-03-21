@@ -1,7 +1,8 @@
-import { Injectable, NgZone, Optional, OnDestroy } from '@angular/core';
+import { Injectable, NgZone, Optional, OnDestroy, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, Subject, Subscription, of, race, from } from 'rxjs';
 import { filter, delay, first, tap, map, switchMap, debounceTime } from 'rxjs/operators';
+import { DOCUMENT } from '@angular/common';
 
 import {
     ValidationHandler,
@@ -91,6 +92,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         protected urlHelper: UrlHelperService,
         protected logger: OAuthLogger,
         @Optional() protected crypto: HashHandler,
+        @Inject(DOCUMENT) private document: Document,
     ) {
         super();
 
@@ -2185,14 +2187,14 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         this.clearIdTokenTimer();
 
         this.removeSilentRefreshEventListener();
-        const silentRefreshFrame = document.getElementById(this.silentRefreshIFrameName);
+        const silentRefreshFrame = this.document.getElementById(this.silentRefreshIFrameName);
         if (silentRefreshFrame) {
             silentRefreshFrame.remove();
         }
 
         this.stopSessionCheckTimer();
         this.removeSessionCheckEventListener();
-        const sessionCheckFrame = document.getElementById(this.sessionCheckIFrameName);
+        const sessionCheckFrame = this.document.getElementById(this.sessionCheckIFrameName);
         if (sessionCheckFrame) {
             sessionCheckFrame.remove();
         }
