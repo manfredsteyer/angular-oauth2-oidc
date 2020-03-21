@@ -9,6 +9,7 @@ import { authCodeFlowConfig } from '../auth-code-flow.config';
 export class HomeComponent implements OnInit {
   loginFailed: boolean = false;
   userProfile: object;
+  usePopup: boolean;
 
   constructor(private oauthService: OAuthService) {
   }
@@ -92,7 +93,7 @@ export class HomeComponent implements OnInit {
 
     this.oauthService.oidc = true;
 
-    if (!this.oauthService.silentRefreshRedirectUri && this.oauthService.responseType === 'code') {
+    if (!this.oauthService.useSilentRefresh && this.oauthService.responseType === 'code') {
       this.oauthService
         .refreshToken()
         .then(info => console.debug('refresh ok', info))

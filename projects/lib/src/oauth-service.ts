@@ -200,7 +200,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
     protected refreshInternal(params, noPrompt): Promise<TokenResponse | OAuthEvent> {
 
-        if (!this.silentRefreshRedirectUri && this.responseType === 'code') {
+        if (!this.useSilentRefresh && this.responseType === 'code') {
             return this.refreshToken();
         } else {
             return this.silentRefresh(params, noPrompt);

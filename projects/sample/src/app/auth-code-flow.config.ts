@@ -1,5 +1,9 @@
 import { AuthConfig } from 'angular-oauth2-oidc';
 
+// Set this to true, to use silent refresh; otherwise the example
+// uses the refresh_token via an AJAX coll to get new tokens.
+const useSilentRefresh = false;
+
 export const authCodeFlowConfig: AuthConfig = {
   issuer: 'https://idsvr4.azurewebsites.net',
 
@@ -8,8 +12,6 @@ export const authCodeFlowConfig: AuthConfig = {
     + ((localStorage.getItem('useHashLocationStrategy') === 'true')
       ? '/#/index.html'
       : '/index.html'),
-
-  silentRefreshRedirectUri: `${window.location.origin}/silent-refresh.html`,
 
   // The SPA's id. The SPA is registerd with this id at the auth-server
   // clientId: 'server.code',
@@ -27,16 +29,25 @@ export const authCodeFlowConfig: AuthConfig = {
   // The first four are defined by OIDC.
   // Important: Request offline_access to get a refresh token
   // The api scope is a usecase specific one
-  scope: 'openid profile email offline_access api',
+  scope: (useSilentRefresh) ? 
+    'openid profile email api' :  
+    'openid profile email offline_access api',
+
+    // ^^ Please note that offline_access is not needed for silent refresh
+    // At least when using idsvr, this even prevents silent refresh
+    // as idsvr ALWAYS prompts the user for consent when this scope is
+    // requested
+
+  // This is needed for silent refresh (refreshing tokens w/o a refresh_token)
+  // **AND** for logging in with a popup
+  silentRefreshRedirectUri: 
+    `${window.location.origin}/silent-refresh.html`,
+
+  useSilentRefresh: useSilentRefresh,
 
   showDebugInformation: true,
 
-  // If you specify this property, the lib tries to refresh the 
-  // token via a silet refresh; otherwise it sends over a refresh_token
-  // via an AJAX call to get new tokens.
-  silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
-
-
-  timeoutFactor: 0.01
+  timeoutFactor: 0.01,
   // disablePKCI: true,
+
 };
