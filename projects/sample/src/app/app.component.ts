@@ -5,7 +5,7 @@ import { OAuthService, NullValidationHandler } from 'angular-oauth2-oidc';
 import { Router } from '@angular/router';
 import { filter} from 'rxjs/operators';
 import { authCodeFlowConfig } from './auth-code-flow.config';
-import { JwksValidationHandler } from 'angular-oauth2-oidc';
+import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 
 @Component({
   // tslint:disable-next-line:component-selector

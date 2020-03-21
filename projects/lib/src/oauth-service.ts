@@ -83,6 +83,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     protected silentRefreshSubject: string;
     protected inImplicitFlow = false;
 
+
+    protected saveNoncesInLocalStorage = false;
+
     constructor(
         protected ngZone: NgZone,
         protected http: HttpClient,
@@ -122,6 +125,17 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                 + 'Consider providing a custom OAuthStorage implementation in your module.',
                 e
             );
+        }
+
+        // in IE, sessionStorage does not always survive a redirect
+        if (typeof window !== 'undefined' &&
+            typeof window['localStorage'] !== 'undefined') {
+            const ua = window?.navigator?.userAgent;
+            const msie = ua?.includes('MSIE ') || ua?.includes('Trident');
+
+            if (msie) {
+                this.saveNoncesInLocalStorage = true;
+            }
         }
 
         this.setupRefreshTimer();
@@ -1286,7 +1300,13 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
         if (this.responseType === 'code' && !this.disablePKCE) {
             const [challenge, verifier] = await this.createChallangeVerifierPairForPKCE();
-            this._storage.setItem('PKCI_verifier', verifier);
+
+            if (this.saveNoncesInLocalStorage && typeof window['localStorage'] !== 'undefined') {
+                localStorage.setItem('PKCI_verifier', verifier);
+            } else {
+                this._storage.setItem('PKCI_verifier', verifier);
+            }
+
             url += '&code_challenge=' + challenge;
             url += '&code_challenge_method=S256';
         }
@@ -1541,7 +1561,14 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             .set('redirect_uri', options.customRedirectUri || this.redirectUri);
 
         if (!this.disablePKCE) {
-            const pkciVerifier = this._storage.getItem('PKCI_verifier');
+            let pkciVerifier;
+
+            if (this.saveNoncesInLocalStorage &&
+                typeof window['localStorage'] !== 'undefined') {
+                pkciVerifier = localStorage.getItem('PKCI_verifier');
+            } else {
+                pkciVerifier = this._storage.getItem('PKCI_verifier');
+            }
 
             if (!pkciVerifier) {
                 console.warn('No PKCI verifier found in oauth storage!');
@@ -1770,7 +1797,16 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     protected validateNonce(
         nonceInState: string
     ): boolean {
-        const savedNonce = this._storage.getItem('nonce');
+
+        let savedNonce;
+
+        if (this.saveNoncesInLocalStorage &&
+            typeof window['localStorage'] !== 'undefined') {
+            savedNonce = localStorage.getItem('nonce');
+        } else {
+            savedNonce = this._storage.getItem('nonce');
+        }
+
         if (savedNonce !== nonceInState) {
 
             const err = 'Validating access_token failed, wrong state/nonce.';
@@ -1819,7 +1855,14 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         const claimsBase64 = this.padBase64(tokenParts[1]);
         const claimsJson = b64DecodeUnicode(claimsBase64);
         const claims = JSON.parse(claimsJson);
-        const savedNonce = this._storage.getItem('nonce');
+
+        let savedNonce;
+        if (this.saveNoncesInLocalStorage &&
+            typeof window['localStorage'] !== 'undefined') {
+            savedNonce = localStorage.getItem('nonce');
+        } else {
+            savedNonce = this._storage.getItem('nonce');
+        }
 
         if (Array.isArray(claims.aud)) {
             if (claims.aud.every(v => v !== this.clientId)) {
@@ -2124,7 +2167,15 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         this._storage.removeItem('access_token');
         this._storage.removeItem('id_token');
         this._storage.removeItem('refresh_token');
-        this._storage.removeItem('nonce');
+
+        if (this.saveNoncesInLocalStorage) {
+            localStorage.removeItem('nonce');
+            localStorage.removeItem('PKCI_verifier');
+        } else {
+            this._storage.removeItem('nonce');
+            this._storage.removeItem('PKCI_verifier');
+        }
+
         this._storage.removeItem('expires_at');
         this._storage.removeItem('id_token_claims_obj');
         this._storage.removeItem('id_token_expires_at');
@@ -2194,7 +2245,17 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     public createAndSaveNonce(): Promise<string> {
         const that = this;
         return this.createNonce().then(function (nonce: any) {
-            that._storage.setItem('nonce', nonce);
+            // Use localStorage for nonce if possible
+            // localStorage is the only storage who survives a
+            // redirect in ALL browsers (also IE)
+            // Otherwiese we'd force teams who have to support
+            // IE into using localStorage for everything
+            if (that.saveNoncesInLocalStorage &&
+                 typeof window['localStorage'] !== 'undefined') {
+                localStorage.setItem('nonce', nonce);
+            } else {
+                that._storage.setItem('nonce', nonce);
+            }
             return nonce;
         });
     }
@@ -2332,9 +2393,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     protected async createChallangeVerifierPairForPKCE(): Promise<[string, string]> {
 
         if (!this.crypto) {
-            throw new Error('PKCI support for code flow needs a CryptoHander. Did you import the OAuthModule using forRoot() ?');
+            throw new Error('PKCE support for code flow needs a CryptoHander. Did you import the OAuthModule using forRoot() ?');
         }
-
 
         const verifier = await this.createNonce();
         const challengeRaw = await this.crypto.calcHash(verifier, 'sha-256');

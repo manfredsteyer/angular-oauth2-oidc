@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { OAuthModule } from 'angular-oauth2-oidc';
+import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -35,7 +35,7 @@ import { SharedModule } from './shared/shared.module';
   ],
   providers: [
     // {provide: AuthConfig, useValue: authConfig },
-    // { provide: OAuthStorage, useClass: DemoStorage },
+    // { provide: OAuthStorage, useValue: localStorage },
     // { provide: ValidationHandler, useClass: JwksValidationHandler },
     { provide: BASE_URL, useValue: 'http://www.angular.at' }
   ],
