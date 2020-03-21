@@ -69,10 +69,16 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                         <a href="additional-documentation/refreshing-a-token.html" data-type="entity-link" data-context-id="additional">Refreshing a Token</a>
                                     </li>
                                     <li class="link ">
+                                        <a href="additional-documentation/silent-refresh.html" data-type="entity-link" data-context-id="additional">Silent Refresh</a>
+                                    </li>
+                                    <li class="link ">
                                         <a href="additional-documentation/working-with-httpinterceptors.html" data-type="entity-link" data-context-id="additional">Working with HttpInterceptors</a>
                                     </li>
                                     <li class="link ">
                                         <a href="additional-documentation/callback-after-login.html" data-type="entity-link" data-context-id="additional">Callback after login</a>
+                                    </li>
+                                    <li class="link ">
+                                        <a href="additional-documentation/popup-based-login.html" data-type="entity-link" data-context-id="additional">Popup-based Login</a>
                                     </li>
                                     <li class="link ">
                                         <a href="additional-documentation/custom-query-parameters.html" data-type="entity-link" data-context-id="additional">Custom Query Parameters</a>

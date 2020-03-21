@@ -2,8 +2,10 @@
 
 This section shows how to use the password flow, which demands the user to directly enter his or her password into the client.
 
-Please note that from an OAuth2/OIDC perspective, the implicit flow is better suited for logging into a SPA and the flow described here should only be used,
+Please note that from an OAuth2/OIDC perspective, the code flow is better suited for logging into a SPA and the flow described here should only be used,
 when a) there is a strong trust relations ship between the client and the auth server and when b) other flows are not possible.
+
+Please also note that with **OAuth 2.1**, **password flow** will be **deprecated**. 
 
 ## Configure Library for Password Flow (using discovery document)
 

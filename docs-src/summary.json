@@ -9,6 +9,10 @@
     },
     {
         "title": "Refreshing a Token",
+        "file": "token-refresh.md"
+    },
+    {
+        "title": "Silent Refresh",
         "file": "silent-refresh.md"
     },
 
@@ -19,6 +23,10 @@
     {
         "title": "Callback after login",
         "file": "callback-after-login.md"
+    },
+    {
+        "title": "Popup-based Login",
+        "file": "popup.md"
     },
     {
         "title": "Custom Query Parameters",

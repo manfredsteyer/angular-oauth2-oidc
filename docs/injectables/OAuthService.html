@@ -177,6 +177,11 @@ password flow.</p>
                             <li>
                                     <span class="modifier">Public</span>
                                     <span class="modifier">Optional</span>
+                                <a href="#customTokenParameters">customTokenParameters</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Optional</span>
                                 <a href="#disableAtHashCheck">disableAtHashCheck</a>
                             </li>
                             <li>
@@ -367,6 +372,11 @@ password flow.</p>
                             <li>
                                     <span class="modifier">Public</span>
                                     <span class="modifier">Optional</span>
+                                <a href="#useSilentRefresh">useSilentRefresh</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Optional</span>
                                 <a href="#waitForTokenInMsec">waitForTokenInMsec</a>
                             </li>
                         </ul>
@@ -471,6 +481,10 @@ password flow.</p>
                             <li>
                                     <span class="modifier">Protected</span>
                                 <a href="#getAccessTokenStoredAt">getAccessTokenStoredAt</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#getCustomTokenResponseProperty">getCustomTokenResponseProperty</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -721,12 +735,12 @@ password flow.</p>
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(ngZone: <a href="https://angular.io/api/core/NgZone" target="_blank">NgZone</a>, http: <a href="https://angular.io/api/common/http/HttpClient" target="_blank">HttpClient</a>, storage: <a href="../classes/OAuthStorage.html">OAuthStorage</a>, tokenValidationHandler: <a href="../classes/ValidationHandler.html">ValidationHandler</a>, config: <a href="../classes/AuthConfig.html">AuthConfig</a>, urlHelper: <a href="../injectables/UrlHelperService.html">UrlHelperService</a>, logger: <a href="../classes/OAuthLogger.html">OAuthLogger</a>, crypto: <a href="../classes/HashHandler.html">HashHandler</a>)</code>
+<code>constructor(ngZone: <a href="https://angular.io/api/core/NgZone" target="_blank">NgZone</a>, http: <a href="https://angular.io/api/common/http/HttpClient" target="_blank">HttpClient</a>, storage: <a href="../classes/OAuthStorage.html">OAuthStorage</a>, tokenValidationHandler: <a href="../classes/ValidationHandler.html">ValidationHandler</a>, config: <a href="../classes/AuthConfig.html">AuthConfig</a>, urlHelper: <a href="../injectables/UrlHelperService.html">UrlHelperService</a>, logger: <a href="../classes/OAuthLogger.html">OAuthLogger</a>, crypto: <a href="../classes/HashHandler.html">HashHandler</a>, document: Document)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">projects/lib/src/oauth-service.ts:83</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="84" class="link-to-prism">projects/lib/src/oauth-service.ts:84</a></div>
                             </td>
                         </tr>
 
@@ -839,6 +853,18 @@ password flow.</p>
                                                     </td>
                                                     
                                                 </tr>
+                                                <tr>
+                                                        <td>document</td>
+                                                  
+                                                        <td>
+                                                                    <code>Document</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -877,8 +903,8 @@ password flow.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="295"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:295</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="297"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:297</a></div>
                 </td>
             </tr>
 
@@ -961,8 +987,8 @@ password flow.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="2091"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:2091</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="2112"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:2112</a></div>
                 </td>
             </tr>
 
@@ -1005,8 +1031,8 @@ to transmit the access_token to a service</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="397"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:397</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="399"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:399</a></div>
                 </td>
             </tr>
 
@@ -1089,8 +1115,8 @@ to transmit the access_token to a service</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1006"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1006</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1010"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1010</a></div>
                 </td>
             </tr>
 
@@ -1161,8 +1187,8 @@ to transmit the access_token to a service</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1386"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1386</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1390"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1390</a></div>
                 </td>
             </tr>
 
@@ -1233,8 +1259,8 @@ to transmit the access_token to a service</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1036"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1036</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1040"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1040</a></div>
                 </td>
             </tr>
 
@@ -1275,8 +1301,8 @@ to transmit the access_token to a service</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="2230"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:2230</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="2258"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:2258</a></div>
                 </td>
             </tr>
 
@@ -1347,8 +1373,8 @@ to transmit the access_token to a service</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1198"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1198</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1202"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1202</a></div>
                 </td>
             </tr>
 
@@ -1388,8 +1414,8 @@ to transmit the access_token to a service</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="2240"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:2240</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="2268"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:2268</a></div>
                 </td>
             </tr>
 
@@ -1460,8 +1486,8 @@ to transmit the access_token to a service</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="385"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:385</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="387"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:387</a></div>
                 </td>
             </tr>
 
@@ -1501,8 +1527,8 @@ to transmit the access_token to a service</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="391"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:391</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="393"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:393</a></div>
                 </td>
             </tr>
 
@@ -1542,8 +1568,8 @@ to transmit the access_token to a service</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="146"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:146</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="148"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:148</a></div>
                 </td>
             </tr>
 
@@ -1583,8 +1609,8 @@ to transmit the access_token to a service</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="132"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:132</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="134"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:134</a></div>
                 </td>
             </tr>
 
@@ -1663,8 +1689,8 @@ to transmit the access_token to a service</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="2299"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:2299</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="2327"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:2327</a></div>
                 </td>
             </tr>
 
@@ -1705,8 +1731,8 @@ to transmit the access_token to a service</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1218"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1218</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1222"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1222</a></div>
                 </td>
             </tr>
 
@@ -1840,8 +1866,8 @@ to transmit the access_token to a service</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="2196"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:2196</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="2224"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:2224</a></div>
                 </td>
             </tr>
 
@@ -1881,8 +1907,8 @@ to transmit the access_token to a service</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="246"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:246</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="248"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:248</a></div>
                 </td>
             </tr>
 
@@ -1953,8 +1979,8 @@ to transmit the access_token to a service</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="680"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:680</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="682"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:682</a></div>
                 </td>
             </tr>
 
@@ -2068,8 +2094,8 @@ to transmit the access_token to a service</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="606"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:606</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="608"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:608</a></div>
                 </td>
             </tr>
 
@@ -2189,8 +2215,8 @@ fail.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="2010"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:2010</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="2021"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:2021</a></div>
                 </td>
             </tr>
 
@@ -2232,8 +2258,8 @@ fail.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="2026"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:2026</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="2037"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:2037</a></div>
                 </td>
             </tr>
 
@@ -2276,8 +2302,8 @@ as milliseconds since 1970.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="2033"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:2033</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="2044"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:2044</a></div>
                 </td>
             </tr>
 
@@ -2288,6 +2314,80 @@ as milliseconds since 1970.</p>
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
 
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getCustomTokenResponseProperty"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Public</span>
+                            getCustomTokenResponseProperty
+                        </b>
+                        <a href="#getCustomTokenResponseProperty"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getCustomTokenResponseProperty(requestedProperty: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="2101"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:2101</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Retrieve a saved custom property of the TokenReponse object. Only if predefined in authconfig.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>requestedProperty</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
                     </div>
                 </td>
             </tr>
@@ -2317,8 +2417,8 @@ as milliseconds since 1970.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1983"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1983</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1994"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1994</a></div>
                 </td>
             </tr>
 
@@ -2360,8 +2460,8 @@ as milliseconds since 1970.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1972"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1972</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1983"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1983</a></div>
                 </td>
             </tr>
 
@@ -2403,8 +2503,8 @@ as milliseconds since 1970.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1994"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1994</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="2005"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:2005</a></div>
                 </td>
             </tr>
 
@@ -2446,8 +2546,8 @@ as milliseconds since 1970.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="2045"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:2045</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="2056"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:2056</a></div>
                 </td>
             </tr>
 
@@ -2490,8 +2590,8 @@ as milliseconds since 1970.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="2037"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:2037</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="2048"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:2048</a></div>
                 </td>
             </tr>
 
@@ -2531,8 +2631,8 @@ as milliseconds since 1970.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="2016"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:2016</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="2027"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:2027</a></div>
                 </td>
             </tr>
 
@@ -2572,8 +2672,8 @@ as milliseconds since 1970.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1784"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1784</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1795"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1795</a></div>
                 </td>
             </tr>
 
@@ -2613,8 +2713,8 @@ as milliseconds since 1970.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1788"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1788</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1799"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1799</a></div>
                 </td>
             </tr>
 
@@ -2697,8 +2797,8 @@ as milliseconds since 1970.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1111"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1111</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1115"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1115</a></div>
                 </td>
             </tr>
 
@@ -2738,8 +2838,8 @@ as milliseconds since 1970.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1146"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1146</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1150"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1150</a></div>
                 </td>
             </tr>
 
@@ -2779,8 +2879,8 @@ as milliseconds since 1970.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1107"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1107</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1111"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1111</a></div>
                 </td>
             </tr>
 
@@ -2820,8 +2920,8 @@ as milliseconds since 1970.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="2056"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:2056</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="2067"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:2067</a></div>
                 </td>
             </tr>
 
@@ -2863,8 +2963,8 @@ as milliseconds since 1970.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="2073"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:2073</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="2084"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:2084</a></div>
                 </td>
             </tr>
 
@@ -2906,8 +3006,8 @@ as milliseconds since 1970.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="2270"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:2270</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="2298"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:2298</a></div>
                 </td>
             </tr>
 
@@ -3000,8 +3100,8 @@ the auth servers login url.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1364"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1364</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1368"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1368</a></div>
                 </td>
             </tr>
 
@@ -3105,8 +3205,8 @@ parameter loginHint (for the sake of compatibility with former versions)</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="943"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:943</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="947"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:947</a></div>
                 </td>
             </tr>
 
@@ -3179,8 +3279,8 @@ and implicit flows.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1322"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1322</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1326"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1326</a></div>
                 </td>
             </tr>
 
@@ -3270,8 +3370,8 @@ and implicit flows.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="2255"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:2255</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="2283"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:2283</a></div>
                 </td>
             </tr>
 
@@ -3364,8 +3464,8 @@ depending on your configuration.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="947"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:947</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="951"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:951</a></div>
                 </td>
             </tr>
 
@@ -3436,8 +3536,8 @@ depending on your configuration.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1158"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1158</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1162"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1162</a></div>
                 </td>
             </tr>
 
@@ -3477,8 +3577,8 @@ depending on your configuration.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="429"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:429</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="431"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:431</a></div>
                 </td>
             </tr>
 
@@ -3559,8 +3659,8 @@ can pass it to to optional parameter fullUrl.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="228"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:228</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="230"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:230</a></div>
                 </td>
             </tr>
 
@@ -3640,8 +3740,8 @@ IdToken or no valid AccessToken.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="215"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:215</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="217"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:217</a></div>
                 </td>
             </tr>
 
@@ -3725,8 +3825,8 @@ the <code>tryLogin(...)</code> method.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="504"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:504</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="506"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:506</a></div>
                 </td>
             </tr>
 
@@ -3766,8 +3866,8 @@ the <code>tryLogin(...)</code> method.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="622"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:622</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="624"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:624</a></div>
                 </td>
             </tr>
 
@@ -3804,15 +3904,15 @@ Otherwise stricter validations take place that make this operation fail.</p>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>logOut(noRedirectToLogoutUrl)</code>
+                    <code>logOut(noRedirectToLogoutUrl, state: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="2101"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:2101</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="2123"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:2123</a></div>
                 </td>
             </tr>
 
@@ -3821,7 +3921,7 @@ Otherwise stricter validations take place that make this operation fail.</p>
                 <td class="col-md-4">
                     <div class="io-description"><p>Removes all tokens and logs the user out.
 If a logout url is configured, the user is
-redirected to it.</p>
+redirected to it with optional state parameter.</p>
 </div>
 
                     <div class="io-description">
@@ -3830,6 +3930,7 @@ redirected to it.</p>
                             <thead>
                                 <tr>
                                     <td>Name</td>
+                                    <td>Type</td>
                                     <td>Optional</td>
                                     <td>Default value</td>
                                 </tr>
@@ -3837,6 +3938,8 @@ redirected to it.</p>
                             <tbody>
                                 <tr>
                                     <td>noRedirectToLogoutUrl</td>
+                                    <td>
+                                    </td>
 
                                     <td>
                                         No
@@ -3844,6 +3947,21 @@ redirected to it.</p>
 
                                     <td>
                                         <code>false</code>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>state</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>&#x27;&#x27;</code>
                                     </td>
 
                                 </tr>
@@ -3887,8 +4005,8 @@ redirected to it.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="2000"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:2000</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="2011"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:2011</a></div>
                 </td>
             </tr>
 
@@ -3955,8 +4073,8 @@ redirected to it.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1016"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1016</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1020"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1020</a></div>
                 </td>
             </tr>
 
@@ -4027,8 +4145,8 @@ redirected to it.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="199"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:199</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="201"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:201</a></div>
                 </td>
             </tr>
 
@@ -4104,8 +4222,8 @@ redirected to it.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="758"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:758</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="761"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:761</a></div>
                 </td>
             </tr>
 
@@ -4151,8 +4269,8 @@ method silentRefresh.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1151"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1151</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1155"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1155</a></div>
                 </td>
             </tr>
 
@@ -4192,8 +4310,8 @@ method silentRefresh.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="831"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:831</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="835"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:835</a></div>
                 </td>
             </tr>
 
@@ -4233,8 +4351,8 @@ method silentRefresh.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1382"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1382</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1386"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1386</a></div>
                 </td>
             </tr>
 
@@ -4276,8 +4394,8 @@ method silentRefresh.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="156"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:156</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="158"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:158</a></div>
                 </td>
             </tr>
 
@@ -4317,8 +4435,8 @@ method silentRefresh.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="150"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:150</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="152"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:152</a></div>
                 </td>
             </tr>
 
@@ -4358,8 +4476,8 @@ method silentRefresh.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="347"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:347</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="349"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:349</a></div>
                 </td>
             </tr>
 
@@ -4399,8 +4517,8 @@ method silentRefresh.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="174"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:174</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="176"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:176</a></div>
                 </td>
             </tr>
 
@@ -4519,8 +4637,8 @@ logged back in via receiving a new token.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="336"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:336</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="338"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:338</a></div>
                 </td>
             </tr>
 
@@ -4560,8 +4678,8 @@ logged back in via receiving a new token.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="366"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:366</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="368"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:368</a></div>
                 </td>
             </tr>
 
@@ -4601,8 +4719,8 @@ logged back in via receiving a new token.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="314"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:314</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="316"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:316</a></div>
                 </td>
             </tr>
 
@@ -4642,8 +4760,8 @@ logged back in via receiving a new token.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="160"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:160</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="162"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:162</a></div>
                 </td>
             </tr>
 
@@ -4683,8 +4801,8 @@ logged back in via receiving a new token.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1060"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1060</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1064"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1064</a></div>
                 </td>
             </tr>
 
@@ -4724,8 +4842,8 @@ logged back in via receiving a new token.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="841"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:841</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="845"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:845</a></div>
                 </td>
             </tr>
 
@@ -4765,8 +4883,8 @@ logged back in via receiving a new token.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="865"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:865</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="869"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:869</a></div>
                 </td>
             </tr>
 
@@ -4859,8 +4977,8 @@ the existing tokens expire.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1181"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1181</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1185"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1185</a></div>
                 </td>
             </tr>
 
@@ -4900,8 +5018,8 @@ the existing tokens expire.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1191"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1191</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1195"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1195</a></div>
                 </td>
             </tr>
 
@@ -4934,15 +5052,15 @@ the existing tokens expire.</p>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>storeAccessTokenResponse(accessToken: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, refreshToken: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, expiresIn: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, grantedScopes: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" target="_blank">String</a>)</code>
+                    <code>storeAccessTokenResponse(accessToken: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, refreshToken: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, expiresIn: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, grantedScopes: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String" target="_blank">String</a>, customParameters?: Map<string | string>)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1399"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1399</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1403"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1403</a></div>
                 </td>
             </tr>
 
@@ -5009,6 +5127,18 @@ the existing tokens expire.</p>
 
 
                                 </tr>
+                                <tr>
+                                    <td>customParameters</td>
+                                    <td>
+                                            <code>Map&lt;string | string&gt;</code>
+                                    </td>
+
+                                    <td>
+                                        Yes
+                                    </td>
+
+
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -5049,8 +5179,8 @@ the existing tokens expire.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1773"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1773</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1784"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1784</a></div>
                 </td>
             </tr>
 
@@ -5121,8 +5251,8 @@ the existing tokens expire.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1780"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1780</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1791"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1791</a></div>
                 </td>
             </tr>
 
@@ -5193,8 +5323,8 @@ the existing tokens expire.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1426"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1426</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1436"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1436</a></div>
                 </td>
             </tr>
 
@@ -5276,8 +5406,8 @@ the existing tokens expire.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1451"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1451</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1461"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1461</a></div>
                 </td>
             </tr>
 
@@ -5352,8 +5482,8 @@ the existing tokens expire.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1626"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1626</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1637"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1637</a></div>
                 </td>
             </tr>
 
@@ -5438,8 +5568,8 @@ current client.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="529"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:529</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="531"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:531</a></div>
                 </td>
             </tr>
 
@@ -5510,8 +5640,8 @@ current client.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1760"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1760</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1771"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1771</a></div>
                 </td>
             </tr>
 
@@ -5582,8 +5712,8 @@ current client.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="304"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:304</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="306"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:306</a></div>
                 </td>
             </tr>
 
@@ -5654,8 +5784,8 @@ current client.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="273"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:273</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="275"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:275</a></div>
                 </td>
             </tr>
 
@@ -5726,8 +5856,8 @@ current client.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="252"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:252</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="254"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:254</a></div>
                 </td>
             </tr>
 
@@ -5798,8 +5928,8 @@ current client.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="1126"
-                            class="link-to-prism">projects/lib/src/oauth-service.ts:1126</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="1130"
+                            class="link-to-prism">projects/lib/src/oauth-service.ts:1130</a></div>
                 </td>
             </tr>
 
@@ -5842,7 +5972,7 @@ current client.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">projects/lib/src/oauth-service.ts:75</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">projects/lib/src/oauth-service.ts:76</a></div>
                             </td>
                         </tr>
 
@@ -5870,7 +6000,7 @@ current client.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">projects/lib/src/oauth-service.ts:76</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">projects/lib/src/oauth-service.ts:77</a></div>
                             </td>
                         </tr>
 
@@ -5903,7 +6033,7 @@ current client.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">projects/lib/src/oauth-service.ts:72</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">projects/lib/src/oauth-service.ts:73</a></div>
                             </td>
                         </tr>
 
@@ -5931,7 +6061,7 @@ current client.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">projects/lib/src/oauth-service.ts:63</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">projects/lib/src/oauth-service.ts:64</a></div>
                             </td>
                         </tr>
 
@@ -5971,7 +6101,7 @@ See the string enum EventType for a full list of event types.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">projects/lib/src/oauth-service.ts:71</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">projects/lib/src/oauth-service.ts:72</a></div>
                             </td>
                         </tr>
 
@@ -6004,7 +6134,7 @@ See the string enum EventType for a full list of event types.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">projects/lib/src/oauth-service.ts:74</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="75" class="link-to-prism">projects/lib/src/oauth-service.ts:75</a></div>
                             </td>
                         </tr>
 
@@ -6032,7 +6162,7 @@ See the string enum EventType for a full list of event types.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="77" class="link-to-prism">projects/lib/src/oauth-service.ts:77</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">projects/lib/src/oauth-service.ts:78</a></div>
                             </td>
                         </tr>
 
@@ -6059,7 +6189,7 @@ See the string enum EventType for a full list of event types.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">projects/lib/src/oauth-service.ts:83</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="84" class="link-to-prism">projects/lib/src/oauth-service.ts:84</a></div>
                             </td>
                         </tr>
 
@@ -6087,7 +6217,7 @@ See the string enum EventType for a full list of event types.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">projects/lib/src/oauth-service.ts:80</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">projects/lib/src/oauth-service.ts:81</a></div>
                             </td>
                         </tr>
 
@@ -6115,7 +6245,7 @@ See the string enum EventType for a full list of event types.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="79" class="link-to-prism">projects/lib/src/oauth-service.ts:79</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">projects/lib/src/oauth-service.ts:80</a></div>
                             </td>
                         </tr>
 
@@ -6143,7 +6273,7 @@ See the string enum EventType for a full list of event types.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="81" class="link-to-prism">projects/lib/src/oauth-service.ts:81</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">projects/lib/src/oauth-service.ts:82</a></div>
                             </td>
                         </tr>
 
@@ -6171,7 +6301,7 @@ See the string enum EventType for a full list of event types.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">projects/lib/src/oauth-service.ts:73</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">projects/lib/src/oauth-service.ts:74</a></div>
                             </td>
                         </tr>
 
@@ -6199,7 +6329,7 @@ See the string enum EventType for a full list of event types.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">projects/lib/src/oauth-service.ts:82</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="83" class="link-to-prism">projects/lib/src/oauth-service.ts:83</a></div>
                             </td>
                         </tr>
 
@@ -6233,7 +6363,7 @@ See the string enum EventType for a full list of event types.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">projects/lib/src/oauth-service.ts:69</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">projects/lib/src/oauth-service.ts:70</a></div>
                             </td>
                         </tr>
 
@@ -6268,7 +6398,7 @@ in with implicit flow.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">projects/lib/src/oauth-service.ts:78</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="79" class="link-to-prism">projects/lib/src/oauth-service.ts:79</a></div>
                             </td>
                         </tr>
 
@@ -6296,7 +6426,7 @@ in with implicit flow.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">projects/lib/src/oauth-service.ts:45</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">projects/lib/src/oauth-service.ts:46</a></div>
                             </td>
                         </tr>
 
@@ -6426,7 +6556,7 @@ id_tokens.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:222</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:227</a></code>
 </div>
                             </td>
                         </tr>
@@ -6473,7 +6603,7 @@ id_tokens.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:142</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:147</a></code>
 </div>
                             </td>
                         </tr>
@@ -6482,6 +6612,53 @@ id_tokens.</p>
                     <td class="col-md-4">
                         <div class="io-description"><p>Map with additional query parameter that are appended to
 the request when initializing implicit flow.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="customTokenParameters"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                                <span class="modifier">Optional</span>
+                            customTokenParameters</b>
+                            <a href="#customTokenParameters"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>string[]</code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>[]</code>
+                        </td>
+                    </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../classes/AuthConfig.html" target="_self" >AuthConfig</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:70</a></code>
+</div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Names of known parameters sent out in the TokenResponse. <a href="https://tools.ietf.org/html/rfc6749#section-5.1">https://tools.ietf.org/html/rfc6749#section-5.1</a></p>
 </div>
                     </td>
                 </tr>
@@ -6515,7 +6692,7 @@ the request when initializing implicit flow.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:183</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:188</a></code>
 </div>
                             </td>
                         </tr>
@@ -6560,7 +6737,7 @@ a security check which means we are more vulnerable.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:234</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:247</a></code>
 </div>
                             </td>
                         </tr>
@@ -6609,7 +6786,7 @@ You can disbale it here by setting this flag to true.
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:115</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:120</a></code>
 </div>
                             </td>
                         </tr>
@@ -6656,7 +6833,7 @@ as good as using no password.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:204</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:209</a></code>
 </div>
                             </td>
                         </tr>
@@ -6752,7 +6929,7 @@ This is a fallback value for the case this value is not exposed.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:136</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:141</a></code>
 </div>
                             </td>
                         </tr>
@@ -6896,7 +7073,7 @@ the user in when using implicit flow.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:212</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:217</a></code>
 </div>
                             </td>
                         </tr>
@@ -6982,7 +7159,7 @@ implicit flow.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:247</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:260</a></code>
 </div>
                             </td>
                         </tr>
@@ -7209,7 +7386,7 @@ implicit flow.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:123</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:128</a></code>
 </div>
                             </td>
                         </tr>
@@ -7300,7 +7477,7 @@ to be used with https.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:72</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:77</a></code>
 </div>
                             </td>
                         </tr>
@@ -7429,7 +7606,7 @@ to be used with https.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:174</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:179</a></code>
 </div>
                             </td>
                         </tr>
@@ -7476,7 +7653,7 @@ to be used with https.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:169</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:174</a></code>
 </div>
                             </td>
                         </tr>
@@ -7517,7 +7694,7 @@ to be used with https.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:164</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:169</a></code>
 </div>
                             </td>
                         </tr>
@@ -7559,7 +7736,7 @@ according to <a href="http://openid.net/specs/openid-connect-session-1_0.html#Ch
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:158</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:163</a></code>
 </div>
                             </td>
                         </tr>
@@ -7602,7 +7779,7 @@ in <a href="http://openid.net/specs/openid-connect-session-1_0.html#ChangeNotifi
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:80</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:85</a></code>
 </div>
                             </td>
                         </tr>
@@ -7652,7 +7829,7 @@ to include Debug level messages.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:144</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:149</a></code>
 </div>
                             </td>
                         </tr>
@@ -7693,7 +7870,7 @@ to include Debug level messages.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:87</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:92</a></code>
 </div>
                             </td>
                         </tr>
@@ -7734,7 +7911,7 @@ to include Debug level messages.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:85</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:90</a></code>
 </div>
                             </td>
                         </tr>
@@ -7775,7 +7952,7 @@ to include Debug level messages.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:93</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:98</a></code>
 </div>
                             </td>
                         </tr>
@@ -7823,7 +8000,7 @@ silent refresh for debugging.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:105</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:110</a></code>
 </div>
                             </td>
                         </tr>
@@ -7864,7 +8041,7 @@ silent refresh for debugging.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:197</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:202</a></code>
 </div>
                             </td>
                         </tr>
@@ -7906,7 +8083,7 @@ Normally, the discovey document&#39;s url starts with the url of the issuer.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:189</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:194</a></code>
 </div>
                             </td>
                         </tr>
@@ -7948,7 +8125,7 @@ Normally, it should be the same as before.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:129</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:134</a></code>
 </div>
                             </td>
                         </tr>
@@ -7996,7 +8173,7 @@ document has to start with the issuer&#39;s url.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:151</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:156</a></code>
 </div>
                             </td>
                         </tr>
@@ -8086,7 +8263,7 @@ is triggered after 75% of the token&#39;s life time.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:217</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:222</a></code>
 </div>
                             </td>
                         </tr>
@@ -8127,7 +8304,7 @@ is triggered after 75% of the token&#39;s life time.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:191</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:196</a></code>
 </div>
                             </td>
                         </tr>
@@ -8168,7 +8345,7 @@ is triggered after 75% of the token&#39;s life time.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:70</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:75</a></code>
 </div>
                             </td>
                         </tr>
@@ -8176,6 +8353,45 @@ is triggered after 75% of the token&#39;s life time.</p>
                 <tr>
                     <td class="col-md-4">
                         <div class="io-description"><p>Url of the userinfo endpoint as defined by OpenId Connect.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="useSilentRefresh"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                                <span class="modifier">Optional</span>
+                            useSilentRefresh</b>
+                            <a href="#useSilentRefresh"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-line">Inherited from         <code><a href="../classes/AuthConfig.html" target="_self" >AuthConfig</a></code>
+</div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:240</a></code>
+</div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Set this to true if you want to use silent refresh together with
+code flow. As silent refresh is the only option for refreshing
+with implicit flow, you don&#39;t need to explicitly turn it on in
+this case.</p>
 </div>
                     </td>
                 </tr>
@@ -8215,7 +8431,7 @@ is triggered after 75% of the token&#39;s life time.</p>
                             </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:227</a></code>
+                                    <div class="io-line">Defined in         <code><a href="../classes/AuthConfig.html#source" target="_self" >AuthConfig:232</a></code>
 </div>
                             </td>
                         </tr>
@@ -8235,10 +8451,11 @@ is triggered after 75% of the token&#39;s life time.</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, NgZone, Optional, OnDestroy } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, NgZone, Optional, OnDestroy, Inject } from &#x27;@angular/core&#x27;;
 import { HttpClient, HttpHeaders, HttpParams } from &#x27;@angular/common/http&#x27;;
 import { Observable, Subject, Subscription, of, race, from } from &#x27;rxjs&#x27;;
 import { filter, delay, first, tap, map, switchMap, debounceTime } from &#x27;rxjs/operators&#x27;;
+import { DOCUMENT } from &#x27;@angular/common&#x27;;
 
 import {
     ValidationHandler,
@@ -8328,6 +8545,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         protected urlHelper: UrlHelperService,
         protected logger: OAuthLogger,
         @Optional() protected crypto: HashHandler,
+        @Inject(DOCUMENT) private document: Document,
     ) {
         super();
 
@@ -8435,7 +8653,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
     protected refreshInternal(params, noPrompt): Promise&lt;TokenResponse | OAuthEvent&gt; {
 
-        if (!this.silentRefreshRedirectUri &amp;&amp; this.responseType &#x3D;&#x3D;&#x3D; &#x27;code&#x27;) {
+        if (!this.useSilentRefresh &amp;&amp; this.responseType &#x3D;&#x3D;&#x3D; &#x27;code&#x27;) {
             return this.refreshToken();
         } else {
             return this.silentRefresh(params, noPrompt);
@@ -8970,7 +9188,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                             tokenResponse.access_token,
                             tokenResponse.refresh_token,
                             tokenResponse.expires_in,
-                            tokenResponse.scope
+                            tokenResponse.scope,
+                            this.extractRecognizedCustomParameters(tokenResponse)
                         );
 
                         this.eventsSubject.next(new OAuthSuccessEvent(&#x27;token_received&#x27;));
@@ -9047,7 +9266,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                             tokenResponse.access_token,
                             tokenResponse.refresh_token,
                             tokenResponse.expires_in,
-                            tokenResponse.scope
+                            tokenResponse.scope,
+                            this.extractRecognizedCustomParameters(tokenResponse)
                         );
 
                         this.eventsSubject.next(new OAuthSuccessEvent(&#x27;token_received&#x27;));
@@ -9637,7 +9857,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         accessToken: string,
         refreshToken: string,
         expiresIn: number,
-        grantedScopes: String
+        grantedScopes: String,
+        customParameters?: Map&lt;string, string&gt;
     ): void {
         this._storage.setItem(&#x27;access_token&#x27;, accessToken);
         if (grantedScopes) {
@@ -9653,6 +9874,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
         if (refreshToken) {
             this._storage.setItem(&#x27;refresh_token&#x27;, refreshToken);
+        }
+        if (customParameters) {
+            customParameters.forEach((value : string, key: string) &#x3D;&gt; {
+              this._storage.setItem(key, value);
+            });
         }
     }
 
@@ -9692,7 +9918,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             options.customHashFragment.substring(1) :
             window.location.search;
 
-        const parts &#x3D; this.getCodePartsFromUrl(window.location.search);
+        const parts &#x3D; this.getCodePartsFromUrl(querySource);
 
         const code &#x3D; parts[&#x27;code&#x27;];
         const state &#x3D; parts[&#x27;state&#x27;];
@@ -9817,7 +10043,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                         tokenResponse.access_token,
                         tokenResponse.refresh_token,
                         tokenResponse.expires_in,
-                        tokenResponse.scope);
+                        tokenResponse.scope,
+                        this.extractRecognizedCustomParameters(tokenResponse));
 
                     if (this.oidc &amp;&amp; tokenResponse.id_token) {
                         this.processIdToken(tokenResponse.id_token, tokenResponse.access_token).
@@ -10322,6 +10549,16 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
 
     /**
+     * Retrieve a saved custom property of the TokenReponse object. Only if predefined in authconfig.
+     */
+    public getCustomTokenResponseProperty(requestedProperty: string): any {
+      return this._storage &amp;&amp; this.config.customTokenParameters
+          &amp;&amp; (this.config.customTokenParameters.indexOf(requestedProperty) &gt;&#x3D; 0)
+            &amp;&amp; this._storage.getItem(requestedProperty) !&#x3D;&#x3D; null
+            ? JSON.parse(this._storage.getItem(requestedProperty)) : null;
+    }
+
+    /**
      * Returns the auth-header that can be used
      * to transmit the access_token to a service
      */
@@ -10332,10 +10569,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     /**
      * Removes all tokens and logs the user out.
      * If a logout url is configured, the user is
-     * redirected to it.
+     * redirected to it with optional state parameter.
      * @param noRedirectToLogoutUrl
+     * @param state
      */
-    public logOut(noRedirectToLogoutUrl &#x3D; false): void {
+    public logOut(noRedirectToLogoutUrl &#x3D; false, state &#x3D; &#x27;&#x27;): void {
         const id_token &#x3D; this.getIdToken();
         this._storage.removeItem(&#x27;access_token&#x27;);
         this._storage.removeItem(&#x27;id_token&#x27;);
@@ -10348,7 +10586,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         this._storage.removeItem(&#x27;access_token_stored_at&#x27;);
         this._storage.removeItem(&#x27;granted_scopes&#x27;);
         this._storage.removeItem(&#x27;session_state&#x27;);
-
+        if (this.config.customTokenParameters) {
+          this.config.customTokenParameters.forEach(customParam &#x3D;&gt; this._storage.removeItem(customParam));
+        }
         this.silentRefreshSubject &#x3D; null;
 
         this.eventsSubject.next(new OAuthInfoEvent(&#x27;logout&#x27;));
@@ -10388,6 +10628,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             const postLogoutUrl &#x3D; this.postLogoutRedirectUri || this.redirectUri;
             if (postLogoutUrl) {
                 params &#x3D; params.set(&#x27;post_logout_redirect_uri&#x27;, postLogoutUrl);
+
+                if (state) {
+                    params &#x3D; params.set(&#x27;state&#x27;, state);
+                }
             }
 
             logoutUrl &#x3D;
@@ -10417,14 +10661,14 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         this.clearIdTokenTimer();
 
         this.removeSilentRefreshEventListener();
-        const silentRefreshFrame &#x3D; document.getElementById(this.silentRefreshIFrameName);
+        const silentRefreshFrame &#x3D; this.document.getElementById(this.silentRefreshIFrameName);
         if (silentRefreshFrame) {
             silentRefreshFrame.remove();
         }
 
         this.stopSessionCheckTimer();
         this.removeSessionCheckEventListener();
-        const sessionCheckFrame &#x3D; document.getElementById(this.sessionCheckIFrameName);
+        const sessionCheckFrame &#x3D; this.document.getElementById(this.sessionCheckIFrameName);
         if (sessionCheckFrame) {
             sessionCheckFrame.remove();
         }
@@ -10542,9 +10786,22 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
         const verifier &#x3D; await this.createNonce();
         const challengeRaw &#x3D; await this.crypto.calcHash(verifier, &#x27;sha-256&#x27;);
-        const challange &#x3D; base64UrlEncode(challengeRaw);
+        const challenge &#x3D; base64UrlEncode(challengeRaw);
 
-        return [challange, verifier];
+        return [challenge, verifier];
+    }
+
+    private extractRecognizedCustomParameters(tokenResponse: TokenResponse): Map&lt;string, string&gt; {
+      let foundParameters: Map&lt;string, string&gt; &#x3D; new Map&lt;string, string&gt;();
+      if (!this.config.customTokenParameters) {
+        return foundParameters;
+      }
+      this.config.customTokenParameters.forEach((recognizedParameter: string) &#x3D;&gt; {
+          if (tokenResponse[recognizedParameter]) {
+            foundParameters.set(recognizedParameter, JSON.stringify(tokenResponse[recognizedParameter]));
+          }
+      });
+      return foundParameters;
     }
 }
 </code></pre>
