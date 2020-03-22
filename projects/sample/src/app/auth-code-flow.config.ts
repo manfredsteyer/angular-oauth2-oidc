@@ -1,8 +1,5 @@
 import { AuthConfig } from 'angular-oauth2-oidc';
-
-// Set this to true, to use silent refresh; otherwise the example
-// uses the refresh_token via an AJAX coll to get new tokens.
-const useSilentRefresh = false;
+import { useSilentRefreshForCodeFlow } from '../flags';
 
 export const authCodeFlowConfig: AuthConfig = {
   issuer: 'https://idsvr4.azurewebsites.net',
@@ -29,7 +26,7 @@ export const authCodeFlowConfig: AuthConfig = {
   // The first four are defined by OIDC.
   // Important: Request offline_access to get a refresh token
   // The api scope is a usecase specific one
-  scope: (useSilentRefresh) ? 
+  scope: (useSilentRefreshForCodeFlow) ? 
     'openid profile email api' :  
     'openid profile email offline_access api',
 
@@ -43,7 +40,7 @@ export const authCodeFlowConfig: AuthConfig = {
   silentRefreshRedirectUri: 
     `${window.location.origin}/silent-refresh.html`,
 
-  useSilentRefresh: useSilentRefresh,
+  useSilentRefresh: useSilentRefreshForCodeFlow,
 
   showDebugInformation: true,
 

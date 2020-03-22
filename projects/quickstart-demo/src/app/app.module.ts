@@ -15,7 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent
   ],
   providers: [
-    { provide: OAuthStorage, useValue: localStorage }
+    // { provide: OAuthStorage, useValue: localStorage }
   ],
   bootstrap: [AppComponent]
 })

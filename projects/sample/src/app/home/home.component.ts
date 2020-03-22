@@ -15,6 +15,8 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    // This would directly (w/o user interaction) redirect the user to the 
+    // login page if they are not already logged in.
     /*
         this.oauthService.loadDiscoveryDocumentAndTryLogin().then(_ => {
             if (!this.oauthService.hasValidIdToken() || !this.oauthService.hasValidAccessToken()) {
@@ -101,8 +103,8 @@ export class HomeComponent implements OnInit {
     } else {
       this.oauthService
         .silentRefresh()
-        .then(info => console.debug('refresh ok', info))
-        .catch(err => console.error('refresh error', err));
+        .then(info => console.debug('silent refresh ok', info))
+        .catch(err => console.error('silent refresh error', err));
     }
   }
 

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { filter} from 'rxjs/operators';
 import { authCodeFlowConfig } from './auth-code-flow.config';
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
+import { useHash } from '../flags';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -41,14 +42,17 @@ export class AppComponent {
 
   }
 
-
   private configureImplicitFlow() {
 
     this.oauthService.configure(authConfig);
     // this.oauthService.setStorage(localStorage);
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
 
-    this.oauthService.loadDiscoveryDocumentAndTryLogin();
+    this.oauthService.loadDiscoveryDocumentAndTryLogin().then(_ => {
+      if (useHash) {
+        this.router.navigate(['/']);
+      }
+    });
 
     // Optional
     this.oauthService.setupAutomaticSilentRefresh();

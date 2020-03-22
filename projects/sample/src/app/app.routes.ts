@@ -2,7 +2,6 @@ import { PasswordFlowLoginComponent } from './password-flow-login/password-flow-
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { FlightHistoryComponent } from './flight-history/flight-history.component';
-import { CustomPreloadingStrategy } from './shared/preload/custom-preloading.strategy';
 
 export let APP_ROUTES: Routes = [
   {
@@ -32,9 +31,3 @@ export let APP_ROUTES: Routes = [
     redirectTo: 'home'
   }
 ];
-
-export let AppRouterModule = RouterModule.forRoot(APP_ROUTES, {
-  preloadingStrategy: CustomPreloadingStrategy,
-  useHash: localStorage.getItem('useHashLocationStrategy') === 'true',
-  // initialNavigation: false
-});
