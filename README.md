@@ -231,7 +231,7 @@ If you use the ``PathLocationStrategy`` (which is on by default) and have a gene
 
 ## Implicit Flow
 
-Nowadays, using code flow + PKCE -- as shown above -- is the recommended OAuth 2/OIDC flow for SPAs. To use the older implicit flow, lookup this docs: https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/implicit-flow.html
+Nowadays, using code flow + PKCE -- as shown above -- is the recommended OAuth 2/OIDC flow for SPAs. To use the older implicit flow, lookup this docs: https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/using-implicit-flow.html
 
 ## More Documentation (!)
 
