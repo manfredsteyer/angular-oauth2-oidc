@@ -27,6 +27,7 @@ export class AppComponent {
     this.oauthService.events
       .pipe(filter(e => e.type === 'token_received'))
       .subscribe(_ => {
+        console.debug('state', this.oauthService.state);
         this.oauthService.loadUserProfile();
       });
 
@@ -57,7 +58,6 @@ export class AppComponent {
     // Optional
     this.oauthService.setupAutomaticSilentRefresh();
 
-
     // Display all events
     this.oauthService.events.subscribe(e => {
       // tslint:disable-next-line:no-console
@@ -70,7 +70,6 @@ export class AppComponent {
         // tslint:disable-next-line:no-console
         console.debug('Your session has been terminated!');
       });
-
   }
 
   // 

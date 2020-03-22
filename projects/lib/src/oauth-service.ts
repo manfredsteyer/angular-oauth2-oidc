@@ -1253,7 +1253,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         const nonce = await this.createAndSaveNonce();
 
         if (state) {
-            state = nonce + this.config.nonceStateSeparator + state;
+            state = nonce + this.config.nonceStateSeparator + encodeURIComponent(state);
         } else {
             state = nonce;
         }
@@ -1461,8 +1461,6 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         }
     }
 
-
-
     private parseQueryString(queryString: string): object {
         if (!queryString || queryString.length === 0) {
             return {};
@@ -1473,8 +1471,6 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         }
 
         return this.urlHelper.parseQueryString(queryString);
-
-
     }
 
     public tryLoginCodeFlow(options: LoginOptions = null): Promise<void> {

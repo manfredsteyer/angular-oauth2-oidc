@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
     await this.oauthService.loadDiscoveryDocument();
     sessionStorage.setItem('flow', 'implicit');
 
-    this.oauthService.initLoginFlow('/some-state;p1=1;p2=2');
+    this.oauthService.initLoginFlow('/some-state;p1=1;p2=2?p3=3&p4=4');
       // the parameter here is optional. It's passed around and can be used after logging in
   }
 
@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
       await this.oauthService.loadDiscoveryDocument();
       sessionStorage.setItem('flow', 'code');
 
-      this.oauthService.initLoginFlow('/some-state;p1=1;p2=2');
+      this.oauthService.initLoginFlow('/some-state;p1=1;p2=2?p3=3&p4=4');
        // the parameter here is optional. It's passed around and can be used after logging in
   }
 
