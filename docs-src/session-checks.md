@@ -29,6 +29,12 @@ export const authConfig: AuthConfig = {
 }
 ```
 
+## Refresh
+
+Please note that the lib performs a token refresh when the session changes to get the newest information about the current session. When using implicit flow, this means you have to configure [silent refresh](./silent-refresh.html); when using code flow you either need silent refresh or a [refresh token](./refreshing-a-token.html).
+
+If using refresh tokens, your Auth Server needs to bind them to the current session's lifetime. Unfortunately, the used version of Identity Server 4, shown in the docs and in the example applications, does not support this at the moment.
+
 ## Events
 To get notified, you can hook up for the event ``session_terminated``:
 

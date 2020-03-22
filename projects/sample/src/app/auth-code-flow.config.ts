@@ -44,6 +44,8 @@ export const authCodeFlowConfig: AuthConfig = {
 
   showDebugInformation: true,
 
+  sessionChecksEnabled: true,
+
   timeoutFactor: 0.01,
   // disablePKCI: true,
 

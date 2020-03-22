@@ -58,6 +58,31 @@ This file is loaded into the hidden iframe after getting new tokens. Its only ta
 </html>
 ```
 
+This simple implementation within silent-refresh.html is sufficient in most cases. It takes care of the hash fragment as well as of the query string (property search). For **edge cases** you need to check if the received hash fragment is a token response. For this, please go with the following **more advanced implementation**:
+
+```html
+<html>
+    <body>
+        <script>
+            var checks = [/[\?|&|#]code=/, /[\?|&|#]error=/, /[\?|&|#]token=/, /[\?|&|#]id_token=/];
+
+            function isResponse(str) {
+                var count = 0;
+                if (!str) return false;
+                for(var i=0; i<checks.length; i++) {
+                    if (str.match(checks[i])) return true;
+                }
+                return false;
+            }
+
+            var message = isResponse(location.hash) ? location.hash : '#' + location.search;
+
+            (window.opener || window.parent).postMessage(message, location.origin);
+        </script>
+    </body>
+</html>
+```
+
 Please make sure that this file is copied to your output directory by your build task. When using the CLI you can define it as an asset for this. For this, you have to add the following line to the file ``.angular-cli.json``:
 
 ```JSON

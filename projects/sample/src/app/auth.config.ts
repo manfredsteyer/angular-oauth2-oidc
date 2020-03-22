@@ -28,7 +28,7 @@ export const authConfig: AuthConfig = {
 
   showDebugInformation: true,
 
-  sessionChecksEnabled: false,
+  sessionChecksEnabled: true,
 
   // timeoutFactor: 0.01,
 };

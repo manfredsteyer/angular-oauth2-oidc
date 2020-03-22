@@ -1090,7 +1090,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                     'wrong origin',
                     origin,
                     'expected',
-                    issuer
+                    issuer,
+                    'event',
+                    e
                 );
 
                 return;
@@ -1127,10 +1129,20 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
 
     protected handleSessionChange(): void {
-        /* events: session_changed, relogin, stopTimer, logged_out*/
         this.eventsSubject.next(new OAuthInfoEvent('session_changed'));
         this.stopSessionCheckTimer();
-        if (this.silentRefreshRedirectUri) {
+
+        if (!this.useSilentRefresh && this.responseType === 'code') {
+            this.refreshToken()
+                .then(_ => {
+                    this.debug('token refresh after session change worked');
+                })
+                .catch(_ => {
+                    this.debug('token refresh did not work after session changed');
+                    this.eventsSubject.next(new OAuthInfoEvent('session_terminated'));
+                    this.logOut(true);
+                });
+        } else if (this.silentRefreshRedirectUri) {
             this.silentRefresh().catch(_ =>
                 this.debug('silent refresh failed after session changed')
             );
@@ -1519,15 +1531,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             return Promise.reject(event);
         }
 
+        this.storeSessionState(sessionState);
+
         if (code) {
-            return new Promise((resolve, reject) => {
-                this.getTokenFromCode(code, options).then(result => {
-                    this.storeSessionState(sessionState);
-                    resolve();
-                }).catch(err => {
-                    reject(err);
-                });
-            });
+            return this.getTokenFromCode(code, options).then(_ => null);
         } else {
             return Promise.resolve();
         }

@@ -30,7 +30,6 @@ export class AppComponent {
         console.debug('state', this.oauthService.state);
         this.oauthService.loadUserProfile();
       });
-
   }
 
   private configureCodeFlow() {
@@ -39,7 +38,7 @@ export class AppComponent {
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
 
     // Optional
-    this.oauthService.setupAutomaticSilentRefresh();
+    // this.oauthService.setupAutomaticSilentRefresh();
 
   }
 
