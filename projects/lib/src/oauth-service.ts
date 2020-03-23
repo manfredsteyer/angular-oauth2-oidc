@@ -1225,7 +1225,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         }
     }
 
-    protected checkSession(): void {
+    public checkSession(): void {
         const iframe: any = document.getElementById(this.sessionCheckIFrameName);
 
         if (!iframe) {
@@ -1440,9 +1440,12 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         customParameters?: Map<string, string>
     ): void {
         this._storage.setItem('access_token', accessToken);
-        if (grantedScopes) {
+        if (grantedScopes && !Array.isArray(grantedScopes)) {
             this._storage.setItem('granted_scopes', JSON.stringify(grantedScopes.split('+')));
+        } else if (grantedScopes && Array.isArray(grantedScopes)) {
+            this._storage.setItem('granted_scopes', JSON.stringify(grantedScopes));
         }
+
         this._storage.setItem('access_token_stored_at', '' + Date.now());
         if (expiresIn) {
             const expiresInMilliSeconds = expiresIn * 1000;

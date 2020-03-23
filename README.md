@@ -1,6 +1,6 @@
 # angular-oauth2-oidc
 
-Support for OAuth 2 and OpenId Connect (OIDC) in Angular. 
+Support for OAuth 2 and OpenId Connect (OIDC) in Angular. Already prepared for the upcoming OAuth 2.1.
 
 ![OIDC Certified Logo](https://raw.githubusercontent.com/manfredsteyer/angular-oauth2-oidc/master/oidc.png)
 
@@ -43,7 +43,7 @@ Please note, that this dependency is not needed for the **code flow**, which is 
 
 Successfully tested with **Angular 9** and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we've used IdentityServer (.NET / .NET Core) and Redhat's Keycloak (Java).
 
-**Angular 9**: Use 9.x versions of this library.
+**Angular 9**: Use 9.x versions of this library (should also work with older Angular versions!).
 
 **Angular 8**: Use 8.x versions of this library.
 
@@ -84,6 +84,7 @@ Successfully tested with **Angular 9** and its Router, PathLocationStrategy as w
 - Validating claims of the id_token regarding the specs
 - Hook for further custom validations
 - Single-Sign-Out by redirecting to the auth-server's logout-endpoint
+- Tested with all modern browsers and IE
 
 ## Sample-Auth-Server
 
