@@ -5,12 +5,10 @@
 
 ### Features
 
-* remove jsrsasign dependancy ([77cb37a](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/77cb37abfd08762a59b221257ed8d5d5b7c795d4))
-* Upgrade to angular 8 ([31c6273](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/31c6273b388af7e796a9ad663e346f1e33ff331c))
 * **automatic silent refresh:** stopAutomaticRefresh stops all timers. ([8ab853b](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/8ab853bf38dd162060d7b6cbd18f7b4fd5a84f18))
-* **code-flow:** allow using implicit flow by setting useSilentRefresh to true ([93902a5](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/93902a5808bb9b75a41d4bde44c6ab763bcfa9f6))
-* **sample:** also use new idsvr 4 for implicit flow demo to prevent issues with same site cookies ([58c6354](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/58c63541bc7d83d72c30577da2b68ac2d1dc35b7))
-* **session checks:** Session checks work now for code flow too. Pls see Docs for details. ([4bf8901](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/4bf89014d8cc5d50ed716500e3f3ad265b4ae2db))
+* **code-flow:** allow using silent refresh by setting useSilentRefresh to true ([93902a5](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/93902a5808bb9b75a41d4bde44c6ab763bcfa9f6))
+* **sample:** Also use new Identity Server 4 for implicit flow demo to prevent issues with same site cookies ([58c6354](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/58c63541bc7d83d72c30577da2b68ac2d1dc35b7))
+* **session checks:** Session checks work now for code flow too. Please see docs for details. ([4bf8901](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/4bf89014d8cc5d50ed716500e3f3ad265b4ae2db))
 
 
 ### Bug Fixes
@@ -23,6 +21,14 @@
 * missing HttpModule dependency ([7eac8ae](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/7eac8ae5cd1fd549f3933c30790f4b802c2c09f0))
 * run tokensetup outside ngzone ([07bb62d](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/07bb62d06abb84ef2da010977d07bfd2a3805b16))
 * typo ([3d331f2](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/3d331f2166340db43f0aaca42ce8abc4913cd027))
+
+### Pull Requests
+- Update sample app and silent-refresh.html script #755, linjie997
+- Add optional state parameter for logout, pmccloghrylaing
+- fix customHashFragment usage in tryLoginCodeFlow, roblabat
+- replace document with injectionToken #741, d-moos
+- Support predefined custom parameters extraction from the TokenResponse, vdveer
+- Fixed not working silent refresh when using 'code' #735, ErazerBrecht
 
 ### Thanks
 
