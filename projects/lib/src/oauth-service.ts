@@ -427,6 +427,15 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     });
   }
 
+  /**
+   * Stops timers for automatic refresh.
+   * To restart it, call setupAutomaticSilentRefresh again.
+   */
+  public stopAutomaticRefresh() {
+    this.clearAccessTokenTimer();
+    this.clearIdTokenTimer();
+  }
+
   protected clearAccessTokenTimer(): void {
     if (this.accessTokenTimeoutSubscription) {
       this.accessTokenTimeoutSubscription.unsubscribe();

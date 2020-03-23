@@ -217,7 +217,7 @@ export class AuthConfig {
   public nonceStateSeparator? = ';';
 
   /**
-   * Set this to true to use HTTP BASIC auth for password flow
+   * Set this to true to use HTTP BASIC auth for AJAX calls
    */
   public useHttpBasicAuth? = false;
 
