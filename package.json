@@ -1,8 +1,9 @@
 {
   "name": "starter",
-  "version": "9.1.0",
+  "version": "9.2.0",
   "license": "MIT",
   "scripts": {
+    "release": "standard-version",
     "ng": "ng",
     "start": "ng serve --project sample -o",
     "build": "npm run prettier && ng build --prod --project lib && npm run copy:readme && npm run docs",
@@ -71,6 +72,22 @@
     "protractor": "~5.4.3",
     "ts-node": "~8.6.2",
     "tslint": "~5.18.0",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "^3.0.2",
+    "husky": "^3.0.9",
+    "standard-version": "^7.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
