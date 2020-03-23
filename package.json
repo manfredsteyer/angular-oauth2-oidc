@@ -1,6 +1,6 @@
 {
   "name": "starter",
-  "version": "9.2.0",
+  "version": "9.0.0",
   "license": "MIT",
   "scripts": {
     "release": "standard-version",
@@ -39,6 +39,7 @@
     "bootstrap": "^3.3.7",
     "js-sha256": "^0.9.0",
     "jsrsasign": "^8.0.12",
+    "ngx-semantic-version": "^1.2.1",
     "rxjs": "6.5.4",
     "rxjs-compat": "^6.5.2",
     "text-encoder-lite": "^1.0.1",
