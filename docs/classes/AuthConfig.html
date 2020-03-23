@@ -974,6 +974,12 @@ implicit flow.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
                             <i>Default value : </i><code>() &#x3D;&gt; {...}</code>
                         </td>
                     </tr>
@@ -1914,7 +1920,7 @@ is triggered after 75% of the token&#39;s life time.</p>
 
                 <tr>
                     <td class="col-md-4">
-                        <div class="io-description"><p>Set this to true to use HTTP BASIC auth for password flow</p>
+                        <div class="io-description"><p>Set this to true to use HTTP BASIC auth for AJAX calls</p>
 </div>
                     </td>
                 </tr>
@@ -2157,7 +2163,7 @@ this case.</p>
    * the verbosity of the console needs to be explicitly set
    * to include Debug level messages.
    */
-   public showDebugInformation? &#x3D; false;
+  public showDebugInformation? &#x3D; false;
 
   /**
    * The redirect uri used when doing silent refresh.
@@ -2292,7 +2298,7 @@ this case.</p>
   public nonceStateSeparator? &#x3D; &#x27;;&#x27;;
 
   /**
-   * Set this to true to use HTTP BASIC auth for password flow
+   * Set this to true to use HTTP BASIC auth for AJAX calls
    */
   public useHttpBasicAuth? &#x3D; false;
 
@@ -2303,7 +2309,7 @@ this case.</p>
 
   /**
    * The interceptors waits this time span if there is no token
-  */
+   */
   public waitForTokenInMsec? &#x3D; 0;
 
   /**
@@ -2332,11 +2338,9 @@ this case.</p>
    * allowing a way for implementations to specify their own method of routing to new
    * urls.
    */
-  public openUri?: ((uri: string) &#x3D;&gt; void) &#x3D; uri &#x3D;&gt; {
+  public openUri?: (uri: string) &#x3D;&gt; void &#x3D; uri &#x3D;&gt; {
     location.href &#x3D; uri;
-  }
-
-
+  };
 }
 </code></pre>
     </div>

@@ -55,6 +55,9 @@
 <li>Create and configure a <code>silent-refresh.html</code> as described <a href="./silent-refresh.html">here</a> *.</li>
 </ul>
 <p>* Please note this does not mean that you have to use silent refresh too.</p>
+<p>Also, for your <code>silent-regfesh.html</code>, make sure you are also targeting
+<code>window.opener</code> and fall back to <code>window.parent</code>:</p>
+<p><strong>Please note</strong>: IE sets opener to null under specific security settings. This prevents making this work.</p>
 
                    </div><div class="search-results">
     <div class="has-results">

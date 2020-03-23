@@ -1,7 +1,5 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
-
 ## 9.1.0 (2020-03-23)
 
 
@@ -26,4 +24,8 @@ All notable changes to this project will be documented in this file. See [standa
 * run tokensetup outside ngzone ([07bb62d](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/07bb62d06abb84ef2da010977d07bfd2a3805b16))
 * typo ([3d331f2](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/3d331f2166340db43f0aaca42ce8abc4913cd027))
 
-### [9.0.2](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/v9.0.1...v9.0.2) (2020-03-23)
+### Thanks
+
+Big Thanks to all contributers: Brecht Carlier, Daniel Moos, Jie Lin, Manfred Steyer, Phil McCloghry-Laing, robin labat, vdveer
+
+Also, big thanks to jeroenheijmans for doing an awesome job with moderating and analyzing the issues!

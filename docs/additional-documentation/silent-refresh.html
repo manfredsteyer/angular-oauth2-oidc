@@ -88,6 +88,26 @@ export const authConfig: AuthConfig = {
         (window.opener || window.parent).postMessage(location.hash || (&#39;#&#39; + location.search), location.origin);
     &lt;/script&gt;
 &lt;/body&gt;
+&lt;/html&gt;</code></pre></div><p>This simple implementation within silent-refresh.html is sufficient in most cases. It takes care of the hash fragment as well as of the query string (property search). For <strong>edge cases</strong> you need to check if the received hash fragment is a token response. For this, please go with the following <strong>more advanced implementation</strong>:</p>
+<div><pre class="line-numbers"><code class="language-html">&lt;html&gt;
+    &lt;body&gt;
+        &lt;script&gt;
+            var checks = [/[\?|&amp;|#]code=/, /[\?|&amp;|#]error=/, /[\?|&amp;|#]token=/, /[\?|&amp;|#]id_token=/];
+
+            function isResponse(str) {
+                var count = 0;
+                if (!str) return false;
+                for(var i=0; i&lt;checks.length; i++) {
+                    if (str.match(checks[i])) return true;
+                }
+                return false;
+            }
+
+            var message = isResponse(location.hash) ? location.hash : &#39;#&#39; + location.search;
+
+            (window.opener || window.parent).postMessage(message, location.origin);
+        &lt;/script&gt;
+    &lt;/body&gt;
 &lt;/html&gt;</code></pre></div><p>Please make sure that this file is copied to your output directory by your build task. When using the CLI you can define it as an asset for this. For this, you have to add the following line to the file <code>.angular-cli.json</code>:</p>
 <div><pre class="line-numbers"><code class="language-JSON">&quot;assets&quot;: [
     [...],

@@ -359,7 +359,7 @@ but you can also create your own implementations.</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &quot;@angular/core&quot;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
 
 /**
  * Additional options that can be passed to tryLogin.
@@ -467,7 +467,6 @@ export class MemoryStorage implements OAuthStorage {
   setItem(key: string, data: string): void {
     this.data.set(key, data);
   }
-
 }
 
 /**
@@ -499,7 +498,7 @@ export interface ParsedIdToken {
  */
 export interface TokenResponse {
   access_token: string;
-  id_token: string; 
+  id_token: string;
   token_type: string;
   expires_in: number;
   refresh_token: string;

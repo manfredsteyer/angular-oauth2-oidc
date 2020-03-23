@@ -12,14 +12,15 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "tsc": "tsc",
-    "prettier": "prettier --write projects/**",
+    "prettier": "prettier --write projects/**/*.ts",
     "docs": "npm run docs:build -- --disableCoverage --disablePrivate --disableInternal --includes docs-src",
     "docs:build": "compodoc -p projects/lib/tsconfig.lib.json -n angular-oauth2-oidc -d docs --hideGenerator",
     "docs:serve": "npm run docs:build -- -s",
     "docs:watch": "npm run docs:build -- -s -w",
     "format": "prettier --single-quote --write projects/**/*.ts",
     "copy:readme": "cpr README.md dist/lib/README.md --overwrite",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "contributer": "git shortlog -s 9.0.0..HEAD"
   },
   "private": true,
   "dependencies": {

@@ -82,6 +82,9 @@
                             <li>
                                 <a href="#toHashString">toHashString</a>
                             </li>
+                            <li>
+                                <a href="#toHashString2">toHashString2</a>
+                            </li>
                         </ul>
                     </td>
                 </tr>
@@ -124,8 +127,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="13"
-                            class="link-to-prism">projects/lib/src/token-validation/hash-handler.ts:13</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="14"
+                            class="link-to-prism">projects/lib/src/token-validation/hash-handler.ts:14</a></div>
                 </td>
             </tr>
 
@@ -206,8 +209,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="20"
-                            class="link-to-prism">projects/lib/src/token-validation/hash-handler.ts:20</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="34"
+                            class="link-to-prism">projects/lib/src/token-validation/hash-handler.ts:34</a></div>
                 </td>
             </tr>
 
@@ -254,6 +257,76 @@
             </tr>
         </tbody>
     </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="toHashString2"></a>
+                    <span class="name">
+                        <b>
+                            toHashString2
+                        </b>
+                        <a href="#toHashString2"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>toHashString2(byteArray: number[])</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="26"
+                            class="link-to-prism">projects/lib/src/token-validation/hash-handler.ts:26</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>byteArray</td>
+                                    <td>
+                                            <code>number[]</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
 
     </div>
@@ -262,54 +335,68 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
 
+import { sha256 } from &#x27;js-sha256&#x27;;
+
 /**
  * Abstraction for crypto algorithms
-*/
+ */
 export abstract class HashHandler {
-    abstract calcHash(valueToHash: string, algorithm: string): Promise&lt;string&gt;;
+  abstract calcHash(valueToHash: string, algorithm: string): Promise&lt;string&gt;;
 }
 
 @Injectable()
 export class DefaultHashHandler implements HashHandler {
+  async calcHash(valueToHash: string, algorithm: string): Promise&lt;string&gt; {
+    // const encoder &#x3D; new TextEncoder();
+    // const hashArray &#x3D; await window.crypto.subtle.digest(algorithm, data);
+    // const data &#x3D; encoder.encode(valueToHash);
 
-    async calcHash(valueToHash: string, algorithm: string): Promise&lt;string&gt; {
-        const encoder &#x3D; new TextEncoder();
-        const data &#x3D; encoder.encode(valueToHash);
-        const hashArray &#x3D; await window.crypto.subtle.digest(algorithm, data);
-        return this.toHashString(hashArray);
+    const hashArray &#x3D; sha256.array(valueToHash);
+    // const hashString &#x3D; this.toHashString(hashArray);
+    const hashString &#x3D; this.toHashString2(hashArray);
+
+    return hashString;
+  }
+
+  toHashString2(byteArray: number[]) {
+    let result &#x3D; &#x27;&#x27;;
+    for (let e of byteArray) {
+      result +&#x3D; String.fromCharCode(e);
     }
+    return result;
+  }
 
-    toHashString(buffer: ArrayBuffer) {
-      const byteArray &#x3D; new Uint8Array(buffer);
-      let result &#x3D; &#x27;&#x27;;
-      for (let e of byteArray) {
-        result +&#x3D; String.fromCharCode(e);
-      }
-      return result;
+  toHashString(buffer: ArrayBuffer) {
+    const byteArray &#x3D; new Uint8Array(buffer);
+    let result &#x3D; &#x27;&#x27;;
+    for (let e of byteArray) {
+      result +&#x3D; String.fromCharCode(e);
     }
+    return result;
+  }
 
-    // hexString(buffer) {
-    //     const byteArray &#x3D; new Uint8Array(buffer);
-    //     const hexCodes &#x3D; [...byteArray].map(value &#x3D;&gt; {
-    //       const hexCode &#x3D; value.toString(16);
-    //       const paddedHexCode &#x3D; hexCode.padStart(2, &#x27;0&#x27;);
-    //       return paddedHexCode;
-    //     });
-      
-    //     return hexCodes.join(&#x27;&#x27;);
-    //   }
-    
-      // toHashString(hexString: string) {
-      //   let result &#x3D; &#x27;&#x27;;
-      //   for (let i &#x3D; 0; i &lt; hexString.length; i +&#x3D; 2) {
-      //     let hexDigit &#x3D; hexString.charAt(i) + hexString.charAt(i + 1);
-      //     let num &#x3D; parseInt(hexDigit, 16);
-      //     result +&#x3D; String.fromCharCode(num);
-      //   }
-      //   return result;
-      // }
+  // hexString(buffer) {
+  //     const byteArray &#x3D; new Uint8Array(buffer);
+  //     const hexCodes &#x3D; [...byteArray].map(value &#x3D;&gt; {
+  //       const hexCode &#x3D; value.toString(16);
+  //       const paddedHexCode &#x3D; hexCode.padStart(2, &#x27;0&#x27;);
+  //       return paddedHexCode;
+  //     });
 
-}</code></pre>
+  //     return hexCodes.join(&#x27;&#x27;);
+  //   }
+
+  // toHashString(hexString: string) {
+  //   let result &#x3D; &#x27;&#x27;;
+  //   for (let i &#x3D; 0; i &lt; hexString.length; i +&#x3D; 2) {
+  //     let hexDigit &#x3D; hexString.charAt(i) + hexString.charAt(i + 1);
+  //     let num &#x3D; parseInt(hexDigit, 16);
+  //     result +&#x3D; String.fromCharCode(num);
+  //   }
+  //   return result;
+  // }
+}
+</code></pre>
     </div>
 
 </div>
