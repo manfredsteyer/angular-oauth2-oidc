@@ -15,7 +15,10 @@ import { DefaultOAuthInterceptor } from './interceptors/default-oauth.intercepto
 import { ValidationHandler } from './token-validation/validation-handler';
 import { NullValidationHandler } from './token-validation/null-validation-handler';
 import { createDefaultLogger, createDefaultStorage } from './factories';
-import { HashHandler, DefaultHashHandler } from './token-validation/hash-handler';
+import {
+  HashHandler,
+  DefaultHashHandler
+} from './token-validation/hash-handler';
 
 @NgModule({
   imports: [CommonModule],
@@ -34,7 +37,7 @@ export class OAuthModule {
         UrlHelperService,
         { provide: OAuthLogger, useFactory: createDefaultLogger },
         { provide: OAuthStorage, useFactory: createDefaultStorage },
-        { provide: ValidationHandler, useClass: validationHandlerClass},
+        { provide: ValidationHandler, useClass: validationHandlerClass },
         { provide: HashHandler, useClass: DefaultHashHandler },
         {
           provide: OAuthResourceServerErrorHandler,

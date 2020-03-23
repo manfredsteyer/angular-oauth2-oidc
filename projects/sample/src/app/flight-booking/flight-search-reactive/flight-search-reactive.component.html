@@ -5,46 +5,45 @@ round-trip
 -->
 
 <form novalidate [formGroup]="filter">
+  <h2>Dynamisches Formular</h2>
+  <div *ngFor="let item of formDesc">
+    <label>{{ item.label }}</label>
+    <input [formControlName]="item.name" class="form-control" />
+  </div>
 
-    <h2>Dynamisches Formular</h2>
-    <div *ngFor="let item of formDesc">
-        <label>{{item.label}}</label>
-        <input [formControlName]="item.name" class="form-control">
+  <h2>Statisches Formular</h2>
+
+  <div class="form-group">
+    <label>From</label>
+    <input class="form-control" formControlName="from" />
+
+    <div *ngIf="!filter.controls.from.valid && !filter.controls.from.pending">
+      Validierungsfehler. Bitte prüfen Sie Ihre Eingaben.
     </div>
 
-    <h2>Statisches Formular</h2>
-
-    <div class="form-group">
-        <label>From</label>
-        <input class="form-control" formControlName="from">
-
-        <div *ngIf="!filter.controls.from.valid && !filter.controls.from.pending ">
-            Validierungsfehler. Bitte prüfen Sie Ihre Eingaben.
-        </div>
-
-        <div *ngIf="filter.controls.from.hasError('city')">
-            Diese Stadt wird nicht angefolgen
-        </div>
-
-        <div *ngIf="filter.controls.from.hasError('required')">
-            Dieses Feld ist ein Pflichtfeld
-        </div>
-
+    <div *ngIf="filter.controls.from.hasError('city')">
+      Diese Stadt wird nicht angefolgen
     </div>
 
-
-    <div class="form-group">
-        <label>To</label>
-        <input class="form-control" formControlName="to" name="to">
+    <div *ngIf="filter.controls.from.hasError('required')">
+      Dieses Feld ist ein Pflichtfeld
     </div>
-    <div class="form-group">
-        <button
-                class="btn btn-primary"
-                name="btnSearch"
-                [disabled]="!filter.valid"
-                (click)="search()">Search</button>
-    </div>
+  </div>
 
+  <div class="form-group">
+    <label>To</label>
+    <input class="form-control" formControlName="to" name="to" />
+  </div>
+  <div class="form-group">
+    <button
+      class="btn btn-primary"
+      name="btnSearch"
+      [disabled]="!filter.valid"
+      (click)="search()"
+    >
+      Search
+    </button>
+  </div>
 </form>
 <!--
 [ngClass]="{ 'active': f == selectedFlight }"
@@ -63,23 +62,21 @@ round-trip
 -->
 
 <div class="row">
-    <div *ngFor="let f of flights" class="col-sm-6 col-md-4 col-lg-3 ">
-        <flight-card [item]="f"
-                     [(selectedItem)]="selectedFlight">
-        </flight-card>
+  <div *ngFor="let f of flights" class="col-sm-6 col-md-4 col-lg-3 ">
+    <flight-card [item]="f" [(selectedItem)]="selectedFlight"> </flight-card>
 
-        <!--
+    <!--
         [selectedItem]="selectedFlight"
                      (selectedItemChange)="selectedFlight = $event"
         -->
 
-        <alt-flight-card
-                [item]="f"
-                [selected]="f == selectedFlight"
-                (selectedChange)="selectedFlight = f">
-        </alt-flight-card>
-
-    </div>
+    <alt-flight-card
+      [item]="f"
+      [selected]="f == selectedFlight"
+      (selectedChange)="selectedFlight = f"
+    >
+    </alt-flight-card>
+  </div>
 </div>
 
 <!--
@@ -88,8 +85,10 @@ round-trip
 -->
 
 <div class="row" style="margin-top:40px">
-<pre>Warenkorb
+  <pre>
+Warenkorb
 ----------------------
-{{selectedFlight | json}}
-</pre>
+{{ selectedFlight | json }}
+</pre
+  >
 </div>

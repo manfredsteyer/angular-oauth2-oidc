@@ -16,7 +16,6 @@ import { CustomPreloadingStrategy } from './shared/preload/custom-preloading.str
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { useHash } from '../flags';
 
-
 const ROUTING_OPTIONS: ExtraOptions = {
   // preloadingStrategy: CustomPreloadingStrategy,
   useHash: useHash,
@@ -32,7 +31,7 @@ const ROUTING_OPTIONS: ExtraOptions = {
     HttpClientModule,
     SharedModule.forRoot(),
     OAuthModule.forRoot({
-      resourceServer: { 
+      resourceServer: {
         allowedUrls: ['http://www.angular.at/api'],
         sendAccessToken: true
       }
@@ -42,7 +41,7 @@ const ROUTING_OPTIONS: ExtraOptions = {
     AppComponent,
     HomeComponent,
     FlightHistoryComponent,
-    PasswordFlowLoginComponent,
+    PasswordFlowLoginComponent
   ],
   providers: [
     // (useHash) ? { provide: LocationStrategy, useClass: HashLocationStrategy } : [],

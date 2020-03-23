@@ -18,7 +18,7 @@ Support for OAuth 2 and OpenId Connect (OIDC) in Angular. Already prepared for t
 
 ## Breaking Change in Version 9
 
-With regards to tree shaking, beginning with version 9, the ``JwksValidationHandler`` has been moved to a library of its own. If you need it for implementing **implicit flow**, please install it using npm:
+With regards to tree shaking, beginning with version 9, the `JwksValidationHandler` has been moved to a library of its own. If you need it for implementing **implicit flow**, please install it using npm:
 
 ```
 npm i angular-oauth2-oidc-jwks --save
@@ -37,7 +37,6 @@ import { JwksValidationHandler } from 'angular-oauth2-oidc';
 ```
 
 Please note, that this dependency is not needed for the **code flow**, which is nowadays the **recommended** flow for single page applications. This also results in smaller bundle sizes.
-
 
 ## Tested Environment
 
@@ -66,14 +65,14 @@ Successfully tested with **Angular 9** and its Router, PathLocationStrategy as w
 - The issues contain some ideas for PRs and enhancements (see labels)
 - If you want to contribute to the docs, you can do so in the `docs-src` folder. Make sure you update `summary.json` as well. Then generate the docs with the following commands:
 
-  ``` sh
+  ```sh
   npm install -g @compodoc/compodoc
   npm run docs
   ```
 
 ## Features
 
-- Logging in via Code Flow + PKCE 
+- Logging in via Code Flow + PKCE
   - Hence, you are safe for the upcoming OAuth 2.1
 - Logging in via Implicit Flow (where a user is redirected to Identity Provider)
 - "Logging in" via Password Flow (where a user enters their password into the client)
@@ -90,17 +89,18 @@ Successfully tested with **Angular 9** and its Router, PathLocationStrategy as w
 
 You can use the OIDC-Sample-Server used in our examples. It assumes, that your Web-App runs on http://localhost:4200
 
-Username/Password: 
-  - max/geheim
-  - bob/bob
-  - alice/alice
+Username/Password:
 
-*clientIds:*
+- max/geheim
+- bob/bob
+- alice/alice
+
+_clientIds:_
 
 - spa (Code Flow + PKCE)
 - implicit (implicit flow)
 
-*redirectUris:*
+_redirectUris:_
 
 - localhost:[4200-4202]
 - localhost:[4200-4202]/index.html
@@ -138,59 +138,58 @@ export class AppModule {
 }
 ```
 
-# Logging in 
+# Logging in
 
 Since Version 8, this library supports code flow and [PKCE](https://tools.ietf.org/html/rfc7636) to align with the current draft of the [OAuth 2.0 Security Best Current Practice](https://tools.ietf.org/html/draft-ietf-oauth-security-topics-13) document. This is also the foundation of the upcoming OAuth 2.1.
 
-
 To configure your solution for code flow + PKCE you have to set the `responseType` to `code`:
 
-  ```TypeScript
-    import { AuthConfig } from 'angular-oauth2-oidc';
+```TypeScript
+  import { AuthConfig } from 'angular-oauth2-oidc';
 
-    export const authCodeFlowConfig: AuthConfig = {
-      // Url of the Identity Provider
-      issuer: 'https://demo.identityserver.io',
+  export const authCodeFlowConfig: AuthConfig = {
+    // Url of the Identity Provider
+    issuer: 'https://demo.identityserver.io',
 
-      // URL of the SPA to redirect the user to after login
-      redirectUri: window.location.origin + '/index.html',
+    // URL of the SPA to redirect the user to after login
+    redirectUri: window.location.origin + '/index.html',
 
-      // The SPA's id. The SPA is registerd with this id at the auth-server
-      // clientId: 'server.code',
-      clientId: 'spa',
+    // The SPA's id. The SPA is registerd with this id at the auth-server
+    // clientId: 'server.code',
+    clientId: 'spa',
 
-      // Just needed if your auth server demands a secret. In general, this
-      // is a sign that the auth server is not configured with SPAs in mind
-      // and it might not enforce further best practices vital for security
-      // such applications.
-      // dummyClientSecret: 'secret',
+    // Just needed if your auth server demands a secret. In general, this
+    // is a sign that the auth server is not configured with SPAs in mind
+    // and it might not enforce further best practices vital for security
+    // such applications.
+    // dummyClientSecret: 'secret',
 
-      responseType: 'code',
+    responseType: 'code',
 
-      // set the scope for the permissions the client should request
-      // The first four are defined by OIDC. 
-      // Important: Request offline_access to get a refresh token
-      // The api scope is a usecase specific one
-      scope: 'openid profile email offline_access api',
+    // set the scope for the permissions the client should request
+    // The first four are defined by OIDC.
+    // Important: Request offline_access to get a refresh token
+    // The api scope is a usecase specific one
+    scope: 'openid profile email offline_access api',
 
-      showDebugInformation: true,
+    showDebugInformation: true,
 
-      // Not recommented:
-      // disablePKCI: true,
-    };
-  ```
+    // Not recommented:
+    // disablePKCI: true,
+  };
+```
 
 After this, you can initialize the code flow using:
 
-  ```TypeScript
-  this.oauthService.initCodeFlow();
-  ```
+```TypeScript
+this.oauthService.initCodeFlow();
+```
 
-There is also a convenience method `initLoginFlow` which initializes either the code flow or the implicit flow depending on your configuration. 
+There is also a convenience method `initLoginFlow` which initializes either the code flow or the implicit flow depending on your configuration.
 
-  ```TypeScript
-  this.oauthService.initLoginFlow();
-  ```
+```TypeScript
+this.oauthService.initLoginFlow();
+```
 
 Also -- as shown in the readme -- you have to execute the following code when bootstrapping to make the library to fetch the token:
 
@@ -199,17 +198,15 @@ this.oauthService.configure(authCodeFlowConfig);
 this.oauthService.loadDiscoveryDocumentAndTryLogin();
 ```
 
-
 ### Skipping the Login Form
 
-If you don't want to display a login form that tells the user that they are redirected to the identity server, you can use the convenience function ``this.oauthService.loadDiscoveryDocumentAndLogin();`` instead of ``this.oauthService.loadDiscoveryDocumentAndTryLogin();`` when setting up the library.
+If you don't want to display a login form that tells the user that they are redirected to the identity server, you can use the convenience function `this.oauthService.loadDiscoveryDocumentAndLogin();` instead of `this.oauthService.loadDiscoveryDocumentAndTryLogin();` when setting up the library.
 
 This directly redirects the user to the identity server if there are no valid tokens. Ensure you have your `issuer` set to your discovery document endpoint!
 
-
 ### Calling a Web API with an Access Token
 
-You can automate this task by switching ``sendAccessToken`` on and by setting ``allowedUrls`` to an array with prefixes for the respective URLs. Use lower case for the prefixes.
+You can automate this task by switching `sendAccessToken` on and by setting `allowedUrls` to an array with prefixes for the respective URLs. Use lower case for the prefixes.
 
 ```TypeScript
 OAuthModule.forRoot({
@@ -228,7 +225,7 @@ See docs: https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-do
 
 ## Routing
 
-If you use the ``PathLocationStrategy`` (which is on by default) and have a general catch-all-route (``path: '**'``) you should be fine. Otherwise look up the section ``Routing with the HashStrategy`` in the [documentation](https://manfredsteyer.github.io/angular-oauth2-oidc/docs/).
+If you use the `PathLocationStrategy` (which is on by default) and have a general catch-all-route (`path: '**'`) you should be fine. Otherwise look up the section `Routing with the HashStrategy` in the [documentation](https://manfredsteyer.github.io/angular-oauth2-oidc/docs/).
 
 ## Implicit Flow
 

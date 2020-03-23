@@ -29,9 +29,7 @@
               "projects/lib/tsconfig.lib.json",
               "projects/lib/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -131,9 +129,7 @@
               "projects/sample/tsconfig.app.json",
               "projects/sample/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -159,9 +155,7 @@
               "projects/quickstart-demo/src/favicon.ico",
               "projects/quickstart-demo/src/assets"
             ],
-            "styles": [
-              "projects/quickstart-demo/src/styles.css"
-            ],
+            "styles": ["projects/quickstart-demo/src/styles.css"],
             "scripts": []
           },
           "configurations": {
@@ -219,9 +213,7 @@
               "projects/quickstart-demo/src/favicon.ico",
               "projects/quickstart-demo/src/assets"
             ],
-            "styles": [
-              "projects/quickstart-demo/src/styles.css"
-            ],
+            "styles": ["projects/quickstart-demo/src/styles.css"],
             "scripts": []
           }
         },
@@ -233,9 +225,7 @@
               "projects/quickstart-demo/tsconfig.spec.json",
               "projects/quickstart-demo/e2e/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {
@@ -281,9 +271,7 @@
               "projects/angular-oauth2-oidc-jwks/tsconfig.lib.json",
               "projects/angular-oauth2-oidc-jwks/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }

@@ -82,7 +82,7 @@ export class AuthConfig {
    * the verbosity of the console needs to be explicitly set
    * to include Debug level messages.
    */
-   public showDebugInformation? = false;
+  public showDebugInformation? = false;
 
   /**
    * The redirect uri used when doing silent refresh.
@@ -228,7 +228,7 @@ export class AuthConfig {
 
   /**
    * The interceptors waits this time span if there is no token
-  */
+   */
   public waitForTokenInMsec? = 0;
 
   /**
@@ -257,9 +257,7 @@ export class AuthConfig {
    * allowing a way for implementations to specify their own method of routing to new
    * urls.
    */
-  public openUri?: ((uri: string) => void) = uri => {
+  public openUri?: (uri: string) => void = uri => {
     location.href = uri;
-  }
-
-
+  };
 }

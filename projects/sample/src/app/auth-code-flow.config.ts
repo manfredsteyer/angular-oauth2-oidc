@@ -5,8 +5,9 @@ export const authCodeFlowConfig: AuthConfig = {
   issuer: 'https://idsvr4.azurewebsites.net',
 
   // URL of the SPA to redirect the user to after login
-  redirectUri: window.location.origin
-    + ((localStorage.getItem('useHashLocationStrategy') === 'true')
+  redirectUri:
+    window.location.origin +
+    (localStorage.getItem('useHashLocationStrategy') === 'true'
       ? '/#/index.html'
       : '/index.html'),
 
@@ -26,19 +27,18 @@ export const authCodeFlowConfig: AuthConfig = {
   // The first four are defined by OIDC.
   // Important: Request offline_access to get a refresh token
   // The api scope is a usecase specific one
-  scope: (useSilentRefreshForCodeFlow) ? 
-    'openid profile email api' :  
-    'openid profile email offline_access api',
+  scope: useSilentRefreshForCodeFlow
+    ? 'openid profile email api'
+    : 'openid profile email offline_access api',
 
-    // ^^ Please note that offline_access is not needed for silent refresh
-    // At least when using idsvr, this even prevents silent refresh
-    // as idsvr ALWAYS prompts the user for consent when this scope is
-    // requested
+  // ^^ Please note that offline_access is not needed for silent refresh
+  // At least when using idsvr, this even prevents silent refresh
+  // as idsvr ALWAYS prompts the user for consent when this scope is
+  // requested
 
   // This is needed for silent refresh (refreshing tokens w/o a refresh_token)
   // **AND** for logging in with a popup
-  silentRefreshRedirectUri: 
-    `${window.location.origin}/silent-refresh.html`,
+  silentRefreshRedirectUri: `${window.location.origin}/silent-refresh.html`,
 
   useSilentRefresh: useSilentRefreshForCodeFlow,
 
@@ -46,7 +46,6 @@ export const authCodeFlowConfig: AuthConfig = {
 
   sessionChecksEnabled: true,
 
-  timeoutFactor: 0.01,
+  timeoutFactor: 0.01
   // disablePKCI: true,
-
 };

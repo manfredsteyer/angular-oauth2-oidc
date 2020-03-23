@@ -1,9 +1,11 @@
 import { MemoryStorage } from './types';
 
 export function createDefaultLogger() {
-    return console;
+  return console;
 }
 
 export function createDefaultStorage() {
-    return typeof sessionStorage !== 'undefined' ? sessionStorage : new MemoryStorage();
+  return typeof sessionStorage !== 'undefined'
+    ? sessionStorage
+    : new MemoryStorage();
 }

@@ -1,26 +1,16 @@
 {
-    "extends": "../../tslint.json",
-    "rules": {
-        "directive-selector": [
-            true,
-            "attribute",
-            null,
-            "camelCase"
-        ],
-        "component-selector": [
-            true,
-            "element",
-            null,
-            "kebab-case"
-        ],
-        "directive-class-suffix": false,
-        "prefer-const": false,
-        "no-trailing-whitespace": false,
-        "member-ordering": false,
-        "triple-equals": false,
-        "no-console": false,
-        "no-var-keyword": false,
-        "no-inferrable-types": false,
-        "comment-format": false
-    }
+  "extends": "../../tslint.json",
+  "rules": {
+    "directive-selector": [true, "attribute", null, "camelCase"],
+    "component-selector": [true, "element", null, "kebab-case"],
+    "directive-class-suffix": false,
+    "prefer-const": false,
+    "no-trailing-whitespace": false,
+    "member-ordering": false,
+    "triple-equals": false,
+    "no-console": false,
+    "no-var-keyword": false,
+    "no-inferrable-types": false,
+    "comment-format": false
+  }
 }

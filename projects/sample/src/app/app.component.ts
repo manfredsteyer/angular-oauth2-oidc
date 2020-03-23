@@ -3,7 +3,7 @@ import { authConfig } from './auth.config';
 import { Component } from '@angular/core';
 import { OAuthService, NullValidationHandler } from 'angular-oauth2-oidc';
 import { Router } from '@angular/router';
-import { filter} from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { authCodeFlowConfig } from './auth-code-flow.config';
 import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 import { useHash } from '../flags';
@@ -15,7 +15,6 @@ import { useHash } from '../flags';
 })
 export class AppComponent {
   constructor(private router: Router, private oauthService: OAuthService) {
-
     // Remember the selected configuration
     if (sessionStorage.getItem('flow') === 'code') {
       this.configureCodeFlow();
@@ -33,17 +32,14 @@ export class AppComponent {
   }
 
   private configureCodeFlow() {
-
     this.oauthService.configure(authCodeFlowConfig);
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
 
     // Optional
     // this.oauthService.setupAutomaticSilentRefresh();
-
   }
 
   private configureImplicitFlow() {
-
     this.oauthService.configure(authConfig);
     // this.oauthService.setStorage(localStorage);
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
@@ -71,7 +67,7 @@ export class AppComponent {
       });
   }
 
-  // 
+  //
   // Below you find further examples for configuration functions
   //
 

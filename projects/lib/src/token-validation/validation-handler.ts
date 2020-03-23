@@ -24,7 +24,9 @@ export abstract class ValidationHandler {
   /**
    * Validates the at_hash in an id_token against the received access_token.
    */
-  public abstract validateAtHash(validationParams: ValidationParams): Promise<boolean>;
+  public abstract validateAtHash(
+    validationParams: ValidationParams
+  ): Promise<boolean>;
 }
 
 /**
@@ -83,5 +85,8 @@ export abstract class AbstractValidationHandler implements ValidationHandler {
    * @param valueToHash
    * @param algorithm
    */
-  protected abstract calcHash(valueToHash: string, algorithm: string): Promise<string>;
+  protected abstract calcHash(
+    valueToHash: string,
+    algorithm: string
+  ): Promise<string>;
 }

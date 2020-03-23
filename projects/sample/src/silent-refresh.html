@@ -1,20 +1,27 @@
 <html>
-    <body>
-        <script>
-            var checks = [/[\?|&|#]code=/, /[\?|&|#]error=/, /[\?|&|#]token=/, /[\?|&|#]id_token=/];
+  <body>
+    <script>
+      var checks = [
+        /[\?|&|#]code=/,
+        /[\?|&|#]error=/,
+        /[\?|&|#]token=/,
+        /[\?|&|#]id_token=/
+      ];
 
-            function isResponse(str) {
-                var count = 0;
-                if (!str) return false;
-                for(var i=0; i<checks.length; i++) {
-                    if (str.match(checks[i])) return true;
-                }
-                return false;
-            }
+      function isResponse(str) {
+        var count = 0;
+        if (!str) return false;
+        for (var i = 0; i < checks.length; i++) {
+          if (str.match(checks[i])) return true;
+        }
+        return false;
+      }
 
-            var message = isResponse(location.hash) ? location.hash : '#' + location.search;
+      var message = isResponse(location.hash)
+        ? location.hash
+        : '#' + location.search;
 
-            (window.opener || window.parent).postMessage(message, location.origin);
-        </script>
-    </body>
+      (window.opener || window.parent).postMessage(message, location.origin);
+    </script>
+  </body>
 </html>
