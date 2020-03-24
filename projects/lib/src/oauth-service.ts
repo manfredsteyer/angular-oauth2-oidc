@@ -732,7 +732,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                         this.storeAccessTokenResponse(
                             tokenResponse.access_token,
                             tokenResponse.refresh_token,
-                            tokenResponse.expires_in,
+                            tokenResponse.expires_in || this.fallbackAccessTokenExpirationTimeInSec,
                             tokenResponse.scope
                         );
 
@@ -809,7 +809,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                         this.storeAccessTokenResponse(
                             tokenResponse.access_token,
                             tokenResponse.refresh_token,
-                            tokenResponse.expires_in,
+                            tokenResponse.expires_in || this.fallbackAccessTokenExpirationTimeInSec,
                             tokenResponse.scope
                         );
 
@@ -1579,7 +1579,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                     this.storeAccessTokenResponse(
                         tokenResponse.access_token,
                         tokenResponse.refresh_token,
-                        tokenResponse.expires_in,
+                        tokenResponse.expires_in || this.fallbackAccessTokenExpirationTimeInSec,
                         tokenResponse.scope);
 
                     if (this.oidc && tokenResponse.id_token) {
