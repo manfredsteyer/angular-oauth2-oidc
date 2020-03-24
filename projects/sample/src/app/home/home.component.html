@@ -2,6 +2,10 @@
 <h1 *ngIf="!givenName">Welcome!</h1>
 <h1 *ngIf="givenName">Welcome, {{ givenName }} {{ familyName }}!</h1>
 
+<div *ngIf="login" style="color: red">
+  You have to login before you can search for flights.
+</div>
+
 <div class="panel panel-default">
   <div class="panel-body">
     <p>Login with Authorization Server</p>

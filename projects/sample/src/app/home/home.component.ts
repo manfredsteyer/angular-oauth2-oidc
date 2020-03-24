@@ -2,6 +2,7 @@ import { authConfig } from '../auth.config';
 import { Component, OnInit } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { authCodeFlowConfig } from '../auth-code-flow.config';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: './home.component.html'
@@ -10,10 +11,19 @@ export class HomeComponent implements OnInit {
   loginFailed: boolean = false;
   userProfile: object;
   usePopup: boolean;
+  login: false;
 
-  constructor(private oauthService: OAuthService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private oauthService: OAuthService) {
+  }
 
   ngOnInit() {
+
+    this.route.params.subscribe(p => {
+      this.login = p['login'];
+    });
+
     // This would directly (w/o user interaction) redirect the user to the
     // login page if they are not already logged in.
     /*
