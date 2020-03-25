@@ -462,6 +462,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
                     this.discoveryDocumentLoaded = true;
                     this.discoveryDocumentLoadedSubject.next(doc);
+                    this.revocationEndpoint = doc.revocation_endpoint;
 
                     if (this.sessionChecksEnabled) {
                         this.restartSessionChecksIfStillLoggedIn();
@@ -562,6 +563,14 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                 'error validating token_endpoint in discovery document',
                 errors
             );
+        }
+
+        errors = this.validateUrlFromDiscoveryDocument(doc.revocation_endpoint);
+        if (errors.length > 0) {
+          this.logger.error(
+            "error validating revocation_endpoint in discovery document",
+            errors
+          );
         }
 
         errors = this.validateUrlFromDiscoveryDocument(doc.userinfo_endpoint);
@@ -2308,5 +2317,29 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         const challange = base64UrlEncode(challengeRaw);
 
         return [challange, verifier];
+    }
+
+    /**
+     * Revokes the auth token to secure the vulnarability
+     * of the token issued allowing the authorization server to clean
+     * up any security credentials associated with the authorization
+     */
+    public revokeTokenAndLogout(): Promise<any> {
+      const revoke_endpoint = this.revocationEndpoint;
+      const current_access_token = this.getAccessToken();
+      return new Promise((resolve, reject) => {
+        fetch(revoke_endpoint, {
+          method: 'POST',
+          headers:
+            {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+          body: `token=${current_access_token}`
+        }).then(res => {
+          console.log('token successfully revoked');
+          this.logOut();
+          resolve(res);
+        });
+      });
     }
 }

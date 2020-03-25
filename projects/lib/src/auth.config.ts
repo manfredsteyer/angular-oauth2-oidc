@@ -65,6 +65,11 @@ export class AuthConfig {
   public tokenEndpoint?: string = null;
 
   /**
+   * Url of the revocation endpoint as defined by OpenId Connect and OAuth 2.
+   */
+  public revocationEndpoint?: string = null;
+
+  /**
    * Url of the userinfo endpoint as defined by OpenId Connect.
    */
   public userinfoEndpoint?: string = null;

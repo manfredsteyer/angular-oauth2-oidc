@@ -138,7 +138,7 @@ export interface ParsedIdToken {
  */
 export interface TokenResponse {
   access_token: string;
-  id_token: string; 
+  id_token: string;
   token_type: string;
   expires_in: number;
   refresh_token: string;
@@ -188,4 +188,5 @@ export interface OidcDiscoveryDoc {
   claims_parameter_supported: boolean;
   service_documentation: string;
   ui_locales_supported: string[];
+  revocation_endpoint: string;
 }
