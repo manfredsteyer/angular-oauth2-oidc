@@ -1,6 +1,6 @@
 ## Refreshing when using Implicit Flow (Implicit Flow and Code Flow)
 
-**Notes for Code Flow**: You can also use this strategy for refreshing tokens when using code flow. However, please note, the strategy described within [Token Refresh](./refreshing-a-token.html) is far easier in this case.
+**Notes for Code Flow**: You can also use this strategy for refreshing tokens when using code flow. However, please note, the strategy described within [Token Refresh](./token-refresh.md) is far easier in this case.
 
 To refresh your tokens when using implicit flow you can use a silent refresh. This is a well-known solution that compensates the fact that implicit flow does not allow for issuing a refresh token. It uses a hidden iframe to get another token from the auth server. When the user is there still logged in (by using a cookie) it will respond without user interaction and provide new tokens.
 
