@@ -30,15 +30,31 @@
                <div class="content getting-started">
                    <div class="content-data">
 
-<h1 id="change-log">Change Log</h1>
-<h2 id="lates-features">Lates features</h2>
-<p>See <a href="https://github.com/manfredsteyer/angular-oauth2-oidc/releases">Release Notes</a> for details on each release.</p>
-<h2 id="older-versions">Older versions</h2>
-<p>Since Angular 5, versions of this library matched up with the Angular version.
-So versions 5.x were released while Angular 5 was out, the 6.x versions during Angular 6, etc.
-If you need to support a specific old version of Angular, you can consider using a version of the library that lines up.</p>
-<p>For older release notes check the repository version history, or above-linked release notes.
-For even older versions, check out <a href="https://github.com/manfredsteyer/angular-oauth2-oidc/blob/5d676101c6118d6fa01bfa05b17fb4a58490eaf7/CHANGELOG.md">the old change log</a>.</p>
+<h1 id="changelog">Changelog</h1>
+<h2 id="910-2020-03-23">9.1.0 (2020-03-23)</h2>
+<h3 id="features">Features</h3>
+<ul>
+<li>remove jsrsasign dependancy (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/77cb37abfd08762a59b221257ed8d5d5b7c795d4">77cb37a</a>)</li>
+<li>Upgrade to angular 8 (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/31c6273b388af7e796a9ad663e346f1e33ff331c">31c6273</a>)</li>
+<li><strong>automatic silent refresh:</strong> stopAutomaticRefresh stops all timers. (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/8ab853bf38dd162060d7b6cbd18f7b4fd5a84f18">8ab853b</a>)</li>
+<li><strong>code-flow:</strong> allow using implicit flow by setting useSilentRefresh to true (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/93902a5808bb9b75a41d4bde44c6ab763bcfa9f6">93902a5</a>)</li>
+<li><strong>sample:</strong> also use new idsvr 4 for implicit flow demo to prevent issues with same site cookies (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/58c63541bc7d83d72c30577da2b68ac2d1dc35b7">58c6354</a>)</li>
+<li><strong>session checks:</strong> Session checks work now for code flow too. Pls see Docs for details. (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/4bf89014d8cc5d50ed716500e3f3ad265b4ae2db">4bf8901</a>)</li>
+</ul>
+<h3 id="bug-fixes">Bug Fixes</h3>
+<ul>
+<li><strong>code flow:</strong> Fixed code flow for IE 11 (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/0f03d393aac9fe4e26444a73884dd154318d530f">0f03d39</a>)</li>
+<li><strong>sample:</strong> use hash-based routing (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/3f44ecae157305c56ae377fcd6d2df8dfde8adf5">3f44eca</a>)</li>
+<li><strong>session state:</strong> save session_state also when using code flow (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/8fa99ff721ea2b08f28bc5e9fa3e48a459e2a59a">8fa99ff</a>)</li>
+<li><strong>state:</strong> passing an url with a querystring as the state, e. g. url?x=1 (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/71b705cb5105f6dfb49aabc55607745b881c5dc3">71b705c</a>)</li>
+<li><a href="https://github.com/manfredsteyer/angular-oauth2-oidc/issues/687">#687</a> (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/e2599e071307ae1efe1592c83bb3b7a01642a61d">e2599e0</a>)</li>
+<li>missing HttpModule dependency (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/7eac8ae5cd1fd549f3933c30790f4b802c2c09f0">7eac8ae</a>)</li>
+<li>run tokensetup outside ngzone (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/07bb62d06abb84ef2da010977d07bfd2a3805b16">07bb62d</a>)</li>
+<li>typo (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/3d331f2166340db43f0aaca42ce8abc4913cd027">3d331f2</a>)</li>
+</ul>
+<h3 id="thanks">Thanks</h3>
+<p>Big Thanks to all contributers: Brecht Carlier, Daniel Moos, Jie Lin, Manfred Steyer, Phil McCloghry-Laing, robin labat, vdveer</p>
+<p>Also, big thanks to jeroenheijmans for doing an awesome job with moderating and analyzing the issues!</p>
 
 
 
@@ -76,6 +92,7 @@ For even older versions, check out <a href="https://github.com/manfredsteyer/ang
             var COMPODOC_CURRENT_PAGE_DEPTH = 0;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
             var COMPODOC_CURRENT_PAGE_URL = 'changelog.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="./js/libs/custom-elements.min.js"></script>

@@ -16,11 +16,12 @@ export class AppComponent {
     this.oauthService.configure(authCodeFlowConfig);
     this.oauthService.loadDiscoveryDocumentAndLogin();
 
+    //this.oauthService.setupAutomaticSilentRefresh();
+
     // Automatically load user profile
-    this.oauthService
-        .events
-        .pipe(filter(e => e.type === 'token_received'))
-        .subscribe(_ => this.oauthService.loadUserProfile());
+    this.oauthService.events
+      .pipe(filter(e => e.type === 'token_received'))
+      .subscribe(_ => this.oauthService.loadUserProfile());
   }
 
   get userName(): string {
@@ -40,5 +41,4 @@ export class AppComponent {
   refresh() {
     this.oauthService.refreshToken();
   }
-
 }

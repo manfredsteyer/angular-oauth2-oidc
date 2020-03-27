@@ -49,11 +49,8 @@
 
 
 <h2 id="configuring-for-implicit-flow">Configuring for Implicit Flow</h2>
-<p>This section shows how to implement login leveraging implicit flow. This is the OAuth2/OIDC flow best suitable for
-Single Page Application. It sends the user to the Identity Provider&#39;s login page. After logging in, the SPA gets tokens.
-This also allows for single sign on as well as single sign off.</p>
-<p>To configure the library, the following sample uses the new configuration API introduced with Version 2.1.
-Hence, the original API is still supported.</p>
+<p>This section shows how to implement login leveraging implicit flow. This is the OAuth2/OIDC flow which was originally intended for Single Page Application. </p>
+<p>Meanwhile using <strong>Code Flow</strong> instead is a <strong>best practice</strong> and with OAuth 2.1 implicit flow will be <strong>deprecated*</strong>.</p>
 <div><pre class="line-numbers"><code class="language-TypeScript">import { AuthConfig } from &#39;angular-oauth2-oidc&#39;;
 
 export const authConfig: AuthConfig = {
@@ -134,54 +131,7 @@ export class HomeComponent {
 
 &lt;div&gt;
     Username/Passwort zum Testen: max/geheim
-&lt;/div&gt;</code></pre></div><h2 id="refreshing-when-using-implicit-flow-not-code-flow">Refreshing when using Implicit Flow (not Code Flow!)</h2>
-<p>To refresh your tokens when using implicit flow you can use a silent refresh. This is a well-known solution that compensates the fact that implicit flow does not allow for issuing a refresh token. It uses a hidden iframe to get another token from the auth server. When the user is there still logged in (by using a cookie) it will respond without user interaction and provide new tokens.</p>
-<p>To use this approach, setup a redirect uri for the silent refresh.</p>
-<p>For this, you can set the property silentRefreshRedirectUri in the config object:</p>
-<div><pre class="line-numbers"><code class="language-TypeScript">// This api will come in the next version
-
-import { AuthConfig } from &#39;angular-oauth2-oidc&#39;;
-
-export const authConfig: AuthConfig = {
-
-  // Url of the Identity Provider
-  issuer: &#39;https://steyer-identity-server.azurewebsites.net/identity&#39;,
-
-  // URL of the SPA to redirect the user to after login
-  redirectUri: window.location.origin + &#39;/index.html&#39;,
-
-  // URL of the SPA to redirect the user after silent refresh
-  silentRefreshRedirectUri: window.location.origin + &#39;/silent-refresh.html&#39;,
-
-  // The SPA&#39;s id. The SPA is registerd with this id at the auth-server
-  clientId: &#39;spa-demo&#39;,
-
-  // set the scope for the permissions the client should request
-  // The first three are defined by OIDC. The 4th is a usecase-specific one
-  scope: &#39;openid profile email voucher&#39;,
-}</code></pre></div><p>As an alternative, you can set the same property directly with the OAuthService:</p>
-<div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.silentRefreshRedirectUri = window.location.origin + &quot;/silent-refresh.html&quot;;</code></pre></div><p>Please keep in mind that this uri has to be configured at the auth-server too.</p>
-<p>This file is loaded into the hidden iframe after getting new tokens. Its only task is to send the received tokens to the main application:</p>
-<div><pre class="line-numbers"><code class="language-HTML">&lt;html&gt;
-&lt;body&gt;
-    &lt;script&gt;
-    window.parent.postMessage(location.hash || (&#39;#&#39; + location.search), location.origin);
-    &lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre></div><p>Please make sure that this file is copied to your output directory by your build task. When using the CLI you can define it as an asset for this. For this, you have to add the following line to the file <code>.angular-cli.json</code>:</p>
-<div><pre class="line-numbers"><code class="language-JSON">&quot;assets&quot;: [
-    [...],
-    &quot;silent-refresh.html&quot;
-],</code></pre></div><p>To perform a silent refresh, just call the following method:</p>
-<div><pre class="line-numbers"><code class="language-TypeScript">this
-    .oauthService
-    .silentRefresh()
-    .then(info =&gt; console.debug(&#39;refresh ok&#39;, info))
-    .catch(err =&gt; console.error(&#39;refresh error&#39;, err));</code></pre></div><p>When there is an error in the iframe that prevents the communication with the main application, silentRefresh will give you a timeout. To configure the timespan for this, you can set the property <code>silentRefreshTimeout</code> (msec). The default value is 20.000 (20 seconds).</p>
-<h3 id="automatically-refreshing-a-token-when-before-it-expires-code-flow-and-implicit-flow">Automatically refreshing a token when/ before it expires (Code Flow and Implicit Flow)</h3>
-<p>To automatically refresh a token when/ some time before it expires, just call the following method after configuring the OAuthService:</p>
-<div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.setupAutomaticSilentRefresh();</code></pre></div><p>By default, this event is fired after 75% of the token&#39;s life time is over. You can adjust this factor by setting the property <code>timeoutFactor</code> to a value between 0 and 1. For instance, 0.5 means, that the event is fired after half of the life time is over and 0.33 triggers the event after a third.</p>
-
+&lt;/div&gt;</code></pre></div>
                    </div><div class="search-results">
     <div class="has-results">
         <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
@@ -200,6 +150,7 @@ export const authConfig: AuthConfig = {
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
             var COMPODOC_CURRENT_PAGE_URL = 'using-implicit-flow.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

@@ -70,6 +70,11 @@ export class AuthConfig {
   public revocationEndpoint?: string = null;
 
   /**
+   * Names of known parameters sent out in the TokenResponse. https://tools.ietf.org/html/rfc6749#section-5.1
+   */
+  public customTokenParameters?: string[] = [];
+
+  /**
    * Url of the userinfo endpoint as defined by OpenId Connect.
    */
   public userinfoEndpoint?: string = null;
@@ -82,7 +87,7 @@ export class AuthConfig {
    * the verbosity of the console needs to be explicitly set
    * to include Debug level messages.
    */
-   public showDebugInformation? = false;
+  public showDebugInformation? = false;
 
   /**
    * The redirect uri used when doing silent refresh.
@@ -217,7 +222,7 @@ export class AuthConfig {
   public nonceStateSeparator? = ';';
 
   /**
-   * Set this to true to use HTTP BASIC auth for password flow
+   * Set this to true to use HTTP BASIC auth for AJAX calls
    */
   public useHttpBasicAuth? = false;
 
@@ -228,8 +233,16 @@ export class AuthConfig {
 
   /**
    * The interceptors waits this time span if there is no token
-  */
+   */
   public waitForTokenInMsec? = 0;
+
+  /**
+   * Set this to true if you want to use silent refresh together with
+   * code flow. As silent refresh is the only option for refreshing
+   * with implicit flow, you don't need to explicitly turn it on in
+   * this case.
+   */
+  public useSilentRefresh?;
 
   /**
    * Code Flow is by defauld used together with PKCI which is also higly recommented.
@@ -249,7 +262,7 @@ export class AuthConfig {
    * allowing a way for implementations to specify their own method of routing to new
    * urls.
    */
-  public openUri?: ((uri: string) => void) = uri => {
+  public openUri?: (uri: string) => void = uri => {
     location.href = uri;
-  }
+  };
 }

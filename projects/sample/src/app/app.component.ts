@@ -3,9 +3,10 @@ import { authConfig } from './auth.config';
 import { Component } from '@angular/core';
 import { OAuthService, NullValidationHandler } from 'angular-oauth2-oidc';
 import { Router } from '@angular/router';
-import { filter} from 'rxjs/operators';
+import { filter } from 'rxjs/operators';
 import { authCodeFlowConfig } from './auth-code-flow.config';
-import { JwksValidationHandler } from 'angular-oauth2-oidc';
+import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
+import { useHash } from '../flags';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -14,7 +15,6 @@ import { JwksValidationHandler } from 'angular-oauth2-oidc';
 })
 export class AppComponent {
   constructor(private router: Router, private oauthService: OAuthService) {
-    
     // Remember the selected configuration
     if (sessionStorage.getItem('flow') === 'code') {
       this.configureCodeFlow();
@@ -26,28 +26,29 @@ export class AppComponent {
     this.oauthService.events
       .pipe(filter(e => e.type === 'token_received'))
       .subscribe(_ => {
+        console.debug('state', this.oauthService.state);
         this.oauthService.loadUserProfile();
       });
-
   }
 
   private configureCodeFlow() {
-
     this.oauthService.configure(authCodeFlowConfig);
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
 
     // Optional
-    this.oauthService.setupAutomaticSilentRefresh();
-
+    // this.oauthService.setupAutomaticSilentRefresh();
   }
-
 
   private configureImplicitFlow() {
     this.oauthService.configure(authConfig);
     // this.oauthService.setStorage(localStorage);
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
-    this.oauthService.loadDiscoveryDocumentAndTryLogin();
 
+    this.oauthService.loadDiscoveryDocumentAndTryLogin().then(_ => {
+      if (useHash) {
+        this.router.navigate(['/']);
+      }
+    });
 
     // Optional
     this.oauthService.setupAutomaticSilentRefresh();
@@ -64,10 +65,9 @@ export class AppComponent {
         // tslint:disable-next-line:no-console
         console.debug('Your session has been terminated!');
       });
-
   }
 
-  // 
+  //
   // Below you find further examples for configuration functions
   //
 

@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 /**
  * Additional options that can be passed to tryLogin.
@@ -106,7 +106,6 @@ export class MemoryStorage implements OAuthStorage {
   setItem(key: string, data: string): void {
     this.data.set(key, data);
   }
-
 }
 
 /**

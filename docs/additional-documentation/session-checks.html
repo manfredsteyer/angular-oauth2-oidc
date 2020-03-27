@@ -69,7 +69,10 @@ export const authConfig: AuthConfig = {
 
   // Activate Session Checks:
   sessionChecksEnabled: true,
-}</code></pre></div><h2 id="events">Events</h2>
+}</code></pre></div><h2 id="refresh">Refresh</h2>
+<p>Please note that the lib performs a token refresh when the session changes to get the newest information about the current session. When using implicit flow, this means you have to configure <a href="./silent-refresh.html">silent refresh</a>; when using code flow you either need silent refresh or a <a href="./refreshing-a-token.html">refresh token</a>.</p>
+<p>If using refresh tokens, your Auth Server needs to bind them to the current session&#39;s lifetime. Unfortunately, the used version of Identity Server 4, shown in the docs and in the example applications, does not support this at the moment.</p>
+<h2 id="events">Events</h2>
 <p>To get notified, you can hook up for the event <code>session_terminated</code>:</p>
 <div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.events.pipe(filter(e =&gt; e.type === &#39;session_terminated&#39;)).subscribe(e =&gt; {
   console.debug(&#39;Your session has been terminated!&#39;);
@@ -92,6 +95,7 @@ export const authConfig: AuthConfig = {
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
             var COMPODOC_CURRENT_PAGE_URL = 'session-checks.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

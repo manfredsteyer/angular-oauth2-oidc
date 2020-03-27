@@ -303,7 +303,9 @@ export abstract class ValidationHandler {
   /**
    * Validates the at_hash in an id_token against the received access_token.
    */
-  public abstract validateAtHash(validationParams: ValidationParams): Promise&lt;boolean&gt;;
+  public abstract validateAtHash(
+    validationParams: ValidationParams
+  ): Promise&lt;boolean&gt;;
 }
 
 /**
@@ -362,7 +364,10 @@ export abstract class AbstractValidationHandler implements ValidationHandler {
    * @param valueToHash
    * @param algorithm
    */
-  protected abstract calcHash(valueToHash: string, algorithm: string): Promise&lt;string&gt;;
+  protected abstract calcHash(
+    valueToHash: string,
+    algorithm: string
+  ): Promise&lt;string&gt;;
 }
 </code></pre>
     </div>
@@ -393,6 +398,7 @@ export abstract class AbstractValidationHandler implements ValidationHandler {
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
             var COMPODOC_CURRENT_PAGE_URL = 'ValidationHandler.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

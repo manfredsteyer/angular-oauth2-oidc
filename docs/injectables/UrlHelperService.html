@@ -277,14 +277,7 @@ export class UrlHelperService {
 
   public parseQueryString(queryString: string): object {
     const data &#x3D; {};
-    let
-      pairs,
-      pair,
-      separatorIndex,
-      escapedKey,
-      escapedValue,
-      key,
-      value;
+    let pairs, pair, separatorIndex, escapedKey, escapedValue, key, value;
 
     if (queryString &#x3D;&#x3D;&#x3D; null) {
       return data;
@@ -307,7 +300,9 @@ export class UrlHelperService {
       key &#x3D; decodeURIComponent(escapedKey);
       value &#x3D; decodeURIComponent(escapedValue);
 
-      if (key.substr(0, 1) &#x3D;&#x3D;&#x3D; &#x27;/&#x27;) { key &#x3D; key.substr(1); }
+      if (key.substr(0, 1) &#x3D;&#x3D;&#x3D; &#x27;/&#x27;) {
+        key &#x3D; key.substr(1);
+      }
 
       data[key] &#x3D; value;
     }
@@ -349,6 +344,7 @@ export class UrlHelperService {
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
             var COMPODOC_CURRENT_PAGE_URL = 'UrlHelperService.html';
+            var MAX_SEARCH_RESULTS = 15;
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

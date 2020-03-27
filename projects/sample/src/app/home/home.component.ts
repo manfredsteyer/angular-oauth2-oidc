@@ -2,6 +2,7 @@ import { authConfig } from '../auth.config';
 import { Component, OnInit } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { authCodeFlowConfig } from '../auth-code-flow.config';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: './home.component.html'
@@ -9,11 +10,22 @@ import { authCodeFlowConfig } from '../auth-code-flow.config';
 export class HomeComponent implements OnInit {
   loginFailed: boolean = false;
   userProfile: object;
+  usePopup: boolean;
+  login: false;
 
-  constructor(private oauthService: OAuthService) {
+  constructor(
+    private route: ActivatedRoute,
+    private oauthService: OAuthService) {
   }
 
   ngOnInit() {
+
+    this.route.params.subscribe(p => {
+      this.login = p['login'];
+    });
+
+    // This would directly (w/o user interaction) redirect the user to the
+    // login page if they are not already logged in.
     /*
         this.oauthService.loadDiscoveryDocumentAndTryLogin().then(_ => {
             if (!this.oauthService.hasValidIdToken() || !this.oauthService.hasValidAccessToken()) {
@@ -24,24 +36,46 @@ export class HomeComponent implements OnInit {
   }
 
   async loginImplicit() {
-
     // Tweak config for implicit flow
     this.oauthService.configure(authConfig);
     await this.oauthService.loadDiscoveryDocument();
     sessionStorage.setItem('flow', 'implicit');
 
-    this.oauthService.initLoginFlow('/some-state;p1=1;p2=2');
-      // the parameter here is optional. It's passed around and can be used after logging in
+    this.oauthService.initLoginFlow('/some-state;p1=1;p2=2?p3=3&p4=4');
+    // the parameter here is optional. It's passed around and can be used after logging in
+  }
+
+  async loginImplicitInPopup() {
+    // Tweak config for implicit flow
+    this.oauthService.configure(authConfig);
+    await this.oauthService.loadDiscoveryDocument();
+    sessionStorage.setItem('flow', 'implicit');
+
+    this.oauthService.initLoginFlowInPopup().then(() => {
+      this.loadUserProfile();
+    });
+    // the parameter here is optional. It's passed around and can be used after logging in
   }
 
   async loginCode() {
-      // Tweak config for code flow
-      this.oauthService.configure(authCodeFlowConfig);
-      await this.oauthService.loadDiscoveryDocument();
-      sessionStorage.setItem('flow', 'code');
+    // Tweak config for code flow
+    this.oauthService.configure(authCodeFlowConfig);
+    await this.oauthService.loadDiscoveryDocument();
+    sessionStorage.setItem('flow', 'code');
 
-      this.oauthService.initLoginFlow('/some-state;p1=1;p2=2');
-       // the parameter here is optional. It's passed around and can be used after logging in
+    this.oauthService.initLoginFlow('/some-state;p1=1;p2=2?p3=3&p4=4');
+    // the parameter here is optional. It's passed around and can be used after logging in
+  }
+
+  async loginCodeInPopup() {
+    // Tweak config for code flow
+    this.oauthService.configure(authCodeFlowConfig);
+    await this.oauthService.loadDiscoveryDocument();
+    sessionStorage.setItem('flow', 'code');
+
+    this.oauthService.initLoginFlowInPopup().then(() => {
+      this.loadUserProfile();
+    });
   }
 
   logout() {
@@ -65,10 +99,12 @@ export class HomeComponent implements OnInit {
   }
 
   refresh() {
-
     this.oauthService.oidc = true;
 
-    if (this.oauthService.responseType === 'code') {
+    if (
+      !this.oauthService.useSilentRefresh &&
+      this.oauthService.responseType === 'code'
+    ) {
       this.oauthService
         .refreshToken()
         .then(info => console.debug('refresh ok', info))
@@ -76,8 +112,8 @@ export class HomeComponent implements OnInit {
     } else {
       this.oauthService
         .silentRefresh()
-        .then(info => console.debug('refresh ok', info))
-        .catch(err => console.error('refresh error', err));
+        .then(info => console.debug('silent refresh ok', info))
+        .catch(err => console.error('silent refresh error', err));
     }
   }
 
