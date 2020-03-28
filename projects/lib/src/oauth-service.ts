@@ -813,7 +813,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             this.storeAccessTokenResponse(
               tokenResponse.access_token,
               tokenResponse.refresh_token,
-              tokenResponse.expires_in || this.fallbackAccessTokenExpirationTimeInSec,
+              tokenResponse.expires_in ||
+                this.fallbackAccessTokenExpirationTimeInSec,
               tokenResponse.scope,
               this.extractRecognizedCustomParameters(tokenResponse)
             );
@@ -899,7 +900,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             this.storeAccessTokenResponse(
               tokenResponse.access_token,
               tokenResponse.refresh_token,
-              tokenResponse.expires_in || this.fallbackAccessTokenExpirationTimeInSec,
+              tokenResponse.expires_in ||
+                this.fallbackAccessTokenExpirationTimeInSec,
               tokenResponse.scope,
               this.extractRecognizedCustomParameters(tokenResponse)
             );
@@ -1738,7 +1740,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             this.storeAccessTokenResponse(
               tokenResponse.access_token,
               tokenResponse.refresh_token,
-              tokenResponse.expires_in || this.fallbackAccessTokenExpirationTimeInSec,
+              tokenResponse.expires_in ||
+                this.fallbackAccessTokenExpirationTimeInSec,
               tokenResponse.scope,
               this.extractRecognizedCustomParameters(tokenResponse)
             );
@@ -2549,26 +2552,62 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   }
 
   /**
-  * Revokes the auth token to secure the vulnarability
-  * of the token issued allowing the authorization server to clean
-  * up any security credentials associated with the authorization
-  */
+   * Revokes the auth token to secure the vulnarability
+   * of the token issued allowing the authorization server to clean
+   * up any security credentials associated with the authorization
+   */
   public revokeTokenAndLogout(): Promise<any> {
-    const revoke_endpoint = this.revocationEndpoint;
-    const current_access_token = this.getAccessToken();
+    let revoke_endpoint = this.revocationEndpoint;
+    let current_access_token = this.getAccessToken();
+    let params = new HttpParams()
+      .set('token', current_access_token)
+      .set('token_type_hint', 'access_token');
+
+    let headers = new HttpHeaders().set(
+      'Content-Type',
+      'application/x-www-form-urlencoded'
+    );
+
+    if (this.useHttpBasicAuth) {
+      const header = btoa(`${this.clientId}:${this.dummyClientSecret}`);
+      headers = headers.set('Authorization', 'Basic ' + header);
+    }
+
+    if (!this.useHttpBasicAuth) {
+      params = params.set('client_id', this.clientId);
+    }
+
+    if (!this.useHttpBasicAuth && this.dummyClientSecret) {
+      params = params.set('client_secret', this.dummyClientSecret);
+    }
+
+    if (this.customQueryParams) {
+      for (const key of Object.getOwnPropertyNames(this.customQueryParams)) {
+        params = params.set(key, this.customQueryParams[key]);
+      }
+    }
+
     return new Promise((resolve, reject) => {
-      fetch(revoke_endpoint, {
-        method: 'POST',
-        headers:
-          {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          },
-        body: `token=${current_access_token}`
-      }).then(res => {
-        console.log('token successfully revoked');
-        this.logOut();
-        resolve(res);
-      });
+      if (current_access_token) {
+        this.http
+          .post<any>(revoke_endpoint, params, { headers })
+          .subscribe(
+            res => {
+              this.logOut();
+              resolve(res);
+              this.logger.info('Token successfully revoked');
+            },
+            err => {
+              this.logger.error('Error revoking token', err);
+              this.eventsSubject.next(
+                new OAuthErrorEvent('token_revoke_error', err)
+              );
+              reject(err);
+            }
+          );
+      } else {
+        this.logger.warn('User not logged in to revoke token.');
+      }
     });
   }
 }

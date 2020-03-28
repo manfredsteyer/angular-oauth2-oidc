@@ -21,7 +21,8 @@ export type EventType =
   | 'session_terminated'
   | 'logout'
   | 'popup_closed'
-  | 'popup_blocked';
+  | 'popup_blocked'
+  | 'token_revoke_error';
 
 export abstract class OAuthEvent {
   constructor(readonly type: EventType) {}
