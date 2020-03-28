@@ -38,6 +38,12 @@ import { JwksValidationHandler } from 'angular-oauth2-oidc';
 
 Please note, that this dependency is not needed for the **code flow**, which is nowadays the **recommended** flow for single page applications. This also results in smaller bundle sizes.
 
+### Breaking change in 9.1.0
+
+The use of `encodeURIComponent` on the argument passed to `initImplicitFlow` and its Code Flow counterparts was mandatory before this version.
+Since that was considered a _bug_, the need to do so was removed.
+Now the reverse is true **if you're upgrading from before 9.0.0**: you need to remove any call to encode URI components in your own application, as the library will now do it for you.
+
 ## Tested Environment
 
 Successfully tested with **Angular 9** and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we've used IdentityServer (.NET / .NET Core) and Redhat's Keycloak (Java).
