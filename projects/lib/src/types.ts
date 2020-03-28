@@ -187,4 +187,5 @@ export interface OidcDiscoveryDoc {
   claims_parameter_supported: boolean;
   service_documentation: string;
   ui_locales_supported: string[];
+  revocation_endpoint: string;
 }

@@ -65,6 +65,11 @@ export class AuthConfig {
   public tokenEndpoint?: string = null;
 
   /**
+   * Url of the revocation endpoint as defined by OpenId Connect and OAuth 2.
+   */
+  public revocationEndpoint?: string = null;
+
+  /**
    * Names of known parameters sent out in the TokenResponse. https://tools.ietf.org/html/rfc6749#section-5.1
    */
   public customTokenParameters?: string[] = [];
