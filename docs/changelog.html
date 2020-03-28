@@ -34,12 +34,10 @@
 <h2 id="910-2020-03-23">9.1.0 (2020-03-23)</h2>
 <h3 id="features">Features</h3>
 <ul>
-<li>remove jsrsasign dependancy (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/77cb37abfd08762a59b221257ed8d5d5b7c795d4">77cb37a</a>)</li>
-<li>Upgrade to angular 8 (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/31c6273b388af7e796a9ad663e346f1e33ff331c">31c6273</a>)</li>
 <li><strong>automatic silent refresh:</strong> stopAutomaticRefresh stops all timers. (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/8ab853bf38dd162060d7b6cbd18f7b4fd5a84f18">8ab853b</a>)</li>
-<li><strong>code-flow:</strong> allow using implicit flow by setting useSilentRefresh to true (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/93902a5808bb9b75a41d4bde44c6ab763bcfa9f6">93902a5</a>)</li>
-<li><strong>sample:</strong> also use new idsvr 4 for implicit flow demo to prevent issues with same site cookies (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/58c63541bc7d83d72c30577da2b68ac2d1dc35b7">58c6354</a>)</li>
-<li><strong>session checks:</strong> Session checks work now for code flow too. Pls see Docs for details. (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/4bf89014d8cc5d50ed716500e3f3ad265b4ae2db">4bf8901</a>)</li>
+<li><strong>code-flow:</strong> allow using silent refresh by setting useSilentRefresh to true (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/93902a5808bb9b75a41d4bde44c6ab763bcfa9f6">93902a5</a>)</li>
+<li><strong>sample:</strong> Also use new Identity Server 4 for implicit flow demo to prevent issues with same site cookies (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/58c63541bc7d83d72c30577da2b68ac2d1dc35b7">58c6354</a>)</li>
+<li><strong>session checks:</strong> Session checks work now for code flow too. Please see docs for details. (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/4bf89014d8cc5d50ed716500e3f3ad265b4ae2db">4bf8901</a>)</li>
 </ul>
 <h3 id="bug-fixes">Bug Fixes</h3>
 <ul>
@@ -51,6 +49,15 @@
 <li>missing HttpModule dependency (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/7eac8ae5cd1fd549f3933c30790f4b802c2c09f0">7eac8ae</a>)</li>
 <li>run tokensetup outside ngzone (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/07bb62d06abb84ef2da010977d07bfd2a3805b16">07bb62d</a>)</li>
 <li>typo (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/3d331f2166340db43f0aaca42ce8abc4913cd027">3d331f2</a>)</li>
+</ul>
+<h3 id="pull-requests">Pull Requests</h3>
+<ul>
+<li>Update sample app and silent-refresh.html script #755, linjie997</li>
+<li>Add optional state parameter for logout, pmccloghrylaing</li>
+<li>fix customHashFragment usage in tryLoginCodeFlow, roblabat</li>
+<li>replace document with injectionToken #741, d-moos</li>
+<li>Support predefined custom parameters extraction from the TokenResponse, vdveer</li>
+<li>Fixed not working silent refresh when using &#39;code&#39; #735, ErazerBrecht</li>
 </ul>
 <h3 id="thanks">Thanks</h3>
 <p>Big Thanks to all contributers: Brecht Carlier, Daniel Moos, Jie Lin, Manfred Steyer, Phil McCloghry-Laing, robin labat, vdveer</p>

@@ -1,6 +1,14 @@
 import { Injectable, NgZone, Optional, OnDestroy, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, Subject, Subscription, of, race, from, combineLatest } from 'rxjs';
+import {
+  Observable,
+  Subject,
+  Subscription,
+  of,
+  race,
+  from,
+  combineLatest
+} from 'rxjs';
 import {
   filter,
   delay,
@@ -2599,7 +2607,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         let revokationParams = params
           .set('token', accessToken)
           .set('token_type_hint', 'access_token');
-        revokeAccessToken = this.http.post<void>(revokeEndpoint, revokationParams, { headers });
+        revokeAccessToken = this.http.post<void>(
+          revokeEndpoint,
+          revokationParams,
+          { headers }
+        );
       } else {
         revokeAccessToken = of(null);
       }
@@ -2608,26 +2620,29 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         let revokationParams = params
           .set('token', refreshToken)
           .set('token_type_hint', 'refresh_token');
-        revokeRefreshToken = this.http.post<void>(revokeEndpoint, revokationParams, { headers });
+        revokeRefreshToken = this.http.post<void>(
+          revokeEndpoint,
+          revokationParams,
+          { headers }
+        );
       } else {
         revokeRefreshToken = of(null);
       }
 
-      combineLatest([revokeAccessToken, revokeRefreshToken])
-      .subscribe(
-            res => {
-              this.logOut();
-              resolve(res);
-              this.logger.info('Token successfully revoked');
-            },
-            err => {
-              this.logger.error('Error revoking token', err);
-              this.eventsSubject.next(
-                new OAuthErrorEvent('token_revoke_error', err)
-              );
-              reject(err);
-            }
+      combineLatest([revokeAccessToken, revokeRefreshToken]).subscribe(
+        res => {
+          this.logOut();
+          resolve(res);
+          this.logger.info('Token successfully revoked');
+        },
+        err => {
+          this.logger.error('Error revoking token', err);
+          this.eventsSubject.next(
+            new OAuthErrorEvent('token_revoke_error', err)
           );
+          reject(err);
+        }
+      );
     });
   }
 }

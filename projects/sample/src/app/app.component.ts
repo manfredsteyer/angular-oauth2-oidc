@@ -41,8 +41,6 @@ export class AppComponent {
 
     // Optional
     this.oauthService.setupAutomaticSilentRefresh();
-
-    
   }
 
   private configureImplicitFlow() {

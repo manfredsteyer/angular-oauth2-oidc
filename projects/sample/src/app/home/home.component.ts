@@ -15,11 +15,10 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private oauthService: OAuthService) {
-  }
+    private oauthService: OAuthService
+  ) {}
 
   ngOnInit() {
-
     this.route.params.subscribe(p => {
       this.login = p['login'];
     });
