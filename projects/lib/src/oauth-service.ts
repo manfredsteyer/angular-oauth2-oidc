@@ -1,6 +1,6 @@
 import { Injectable, NgZone, Optional, OnDestroy, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, Subject, Subscription, of, race, from } from 'rxjs';
+import { Observable, Subject, Subscription, of, race, from, combineLatest } from 'rxjs';
 import {
   filter,
   delay,
@@ -2557,11 +2557,15 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * up any security credentials associated with the authorization
    */
   public revokeTokenAndLogout(): Promise<any> {
-    let revoke_endpoint = this.revocationEndpoint;
-    let current_access_token = this.getAccessToken();
-    let params = new HttpParams()
-      .set('token', current_access_token)
-      .set('token_type_hint', 'access_token');
+    let revokeEndpoint = this.revocationEndpoint;
+    let accessToken = this.getAccessToken();
+    let refreshToken = this.getRefreshToken();
+
+    if (!accessToken) {
+      return;
+    }
+
+    let params = new HttpParams();
 
     let headers = new HttpHeaders().set(
       'Content-Type',
@@ -2588,10 +2592,29 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
 
     return new Promise((resolve, reject) => {
-      if (current_access_token) {
-        this.http
-          .post<any>(revoke_endpoint, params, { headers })
-          .subscribe(
+      let revokeAccessToken: Observable<void>;
+      let revokeRefreshToken: Observable<void>;
+
+      if (accessToken) {
+        let revokationParams = params
+          .set('token', accessToken)
+          .set('token_type_hint', 'access_token');
+        revokeAccessToken = this.http.post<void>(revokeEndpoint, revokationParams, { headers });
+      } else {
+        revokeAccessToken = of(null);
+      }
+
+      if (refreshToken) {
+        let revokationParams = params
+          .set('token', refreshToken)
+          .set('token_type_hint', 'refresh_token');
+        revokeRefreshToken = this.http.post<void>(revokeEndpoint, revokationParams, { headers });
+      } else {
+        revokeRefreshToken = of(null);
+      }
+
+      combineLatest([revokeAccessToken, revokeRefreshToken])
+      .subscribe(
             res => {
               this.logOut();
               resolve(res);
@@ -2605,9 +2628,6 @@ export class OAuthService extends AuthConfig implements OnDestroy {
               reject(err);
             }
           );
-      } else {
-        this.logger.warn('User not logged in to revoke token.');
-      }
     });
   }
 }

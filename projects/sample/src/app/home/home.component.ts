@@ -79,7 +79,8 @@ export class HomeComponent implements OnInit {
   }
 
   logout() {
-    this.oauthService.logOut();
+    // this.oauthService.logOut();
+    this.oauthService.revokeTokenAndLogout();
   }
 
   loadUserProfile(): void {

@@ -41,6 +41,7 @@ Please note, that this dependency is not needed for the **code flow**, which is 
 ### Breaking change in 9.1.0
 
 The use of `encodeURIComponent` on the argument passed to `initImplicitFlow` and its Code Flow counterparts was mandatory before this version.
+
 Since that was considered a _bug_, the need to do so was removed.
 Now the reverse is true **if you're upgrading from before 9.0.0**: you need to remove any call to encode URI components in your own application, as the library will now do it for you.
 
@@ -48,7 +49,7 @@ Now the reverse is true **if you're upgrading from before 9.0.0**: you need to r
 
 Successfully tested with **Angular 9** and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we've used IdentityServer (.NET / .NET Core) and Redhat's Keycloak (Java).
 
-**Angular 9**: Use 9.x versions of this library (should also work with older Angular versions!).
+**Angular 9**: Use 9.x versions of this library (**should also work with older Angular versions!**).
 
 **Angular 8**: Use 8.x versions of this library.
 
@@ -90,6 +91,7 @@ Successfully tested with **Angular 9** and its Router, PathLocationStrategy as w
 - Hook for further custom validations
 - Single-Sign-Out by redirecting to the auth-server's logout-endpoint
 - Tested with all modern browsers and IE
+- Token Revocation according to [RFC 7009](https://tools.ietf.org/html/rfc7009#section-2.2)
 
 ## Sample-Auth-Server
 
@@ -202,6 +204,20 @@ Also -- as shown in the readme -- you have to execute the following code when bo
 ```TypeScript
 this.oauthService.configure(authCodeFlowConfig);
 this.oauthService.loadDiscoveryDocumentAndTryLogin();
+```
+
+### Logging out
+
+The logOut method clears the used token store (by default ``sessionStorage``) and forwards the user to the auth servers logout endpoint if one was configured (manually or via the discovery document).
+
+```typescript
+this.oauthService.logOut();
+```
+
+If you want to revoke the existing access token and the existing refresh token before logging out, use the following method:
+
+```typescript
+this.oauthService.revokeTokenAndLogout();
 ```
 
 ### Skipping the Login Form

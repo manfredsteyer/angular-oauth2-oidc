@@ -46,6 +46,8 @@ export const authCodeFlowConfig: AuthConfig = {
 
   sessionChecksEnabled: true,
 
-  timeoutFactor: 0.01
+  timeoutFactor: 0.01,
   // disablePKCI: true,
+
+  clearHashAfterLogin: false,
 };

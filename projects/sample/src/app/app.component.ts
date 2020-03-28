@@ -33,10 +33,16 @@ export class AppComponent {
 
   private configureCodeFlow() {
     this.oauthService.configure(authCodeFlowConfig);
-    this.oauthService.loadDiscoveryDocumentAndTryLogin();
+    this.oauthService.loadDiscoveryDocumentAndTryLogin().then(_ => {
+      if (useHash) {
+        this.router.navigate(['/']);
+      }
+    });
 
     // Optional
-    // this.oauthService.setupAutomaticSilentRefresh();
+    this.oauthService.setupAutomaticSilentRefresh();
+
+    
   }
 
   private configureImplicitFlow() {
