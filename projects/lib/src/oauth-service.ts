@@ -979,21 +979,21 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       );
     }
 
-    if (typeof document === 'undefined') {
+    if (typeof this.document === 'undefined') {
       throw new Error('silent refresh is not supported on this platform');
     }
 
-    const existingIframe = document.getElementById(
+    const existingIframe = this.document.getElementById(
       this.silentRefreshIFrameName
     );
 
     if (existingIframe) {
-      document.body.removeChild(existingIframe);
+      this.document.body.removeChild(existingIframe);
     }
 
     this.silentRefreshSubject = claims['sub'];
 
-    const iframe = document.createElement('iframe');
+    const iframe = this.document.createElement('iframe');
     iframe.id = this.silentRefreshIFrameName;
 
     this.setupSilentRefreshEventListener();
@@ -1005,7 +1005,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       if (!this.silentRefreshShowIFrame) {
         iframe.style['display'] = 'none';
       }
-      document.body.appendChild(iframe);
+      this.document.body.appendChild(iframe);
     });
 
     const errors = this.events.pipe(
@@ -1177,7 +1177,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       );
       return false;
     }
-    if (typeof document === 'undefined') {
+    if (typeof this.document === 'undefined') {
       return false;
     }
 
@@ -1299,12 +1299,12 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       return;
     }
 
-    const existingIframe = document.getElementById(this.sessionCheckIFrameName);
+    const existingIframe = this.document.getElementById(this.sessionCheckIFrameName);
     if (existingIframe) {
-      document.body.removeChild(existingIframe);
+      this.document.body.removeChild(existingIframe);
     }
 
-    const iframe = document.createElement('iframe');
+    const iframe = this.document.createElement('iframe');
     iframe.id = this.sessionCheckIFrameName;
 
     this.setupSessionCheckEventListener();
@@ -1312,7 +1312,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     const url = this.sessionCheckIFrameUrl;
     iframe.setAttribute('src', url);
     iframe.style.display = 'none';
-    document.body.appendChild(iframe);
+    this.document.body.appendChild(iframe);
 
     this.startSessionCheckTimer();
   }
@@ -1335,7 +1335,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   }
 
   public checkSession(): void {
-    const iframe: any = document.getElementById(this.sessionCheckIFrameName);
+    const iframe: any = this.document.getElementById(this.sessionCheckIFrameName);
 
     if (!iframe) {
       this.logger.warn(
