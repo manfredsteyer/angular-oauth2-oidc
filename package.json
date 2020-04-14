@@ -6,7 +6,7 @@
     "release": "standard-version",
     "ng": "ng",
     "start": "ng serve --project sample -o",
-    "build": "npm run prettier && ng build --prod --project lib && npm run copy:readme && npm run docs",
+    "build": "npm run prettier && ng build --prod --project lib && npm run copy:readme && npm run copy:license && npm run docs",
     "build:jwks": "npm run prettier && ng build angular-oauth2-oidc-jwks --ts-config tsconfig.npm.json",
     "test": "ng test",
     "lint": "ng lint",
@@ -19,6 +19,7 @@
     "docs:watch": "npm run docs:build -- -s -w",
     "format": "prettier --single-quote --write projects/**/*.ts",
     "copy:readme": "cpr README.md dist/lib/README.md --overwrite",
+    "copy:license": "cpr LICENSE dist/lib/LICENSE --overwrite",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "contributer": "git shortlog -s 9.0.0..HEAD"
   },
