@@ -275,16 +275,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   public loadDiscoveryDocumentAndLogin(
     options: LoginOptions & { state?: string } = null
   ): Promise<boolean> {
-    if (!options) {
-      options = { state: '' };
-    }
+    options = options || {};
     return this.loadDiscoveryDocumentAndTryLogin(options).then(_ => {
       if (!this.hasValidIdToken() || !this.hasValidAccessToken()) {
-        if (this.responseType === 'code') {
-          this.initCodeFlow();
-        } else {
-          this.initImplicitFlow();
-        }
+        const state = typeof options.state === 'string' ? options.state : '';
+        this.initLoginFlow(state);
         return false;
       } else {
         return true;
