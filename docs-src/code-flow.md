@@ -15,7 +15,7 @@ To configure your solution for code flow + PKCE you have to set the `responseTyp
       // URL of the SPA to redirect the user to after login
       redirectUri: window.location.origin + '/index.html',
 
-      // The SPA's id. The SPA is registerd with this id at the auth-server
+      // The SPA's id. The SPA is registered with this id at the auth-server
       // clientId: 'server.code',
       clientId: 'spa',
 
@@ -35,7 +35,7 @@ To configure your solution for code flow + PKCE you have to set the `responseTyp
 
       showDebugInformation: true,
 
-      // Not recommented:
+      // Not recommended:
       // disablePKCI: true,
     };
   ```
