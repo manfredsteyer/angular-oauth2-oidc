@@ -4,7 +4,7 @@
   "author": {
     "name": "Manfred Steyer"
   },
-  "version": "9.2.1",
+  "version": "9.2.2",
   "repository": "manfredsteyer/angular-oauth2-oidc",
   "dependencies": {
     "js-sha256": "^0.9.0"
