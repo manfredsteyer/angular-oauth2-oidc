@@ -243,7 +243,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     params,
     noPrompt
   ): Promise<TokenResponse | OAuthEvent> {
-    if (!this.useSilentRefresh && this.responseType === 'code') {
+    if (!this.useSilentRefresh && this.getRefreshToken()) {
       return this.refreshToken();
     } else {
       return this.silentRefresh(params, noPrompt);
@@ -280,7 +280,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
     return this.loadDiscoveryDocumentAndTryLogin(options).then(_ => {
       if (!this.hasValidIdToken() || !this.hasValidAccessToken()) {
-        if (this.responseType === 'code') {
+        if (this.isCodeResponseType(this.responseType)) {
           this.initCodeFlow(options.state);
         } else {
           this.initImplicitFlow(options.state);
@@ -1241,7 +1241,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     this.eventsSubject.next(new OAuthInfoEvent('session_changed'));
     this.stopSessionCheckTimer();
 
-    if (!this.useSilentRefresh && this.responseType === 'code') {
+    if (!this.useSilentRefresh && this.getRefreshToken()) {
       this.refreshToken()
         .then(_ => {
           this.debug('token refresh after session change worked');
@@ -1418,7 +1418,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       '&scope=' +
       encodeURIComponent(scope);
 
-    if (this.responseType === 'code' && !this.disablePKCE) {
+    if (this.isCodeResponseType(this.responseType) && !this.disablePKCE) {
       const [
         challenge,
         verifier
@@ -1585,11 +1585,15 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * @param options Optional options.
    */
   public tryLogin(options: LoginOptions = null): Promise<boolean> {
-    if (this.config.responseType === 'code') {
+    if (this.isCodeResponseType(this.config.responseType)) {
       return this.tryLoginCodeFlow(options).then(_ => true);
     } else {
       return this.tryLoginImplicitFlow(options);
     }
+  }
+
+  private isCodeResponseType(responseType: string): boolean {
+    return responseType === 'code' || responseType.startsWith('code ') || responseType.endsWith(' code') || responseType.includes(' code ');
   }
 
   private parseQueryString(queryString: string): object {
@@ -2068,7 +2072,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     // addressing https://github.com/manfredsteyer/angular-oauth2-oidc/issues/661
     // i.e. Based on spec the at_hash check is only true for implicit code flow on Ping Federate
     // https://www.pingidentity.com/developer/en/resources/openid-connect-developers-guide.html
-    if (this.hasOwnProperty('responseType') && this.responseType === 'code') {
+    if (this.hasOwnProperty('responseType') && this.isCodeResponseType(this.responseType)) {
       this.disableAtHashCheck = true;
     }
     if (
@@ -2489,7 +2493,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * depending on your configuration.
    */
   public initLoginFlow(additionalState = '', params = {}): void {
-    if (this.responseType === 'code') {
+    if (this.isCodeResponseType(this.responseType)) {
       return this.initCodeFlow(additionalState, params);
     } else {
       return this.initImplicitFlow(additionalState, params);
