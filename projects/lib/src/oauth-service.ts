@@ -102,6 +102,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   protected inImplicitFlow = false;
 
   protected saveNoncesInLocalStorage = false;
+  private document: Document;
 
   constructor(
     protected ngZone: NgZone,
@@ -112,11 +113,14 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     protected urlHelper: UrlHelperService,
     protected logger: OAuthLogger,
     @Optional() protected crypto: HashHandler,
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) document: any
   ) {
     super();
 
     this.debug('angular-oauth2-oidc v8-beta');
+
+    // See https://github.com/manfredsteyer/angular-oauth2-oidc/issues/773 for why this is needed
+    this.document = document;
 
     this.discoveryDocumentLoaded$ = this.discoveryDocumentLoadedSubject.asObservable();
     this.events = this.eventsSubject.asObservable();
