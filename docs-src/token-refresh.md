@@ -4,7 +4,7 @@ When using code flow, you can get an ``refresh_token``. While the original stand
 
 Please also note, that you have to request the ``offline_access`` scope to get an refresh token.
 
-To refresh your token, just call the ``refresh`` method:
+To refresh your token, just call the ``refreshToken`` method:
 
 ```typescript
 this.oauthService.refreshToken();
