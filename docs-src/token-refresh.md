@@ -7,7 +7,7 @@ Please also note, that you have to request the ``offline_access`` scope to get a
 To refresh your token, just call the ``refresh`` method:
 
 ```typescript
-this.oauthService.refresh();
+this.oauthService.refreshToken();
 ```
 
 
