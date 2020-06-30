@@ -1,5 +1,5 @@
 import { Injectable, NgZone, Optional, OnDestroy, Inject } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import {
   Observable,
   Subject,
@@ -7,7 +7,8 @@ import {
   of,
   race,
   from,
-  combineLatest
+  combineLatest,
+  throwError
 } from 'rxjs';
 import {
   filter,
@@ -16,7 +17,8 @@ import {
   tap,
   map,
   switchMap,
-  debounceTime
+  debounceTime,
+  catchError
 } from 'rxjs/operators';
 import { DOCUMENT } from '@angular/common';
 
@@ -2296,9 +2298,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * @param noRedirectToLogoutUrl
    * @param state
    */
+  public logOut(): void;
   public logOut(customParameters: object): void;
   public logOut(noRedirectToLogoutUrl: boolean, state: string): void;
-  public logOut(customParameters: boolean | object, state = ''): void {
+  public logOut(customParameters: boolean | object = {}, state = ''): void {
     let noRedirectToLogoutUrl = false;
     if (typeof customParameters === 'boolean') {
       noRedirectToLogoutUrl = customParameters;
@@ -2576,7 +2579,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * of the token issued allowing the authorization server to clean
    * up any security credentials associated with the authorization
    */
-  public revokeTokenAndLogout(): Promise<any> {
+  public revokeTokenAndLogout(customParameters: object = {}, ignoreCorsIssues = false): Promise<any> {
     let revokeEndpoint = this.revocationEndpoint;
     let accessToken = this.getAccessToken();
     let refreshToken = this.getRefreshToken();
@@ -2641,9 +2644,27 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         revokeRefreshToken = of(null);
       }
 
+      if (ignoreCorsIssues) {
+        revokeAccessToken = revokeAccessToken
+          .pipe(catchError((err: HttpErrorResponse) => {
+            if (err.status === 0) {
+              return of<void>();
+            }
+            return throwError(err);
+          }));
+
+        revokeRefreshToken = revokeRefreshToken
+          .pipe(catchError((err: HttpErrorResponse) => {
+            if (err.status === 0) {
+              return of<void>();
+            }
+            return throwError(err);
+          }));
+      }
+
       combineLatest([revokeAccessToken, revokeRefreshToken]).subscribe(
         res => {
-          this.logOut();
+          this.logOut()
           resolve(res);
           this.logger.info('Token successfully revoked');
         },
