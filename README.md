@@ -49,6 +49,8 @@ Now the reverse is true **if you're upgrading from before 9.0.0**: you need to r
 
 Successfully tested with **Angular 9** and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we've used IdentityServer (.NET / .NET Core) and Redhat's Keycloak (Java).
 
+**Angular 10**: Use 10.x versions of this library (**should also work with older Angular versions!**).
+
 **Angular 9**: Use 9.x versions of this library (**should also work with older Angular versions!**).
 
 **Angular 8**: Use 8.x versions of this library.
