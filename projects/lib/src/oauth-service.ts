@@ -102,6 +102,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   protected inImplicitFlow = false;
 
   protected saveNoncesInLocalStorage = false;
+  private document: Document;
 
   constructor(
     protected ngZone: NgZone,
@@ -112,11 +113,14 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     protected urlHelper: UrlHelperService,
     protected logger: OAuthLogger,
     @Optional() protected crypto: HashHandler,
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) document: any
   ) {
     super();
 
     this.debug('angular-oauth2-oidc v8-beta');
+
+    // See https://github.com/manfredsteyer/angular-oauth2-oidc/issues/773 for why this is needed
+    this.document = document;
 
     this.discoveryDocumentLoaded$ = this.discoveryDocumentLoadedSubject.asObservable();
     this.events = this.eventsSubject.asObservable();
@@ -278,6 +282,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     options = options || {};
     return this.loadDiscoveryDocumentAndTryLogin(options).then(_ => {
       if (!this.hasValidIdToken() || !this.hasValidAccessToken()) {
+
         const state = typeof options.state === 'string' ? options.state : '';
         this.initLoginFlow(state);
         return false;
@@ -1413,7 +1418,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       '&scope=' +
       encodeURIComponent(scope);
 
-    if (this.responseType === 'code' && !this.disablePKCE) {
+    if (this.responseType.includes('code') && !this.disablePKCE) {
       const [
         challenge,
         verifier
@@ -2063,7 +2068,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     // addressing https://github.com/manfredsteyer/angular-oauth2-oidc/issues/661
     // i.e. Based on spec the at_hash check is only true for implicit code flow on Ping Federate
     // https://www.pingidentity.com/developer/en/resources/openid-connect-developers-guide.html
-    if (this.hasOwnProperty('responseType') && this.responseType === 'code') {
+    if (this.hasOwnProperty('responseType') && (this.responseType === 'code' || this.responseType === 'id_token')) {
       this.disableAtHashCheck = true;
     }
     if (

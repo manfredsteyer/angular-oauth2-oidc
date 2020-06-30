@@ -2,17 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [9.2.2](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/v9.2.1...v9.2.2) (2020-05-09)
+
+### [9.2.1](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/v9.2.0...v9.2.1) (2020-04-23)
+
 ## [9.2.0](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/v9.1.0...v9.2.0) (2020-03-28)
 
 
 ### Features
+
+* **revoketokenandlogout:** explicit way to revoke an access token according to [RFC 7009](https://tools.ietf.org/html/rfc7009) ([c799ead](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/c799eadbfa616d459af8be1a667499834745d78f))
 
 * **token-revocation:** also revoke refresh_token ([429ed2c](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/429ed2c5b50c60ac857ff0ffe84c1d7fc995c6dd))
 
 
 ### Bug Fixes
 
-* **revoketokenandlogout:** explicit way to revoke an access token ([c799ead](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/c799eadbfa616d459af8be1a667499834745d78f))
 * **sample:** make sense of the guard ([1cae011](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/1cae011532dc91a250368c95120812d2f78f8109))
 
 ## 9.1.0 (2020-03-23)

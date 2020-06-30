@@ -8920,9 +8920,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     return this.loadDiscoveryDocumentAndTryLogin(options).then(_ &#x3D;&gt; {
       if (!this.hasValidIdToken() || !this.hasValidAccessToken()) {
         if (this.responseType &#x3D;&#x3D;&#x3D; &#x27;code&#x27;) {
-          this.initCodeFlow();
+          this.initCodeFlow(options.state);
         } else {
-          this.initImplicitFlow();
+          this.initImplicitFlow(options.state);
         }
         return false;
       } else {

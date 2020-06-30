@@ -45,8 +45,8 @@ export class AppComponent {
 
   private configureImplicitFlow() {
     this.oauthService.configure(authConfig);
-    // this.oauthService.setStorage(localStorage);
-    this.oauthService.tokenValidationHandler = new JwksValidationHandler();
+    this.oauthService.setStorage(localStorage);
+    // this.oauthService.tokenValidationHandler = new JwksValidationHandler();
 
     this.oauthService.loadDiscoveryDocumentAndTryLogin().then(_ => {
       if (useHash) {
