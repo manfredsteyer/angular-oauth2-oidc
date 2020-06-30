@@ -2072,7 +2072,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     // addressing https://github.com/manfredsteyer/angular-oauth2-oidc/issues/661
     // i.e. Based on spec the at_hash check is only true for implicit code flow on Ping Federate
     // https://www.pingidentity.com/developer/en/resources/openid-connect-developers-guide.html
-    if (this.hasOwnProperty('responseType') && this.responseType === 'code') {
+    if (this.hasOwnProperty('responseType') && (this.responseType === 'code' || this.responseType === 'id_token')) {
       this.disableAtHashCheck = true;
     }
     if (
