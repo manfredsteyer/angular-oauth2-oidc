@@ -3,5 +3,6 @@
   "version": "9.0.0",
   "dependencies": {
     "jsrsasign": "^8.0.12"
-  }
+  ,    "tslib": "^2.0.0"
+}
 }

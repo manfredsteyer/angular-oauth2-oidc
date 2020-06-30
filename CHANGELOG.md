@@ -1,8 +1,53 @@
+## 10.0.0 (2020-06-30)
+
+* chore: increase version in package.json ([84d95a7](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/84d95a7))
+* chore: make version 9.2 ready ([415e053](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/415e053))
+* chore(deps): bump jsrsasign from 8.0.12 to 8.0.19 ([4def1c1](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/4def1c1))
+* chore(deps): bump websocket-extensions from 0.1.3 to 0.1.4 ([cae715e](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/cae715e))
+* chore(release): 9.2.1 ([7a15194](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/7a15194))
+* chore(release): 9.2.2 ([40f5ae5](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/40f5ae5))
+* chore(release): 9.3.0 ([f42f943](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/f42f943))
+* refactor: inline js-sha256 ([ca435c0](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/ca435c0))
+* refactor: remove dep on contributer-table ([b486546](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/b486546))
+* refactor: use esm for sha-256 ([92ee76d](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/92ee76d))
+* feat(oauth-service): pass custom url params to logOut ([4607d55](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/4607d55))
+* feat(oauth-service): revokeTokenAndLogout with cust params ([026dcb3](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/026dcb3))
+* 'disableAtHashCheck' by default if responseType is 'id_token' ([169d749](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/169d749))
+* #825: ([38c7c3f](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/38c7c3f)), closes [#825](https://github.com/manfredsteyer/angular-oauth2-oidc/issues/825)
+* #825: ([fb3afe4](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/fb3afe4)), closes [#825](https://github.com/manfredsteyer/angular-oauth2-oidc/issues/825)
+* Fix issue with ambient type in constructor when running Universal with Ivy ([9e95c73](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/9e95c73))
+* Fix typo in code-flow.md ([1816e7b](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/1816e7b))
+* Replaced document by this.document #773 ([678ff95](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/678ff95)), closes [#773](https://github.com/manfredsteyer/angular-oauth2-oidc/issues/773)
+* response_types including 'code' gets a code_challenge ([58a8132](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/58a8132))
+* Update code-flow.md ([5c5288c](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/5c5288c))
+* docs(readme): use our own idsvr ([65c2b95](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/65c2b95))
+* fix: loadDiscoveryDocumentAndLogin should pass state into initLoginFlow ([132c624](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/132c624))
+* fix(lib): copying LICENSE file to output build ([e89aa6d](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/e89aa6d))
+
+
+# [10.0.0](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/9.2.0...10.0.0) (2020-06-30)
+
+
+### Bug Fixes
+
+* loadDiscoveryDocumentAndLogin should pass state into initLoginFlow ([132c624](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/132c62426cfe07ddaf0eebb85bdf062ee49e4a06))
+* **lib:** copying LICENSE file to output build ([e89aa6d](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/e89aa6d90054dc4ad20f234db2107e82b11a9386))
+
+
+### Features
+
+* **oauth-service:** pass custom url params to logOut ([4607d55](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/4607d55c6bdf608a32a2a029feac9eb37bfb493d))
+* **oauth-service:** revokeTokenAndLogout with cust params ([026dcb3](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/026dcb38e4299afbab8faff1d54dba94cadc1aa6))
+
+
+
+# [10.0.0](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/v9.3.0...v10.0.0) (2020-06-30)
+
+
+
 # Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
-
-## 9.3.0 (2020-06-30)
 
 
 ### Features

@@ -170,9 +170,6 @@ export class AppModule {
     scope: &#39;openid profile email offline_access api&#39;,
 
     showDebugInformation: true,
-
-    // Not recommented:
-    // disablePKCI: true,
   };</code></pre></div><p>After this, you can initialize the code flow using:</p>
 <div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.initCodeFlow();</code></pre></div><p>There is also a convenience method <code>initLoginFlow</code> which initializes either the code flow or the implicit flow depending on your configuration.</p>
 <div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.initLoginFlow();</code></pre></div><p>Also -- as shown in the readme -- you have to execute the following code when bootstrapping to make the library to fetch the token:</p>

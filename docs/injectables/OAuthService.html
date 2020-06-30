@@ -11637,7 +11637,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         revokeAccessToken &#x3D; revokeAccessToken.pipe(
           catchError((err: HttpErrorResponse) &#x3D;&gt; {
             if (err.status &#x3D;&#x3D;&#x3D; 0) {
-              return of&lt;void&gt;();
+              return of&lt;void&gt;(null);
             }
             return throwError(err);
           })
@@ -11646,7 +11646,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         revokeRefreshToken &#x3D; revokeRefreshToken.pipe(
           catchError((err: HttpErrorResponse) &#x3D;&gt; {
             if (err.status &#x3D;&#x3D;&#x3D; 0) {
-              return of&lt;void&gt;();
+              return of&lt;void&gt;(null);
             }
             return throwError(err);
           })
@@ -11655,7 +11655,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
       combineLatest([revokeAccessToken, revokeRefreshToken]).subscribe(
         res &#x3D;&gt; {
-          this.logOut();
+          this.logOut(customParameters);
           resolve(res);
           this.logger.info(&#x27;Token successfully revoked&#x27;);
         },

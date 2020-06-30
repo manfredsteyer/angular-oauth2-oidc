@@ -181,9 +181,6 @@ To configure your solution for code flow + PKCE you have to set the `responseTyp
     scope: 'openid profile email offline_access api',
 
     showDebugInformation: true,
-
-    // Not recommented:
-    // disablePKCI: true,
   };
 ```
 
