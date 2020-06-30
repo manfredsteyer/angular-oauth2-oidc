@@ -6,9 +6,6 @@
   },
   "version": "9.2.2",
   "repository": "manfredsteyer/angular-oauth2-oidc",
-  "dependencies": {
-    "js-sha256": "^0.9.0"
-  },
   "peerDependencies": {
     "@angular/common": ">=8.0.0",
     "@angular/core": ">=8.0.0"

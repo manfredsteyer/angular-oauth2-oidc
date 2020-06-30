@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { sha256 } from 'js-sha256';
+import { sha256 } from './js-sha256';
 
 /**
  * Abstraction for crypto algorithms

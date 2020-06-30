@@ -39,7 +39,6 @@
     "angular-oauth2-oidc-jwks": "^9.0.0",
     "base64-js": "^1.3.0",
     "bootstrap": "^3.3.7",
-    "js-sha256": "^0.9.0",
     "jsrsasign": "^8.0.19",
     "ngx-semantic-version": "^1.2.1",
     "rxjs": "6.5.4",

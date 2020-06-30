@@ -2300,6 +2300,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    */
   public logOut(): void;
   public logOut(customParameters: object): void;
+  public logOut(noRedirectToLogoutUrl: boolean): void;
   public logOut(noRedirectToLogoutUrl: boolean, state: string): void;
   public logOut(customParameters: boolean | object = {}, state = ''): void {
     let noRedirectToLogoutUrl = false;
