@@ -1428,9 +1428,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         this.saveNoncesInLocalStorage &&
         typeof window['localStorage'] !== 'undefined'
       ) {
-        localStorage.setItem('PKCI_verifier', verifier);
+        localStorage.setItem('PKCE_verifier', verifier);
       } else {
-        this._storage.setItem('PKCI_verifier', verifier);
+        this._storage.setItem('PKCE_verifier', verifier);
       }
 
       url += '&code_challenge=' + challenge;
@@ -1689,21 +1689,21 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       .set('redirect_uri', options.customRedirectUri || this.redirectUri);
 
     if (!this.disablePKCE) {
-      let pkciVerifier;
+      let PKCEVerifier;
 
       if (
         this.saveNoncesInLocalStorage &&
         typeof window['localStorage'] !== 'undefined'
       ) {
-        pkciVerifier = localStorage.getItem('PKCI_verifier');
+        PKCEVerifier = localStorage.getItem('PKCE_verifier');
       } else {
-        pkciVerifier = this._storage.getItem('PKCI_verifier');
+        PKCEVerifier = this._storage.getItem('PKCE_verifier');
       }
 
-      if (!pkciVerifier) {
-        console.warn('No PKCI verifier found in oauth storage!');
+      if (!PKCEVerifier) {
+        console.warn('No PKCE verifier found in oauth storage!');
       } else {
-        params = params.set('code_verifier', pkciVerifier);
+        params = params.set('code_verifier', PKCEVerifier);
       }
     }
 
@@ -2296,7 +2296,15 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * @param noRedirectToLogoutUrl
    * @param state
    */
-  public logOut(noRedirectToLogoutUrl = false, state = ''): void {
+  public logOut(customParameters: object): void;
+  public logOut(noRedirectToLogoutUrl: boolean, state: string): void;
+  public logOut(customParameters: boolean | object, state = ''): void {
+    let noRedirectToLogoutUrl = false;
+    if (typeof customParameters === 'boolean') {
+      noRedirectToLogoutUrl = customParameters;
+      customParameters = {};
+    }
+
     const id_token = this.getIdToken();
     this._storage.removeItem('access_token');
     this._storage.removeItem('id_token');
@@ -2304,10 +2312,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
     if (this.saveNoncesInLocalStorage) {
       localStorage.removeItem('nonce');
-      localStorage.removeItem('PKCI_verifier');
+      localStorage.removeItem('PKCE_verifier');
     } else {
       this._storage.removeItem('nonce');
-      this._storage.removeItem('PKCI_verifier');
+      this._storage.removeItem('PKCE_verifier');
     }
 
     this._storage.removeItem('expires_at');
@@ -2364,6 +2372,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         if (state) {
           params = params.set('state', state);
         }
+      }
+
+      for(let key in customParameters) {
+        params = params.set(key, customParameters[key]);
       }
 
       logoutUrl =
