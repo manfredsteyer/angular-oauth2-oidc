@@ -206,7 +206,7 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
 
-import { sha256 } from &#x27;js-sha256&#x27;;
+import { sha256 } from &#x27;./js-sha256&#x27;;
 
 /**
  * Abstraction for crypto algorithms
@@ -222,7 +222,7 @@ export class DefaultHashHandler implements HashHandler {
     // const hashArray &#x3D; await window.crypto.subtle.digest(algorithm, data);
     // const data &#x3D; encoder.encode(valueToHash);
 
-    const hashArray &#x3D; sha256.array(valueToHash);
+    const hashArray &#x3D; (sha256 as any).array(valueToHash);
     // const hashString &#x3D; this.toHashString(hashArray);
     const hashString &#x3D; this.toHashString2(hashArray);
 

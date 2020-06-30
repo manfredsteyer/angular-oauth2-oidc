@@ -6,6 +6,7 @@
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
+    "allowJs": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "downlevelIteration": true,

@@ -16,7 +16,7 @@ export class DefaultHashHandler implements HashHandler {
     // const hashArray = await window.crypto.subtle.digest(algorithm, data);
     // const data = encoder.encode(valueToHash);
 
-    const hashArray = sha256.array(valueToHash);
+    const hashArray = (sha256 as any).array(valueToHash);
     // const hashString = this.toHashString(hashArray);
     const hashString = this.toHashString2(hashArray);
 

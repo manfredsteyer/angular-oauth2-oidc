@@ -51,8 +51,8 @@
 <h1 id="refreshing-a-token-using-code-flow-not-implicit-flow">Refreshing a Token using Code Flow (not Implicit Flow!)</h1>
 <p>When using code flow, you can get an <code>refresh_token</code>. While the original standard DOES NOT allow this for SPAs, the mentioned <a href="https://tools.ietf.org/html/draft-ietf-oauth-security-topics-13">OAuth 2.0 Security Best Current Practice</a> document proposes to ease this limitation. However, it specifies a list of requirements one should take care about before using <code>refresh_tokens</code>. Please make sure you respect those requirements.</p>
 <p>Please also note, that you have to request the <code>offline_access</code> scope to get an refresh token.</p>
-<p>To refresh your token, just call the <code>refresh</code> method:</p>
-<div><pre class="line-numbers"><code class="language-typescript">this.oauthService.refresh();</code></pre></div><h2 id="automatically-refreshing-a-token-when-before-it-expires-code-flow-and-implicit-flow">Automatically refreshing a token when/ before it expires (Code Flow and Implicit Flow)</h2>
+<p>To refresh your token, just call the <code>refreshToken</code> method:</p>
+<div><pre class="line-numbers"><code class="language-typescript">this.oauthService.refreshToken();</code></pre></div><h2 id="automatically-refreshing-a-token-when-before-it-expires-code-flow-and-implicit-flow">Automatically refreshing a token when/ before it expires (Code Flow and Implicit Flow)</h2>
 <p>To automatically refresh a token when/ some time before it expires, just call the following method after configuring the <code>OAuthService</code>:</p>
 <div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.setupAutomaticSilentRefresh();</code></pre></div><p>By default, this event is fired after 75% of the token&#39;s life time is over. You can adjust this factor by setting the property <code>timeoutFactor</code> to a value between 0 and 1. For instance, 0.5 means, that the event is fired after half of the life time is over and 0.33 triggers the event after a third.</p>
 

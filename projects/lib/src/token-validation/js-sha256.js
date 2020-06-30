@@ -7,8 +7,7 @@
  * @license MIT
  */
 /*jslint bitwise: true */
-(function () {
-    'use strict';
+
   
     var ERROR = 'input is invalid type';
     var WINDOW = typeof window === 'object';
@@ -504,15 +503,4 @@
     exports.sha256.hmac = createHmacMethod();
     exports.sha224.hmac = createHmacMethod(true);
   
-    if (COMMON_JS) {
-      module.exports = exports;
-    } else {
-      root.sha256 = exports.sha256;
-      root.sha224 = exports.sha224;
-      if (AMD) {
-        define(function () {
-          return exports;
-        });
-      }
-    }
-  })();
+    export  { exports as sha256 };

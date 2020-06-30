@@ -1,5 +1,10 @@
 import { Injectable, NgZone, Optional, OnDestroy, Inject } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpParams,
+  HttpErrorResponse
+} from '@angular/common/http';
 import {
   Observable,
   Subject,
@@ -284,7 +289,6 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     options = options || {};
     return this.loadDiscoveryDocumentAndTryLogin(options).then(_ => {
       if (!this.hasValidIdToken() || !this.hasValidAccessToken()) {
-
         const state = typeof options.state === 'string' ? options.state : '';
         this.initLoginFlow(state);
         return false;
@@ -1301,7 +1305,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       return;
     }
 
-    const existingIframe = this.document.getElementById(this.sessionCheckIFrameName);
+    const existingIframe = this.document.getElementById(
+      this.sessionCheckIFrameName
+    );
     if (existingIframe) {
       this.document.body.removeChild(existingIframe);
     }
@@ -1337,7 +1343,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   }
 
   public checkSession(): void {
-    const iframe: any = this.document.getElementById(this.sessionCheckIFrameName);
+    const iframe: any = this.document.getElementById(
+      this.sessionCheckIFrameName
+    );
 
     if (!iframe) {
       this.logger.warn(
@@ -2070,7 +2078,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     // addressing https://github.com/manfredsteyer/angular-oauth2-oidc/issues/661
     // i.e. Based on spec the at_hash check is only true for implicit code flow on Ping Federate
     // https://www.pingidentity.com/developer/en/resources/openid-connect-developers-guide.html
-    if (this.hasOwnProperty('responseType') && (this.responseType === 'code' || this.responseType === 'id_token')) {
+    if (
+      this.hasOwnProperty('responseType') &&
+      (this.responseType === 'code' || this.responseType === 'id_token')
+    ) {
       this.disableAtHashCheck = true;
     }
     if (
@@ -2378,7 +2389,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         }
       }
 
-      for(let key in customParameters) {
+      for (let key in customParameters) {
         params = params.set(key, customParameters[key]);
       }
 
@@ -2580,7 +2591,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * of the token issued allowing the authorization server to clean
    * up any security credentials associated with the authorization
    */
-  public revokeTokenAndLogout(customParameters: object = {}, ignoreCorsIssues = false): Promise<any> {
+  public revokeTokenAndLogout(
+    customParameters: object = {},
+    ignoreCorsIssues = false
+  ): Promise<any> {
     let revokeEndpoint = this.revocationEndpoint;
     let accessToken = this.getAccessToken();
     let refreshToken = this.getRefreshToken();
@@ -2646,26 +2660,28 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       }
 
       if (ignoreCorsIssues) {
-        revokeAccessToken = revokeAccessToken
-          .pipe(catchError((err: HttpErrorResponse) => {
+        revokeAccessToken = revokeAccessToken.pipe(
+          catchError((err: HttpErrorResponse) => {
             if (err.status === 0) {
               return of<void>();
             }
             return throwError(err);
-          }));
+          })
+        );
 
-        revokeRefreshToken = revokeRefreshToken
-          .pipe(catchError((err: HttpErrorResponse) => {
+        revokeRefreshToken = revokeRefreshToken.pipe(
+          catchError((err: HttpErrorResponse) => {
             if (err.status === 0) {
               return of<void>();
             }
             return throwError(err);
-          }));
+          })
+        );
       }
 
       combineLatest([revokeAccessToken, revokeRefreshToken]).subscribe(
         res => {
-          this.logOut()
+          this.logOut();
           resolve(res);
           this.logger.info('Token successfully revoked');
         },
