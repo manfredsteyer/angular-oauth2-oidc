@@ -12,3 +12,4 @@ export * from './events';
 export * from './interceptors/default-oauth.interceptor';
 export * from './interceptors/resource-server-error-handler';
 export * from './oauth-module.config';
+export * from './date-time-provider';
