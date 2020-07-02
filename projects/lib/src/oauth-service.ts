@@ -122,7 +122,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     protected logger: OAuthLogger,
     @Optional() protected crypto: HashHandler,
     @Inject(DOCUMENT) document: any,
-    protected dateTimeService: DateTimeProvider,
+    protected dateTimeService: DateTimeProvider
   ) {
     super();
 
@@ -1574,7 +1574,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       this._storage.setItem('granted_scopes', JSON.stringify(grantedScopes));
     }
 
-    this._storage.setItem('access_token_stored_at', '' + this.dateTimeService.now());
+    this._storage.setItem(
+      'access_token_stored_at',
+      '' + this.dateTimeService.now()
+    );
     if (expiresIn) {
       const expiresInMilliSeconds = expiresIn * 1000;
       const now = this.dateTimeService.new();
@@ -1975,7 +1978,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     this._storage.setItem('id_token', idToken.idToken);
     this._storage.setItem('id_token_claims_obj', idToken.idTokenClaimsJson);
     this._storage.setItem('id_token_expires_at', '' + idToken.idTokenExpiresAt);
-    this._storage.setItem('id_token_stored_at', '' + this.dateTimeService.now());
+    this._storage.setItem(
+      'id_token_stored_at',
+      '' + this.dateTimeService.now()
+    );
   }
 
   protected storeSessionState(sessionState: string): void {

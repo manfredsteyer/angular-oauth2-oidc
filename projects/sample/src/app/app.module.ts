@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { OAuthModule, OAuthStorage, DateTimeProvider } from 'angular-oauth2-oidc';
+import {
+  OAuthModule,
+  OAuthStorage,
+  DateTimeProvider
+} from 'angular-oauth2-oidc';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
