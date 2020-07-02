@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
+import { OAuthModule, OAuthStorage, DateTimeProvider } from 'angular-oauth2-oidc';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -10,6 +10,7 @@ import { BASE_URL } from './app.tokens';
 import { FlightHistoryComponent } from './flight-history/flight-history.component';
 import { HomeComponent } from './home/home.component';
 import { PasswordFlowLoginComponent } from './password-flow-login/password-flow-login.component';
+// import { CustomDateTimeProvider } from './shared/date/custom-date-time-provider';
 import { SharedModule } from './shared/shared.module';
 import { RouterModule, ExtraOptions } from '@angular/router';
 import { CustomPreloadingStrategy } from './shared/preload/custom-preloading.strategy';
@@ -48,6 +49,8 @@ const ROUTING_OPTIONS: ExtraOptions = {
     // {provide: AuthConfig, useValue: authConfig },
     // { provide: OAuthStorage, useValue: localStorage },
     // { provide: ValidationHandler, useClass: JwksValidationHandler },
+    // Enabled the custom date time provider will make the sample fail to login, since the demo Idp time is correctly synced to the world time.
+    // { provide: DateTimeProvider, useClass: CustomDateTimeProvider },
     { provide: BASE_URL, useValue: 'http://www.angular.at' }
   ],
   bootstrap: [AppComponent]
