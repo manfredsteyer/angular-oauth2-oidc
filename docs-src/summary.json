@@ -83,6 +83,24 @@
     {
         "title": "Original Config API",
         "file": "implicit-flow-config-discovery.md"
+    },
+    {
+        "title": "Authorization Servers",
+        "file": "authsvr.md",
+        "children": [
+            {
+                "title": "Using Identity Server",
+                "file": "authsvr-idsvr.md"
+            },
+            {
+                "title": "Using Keycloak",
+                "file": "authsvr-keycloak.md"
+            },
+            {
+                "title": "Auth0",
+                "file": "authsvr-auth0.md"
+            }
+        ]
     }
 
 ]
