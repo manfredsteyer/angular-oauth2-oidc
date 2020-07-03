@@ -110,6 +110,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
   protected saveNoncesInLocalStorage = false;
   private document: Document;
+  private sessionCheckIFrameOrigin: string;
 
   constructor(
     protected ngZone: NgZone,
@@ -534,6 +535,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
           this.jwksUri = doc.jwks_uri;
           this.sessionCheckIFrameUrl =
             doc.check_session_iframe || this.sessionCheckIFrameUrl;
+          this.sessionCheckIFrameOrigin = new URL(this.sessionCheckIFrameUrl || this.issuer).origin;
 
           this.discoveryDocumentLoaded = true;
           this.discoveryDocumentLoadedSubject.next(doc);
@@ -1361,7 +1363,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
 
     const message = this.clientId + ' ' + sessionState;
-    iframe.contentWindow.postMessage(message, this.issuer);
+    iframe.contentWindow.postMessage(message, this.sessionCheckIFrameOrigin);
   }
 
   protected async createLoginUrl(
