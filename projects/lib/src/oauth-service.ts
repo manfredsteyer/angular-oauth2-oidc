@@ -124,10 +124,14 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   ) {
     super();
 
-    this.debug('angular-oauth2-oidc v8-beta');
+    this.debug('angular-oauth2-oidc v10');
 
     // See https://github.com/manfredsteyer/angular-oauth2-oidc/issues/773 for why this is needed
     this.document = document;
+
+    if (!config) {
+      config = {};
+    }
 
     this.discoveryDocumentLoaded$ = this.discoveryDocumentLoadedSubject.asObservable();
     this.events = this.eventsSubject.asObservable();
