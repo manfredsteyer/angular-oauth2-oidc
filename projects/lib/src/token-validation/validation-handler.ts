@@ -43,23 +43,24 @@ export abstract class AbstractValidationHandler implements ValidationHandler {
   /**
    * Validates the at_hash in an id_token against the received access_token.
    */
-  async validateAtHash(params: ValidationParams): Promise<boolean> {
+  validateAtHash(params: ValidationParams): Promise<boolean> {
     let hashAlg = this.inferHashAlgorithm(params.idTokenHeader);
 
-    let tokenHash = await this.calcHash(params.accessToken, hashAlg); // sha256(accessToken, { asString: true });
+    return this.calcHash(params.accessToken, hashAlg)
+      .then(tokenHash => {
+        let leftMostHalf = tokenHash.substr(0, tokenHash.length / 2);
 
-    let leftMostHalf = tokenHash.substr(0, tokenHash.length / 2);
+        let atHash = base64UrlEncode(leftMostHalf);
 
-    let atHash = base64UrlEncode(leftMostHalf);
+        let claimsAtHash = params.idTokenClaims['at_hash'].replace(/=/g, '');
 
-    let claimsAtHash = params.idTokenClaims['at_hash'].replace(/=/g, '');
+        if (atHash !== claimsAtHash) {
+          console.error('exptected at_hash: ' + atHash);
+          console.error('actual at_hash: ' + claimsAtHash);
+        }
 
-    if (atHash !== claimsAtHash) {
-      console.error('exptected at_hash: ' + atHash);
-      console.error('actual at_hash: ' + claimsAtHash);
-    }
-
-    return atHash === claimsAtHash;
+        return atHash === claimsAtHash;
+      });
   }
 
   /**
