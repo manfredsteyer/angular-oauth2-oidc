@@ -2561,11 +2561,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       );
     }
 
-    const verifier = await this.createNonce();
-    const challengeRaw = await this.crypto.calcHash(verifier, 'sha-256');
-    const challenge = base64UrlEncode(challengeRaw);
-
-    return [challenge, verifier];
+    return this.createNonce()
+      .then(verifier => ({ verifier, raw: this.crypto.calcHash(verifier, 'sha-256')}))
+      .then(parts => [base64UrlEncode(parts.raw), parts.verifier]);
   }
 
   private extractRecognizedCustomParameters(
