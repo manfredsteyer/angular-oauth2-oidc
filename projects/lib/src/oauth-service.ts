@@ -777,48 +777,65 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     password: string,
     headers: HttpHeaders = new HttpHeaders()
   ): Promise<TokenResponse> {
+    const parameters = {
+        username: userName,
+        password: password,
+    };
+    return this.fetchTokenUsingGrant('password', parameters, headers);
+}
+
+  /**
+   * Uses a custom grant type to retrieve tokens.
+   * @param grantType Grant type.
+   * @param parameters Parameters to pass.
+   * @param headers Optional additional HTTP headers.
+   */
+  public fetchTokenUsingGrant(grantType: string, parameters: object, headers: HttpHeaders = new HttpHeaders()): Promise<TokenResponse> {
     this.assertUrlNotNullAndCorrectProtocol(
       this.tokenEndpoint,
       'tokenEndpoint'
     );
 
+    /**
+     * A `HttpParameterCodec` that uses `encodeURIComponent` and `decodeURIComponent` to
+     * serialize and parse URL parameter keys and values.
+     *
+     * @stable
+     */
+    let params = new HttpParams({ encoder: new WebHttpUrlEncodingCodec() })
+      .set('grant_type', grantType)
+      .set('scope', this.scope);
+
+    if (this.useHttpBasicAuth) {
+      const header = btoa(`${this.clientId}:${this.dummyClientSecret}`);
+      headers = headers.set('Authorization', 'Basic ' + header);
+    }
+
+    if (!this.useHttpBasicAuth) {
+      params = params.set('client_id', this.clientId);
+    }
+
+    if (!this.useHttpBasicAuth && this.dummyClientSecret) {
+      params = params.set('client_secret', this.dummyClientSecret);
+    }
+
+    if (this.customQueryParams) {
+      for (const key of Object.getOwnPropertyNames(this.customQueryParams)) {
+        params = params.set(key, this.customQueryParams[key]);
+      }
+    }
+
+    // set explicit parameters last, to allow overwriting
+    for (const key of Object.keys(parameters)) {
+      params = params.set(key, parameters[key]);
+    }
+
+    headers = headers.set(
+      'Content-Type',
+      'application/x-www-form-urlencoded'
+    );
+
     return new Promise((resolve, reject) => {
-      /**
-       * A `HttpParameterCodec` that uses `encodeURIComponent` and `decodeURIComponent` to
-       * serialize and parse URL parameter keys and values.
-       *
-       * @stable
-       */
-      let params = new HttpParams({ encoder: new WebHttpUrlEncodingCodec() })
-        .set('grant_type', 'password')
-        .set('scope', this.scope)
-        .set('username', userName)
-        .set('password', password);
-
-      if (this.useHttpBasicAuth) {
-        const header = btoa(`${this.clientId}:${this.dummyClientSecret}`);
-        headers = headers.set('Authorization', 'Basic ' + header);
-      }
-
-      if (!this.useHttpBasicAuth) {
-        params = params.set('client_id', this.clientId);
-      }
-
-      if (!this.useHttpBasicAuth && this.dummyClientSecret) {
-        params = params.set('client_secret', this.dummyClientSecret);
-      }
-
-      if (this.customQueryParams) {
-        for (const key of Object.getOwnPropertyNames(this.customQueryParams)) {
-          params = params.set(key, this.customQueryParams[key]);
-        }
-      }
-
-      headers = headers.set(
-        'Content-Type',
-        'application/x-www-form-urlencoded'
-      );
-
       this.http
         .post<TokenResponse>(this.tokenEndpoint, params, { headers })
         .subscribe(
@@ -827,21 +844,26 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             this.storeAccessTokenResponse(
               tokenResponse.access_token,
               tokenResponse.refresh_token,
-              tokenResponse.expires_in ||
-                this.fallbackAccessTokenExpirationTimeInSec,
+              tokenResponse.expires_in || this.fallbackAccessTokenExpirationTimeInSec,
               tokenResponse.scope,
               this.extractRecognizedCustomParameters(tokenResponse)
             );
-
+            if (this.oidc && tokenResponse.id_token) {
+              this.processIdToken(tokenResponse.id_token, tokenResponse.access_token)
+                .then(result => {
+                  this.storeIdToken(result);
+                  resolve(tokenResponse);
+                });
+            }
             this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
             resolve(tokenResponse);
           },
           err => {
-            this.logger.error('Error performing password flow', err);
+            this.logger.error('Error performing ${grantType} flow', err);
             this.eventsSubject.next(new OAuthErrorEvent('token_error', err));
             reject(err);
           }
-        );
+        )
     });
   }
 
