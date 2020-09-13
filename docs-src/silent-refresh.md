@@ -67,7 +67,6 @@ This simple implementation within silent-refresh.html is sufficient in most case
             var checks = [/[\?|&|#]code=/, /[\?|&|#]error=/, /[\?|&|#]token=/, /[\?|&|#]id_token=/];
 
             function isResponse(str) {
-                var count = 0;
                 if (!str) return false;
                 for(var i=0; i<checks.length; i++) {
                     if (str.match(checks[i])) return true;
@@ -77,12 +76,24 @@ This simple implementation within silent-refresh.html is sufficient in most case
 
             var message = isResponse(location.hash) ? location.hash : '#' + location.search;
 
-            (window.opener || window.parent).postMessage(message, location.origin);
+            if (window.parent && window.parent !== window) {
+                // if loaded as an iframe during silent refresh
+                window.parent.postMessage(message, location.origin);
+            } else if (window.opener && window.opener !== window) {
+                // if loaded as a popup during initial login
+                window.opener.postMessage(message, location.origin);
+            } else {
+                // last resort for a popup which has been through redirects and can't use window.opener
+                localStorage.setItem('auth_hash', message);
+                localStorage.removeItem('auth_hash');
+            }
         </script>
     </body>
 </html>
 ```
+The above example checks if the message in the URL (either hash or query string) is indeed a message returned with a response from an authentication provider and not an arbitrary value and then attempts to forward this message to a parent widow either by `.parent` (when this html is loaded in an iframe as a result of silent refresh) or by `.opener` (when the html is loaded into a popup during initial login) or finally using a storage event (as a fallback for complex cases, e.g. initial login in a popup with a cross-domain auth provider).
 
+ 
 Please make sure that this file is copied to your output directory by your build task. When using the CLI you can define it as an asset for this. For this, you have to add the following line to the file ``.angular-cli.json``:
 
 ```JSON
