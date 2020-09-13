@@ -1059,7 +1059,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     return this.initLoginFlowInPopup(options);
   }
 
-  public initLoginFlowInPopup(options?: { height?: number; width?: number }) {
+  public initLoginFlowInPopup(options?: { height?: number; width?: number }): Promise<boolean> {
     options = options || {};
     return this.createLoginUrl(
       null,
@@ -1081,6 +1081,21 @@ export class OAuthService extends AuthConfig implements OnDestroy {
           this.calculatePopupFeatures(options)
         );
         let checkForPopupClosedTimer: any;
+
+        const tryLogin = (hash: string) => {
+          this.tryLogin({
+            customHashFragment: hash,
+            preventClearHashAfterLogin: true,
+            customRedirectUri: this.silentRefreshRedirectUri,
+          }).then(() => {
+            cleanup();
+            resolve(true);
+          }, err => {
+            cleanup();
+            reject(err);
+          });
+        };
+
         const checkForPopupClosed = () => {
           if (!windowRef || windowRef.closed) {
             cleanup();
@@ -1098,6 +1113,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
         const cleanup = () => {
           window.clearInterval(checkForPopupClosedTimer);
+          window.removeEventListener('storage', storageListener);
           window.removeEventListener('message', listener);
           if (windowRef !== null) {
             windowRef.close();
@@ -1109,26 +1125,22 @@ export class OAuthService extends AuthConfig implements OnDestroy {
           const message = this.processMessageEventMessage(e);
 
           if (message && message !== null) {
-            this.tryLogin({
-              customHashFragment: message,
-              preventClearHashAfterLogin: true,
-              customRedirectUri: this.silentRefreshRedirectUri
-            }).then(
-              () => {
-                cleanup();
-                resolve();
-              },
-              err => {
-                cleanup();
-                reject(err);
-              }
-            );
+            window.removeEventListener('storage', storageListener);
+            tryLogin(message);
           } else {
             console.log('false event firing');
           }
         };
 
+        const storageListener = (event: StorageEvent) => {
+          if (event.key === 'auth_hash') {
+            window.removeEventListener('message', listener);
+            tryLogin(event.newValue);
+          }
+        };
+
         window.addEventListener('message', listener);
+        window.addEventListener('storage', storageListener);
       });
     });
   }
