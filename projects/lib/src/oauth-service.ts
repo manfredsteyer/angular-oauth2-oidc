@@ -1252,7 +1252,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       // only run in Angular zone if it is 'changed' or 'error'
       switch (e.data) {
         case 'unchanged':
-          this.handleSessionUnchanged();
+          this.ngZone.run(() => {
+            this.handleSessionUnchanged();
+          });
           break;
         case 'changed':
           this.ngZone.run(() => {
@@ -1277,6 +1279,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
   protected handleSessionUnchanged(): void {
     this.debug('session check', 'session unchanged');
+    this.eventsSubject.next(new OAuthInfoEvent('session_unchanged'));
   }
 
   protected handleSessionChange(): void {
