@@ -2543,8 +2543,13 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         "loginUrl  must use HTTPS (with TLS), or config value for property 'requireHttps' must be set to 'false' and allow HTTP (without TLS)."
       );
     }
+    
+    let loginHint = null;
+    if (typeof params === 'string') {
+        loginHint = params;
+    }
 
-    this.createLoginUrl(additionalState, '', null, false, params)
+    this.createLoginUrl(additionalState, loginHint, null, false, params)
       .then(this.config.openUri)
       .catch(error => {
         console.error('Error in initAuthorizationCodeFlow');
