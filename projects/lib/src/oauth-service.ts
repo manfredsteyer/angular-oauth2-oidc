@@ -2371,8 +2371,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     // For backward compatibility
     if (this.logoutUrl.indexOf('{{') > -1) {
       logoutUrl = this.logoutUrl
-        .replace(/\{\{id_token\}\}/, id_token)
-        .replace(/\{\{client_id\}\}/, this.clientId);
+        .replace(/\{\{id_token\}\}/, encodeURIComponent(id_token))
+        .replace(/\{\{client_id\}\}/, encodeURIComponent(this.clientId));
     } else {
       let params = new HttpParams();
 
