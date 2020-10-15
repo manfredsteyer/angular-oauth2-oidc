@@ -67,7 +67,7 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
 
     return merge(
       of(this.oAuthService.getAccessToken()).pipe(
-        filter(token => (token ? true : false))
+        filter(token => !!token)
       ),
       this.oAuthService.events.pipe(
         filter(e => e.type === 'token_received'),
