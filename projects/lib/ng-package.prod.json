@@ -2,7 +2,8 @@
   "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
   "dest": "../../dist/lib",
   "lib": {
-    "entryFile": "src/public_api.ts"
+    "entryFile": "src/public_api.ts",
+	  "umdId": "angularOauth2Oidc"
   },
   "whitelistedNonPeerDependencies": [
     "js-sha256"
