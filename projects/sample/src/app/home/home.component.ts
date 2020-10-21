@@ -86,6 +86,14 @@ export class HomeComponent implements OnInit {
     this.oauthService.loadUserProfile().then(up => (this.userProfile = up));
   }
 
+  startAutomaticRefresh(): void {
+    this.oauthService.setupAutomaticSilentRefresh();
+  }
+
+  stopAutomaticRefresh(): void {
+    this.oauthService.stopAutomaticRefresh();
+  }
+
   get givenName() {
     var claims = this.oauthService.getIdentityClaims();
     if (!claims) return null;
