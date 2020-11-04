@@ -187,7 +187,7 @@ export class AuthConfig {
    * This property has been introduced to disable at_hash checks
    * and is indented for Identity Provider that does not deliver
    * an at_hash EVEN THOUGH its recommended by the OIDC specs.
-   * Of course, when disabling these checks the we are bypassing
+   * Of course, when disabling these checks then we are bypassing
    * a security check which means we are more vulnerable.
    */
   public disableAtHashCheck? = false;
