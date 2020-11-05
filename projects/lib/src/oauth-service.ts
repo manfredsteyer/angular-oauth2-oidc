@@ -1643,7 +1643,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
     if (parts['error']) {
       this.debug('error trying to login');
-      this.handleLoginError({}, parts);
+      this.handleLoginError(options, parts);
       const err = new OAuthErrorEvent('code_error', {}, parts);
       this.eventsSubject.next(err);
       return Promise.reject(err);
