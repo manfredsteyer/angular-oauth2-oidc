@@ -1893,7 +1893,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     if (!this.oidc) {
       this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
       if (this.clearHashAfterLogin && !options.preventClearHashAfterLogin) {
-        location.hash = '';
+        this.clearLocationHash();
       }
 
       this.callOnTokenReceivedIfExists(options);
@@ -1918,7 +1918,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         this.storeIdToken(result);
         this.storeSessionState(sessionState);
         if (this.clearHashAfterLogin && !options.preventClearHashAfterLogin) {
-          location.hash = '';
+          this.clearLocationHash();
         }
         this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
         this.callOnTokenReceivedIfExists(options);
@@ -1989,7 +1989,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       options.onLoginError(parts);
     }
     if (this.clearHashAfterLogin && !options.preventClearHashAfterLogin) {
-      location.hash = '';
+      this.clearLocationHash();
     }
   }
 
@@ -2694,5 +2694,16 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         }
       );
     });
+  }
+
+  /**
+   * Clear location.hash if it's present
+   */
+  private clearLocationHash() {
+    // Checking for empty hash is necessary for Firefox
+    // as setting an empty hash to an empty string adds # to the URL
+    if(location.hash != '') {
+      location.hash = '';
+    }
   }
 }
