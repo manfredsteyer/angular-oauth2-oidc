@@ -16,6 +16,12 @@ export class AuthConfig {
   public postLogoutRedirectUri? = '';
 
   /**
+   * Defines whether to use 'redirectUri' as a replacement
+   * of 'postLogoutRedirectUri' if the latter is not set.
+   */
+  public redirectUriAsPostLogoutRedirectUriFallback? = true;
+
+  /**
    * The auth server's endpoint that allows to log
    * the user in when using implicit flow.
    */

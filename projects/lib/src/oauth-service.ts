@@ -2380,7 +2380,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         params = params.set('id_token_hint', id_token);
       }
 
-      const postLogoutUrl = this.postLogoutRedirectUri || this.redirectUri;
+      const postLogoutUrl = this.postLogoutRedirectUri || (this.redirectUriAsPostLogoutRedirectUriFallback && this.redirectUri || '');
       if (postLogoutUrl) {
         params = params.set('post_logout_redirect_uri', postLogoutUrl);
 
