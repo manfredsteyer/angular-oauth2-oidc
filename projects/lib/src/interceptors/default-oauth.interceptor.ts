@@ -47,7 +47,7 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const url = req.url.toLowerCase();
+    const url: string = req.url;
 
     if (
       !this.moduleConfig ||
