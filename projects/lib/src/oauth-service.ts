@@ -231,15 +231,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             shouldRunSilentRefresh = false;
           }
         }),
-        filter(e => e.type === 'token_expires'),
+        filter((e: OAuthInfoEvent) => e.type === 'token_expires' && (listenTo == null || listenTo === 'any' || e.info === listenTo)),
         debounceTime(1000)
       )
-      .subscribe(e => {
-        const event = e as OAuthInfoEvent;
-        if (
-          (listenTo == null || listenTo === 'any' || event.info === listenTo) &&
-          shouldRunSilentRefresh
-        ) {
+      .subscribe(_ => {
+        if (shouldRunSilentRefresh) {
           // this.silentRefresh(params, noPrompt).catch(_ => {
           this.refreshInternal(params, noPrompt).catch(_ => {
             this.debug('Automatic silent refresh did not work');
