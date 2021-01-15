@@ -2,7 +2,7 @@
 
 When using code flow, you can get an ``refresh_token``. While the original standard DOES NOT allow this for SPAs, the mentioned [OAuth 2.0 Security Best Current Practice](https://tools.ietf.org/html/draft-ietf-oauth-security-topics-13) document proposes to ease this limitation. However, it specifies a list of requirements one should take care about before using ``refresh_tokens``. Please make sure you respect those requirements.
 
-Please also note, that you have to request the ``offline_access`` scope to get an refresh token.
+Please also note, that you have to request the ``offline_access`` scope to get a refresh token.
 
 To refresh your token, just call the ``refreshToken`` method:
 
