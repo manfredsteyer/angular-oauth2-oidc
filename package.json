@@ -44,7 +44,6 @@
     "rxjs": "6.5.4",
     "rxjs-compat": "^6.5.2",
     "text-encoder-lite": "^1.0.1",
-    "tsickle": "^0.38.1",
     "tslib": "^2.0.0",
     "zone.js": "^0.10.3"
   },
