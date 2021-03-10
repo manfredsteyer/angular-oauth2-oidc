@@ -1,32 +1,29 @@
-/*
-  This is a "Solution Style" tsconfig.json file, and is used by editors and TypeScript’s language server to improve development experience.
-  It is not intended to be used to perform a compilation.
-
-  To learn more about this file see: https://angular.io/config/solution-tsconfig.
-*/
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./projects/lib/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/sample/tsconfig.app.json"
-    },
-    {
-      "path": "./projects/sample/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/quickstart-demo/tsconfig.app.json"
-    },
-    {
-      "path": "./projects/quickstart-demo/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/angular-oauth2-oidc-jwks/tsconfig.lib.json"
-    },
-    {
-      "path": "./projects/angular-oauth2-oidc-jwks/tsconfig.spec.json"
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "allowJs": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "downlevelIteration": true,
+    "module": "esnext",
+    "target": "es5",
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2017", "dom"],
+    "paths": {
+      "sample": ["dist/sample"],
+      "angular-oauth2-oidc": ["projects/lib/src/public_api"],
+
+      "angular-oauth2-oidc-jwks": [
+        "projects/angular-oauth2-oidc-jwks/src/public-api"
+      ]
     }
-  ]
+  },
+  "angularCompilerOptions": {
+    "enableIvy": false
+  }
 }
