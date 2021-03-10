@@ -19,7 +19,7 @@ import { useHash } from '../flags';
 const ROUTING_OPTIONS: ExtraOptions = {
   // preloadingStrategy: CustomPreloadingStrategy,
   useHash: useHash,
-  initialNavigation: !useHash
+  initialNavigation: !useHash ? 'disabled' : 'enabled'
 };
 
 @NgModule({

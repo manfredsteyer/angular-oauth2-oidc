@@ -1070,7 +1070,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         display: 'popup'
       }
     ).then(url => {
-      return new Promise((resolve, reject) => {
+      return new Promise<void>((resolve, reject) => {
         /**
          * Error handling section
          */
