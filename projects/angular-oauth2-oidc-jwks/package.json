@@ -1,6 +1,6 @@
 {
   "name": "angular-oauth2-oidc-jwks",
-  "version": "9.0.0",
+  "version": "9.0.1",
   "dependencies": {
     "jsrsasign": "^10.2.0",
     "tslib": "^2.0.0"
