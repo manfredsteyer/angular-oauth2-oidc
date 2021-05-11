@@ -1,0 +1,140 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>angular-oauth2-oidc</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../../images/favicon.ico">
+	      <link rel="stylesheet" href="../../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../../" class="navbar-brand">angular-oauth2-oidc</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content additional-page">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+<h1 id="using-auth0">Using Auth0</h1>
+<p>To use this lib with Auth0, open your Auth0 account and configure:</p>
+<ul>
+<li>An app </li>
+<li>An API</li>
+</ul>
+<p>Configure the app to use <code>refresh token rotation</code> and the grant types <code>authorization code</code> and <code>refresh token</code>. For grant types, see the advanced settings at the end of the settings page.</p>
+<h2 id="configuration">Configuration</h2>
+<p>Provide a configuration like this:</p>
+<div><pre class="line-numbers"><code class="language-typescript">import { AuthConfig } from &#39;angular-oauth2-oidc&#39;;
+
+export const authConfig: AuthConfig = {
+
+    issuer: &#39;https://dev-g-61sdfs.eu.auth0.com/&#39;,
+
+    // Your app&#39;s client id:
+    clientId: &#39;opHt1Tkt9E9fVQTZPBVF1tHVhjrxvyVX&#39;,
+    redirectUri: window.location.origin,
+
+    scope: &#39;openid profile email offline_access&#39;,
+
+    responseType: &#39;code&#39;,
+
+    logoutUrl: &#39;https://dev-g-61sdfs.eu.auth0.com/v2/logout&#39;,
+
+    customQueryParams: {
+        // Your API&#39;s name
+        audience: &#39;http://www.angular.at/api&#39;
+    },
+};</code></pre></div><h2 id="getting-using-and-refreshing-a-token">Getting, Using, and Refreshing a Token</h2>
+<p>This should work as shown in the other examples in this documentation and in the readme file.</p>
+<h2 id="logging-out">Logging out</h2>
+<p>Auth0&#39;s logout endpoint expects the parameters <code>client_id and</code>returnTo``:</p>
+<div><pre class="line-numbers"><code class="language-typescript">this.oauthService.revokeTokenAndLogout({
+  client_id: this.oauthService.clientId,
+  returnTo: this.oauthService.redirectUri
+}, true);</code></pre></div><p>The optional 2nd parameter set to <code>true</code> ignores CORS issues with the logout endpoint.</p>
+<h2 id="example">Example</h2>
+<p>Please find a <a href="https://github.com/manfredsteyer/auth0-demo">demo</a> for using Auth0 with angular-oauth2-oidc <a href="https://github.com/manfredsteyer/auth0-demo">here</a>.</p>
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 2;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
+            var COMPODOC_CURRENT_PAGE_URL = 'auth0.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../../js/libs/custom-elements.min.js"></script>
+       <script src="../../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../../js/menu-wc.js" defer></script>
+
+       <script src="../../js/libs/bootstrap-native.js"></script>
+
+       <script src="../../js/libs/es6-shim.min.js"></script>
+       <script src="../../js/libs/EventDispatcher.js"></script>
+       <script src="../../js/libs/promise.min.js"></script>
+       <script src="../../js/libs/zepto.min.js"></script>
+
+       <script src="../../js/compodoc.js"></script>
+
+       <script src="../../js/tabs.js"></script>
+       <script src="../../js/menu.js"></script>
+       <script src="../../js/libs/clipboard.min.js"></script>
+       <script src="../../js/libs/prism.js"></script>
+       <script src="../../js/sourceCode.js"></script>
+          <script src="../../js/search/search.js"></script>
+          <script src="../../js/search/lunr.min.js"></script>
+          <script src="../../js/search/search-lunr.js"></script>
+          <script src="../../js/search/search_index.js"></script>
+       <script src="../../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

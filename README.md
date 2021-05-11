@@ -9,6 +9,7 @@ Support for OAuth 2 and OpenId Connect (OIDC) in Angular. Already prepared for t
 - [jsrasign](https://kjur.github.io/jsrsasign/) for validating token signature and for hashing
 - [Identity Server](https://github.com/identityserver) for testing with an .NET/.NET Core Backend
 - [Keycloak (Redhat)](http://www.keycloak.org/) for testing with Java
+- [Auth0](https://auth0.com/)
 
 ## Resources
 
@@ -47,7 +48,11 @@ Now the reverse is true **if you're upgrading from before 9.0.0**: you need to r
 
 ## Tested Environment
 
-Successfully tested with **Angular 9** and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we've used IdentityServer (.NET / .NET Core) and Redhat's Keycloak (Java).
+Successfully tested with **Angular 9** and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we've used IdentityServer (.NET / .NET Core), Redhat's Keycloak (Java), and Auth0 (Auth0 is officially supported since version 10 of this lib). For Auth0, please have a look into the respective documentation page here.
+
+Also, the Okta community created some guidelines on how to use this lib with Okta. See the links at the end of this page for more information.
+
+**Angular 10**: Use 10.x versions of this library (**should also work with older Angular versions!**).
 
 **Angular 9**: Use 9.x versions of this library (**should also work with older Angular versions!**).
 

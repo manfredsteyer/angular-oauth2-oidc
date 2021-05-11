@@ -122,6 +122,26 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     <li class="link ">
                                         <a href="additional-documentation/original-config-api.html" data-type="entity-link" data-context-id="additional">Original Config API</a>
                                     </li>
+                                    <li class="chapter inner">
+                                        <a data-type="chapter-link" href="additional-documentation/authorization-servers.html" data-context-id="additional">
+                                            <div class="menu-toggler linked" data-toggle="collapse" ${ isNormalMode ?
+                                            'data-target="#additional-page-64bc69bb1a8182c122d3c7f9e3c63e2d"' : 'data-target="#xs-additional-page-64bc69bb1a8182c122d3c7f9e3c63e2d"' }>
+                                                <span class="link-name">Authorization Servers</span>
+                                                <span class="icon ion-ios-arrow-down"></span>
+                                            </div>
+                                        </a>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="additional-page-64bc69bb1a8182c122d3c7f9e3c63e2d"' : 'id="xs-additional-page-64bc69bb1a8182c122d3c7f9e3c63e2d"' }>
+                                            <li class="link for-chapter2">
+                                                <a href="additional-documentation/authorization-servers/using-identity-server.html" data-type="entity-link" data-context="sub-entity" data-context-id="additional">Using Identity Server</a>
+                                            </li>
+                                            <li class="link for-chapter2">
+                                                <a href="additional-documentation/authorization-servers/using-keycloak.html" data-type="entity-link" data-context="sub-entity" data-context-id="additional">Using Keycloak</a>
+                                            </li>
+                                            <li class="link for-chapter2">
+                                                <a href="additional-documentation/authorization-servers/auth0.html" data-type="entity-link" data-context="sub-entity" data-context-id="additional">Auth0</a>
+                                            </li>
+                                        </ul>
+                                    </li>
                         </ul>
                     </li>
                     <li class="chapter modules">
