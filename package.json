@@ -1,5 +1,5 @@
 {
-  "name": "starter",
+  "name": "angular-oauth2-oidc",
   "version": "10.0.2",
   "license": "MIT",
   "scripts": {
