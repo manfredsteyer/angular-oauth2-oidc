@@ -22,15 +22,13 @@ export class FlightService {
 
     let params = new HttpParams().set('from', from).set('to', to);
 
-    this.http
-      .get<Flight[]>(url, { headers, params })
-      .subscribe(
-        flights => {
-          this.flights = flights;
-        },
-        err => {
-          console.warn('status', err.status);
-        }
-      );
+    this.http.get<Flight[]>(url, { headers, params }).subscribe(
+      (flights) => {
+        this.flights = flights;
+      },
+      (err) => {
+        console.warn('status', err.status);
+      }
+    );
   }
 }

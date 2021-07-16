@@ -5,7 +5,7 @@ import { authCodeFlowConfig } from '../auth-code-flow.config';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  templateUrl: './home.component.html'
+  templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
   loginFailed: boolean = false;
@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe(p => {
+    this.route.params.subscribe((p) => {
       this.login = p['login'];
     });
 
@@ -83,7 +83,7 @@ export class HomeComponent implements OnInit {
   }
 
   loadUserProfile(): void {
-    this.oauthService.loadUserProfile().then(up => (this.userProfile = up));
+    this.oauthService.loadUserProfile().then((up) => (this.userProfile = up));
   }
 
   startAutomaticRefresh(): void {
@@ -115,13 +115,13 @@ export class HomeComponent implements OnInit {
     ) {
       this.oauthService
         .refreshToken()
-        .then(info => console.debug('refresh ok', info))
-        .catch(err => console.error('refresh error', err));
+        .then((info) => console.debug('refresh ok', info))
+        .catch((err) => console.error('refresh error', err));
     } else {
       this.oauthService
         .silentRefresh()
-        .then(info => console.debug('silent refresh ok', info))
-        .catch(err => console.error('silent refresh error', err));
+        .then((info) => console.debug('silent refresh ok', info))
+        .catch((err) => console.error('silent refresh error', err));
     }
   }
 

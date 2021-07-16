@@ -8,7 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
-	      <link rel="stylesheet" href="../styles/style.css">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
     </head>
     <body>
 
@@ -42,7 +43,7 @@
 
 <ol class="breadcrumb">
   <li>Classes</li>
-  <li>LoginOptions</li>
+  <li >LoginOptions</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -62,6 +63,7 @@
         <p class="comment">
             <code>projects/lib/src/types.ts</code>
         </p>
+
 
             <p class="comment">
                 <h3>Description</h3>
@@ -88,31 +90,35 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Optional</span>
-                                <a href="#customHashFragment">customHashFragment</a>
+                                <a href="#customHashFragment" >customHashFragment</a>
                             </li>
                             <li>
                                     <span class="modifier">Optional</span>
-                                <a href="#customRedirectUri">customRedirectUri</a>
+                                <a href="#customRedirectUri" >customRedirectUri</a>
                             </li>
                             <li>
                                     <span class="modifier">Optional</span>
-                                <a href="#disableOAuth2StateCheck">disableOAuth2StateCheck</a>
+                                <a href="#disableNonceCheck" >disableNonceCheck</a>
                             </li>
                             <li>
                                     <span class="modifier">Optional</span>
-                                <a href="#onLoginError">onLoginError</a>
+                                <a href="#disableOAuth2StateCheck" >disableOAuth2StateCheck</a>
                             </li>
                             <li>
                                     <span class="modifier">Optional</span>
-                                <a href="#onTokenReceived">onTokenReceived</a>
+                                <a href="#onLoginError" >onLoginError</a>
                             </li>
                             <li>
                                     <span class="modifier">Optional</span>
-                                <a href="#preventClearHashAfterLogin">preventClearHashAfterLogin</a>
+                                <a href="#onTokenReceived" >onTokenReceived</a>
                             </li>
                             <li>
                                     <span class="modifier">Optional</span>
-                                <a href="#validationHandler">validationHandler</a>
+                                <a href="#preventClearHashAfterLogin" >preventClearHashAfterLogin</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Optional</span>
+                                <a href="#validationHandler" >validationHandler</a>
                             </li>
                         </ul>
                     </td>
@@ -130,37 +136,36 @@
 
             <section>
     
-        <h3 id="inputs">
-            Properties
-        </h3>
-        <table class="table table-sm table-bordered">
-            <tbody>
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="customHashFragment"></a>
+                    <span class="name">
+                            <span class="modifier">Optional</span>
+                        <span ><b>customHashFragment</b></span>
+                        <a href="#customHashFragment"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
                 <tr>
                     <td class="col-md-4">
-                        <a name="customHashFragment"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Optional</span>
-                            customHashFragment</b>
-                            <a href="#customHashFragment"><span class="icon ion-ios-link"></span></a>
-                        </span>
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
+                                <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">projects/lib/src/types.ts:40</a></div>
                         </td>
                     </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">projects/lib/src/types.ts:40</a></div>
-                            </td>
-                        </tr>
 
-                <tr>
-                    <td class="col-md-4">
-                        <div class="io-description"><p>A custom hash fragment to be used instead of the
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>A custom hash fragment to be used instead of the
 actual one. This is used for silent refreshes, to
 pass the iframes hash fragment to this method, and
 is also used by popup flows in the same manner.
@@ -169,229 +174,259 @@ to a hash symbol followed by the querystring. The
 question mark is optional, but may be present following
 the hash symbol.</p>
 </div>
-                    </td>
-                </tr>
+                </td>
+            </tr>
 
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="customRedirectUri"></a>
+                    <span class="name">
+                            <span class="modifier">Optional</span>
+                        <span ><b>customRedirectUri</b></span>
+                        <a href="#customRedirectUri"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
                 <tr>
                     <td class="col-md-4">
-                        <a name="customRedirectUri"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Optional</span>
-                            customRedirectUri</b>
-                            <a href="#customRedirectUri"><span class="icon ion-ios-link"></span></a>
-                        </span>
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
+                                <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">projects/lib/src/types.ts:74</a></div>
                         </td>
                     </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">projects/lib/src/types.ts:65</a></div>
-                            </td>
-                        </tr>
 
-                <tr>
-                    <td class="col-md-4">
-                        <div class="io-description"><p>Set this for code flow if you used a custom redirect Uri
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Set this for code flow if you used a custom redirect Uri
 when retrieving the code. This is used internally for silent
 refresh and popup flows.</p>
 </div>
-                    </td>
-                </tr>
+                </td>
+            </tr>
 
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="disableNonceCheck"></a>
+                    <span class="name">
+                            <span class="modifier">Optional</span>
+                        <span ><b>disableNonceCheck</b></span>
+                        <a href="#disableNonceCheck"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
                 <tr>
                     <td class="col-md-4">
-                        <a name="disableOAuth2StateCheck"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Optional</span>
-                            disableOAuth2StateCheck</b>
-                            <a href="#disableOAuth2StateCheck"><span class="icon ion-ios-link"></span></a>
-                        </span>
+                        <i>Default value : </i><code>false</code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">projects/lib/src/types.ts:59</a></div>
                         </td>
                     </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">projects/lib/src/types.ts:50</a></div>
-                            </td>
-                        </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Set this to true to disable the nonce
+check which is used to avoid
+replay attacks.
+This flag should never be true in
+production environments.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="disableOAuth2StateCheck"></a>
+                    <span class="name">
+                            <span class="modifier">Optional</span>
+                        <span ><b>disableOAuth2StateCheck</b></span>
+                        <a href="#disableOAuth2StateCheck"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
                 <tr>
                     <td class="col-md-4">
-                        <div class="io-description"><p>Set this to true to disable the oauth2 state
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">projects/lib/src/types.ts:50</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Set this to true to disable the oauth2 state
 check which is a best practice to avoid
 security attacks.
 As OIDC defines a nonce check that includes
 this, this can be set to true when only doing
 OIDC.</p>
 </div>
-                    </td>
-                </tr>
+                </td>
+            </tr>
 
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onLoginError"></a>
+                    <span class="name">
+                            <span class="modifier">Optional</span>
+                        <span ><b>onLoginError</b></span>
+                        <a href="#onLoginError"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
                 <tr>
                     <td class="col-md-4">
-                        <a name="onLoginError"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Optional</span>
-                            onLoginError</b>
-                            <a href="#onLoginError"><span class="icon ion-ios-link"></span></a>
-                        </span>
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
-
+                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">projects/lib/src/types.ts:28</a></div>
                         </td>
                     </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">projects/lib/src/types.ts:28</a></div>
-                            </td>
-                        </tr>
 
-                <tr>
-                    <td class="col-md-4">
-                        <div class="io-description"><p>Called when tryLogin detects that the auth server
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Called when tryLogin detects that the auth server
 included an error message into the hash fragment.</p>
 <p>Deprecated:  Use property <code>events</code> on OAuthService instead.</p>
 </div>
-                    </td>
-                </tr>
+                </td>
+            </tr>
 
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onTokenReceived"></a>
+                    <span class="name">
+                            <span class="modifier">Optional</span>
+                        <span ><b>onTokenReceived</b></span>
+                        <a href="#onTokenReceived"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
                 <tr>
                     <td class="col-md-4">
-                        <a name="onTokenReceived"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Optional</span>
-                            onTokenReceived</b>
-                            <a href="#onTokenReceived"><span class="icon ion-ios-link"></span></a>
-                        </span>
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
-
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">projects/lib/src/types.ts:13</a></div>
                         </td>
                     </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">projects/lib/src/types.ts:13</a></div>
-                            </td>
-                        </tr>
 
-                <tr>
-                    <td class="col-md-4">
-                        <div class="io-description"><p>Is called, after a token has been received and
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Is called, after a token has been received and
 successfully validated.</p>
 <p>Deprecated:  Use property <code>events</code> on OAuthService instead.</p>
 </div>
-                    </td>
-                </tr>
+                </td>
+            </tr>
 
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="preventClearHashAfterLogin"></a>
+                    <span class="name">
+                            <span class="modifier">Optional</span>
+                        <span ><b>preventClearHashAfterLogin</b></span>
+                        <a href="#preventClearHashAfterLogin"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
                 <tr>
                     <td class="col-md-4">
-                        <a name="preventClearHashAfterLogin"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Optional</span>
-                            preventClearHashAfterLogin</b>
-                            <a href="#preventClearHashAfterLogin"><span class="icon ion-ios-link"></span></a>
-                        </span>
+                        <i>Default value : </i><code>false</code>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>false</code>
+                                <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">projects/lib/src/types.ts:67</a></div>
                         </td>
                     </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">projects/lib/src/types.ts:58</a></div>
-                            </td>
-                        </tr>
 
-                <tr>
-                    <td class="col-md-4">
-                        <div class="io-description"><p>Normally, you want to clear your hash fragment after
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Normally, you want to clear your hash fragment after
 the lib read the token(s) so that they are not displayed
 anymore in the url. If not, set this to true. For code flow
 this controls removing query string values.</p>
 </div>
-                    </td>
-                </tr>
+                </td>
+            </tr>
 
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="validationHandler"></a>
+                    <span class="name">
+                            <span class="modifier">Optional</span>
+                        <span ><b>validationHandler</b></span>
+                        <a href="#validationHandler"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
                 <tr>
                     <td class="col-md-4">
-                        <a name="validationHandler"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Optional</span>
-                            validationHandler</b>
-                            <a href="#validationHandler"><span class="icon ion-ios-link"></span></a>
-                        </span>
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
+
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
-
+                                <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">projects/lib/src/types.ts:20</a></div>
                         </td>
                     </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">projects/lib/src/types.ts:20</a></div>
-                            </td>
-                        </tr>
 
-                <tr>
-                    <td class="col-md-4">
-                        <div class="io-description"><p>Hook, to validate the received tokens.</p>
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Hook, to validate the received tokens.</p>
 <p>Deprecated:  Use property <code>tokenValidationHandler</code> on OAuthService instead.</p>
 </div>
-                    </td>
-                </tr>
+                </td>
+            </tr>
 
-            </tbody>
-        </table>
+        </tbody>
+    </table>
 </section>
 
 
@@ -454,6 +489,15 @@ export class LoginOptions {
    * OIDC.
    */
   disableOAuth2StateCheck?: boolean;
+
+  /**
+   * Set this to true to disable the nonce
+   * check which is used to avoid
+   * replay attacks.
+   * This flag should never be true in
+   * production environments.
+   */
+  disableNonceCheck? &#x3D; false;
 
   /**
    * Normally, you want to clear your hash fragment after
@@ -629,9 +673,9 @@ export interface OidcDiscoveryDoc {
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
-       <script src="../js/menu-wc.js" defer></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 

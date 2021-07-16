@@ -8,7 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
-	      <link rel="stylesheet" href="../styles/style.css">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
     </head>
     <body>
 
@@ -49,7 +50,7 @@
 
 
 <h2 id="refreshing-when-using-implicit-flow-implicit-flow-and-code-flow">Refreshing when using Implicit Flow (Implicit Flow and Code Flow)</h2>
-<p><strong>Notes for Code Flow</strong>: You can also use this strategy for refreshing tokens when using code flow. However, please note, the strategy described within <a href="./refreshing-a-token.html">Token Refresh</a> is far easier in this case.</p>
+<p><strong>Notes for Code Flow</strong>: You can also use this strategy for refreshing tokens when using code flow. However, please note, the strategy described within <a href="./token-refresh.md">Token Refresh</a> is far easier in this case.</p>
 <p>To refresh your tokens when using implicit flow you can use a silent refresh. This is a well-known solution that compensates the fact that implicit flow does not allow for issuing a refresh token. It uses a hidden iframe to get another token from the auth server. When the user is there still logged in (by using a cookie) it will respond without user interaction and provide new tokens.</p>
 <p>To use this approach, setup a redirect uri for the silent refresh.</p>
 <p>For this, you can set the property silentRefreshRedirectUri in the config object:</p>
@@ -95,7 +96,6 @@ export const authConfig: AuthConfig = {
             var checks = [/[\?|&amp;|#]code=/, /[\?|&amp;|#]error=/, /[\?|&amp;|#]token=/, /[\?|&amp;|#]id_token=/];
 
             function isResponse(str) {
-                var count = 0;
                 if (!str) return false;
                 for(var i=0; i&lt;checks.length; i++) {
                     if (str.match(checks[i])) return true;
@@ -105,10 +105,21 @@ export const authConfig: AuthConfig = {
 
             var message = isResponse(location.hash) ? location.hash : &#39;#&#39; + location.search;
 
-            (window.opener || window.parent).postMessage(message, location.origin);
+            if (window.parent &amp;&amp; window.parent !== window) {
+                // if loaded as an iframe during silent refresh
+                window.parent.postMessage(message, location.origin);
+            } else if (window.opener &amp;&amp; window.opener !== window) {
+                // if loaded as a popup during initial login
+                window.opener.postMessage(message, location.origin);
+            } else {
+                // last resort for a popup which has been through redirects and can&#39;t use window.opener
+                localStorage.setItem(&#39;auth_hash&#39;, message);
+                localStorage.removeItem(&#39;auth_hash&#39;);
+            }
         &lt;/script&gt;
     &lt;/body&gt;
-&lt;/html&gt;</code></pre></div><p>Please make sure that this file is copied to your output directory by your build task. When using the CLI you can define it as an asset for this. For this, you have to add the following line to the file <code>.angular-cli.json</code>:</p>
+&lt;/html&gt;</code></pre></div><p>The above example checks if the message in the URL (either hash or query string) is indeed a message returned with a response from an authentication provider and not an arbitrary value and then attempts to forward this message to a parent widow either by <code>.parent</code> (when this html is loaded in an iframe as a result of silent refresh) or by <code>.opener</code> (when the html is loaded into a popup during initial login) or finally using a storage event (as a fallback for complex cases, e.g. initial login in a popup with a cross-domain auth provider).</p>
+<p>Please make sure that this file is copied to your output directory by your build task. When using the CLI you can define it as an asset for this. For this, you have to add the following line to the file <code>.angular-cli.json</code>:</p>
 <div><pre class="line-numbers"><code class="language-JSON">&quot;assets&quot;: [
     [...],
     &quot;silent-refresh.html&quot;
@@ -145,9 +156,9 @@ export const authConfig: AuthConfig = {
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
-       <script src="../js/menu-wc.js" defer></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 

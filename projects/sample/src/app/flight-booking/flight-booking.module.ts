@@ -19,7 +19,7 @@ import { FlightService } from './services/flight.service';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    FlightBookingRouterModule
+    FlightBookingRouterModule,
   ],
   declarations: [
     FlightSearchComponent,
@@ -29,9 +29,9 @@ import { FlightService } from './services/flight.service';
     FlightSearchReactiveComponent,
     PassengerSearchComponent,
     FlightEditComponent,
-    FlightBookingComponent
+    FlightBookingComponent,
   ],
   providers: [FlightService],
-  exports: []
+  exports: [],
 })
 export class FlightBookingModule {}

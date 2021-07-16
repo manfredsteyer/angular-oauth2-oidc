@@ -11,7 +11,7 @@ import { useHash } from '../flags';
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'flight-app',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
 })
 export class AppComponent {
   constructor(private router: Router, private oauthService: OAuthService) {
@@ -24,20 +24,19 @@ export class AppComponent {
 
     // Automatically load user profile
     this.oauthService.events
-      .pipe(filter(e => e.type === 'token_received'))
-      .subscribe(_ => {
+      .pipe(filter((e) => e.type === 'token_received'))
+      .subscribe((_) => {
         console.debug('state', this.oauthService.state);
         this.oauthService.loadUserProfile();
 
         const scopes = this.oauthService.getGrantedScopes();
         console.debug('scopes', scopes);
-
       });
   }
 
   private configureCodeFlow() {
     this.oauthService.configure(authCodeFlowConfig);
-    this.oauthService.loadDiscoveryDocumentAndTryLogin().then(_ => {
+    this.oauthService.loadDiscoveryDocumentAndTryLogin().then((_) => {
       if (useHash) {
         this.router.navigate(['/']);
       }
@@ -51,7 +50,7 @@ export class AppComponent {
     this.oauthService.configure(authConfig);
     // this.oauthService.tokenValidationHandler = new JwksValidationHandler();
 
-    this.oauthService.loadDiscoveryDocumentAndTryLogin().then(_ => {
+    this.oauthService.loadDiscoveryDocumentAndTryLogin().then((_) => {
       if (useHash) {
         this.router.navigate(['/']);
       }
@@ -61,14 +60,14 @@ export class AppComponent {
     this.oauthService.setupAutomaticSilentRefresh();
 
     // Display all events
-    this.oauthService.events.subscribe(e => {
+    this.oauthService.events.subscribe((e) => {
       // tslint:disable-next-line:no-console
       console.debug('oauth/oidc event', e);
     });
 
     this.oauthService.events
-      .pipe(filter(e => e.type === 'session_terminated'))
-      .subscribe(e => {
+      .pipe(filter((e) => e.type === 'session_terminated'))
+      .subscribe((e) => {
         // tslint:disable-next-line:no-console
         console.debug('Your session has been terminated!');
       });
@@ -109,19 +108,19 @@ export class AppComponent {
 
     this.oauthService.tokenValidationHandler = new NullValidationHandler();
 
-    this.oauthService.events.subscribe(e => {
+    this.oauthService.events.subscribe((e) => {
       // tslint:disable-next-line:no-console
       console.debug('oauth/oidc event', e);
     });
 
     // Load Discovery Document and then try to login the user
-    this.oauthService.loadDiscoveryDocument().then(doc => {
+    this.oauthService.loadDiscoveryDocument().then((doc) => {
       this.oauthService.tryLogin();
     });
 
     this.oauthService.events
-      .pipe(filter(e => e.type === 'token_expires'))
-      .subscribe(e => {
+      .pipe(filter((e) => e.type === 'token_expires'))
+      .subscribe((e) => {
         // tslint:disable-next-line:no-console
         console.debug('received token_expires event', e);
         this.oauthService.silentRefresh();

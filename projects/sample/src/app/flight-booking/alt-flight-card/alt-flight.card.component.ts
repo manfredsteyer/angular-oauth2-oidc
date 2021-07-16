@@ -3,7 +3,7 @@ import { Flight } from '../../entities/flight';
 
 @Component({
   selector: 'alt-flight-card',
-  templateUrl: 'alt-flight-card.component.html'
+  templateUrl: 'alt-flight-card.component.html',
 })
 export class AltFlightCardComponent {
   @Input() item: Flight;

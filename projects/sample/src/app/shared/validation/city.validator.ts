@@ -3,7 +3,7 @@ import {
   NG_VALIDATORS,
   Validator,
   AbstractControl,
-  FormGroup
+  FormGroup,
 } from '@angular/forms';
 
 @Directive({
@@ -12,9 +12,9 @@ import {
     {
       provide: NG_VALIDATORS,
       useExisting: CityValidatorDirective,
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class CityValidatorDirective implements Validator {
   // @Input() city: string;
@@ -31,7 +31,7 @@ export class CityValidatorDirective implements Validator {
 
     if (otherValue == c.value) {
       return {
-        city: 'rundflug'
+        city: 'rundflug',
       };
     }
 
@@ -41,7 +41,7 @@ export class CityValidatorDirective implements Validator {
 
     if (allowed.indexOf(c.value) == -1) {
       return {
-        city: true
+        city: true,
       };
     }
 

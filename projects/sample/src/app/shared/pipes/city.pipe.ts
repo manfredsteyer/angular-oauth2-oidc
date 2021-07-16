@@ -2,7 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'city',
-  pure: true
+  pure: true,
 })
 export class CityPipe implements PipeTransform {
   transform(value: any, ...args: any[]): any {

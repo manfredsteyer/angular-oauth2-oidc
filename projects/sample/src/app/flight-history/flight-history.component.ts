@@ -8,6 +8,6 @@ import { Component } from '@angular/core';
       <li>Hamburg - Frankfurt</li>
       <li>Frankfurt - Graz</li>
     </ul>
-  `
+  `,
 })
 export class FlightHistoryComponent {}

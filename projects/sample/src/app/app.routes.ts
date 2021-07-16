@@ -7,30 +7,30 @@ export let APP_ROUTES: Routes = [
   {
     path: '',
     redirectTo: 'home',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
   },
   {
     path: 'password-flow-login',
-    component: PasswordFlowLoginComponent
+    component: PasswordFlowLoginComponent,
   },
   {
     path: 'flight-booking',
     loadChildren: () =>
       import('./flight-booking/flight-booking.module').then(
-        mod => mod.FlightBookingModule
-      )
+        (mod) => mod.FlightBookingModule
+      ),
   },
   {
     path: 'history',
     component: FlightHistoryComponent,
-    outlet: 'aux'
+    outlet: 'aux',
   },
   {
     path: '**',
-    redirectTo: 'home'
-  }
+    redirectTo: 'home',
+  },
 ];

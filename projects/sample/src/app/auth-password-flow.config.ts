@@ -23,5 +23,5 @@ export const authPasswordFlowConfig: AuthConfig = {
 
   showDebugInformation: true,
 
-  oidc: false
+  oidc: false,
 };

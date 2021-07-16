@@ -8,7 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
-	      <link rel="stylesheet" href="../styles/style.css">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
     </head>
     <body>
 
@@ -43,7 +44,9 @@
 
 <ol class="breadcrumb">
   <li>Interfaces</li>
-  <li>ParsedIdToken</li>
+  <li
+  >
+  ParsedIdToken</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -63,6 +66,7 @@
         <p class="comment">
             <code>projects/lib/src/types.ts</code>
         </p>
+
 
             <p class="comment">
                 <h3>Description</h3>
@@ -86,22 +90,40 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                        <a href="#idToken">idToken</a>
+                                        <a href="#idToken" 
+>
+                                            idToken
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#idTokenClaims">idTokenClaims</a>
+                                        <a href="#idTokenClaims" 
+>
+                                            idTokenClaims
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#idTokenClaimsJson">idTokenClaimsJson</a>
+                                        <a href="#idTokenClaimsJson" 
+>
+                                            idTokenClaimsJson
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#idTokenExpiresAt">idTokenExpiresAt</a>
+                                        <a href="#idTokenExpiresAt" 
+>
+                                            idTokenExpiresAt
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#idTokenHeader">idTokenHeader</a>
+                                        <a href="#idTokenHeader" 
+>
+                                            idTokenHeader
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#idTokenHeaderJson">idTokenHeaderJson</a>
+                                        <a href="#idTokenHeaderJson" 
+>
+                                            idTokenHeaderJson
+                                        </a>
                                 </li>
                             </ul>
                         </td>
@@ -119,7 +141,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="idToken"></a>
-                                        <span class="name"><b>idToken</b><a href="#idToken"><span class="icon ion-ios-link"></span></a></span>
+                                        <span class="name "><b>idToken</b>
+                                            <a href="#idToken">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -148,7 +174,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="idTokenClaims"></a>
-                                        <span class="name"><b>idTokenClaims</b><a href="#idTokenClaims"><span class="icon ion-ios-link"></span></a></span>
+                                        <span class="name "><b>idTokenClaims</b>
+                                            <a href="#idTokenClaims">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -177,7 +207,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="idTokenClaimsJson"></a>
-                                        <span class="name"><b>idTokenClaimsJson</b><a href="#idTokenClaimsJson"><span class="icon ion-ios-link"></span></a></span>
+                                        <span class="name "><b>idTokenClaimsJson</b>
+                                            <a href="#idTokenClaimsJson">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -206,7 +240,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="idTokenExpiresAt"></a>
-                                        <span class="name"><b>idTokenExpiresAt</b><a href="#idTokenExpiresAt"><span class="icon ion-ios-link"></span></a></span>
+                                        <span class="name "><b>idTokenExpiresAt</b>
+                                            <a href="#idTokenExpiresAt">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -235,7 +273,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="idTokenHeader"></a>
-                                        <span class="name"><b>idTokenHeader</b><a href="#idTokenHeader"><span class="icon ion-ios-link"></span></a></span>
+                                        <span class="name "><b>idTokenHeader</b>
+                                            <a href="#idTokenHeader">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -264,7 +306,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="idTokenHeaderJson"></a>
-                                        <span class="name"><b>idTokenHeaderJson</b><a href="#idTokenHeaderJson"><span class="icon ion-ios-link"></span></a></span>
+                                        <span class="name "><b>idTokenHeaderJson</b>
+                                            <a href="#idTokenHeaderJson">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -343,6 +389,15 @@ export class LoginOptions {
    * OIDC.
    */
   disableOAuth2StateCheck?: boolean;
+
+  /**
+   * Set this to true to disable the nonce
+   * check which is used to avoid
+   * replay attacks.
+   * This flag should never be true in
+   * production environments.
+   */
+  disableNonceCheck? &#x3D; false;
 
   /**
    * Normally, you want to clear your hash fragment after
@@ -517,9 +572,9 @@ export interface OidcDiscoveryDoc {
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
-       <script src="../js/menu-wc.js" defer></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 

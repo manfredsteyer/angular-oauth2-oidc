@@ -8,7 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
-	      <link rel="stylesheet" href="../styles/style.css">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
     </head>
     <body>
 
@@ -58,7 +59,7 @@
 })</code></pre></div><p>You can provide an error handler for the urls white listed here by provding a service for the token <code>OAuthResourceServerErrorHandler</code>.</p>
 <p>To implement such a service, implement the abstract class <code>OAuthResourceServerErrorHandler</code>. The following example shows the default implemantion that just passes the cought error through:</p>
 <div><pre class="line-numbers"><code class="language-TypeScript">export class OAuthNoopResourceServerErrorHandler implements OAuthResourceServerErrorHandler {
-
+    
     handleError(err: HttpResponse&lt;any&gt;): Observable&lt;any&gt; {
         return _throw(err);
     }
@@ -76,7 +77,7 @@ import &#39;rxjs/add/operator/catch&#39;;
 
 &#64;Injectable()
 export class DefaultOAuthInterceptor implements HttpInterceptor {
-
+    
     constructor(
         private authStorage: OAuthStorage,
         private errorHandler: OAuthResourceServerErrorHandler,
@@ -90,7 +91,7 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
     }
 
     public intercept(req: HttpRequest&lt;any&gt;, next: HttpHandler): Observable&lt;HttpEvent&lt;any&gt;&gt; {
-
+        
         let url = req.url.toLowerCase();
 
         if (!this.moduleConfig) return next.handle(req);
@@ -99,7 +100,7 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
         if (!this.checkUrl(url)) return next.handle(req);
 
         let sendAccessToken = this.moduleConfig.resourceServer.sendAccessToken;
-
+        
         if (sendAccessToken) {
 
             let token = this.authStorage.getItem(&#39;access_token&#39;);
@@ -139,9 +140,9 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
-       <script src="../js/menu-wc.js" defer></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 

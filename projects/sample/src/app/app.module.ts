@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import {
   OAuthModule,
   OAuthStorage,
-  DateTimeProvider
+  DateTimeProvider,
 } from 'angular-oauth2-oidc';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -21,7 +21,6 @@ import { CustomPreloadingStrategy } from './shared/preload/custom-preloading.str
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { useHash } from '../flags';
 
-
 @NgModule({
   imports: [
     BrowserModule,
@@ -33,15 +32,15 @@ import { useHash } from '../flags';
     OAuthModule.forRoot({
       resourceServer: {
         allowedUrls: ['http://www.angular.at/api'],
-        sendAccessToken: true
-      }
-    })
+        sendAccessToken: true,
+      },
+    }),
   ],
   declarations: [
     AppComponent,
     HomeComponent,
     FlightHistoryComponent,
-    PasswordFlowLoginComponent
+    PasswordFlowLoginComponent,
   ],
   providers: [
     // (useHash) ? { provide: LocationStrategy, useClass: HashLocationStrategy } : [],
@@ -50,8 +49,8 @@ import { useHash } from '../flags';
     // { provide: ValidationHandler, useClass: JwksValidationHandler },
     // Enabled the custom date time provider will make the sample fail to login, since the demo Idp time is correctly synced to the world time.
     // { provide: DateTimeProvider, useClass: CustomDateTimeProvider },
-    { provide: BASE_URL, useValue: 'http://www.angular.at' }
+    { provide: BASE_URL, useValue: 'http://www.angular.at' },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

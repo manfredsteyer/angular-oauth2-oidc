@@ -8,7 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
-	      <link rel="stylesheet" href="../styles/style.css">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
     </head>
     <body>
 
@@ -39,7 +40,7 @@
 
 <ol class="breadcrumb">
   <li>Interceptors</li>
-  <li>DefaultOAuthInterceptor</li>
+  <li >DefaultOAuthInterceptor</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -62,6 +63,7 @@
 
 
 
+
             <section>
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
@@ -77,7 +79,7 @@
                         <ul class="index-list">
                             <li>
                                     <span class="modifier">Public</span>
-                                <a href="#intercept">intercept</a>
+                                <a href="#intercept" >intercept</a>
                             </li>
                         </ul>
                     </td>
@@ -97,12 +99,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(authStorage: <a href="../classes/OAuthStorage.html">OAuthStorage</a>, oAuthService: <a href="../injectables/OAuthService.html">OAuthService</a>, errorHandler: <a href="../classes/OAuthResourceServerErrorHandler.html">OAuthResourceServerErrorHandler</a>, moduleConfig: <a href="../classes/OAuthModuleConfig.html">OAuthModuleConfig</a>)</code>
+<code>constructor(oAuthService: <a href="../injectables/OAuthService.html" target="_self">OAuthService</a>, errorHandler: <a href="../classes/OAuthResourceServerErrorHandler.html" target="_self">OAuthResourceServerErrorHandler</a>, moduleConfig: <a href="../classes/OAuthModuleConfig.html" target="_self">OAuthModuleConfig</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">projects/lib/src/interceptors/default-oauth.interceptor.ts:24</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">projects/lib/src/interceptors/default-oauth.interceptor.ts:23</a></div>
                             </td>
                         </tr>
 
@@ -119,18 +121,6 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                                <tr>
-                                                        <td>authStorage</td>
-                                                  
-                                                        <td>
-                                                                        <code><a href="../classes/OAuthStorage.html" target="_self" >OAuthStorage</a></code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
                                                 <tr>
                                                         <td>oAuthService</td>
                                                   
@@ -187,10 +177,8 @@
                 <td class="col-md-4">
                     <a name="intercept"></a>
                     <span class="name">
-                        <b>
-                            <span class="modifier">Public</span>
-                            intercept
-                        </b>
+                        <span class="modifier">Public</span>
+                        <span ><b>intercept</b></span>
                         <a href="#intercept"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -205,8 +193,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="46"
-                            class="link-to-prism">projects/lib/src/interceptors/default-oauth.interceptor.ts:46</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="44"
+                            class="link-to-prism">projects/lib/src/interceptors/default-oauth.interceptor.ts:44</a></div>
                 </td>
             </tr>
 
@@ -277,7 +265,7 @@ import {
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
-  HttpRequest
+  HttpRequest,
 } from &#x27;@angular/common/http&#x27;;
 import { Observable, of, merge } from &#x27;rxjs&#x27;;
 import {
@@ -286,17 +274,15 @@ import {
   map,
   take,
   mergeMap,
-  timeout
+  timeout,
 } from &#x27;rxjs/operators&#x27;;
 import { OAuthResourceServerErrorHandler } from &#x27;./resource-server-error-handler&#x27;;
 import { OAuthModuleConfig } from &#x27;../oauth-module.config&#x27;;
-import { OAuthStorage } from &#x27;../types&#x27;;
 import { OAuthService } from &#x27;../oauth-service&#x27;;
 
 @Injectable()
 export class DefaultOAuthInterceptor implements HttpInterceptor {
   constructor(
-    private authStorage: OAuthStorage,
     private oAuthService: OAuthService,
     private errorHandler: OAuthResourceServerErrorHandler,
     @Optional() private moduleConfig: OAuthModuleConfig
@@ -308,8 +294,8 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
     }
 
     if (this.moduleConfig.resourceServer.allowedUrls) {
-      return !!this.moduleConfig.resourceServer.allowedUrls.find(u &#x3D;&gt;
-        url.startsWith(u)
+      return !!this.moduleConfig.resourceServer.allowedUrls.find((u) &#x3D;&gt;
+        url.toLowerCase().startsWith(u.toLowerCase())
       );
     }
 
@@ -335,22 +321,20 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
     if (!sendAccessToken) {
       return next
         .handle(req)
-        .pipe(catchError(err &#x3D;&gt; this.errorHandler.handleError(err)));
+        .pipe(catchError((err) &#x3D;&gt; this.errorHandler.handleError(err)));
     }
 
     return merge(
-      of(this.oAuthService.getAccessToken()).pipe(
-        filter(token &#x3D;&gt; (token ? true : false))
-      ),
+      of(this.oAuthService.getAccessToken()).pipe(filter((token) &#x3D;&gt; !!token)),
       this.oAuthService.events.pipe(
-        filter(e &#x3D;&gt; e.type &#x3D;&#x3D;&#x3D; &#x27;token_received&#x27;),
+        filter((e) &#x3D;&gt; e.type &#x3D;&#x3D;&#x3D; &#x27;token_received&#x27;),
         timeout(this.oAuthService.waitForTokenInMsec || 0),
-        catchError(_ &#x3D;&gt; of(null)), // timeout is not an error
-        map(_ &#x3D;&gt; this.oAuthService.getAccessToken())
+        catchError((_) &#x3D;&gt; of(null)), // timeout is not an error
+        map((_) &#x3D;&gt; this.oAuthService.getAccessToken())
       )
     ).pipe(
       take(1),
-      mergeMap(token &#x3D;&gt; {
+      mergeMap((token) &#x3D;&gt; {
         if (token) {
           const header &#x3D; &#x27;Bearer &#x27; + token;
           const headers &#x3D; req.headers.set(&#x27;Authorization&#x27;, header);
@@ -359,7 +343,7 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
 
         return next
           .handle(req)
-          .pipe(catchError(err &#x3D;&gt; this.errorHandler.handleError(err)));
+          .pipe(catchError((err) &#x3D;&gt; this.errorHandler.handleError(err)));
       })
     );
   }
@@ -401,9 +385,9 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
-       <script src="../js/menu-wc.js" defer></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 

@@ -4,7 +4,7 @@ import { Component, Input, OnInit, OnChanges } from '@angular/core';
   selector: 'date-component',
   template: `
     <div>{{ day }}.{{ month }}.{{ year }} {{ hour }}:{{ minute }}</div>
-  `
+  `,
 })
 export class DateComponent implements OnInit, OnChanges {
   @Input() date: string;

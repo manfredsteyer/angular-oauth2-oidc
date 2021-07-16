@@ -10,7 +10,7 @@ import { UrlHelperService } from './url-helper.service';
 import { OAuthModuleConfig } from './oauth-module.config';
 import {
   OAuthResourceServerErrorHandler,
-  OAuthNoopResourceServerErrorHandler
+  OAuthNoopResourceServerErrorHandler,
 } from './interceptors/resource-server-error-handler';
 import { DefaultOAuthInterceptor } from './interceptors/default-oauth.interceptor';
 import { ValidationHandler } from './token-validation/validation-handler';
@@ -18,13 +18,13 @@ import { NullValidationHandler } from './token-validation/null-validation-handle
 import { createDefaultLogger, createDefaultStorage } from './factories';
 import {
   HashHandler,
-  DefaultHashHandler
+  DefaultHashHandler,
 } from './token-validation/hash-handler';
 
 @NgModule({
   imports: [CommonModule],
   declarations: [],
-  exports: []
+  exports: [],
 })
 export class OAuthModule {
   static forRoot(
@@ -42,16 +42,16 @@ export class OAuthModule {
         { provide: HashHandler, useClass: DefaultHashHandler },
         {
           provide: OAuthResourceServerErrorHandler,
-          useClass: OAuthNoopResourceServerErrorHandler
+          useClass: OAuthNoopResourceServerErrorHandler,
         },
         { provide: OAuthModuleConfig, useValue: config },
         {
           provide: HTTP_INTERCEPTORS,
           useClass: DefaultOAuthInterceptor,
-          multi: true
+          multi: true,
         },
-        { provide: DateTimeProvider, useClass: SystemDateTimeProvider }
-      ]
+        { provide: DateTimeProvider, useClass: SystemDateTimeProvider },
+      ],
     };
   }
 }

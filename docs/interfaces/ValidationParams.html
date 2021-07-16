@@ -8,7 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
-	      <link rel="stylesheet" href="../styles/style.css">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
     </head>
     <body>
 
@@ -43,7 +44,9 @@
 
 <ol class="breadcrumb">
   <li>Interfaces</li>
-  <li>ValidationParams</li>
+  <li
+  >
+  ValidationParams</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -66,6 +69,7 @@
 
 
 
+
         <section>
             <h3 id="index">Index</h3>
             <table class="table table-sm table-bordered index-table">
@@ -79,22 +83,40 @@
                         <td class="col-md-4">
                             <ul class="index-list">
                                 <li>
-                                        <a href="#accessToken">accessToken</a>
+                                        <a href="#accessToken" 
+>
+                                            accessToken
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#idToken">idToken</a>
+                                        <a href="#idToken" 
+>
+                                            idToken
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#idTokenClaims">idTokenClaims</a>
+                                        <a href="#idTokenClaims" 
+>
+                                            idTokenClaims
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#idTokenHeader">idTokenHeader</a>
+                                        <a href="#idTokenHeader" 
+>
+                                            idTokenHeader
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#jwks">jwks</a>
+                                        <a href="#jwks" 
+>
+                                            jwks
+                                        </a>
                                 </li>
                                 <li>
-                                        <a href="#loadKeys">loadKeys</a>
+                                        <a href="#loadKeys" 
+>
+                                            loadKeys
+                                        </a>
                                 </li>
                             </ul>
                         </td>
@@ -112,7 +134,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="accessToken"></a>
-                                        <span class="name"><b>accessToken</b><a href="#accessToken"><span class="icon ion-ios-link"></span></a></span>
+                                        <span class="name "><b>accessToken</b>
+                                            <a href="#accessToken">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -141,7 +167,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="idToken"></a>
-                                        <span class="name"><b>idToken</b><a href="#idToken"><span class="icon ion-ios-link"></span></a></span>
+                                        <span class="name "><b>idToken</b>
+                                            <a href="#idToken">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -170,7 +200,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="idTokenClaims"></a>
-                                        <span class="name"><b>idTokenClaims</b><a href="#idTokenClaims"><span class="icon ion-ios-link"></span></a></span>
+                                        <span class="name "><b>idTokenClaims</b>
+                                            <a href="#idTokenClaims">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -199,7 +233,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="idTokenHeader"></a>
-                                        <span class="name"><b>idTokenHeader</b><a href="#idTokenHeader"><span class="icon ion-ios-link"></span></a></span>
+                                        <span class="name "><b>idTokenHeader</b>
+                                            <a href="#idTokenHeader">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -228,7 +266,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="jwks"></a>
-                                        <span class="name"><b>jwks</b><a href="#jwks"><span class="icon ion-ios-link"></span></a></span>
+                                        <span class="name "><b>jwks</b>
+                                            <a href="#jwks">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -257,7 +299,11 @@
                                 <tr>
                                     <td class="col-md-4">
                                         <a name="loadKeys"></a>
-                                        <span class="name"><b>loadKeys</b><a href="#loadKeys"><span class="icon ion-ios-link"></span></a></span>
+                                        <span class="name "><b>loadKeys</b>
+                                            <a href="#loadKeys">
+                                                <span class="icon ion-ios-link"></span>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -411,9 +457,9 @@ export abstract class AbstractValidationHandler implements ValidationHandler {
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
-       <script src="../js/menu-wc.js" defer></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 

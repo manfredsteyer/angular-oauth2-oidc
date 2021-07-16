@@ -7,7 +7,7 @@ import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   title = 'Quickstart Demo';
@@ -20,8 +20,8 @@ export class AppComponent {
 
     // Automatically load user profile
     this.oauthService.events
-      .pipe(filter(e => e.type === 'token_received'))
-      .subscribe(_ => this.oauthService.loadUserProfile());
+      .pipe(filter((e) => e.type === 'token_received'))
+      .subscribe((_) => this.oauthService.loadUserProfile());
   }
 
   get userName(): string {

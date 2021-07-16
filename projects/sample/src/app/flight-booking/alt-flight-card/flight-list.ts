@@ -13,7 +13,7 @@ import { Flight } from '../../entities/flight';
         </alt-flight-card>
       </div>
     </div>
-  `
+  `,
 })
 export class FlightListComponent {
   @Input() flights: Flight[] = [];

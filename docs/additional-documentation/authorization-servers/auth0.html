@@ -8,7 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../../images/favicon.ico">
-	      <link rel="stylesheet" href="../../styles/style.css">
+	   <link rel="stylesheet" href="../../styles/style.css">
+        <link rel="stylesheet" href="../../styles/dark.css" media="(prefers-color-scheme: dark)">
     </head>
     <body>
 
@@ -80,7 +81,7 @@ export const authConfig: AuthConfig = {
 };</code></pre></div><h2 id="getting-using-and-refreshing-a-token">Getting, Using, and Refreshing a Token</h2>
 <p>This should work as shown in the other examples in this documentation and in the readme file.</p>
 <h2 id="logging-out">Logging out</h2>
-<p>Auth0&#39;s logout endpoint expects the parameters <code>client_id and</code>returnTo``:</p>
+<p>Auth0&#39;s logout endpoint expects the parameters <code>client_id</code> and <code>returnTo</code>:</p>
 <div><pre class="line-numbers"><code class="language-typescript">this.oauthService.revokeTokenAndLogout({
   client_id: this.oauthService.clientId,
   returnTo: this.oauthService.redirectUri
@@ -111,9 +112,9 @@ export const authConfig: AuthConfig = {
 
        <script src="../../js/libs/custom-elements.min.js"></script>
        <script src="../../js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="../../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
-       <script src="../../js/menu-wc.js" defer></script>
+       
+       <script type="module" src="../../js/menu-wc.js" defer></script>
+       <script nomodule src="../../js/menu-wc_es5.js" defer></script>
 
        <script src="../../js/libs/bootstrap-native.js"></script>
 

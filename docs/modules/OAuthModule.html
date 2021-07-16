@@ -8,7 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
-	      <link rel="stylesheet" href="../styles/style.css">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
     </head>
     <body>
 
@@ -34,7 +35,7 @@
 
 <ol class="breadcrumb">
     <li>Modules</li>
-    <li>OAuthModule</li>
+    <li >OAuthModule</li>
 </ol>
 
 
@@ -60,6 +61,7 @@
 
 
 
+
         <div class="container-fluid module">
             <div class="row">
             </div>
@@ -76,10 +78,8 @@
                 <td class="col-md-4">
                     <a name="forRoot"></a>
                     <span class="name">
-                        <b>
-                            <span class="modifier">Static</span>
-                            forRoot
-                        </b>
+                        <span class="modifier">Static</span>
+                        <span ><b>forRoot</b></span>
                         <a href="#forRoot"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -87,7 +87,7 @@
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>forRoot(config: <a href="../classes/OAuthModuleConfig.html">OAuthModuleConfig</a>, validationHandlerClass)</code>
+                    <code>forRoot(config: <a href="../classes/OAuthModuleConfig.html" target="_self">OAuthModuleConfig</a>, validationHandlerClass)</code>
                 </td>
             </tr>
 
@@ -177,7 +177,7 @@ import { UrlHelperService } from &#x27;./url-helper.service&#x27;;
 import { OAuthModuleConfig } from &#x27;./oauth-module.config&#x27;;
 import {
   OAuthResourceServerErrorHandler,
-  OAuthNoopResourceServerErrorHandler
+  OAuthNoopResourceServerErrorHandler,
 } from &#x27;./interceptors/resource-server-error-handler&#x27;;
 import { DefaultOAuthInterceptor } from &#x27;./interceptors/default-oauth.interceptor&#x27;;
 import { ValidationHandler } from &#x27;./token-validation/validation-handler&#x27;;
@@ -185,13 +185,13 @@ import { NullValidationHandler } from &#x27;./token-validation/null-validation-h
 import { createDefaultLogger, createDefaultStorage } from &#x27;./factories&#x27;;
 import {
   HashHandler,
-  DefaultHashHandler
+  DefaultHashHandler,
 } from &#x27;./token-validation/hash-handler&#x27;;
 
 @NgModule({
   imports: [CommonModule],
   declarations: [],
-  exports: []
+  exports: [],
 })
 export class OAuthModule {
   static forRoot(
@@ -209,16 +209,16 @@ export class OAuthModule {
         { provide: HashHandler, useClass: DefaultHashHandler },
         {
           provide: OAuthResourceServerErrorHandler,
-          useClass: OAuthNoopResourceServerErrorHandler
+          useClass: OAuthNoopResourceServerErrorHandler,
         },
         { provide: OAuthModuleConfig, useValue: config },
         {
           provide: HTTP_INTERCEPTORS,
           useClass: DefaultOAuthInterceptor,
-          multi: true
+          multi: true,
         },
-        { provide: DateTimeProvider, useClass: SystemDateTimeProvider }
-      ]
+        { provide: DateTimeProvider, useClass: SystemDateTimeProvider },
+      ],
     };
   }
 }
@@ -263,9 +263,9 @@ export class OAuthModule {
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
-       <script src="../js/menu-wc.js" defer></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 

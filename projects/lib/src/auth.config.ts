@@ -268,7 +268,7 @@ export class AuthConfig {
    * allowing a way for implementations to specify their own method of routing to new
    * urls.
    */
-  public openUri?: (uri: string) => void = uri => {
+  public openUri?: (uri: string) => void = (uri) => {
     location.href = uri;
   };
 }

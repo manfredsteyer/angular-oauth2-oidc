@@ -8,7 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
-	      <link rel="stylesheet" href="../styles/style.css">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
     </head>
     <body>
 
@@ -42,7 +43,7 @@
 
 <ol class="breadcrumb">
   <li>Classes</li>
-  <li>ValidationHandler</li>
+  <li >ValidationHandler</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -62,6 +63,7 @@
         <p class="comment">
             <code>projects/lib/src/token-validation/validation-handler.ts</code>
         </p>
+
 
             <p class="comment">
                 <h3>Description</h3>
@@ -91,12 +93,12 @@ validate tokens.</p>
                             <li>
                                     <span class="modifier">Public</span>
                                     <span class="modifier">Abstract</span>
-                                <a href="#validateAtHash">validateAtHash</a>
+                                <a href="#validateAtHash" >validateAtHash</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
                                     <span class="modifier">Abstract</span>
-                                <a href="#validateSignature">validateSignature</a>
+                                <a href="#validateSignature" >validateSignature</a>
                             </li>
                         </ul>
                     </td>
@@ -123,11 +125,9 @@ validate tokens.</p>
                 <td class="col-md-4">
                     <a name="validateAtHash"></a>
                     <span class="name">
-                        <b>
-                            <span class="modifier">Public</span>
-                            <span class="modifier">Abstract</span>
-                            validateAtHash
-                        </b>
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Abstract</span>
+                        <span ><b>validateAtHash</b></span>
                         <a href="#validateAtHash"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -135,7 +135,7 @@ validate tokens.</p>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>validateAtHash(validationParams: <a href="../interfaces/ValidationParams.html">ValidationParams</a>)</code>
+                    <code>validateAtHash(validationParams: <a href="../interfaces/ValidationParams.html" target="_self">ValidationParams</a>)</code>
                 </td>
             </tr>
 
@@ -198,11 +198,9 @@ validate tokens.</p>
                 <td class="col-md-4">
                     <a name="validateSignature"></a>
                     <span class="name">
-                        <b>
-                            <span class="modifier">Public</span>
-                            <span class="modifier">Abstract</span>
-                            validateSignature
-                        </b>
+                        <span class="modifier">Public</span>
+                        <span class="modifier">Abstract</span>
+                        <span ><b>validateSignature</b></span>
                         <a href="#validateSignature"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -210,7 +208,7 @@ validate tokens.</p>
             <tr>
                 <td class="col-md-4">
                     <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>validateSignature(validationParams: <a href="../interfaces/ValidationParams.html">ValidationParams</a>)</code>
+                    <code>validateSignature(validationParams: <a href="../interfaces/ValidationParams.html" target="_self">ValidationParams</a>)</code>
                 </td>
             </tr>
 
@@ -403,9 +401,9 @@ export abstract class AbstractValidationHandler implements ValidationHandler {
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
-       <script src="../js/menu-wc.js" defer></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 

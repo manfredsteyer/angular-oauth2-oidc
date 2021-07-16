@@ -1,7 +1,7 @@
 import * as rs from 'jsrsasign';
 import {
   AbstractValidationHandler,
-  ValidationParams
+  ValidationParams,
 } from 'angular-oauth2-oidc';
 
 /**
@@ -25,7 +25,7 @@ export class JwksValidationHandler extends AbstractValidationHandler {
     'ES384',
     'PS256',
     'PS384',
-    'PS512'
+    'PS512',
   ];
 
   /**
@@ -57,11 +57,11 @@ export class JwksValidationHandler extends AbstractValidationHandler {
     let alg = params.idTokenHeader['alg'];
 
     if (kid) {
-      key = keys.find(k => k['kid'] === kid /* && k['use'] === 'sig' */);
+      key = keys.find((k) => k['kid'] === kid /* && k['use'] === 'sig' */);
     } else {
       let kty = this.alg2kty(alg);
       let matchingKeys = keys.filter(
-        k => k['kty'] === kty && k['use'] === 'sig'
+        (k) => k['kty'] === kty && k['use'] === 'sig'
       );
 
       /*
@@ -83,8 +83,8 @@ export class JwksValidationHandler extends AbstractValidationHandler {
     if (!key && !retry && params.loadKeys) {
       return params
         .loadKeys()
-        .then(loadedKeys => (params.jwks = loadedKeys))
-        .then(_ => this.validateSignature(params, true));
+        .then((loadedKeys) => (params.jwks = loadedKeys))
+        .then((_) => this.validateSignature(params, true));
     }
 
     if (!key && retry && !kid) {
@@ -108,7 +108,7 @@ export class JwksValidationHandler extends AbstractValidationHandler {
     let keyObj = rs.KEYUTIL.getKey(key);
     let validationOptions = {
       alg: this.allowedAlgorithms,
-      gracePeriod: this.gracePeriodInSec
+      gracePeriod: this.gracePeriodInSec,
     };
     let isValid = rs.KJUR.jws.JWS.verifyJWT(
       params.idToken,

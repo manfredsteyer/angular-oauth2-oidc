@@ -24,5 +24,5 @@ export const googleAuthConfig: AuthConfig = {
 
   showDebugInformation: true,
 
-  sessionChecksEnabled: true
+  sessionChecksEnabled: true,
 };

@@ -155,7 +155,7 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </a>
                         <ul class="links collapse " ${ isNormalMode ? 'id="modules-links"' : 'id="xs-modules-links"' }>
                             <li class="link">
-                                <a href="modules/OAuthModule.html" data-type="entity-link">OAuthModule</a>
+                                <a href="modules/OAuthModule.html" data-type="entity-link" >OAuthModule</a>
                             </li>
                 </ul>
                 </li>
@@ -168,64 +168,64 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </div>
                         <ul class="links collapse " ${ isNormalMode ? 'id="classes-links"' : 'id="xs-classes-links"' }>
                             <li class="link">
-                                <a href="classes/AbstractValidationHandler.html" data-type="entity-link">AbstractValidationHandler</a>
+                                <a href="classes/AbstractValidationHandler.html" data-type="entity-link" >AbstractValidationHandler</a>
                             </li>
                             <li class="link">
-                                <a href="classes/AuthConfig.html" data-type="entity-link">AuthConfig</a>
+                                <a href="classes/AuthConfig.html" data-type="entity-link" >AuthConfig</a>
                             </li>
                             <li class="link">
-                                <a href="classes/DateTimeProvider.html" data-type="entity-link">DateTimeProvider</a>
+                                <a href="classes/DateTimeProvider.html" data-type="entity-link" >DateTimeProvider</a>
                             </li>
                             <li class="link">
-                                <a href="classes/HashHandler.html" data-type="entity-link">HashHandler</a>
+                                <a href="classes/HashHandler.html" data-type="entity-link" >HashHandler</a>
                             </li>
                             <li class="link">
-                                <a href="classes/JwksValidationHandler.html" data-type="entity-link">JwksValidationHandler</a>
+                                <a href="classes/JwksValidationHandler.html" data-type="entity-link" >JwksValidationHandler</a>
                             </li>
                             <li class="link">
-                                <a href="classes/LoginOptions.html" data-type="entity-link">LoginOptions</a>
+                                <a href="classes/LoginOptions.html" data-type="entity-link" >LoginOptions</a>
                             </li>
                             <li class="link">
-                                <a href="classes/NullValidationHandler.html" data-type="entity-link">NullValidationHandler</a>
+                                <a href="classes/NullValidationHandler.html" data-type="entity-link" >NullValidationHandler</a>
                             </li>
                             <li class="link">
-                                <a href="classes/OAuthErrorEvent.html" data-type="entity-link">OAuthErrorEvent</a>
+                                <a href="classes/OAuthErrorEvent.html" data-type="entity-link" >OAuthErrorEvent</a>
                             </li>
                             <li class="link">
-                                <a href="classes/OAuthEvent.html" data-type="entity-link">OAuthEvent</a>
+                                <a href="classes/OAuthEvent.html" data-type="entity-link" >OAuthEvent</a>
                             </li>
                             <li class="link">
-                                <a href="classes/OAuthInfoEvent.html" data-type="entity-link">OAuthInfoEvent</a>
+                                <a href="classes/OAuthInfoEvent.html" data-type="entity-link" >OAuthInfoEvent</a>
                             </li>
                             <li class="link">
-                                <a href="classes/OAuthLogger.html" data-type="entity-link">OAuthLogger</a>
+                                <a href="classes/OAuthLogger.html" data-type="entity-link" >OAuthLogger</a>
                             </li>
                             <li class="link">
-                                <a href="classes/OAuthModuleConfig.html" data-type="entity-link">OAuthModuleConfig</a>
+                                <a href="classes/OAuthModuleConfig.html" data-type="entity-link" >OAuthModuleConfig</a>
                             </li>
                             <li class="link">
-                                <a href="classes/OAuthNoopResourceServerErrorHandler.html" data-type="entity-link">OAuthNoopResourceServerErrorHandler</a>
+                                <a href="classes/OAuthNoopResourceServerErrorHandler.html" data-type="entity-link" >OAuthNoopResourceServerErrorHandler</a>
                             </li>
                             <li class="link">
-                                <a href="classes/OAuthResourceServerConfig.html" data-type="entity-link">OAuthResourceServerConfig</a>
+                                <a href="classes/OAuthResourceServerConfig.html" data-type="entity-link" >OAuthResourceServerConfig</a>
                             </li>
                             <li class="link">
-                                <a href="classes/OAuthResourceServerErrorHandler.html" data-type="entity-link">OAuthResourceServerErrorHandler</a>
+                                <a href="classes/OAuthResourceServerErrorHandler.html" data-type="entity-link" >OAuthResourceServerErrorHandler</a>
                             </li>
                             <li class="link">
-                                <a href="classes/OAuthStorage.html" data-type="entity-link">OAuthStorage</a>
+                                <a href="classes/OAuthStorage.html" data-type="entity-link" >OAuthStorage</a>
                             </li>
                             <li class="link">
-                                <a href="classes/OAuthSuccessEvent.html" data-type="entity-link">OAuthSuccessEvent</a>
+                                <a href="classes/OAuthSuccessEvent.html" data-type="entity-link" >OAuthSuccessEvent</a>
                             </li>
                             <li class="link">
-                                <a href="classes/ReceivedTokens.html" data-type="entity-link">ReceivedTokens</a>
+                                <a href="classes/ReceivedTokens.html" data-type="entity-link" >ReceivedTokens</a>
                             </li>
                             <li class="link">
-                                <a href="classes/ValidationHandler.html" data-type="entity-link">ValidationHandler</a>
+                                <a href="classes/ValidationHandler.html" data-type="entity-link" >ValidationHandler</a>
                             </li>
                             <li class="link">
-                                <a href="classes/WebHttpUrlEncodingCodec.html" data-type="entity-link">WebHttpUrlEncodingCodec</a>
+                                <a href="classes/WebHttpUrlEncodingCodec.html" data-type="entity-link" >WebHttpUrlEncodingCodec</a>
                             </li>
                         </ul>
                     </li>
@@ -238,19 +238,19 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </div>
                             <ul class="links collapse " ${ isNormalMode ? 'id="injectables-links"' : 'id="xs-injectables-links"' }>
                                 <li class="link">
-                                    <a href="injectables/DefaultHashHandler.html" data-type="entity-link">DefaultHashHandler</a>
+                                    <a href="injectables/DefaultHashHandler.html" data-type="entity-link" >DefaultHashHandler</a>
                                 </li>
                                 <li class="link">
-                                    <a href="injectables/MemoryStorage.html" data-type="entity-link">MemoryStorage</a>
+                                    <a href="injectables/MemoryStorage.html" data-type="entity-link" >MemoryStorage</a>
                                 </li>
                                 <li class="link">
-                                    <a href="injectables/OAuthService.html" data-type="entity-link">OAuthService</a>
+                                    <a href="injectables/OAuthService.html" data-type="entity-link" >OAuthService</a>
                                 </li>
                                 <li class="link">
-                                    <a href="injectables/SystemDateTimeProvider.html" data-type="entity-link">SystemDateTimeProvider</a>
+                                    <a href="injectables/SystemDateTimeProvider.html" data-type="entity-link" >SystemDateTimeProvider</a>
                                 </li>
                                 <li class="link">
-                                    <a href="injectables/UrlHelperService.html" data-type="entity-link">UrlHelperService</a>
+                                    <a href="injectables/UrlHelperService.html" data-type="entity-link" >UrlHelperService</a>
                                 </li>
                             </ul>
                         </li>
@@ -263,7 +263,7 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </div>
                         <ul class="links collapse " ${ isNormalMode ? 'id="interceptors-links"' : 'id="xs-interceptors-links"' }>
                             <li class="link">
-                                <a href="interceptors/DefaultOAuthInterceptor.html" data-type="entity-link">DefaultOAuthInterceptor</a>
+                                <a href="interceptors/DefaultOAuthInterceptor.html" data-type="entity-link" >DefaultOAuthInterceptor</a>
                             </li>
                         </ul>
                     </li>
@@ -276,19 +276,19 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </div>
                         <ul class="links collapse " ${ isNormalMode ? ' id="interfaces-links"' : 'id="xs-interfaces-links"' }>
                             <li class="link">
-                                <a href="interfaces/OidcDiscoveryDoc.html" data-type="entity-link">OidcDiscoveryDoc</a>
+                                <a href="interfaces/OidcDiscoveryDoc.html" data-type="entity-link" >OidcDiscoveryDoc</a>
                             </li>
                             <li class="link">
-                                <a href="interfaces/ParsedIdToken.html" data-type="entity-link">ParsedIdToken</a>
+                                <a href="interfaces/ParsedIdToken.html" data-type="entity-link" >ParsedIdToken</a>
                             </li>
                             <li class="link">
-                                <a href="interfaces/TokenResponse.html" data-type="entity-link">TokenResponse</a>
+                                <a href="interfaces/TokenResponse.html" data-type="entity-link" >TokenResponse</a>
                             </li>
                             <li class="link">
-                                <a href="interfaces/UserInfo.html" data-type="entity-link">UserInfo</a>
+                                <a href="interfaces/UserInfo.html" data-type="entity-link" >UserInfo</a>
                             </li>
                             <li class="link">
-                                <a href="interfaces/ValidationParams.html" data-type="entity-link">ValidationParams</a>
+                                <a href="interfaces/ValidationParams.html" data-type="entity-link" >ValidationParams</a>
                             </li>
                         </ul>
                     </li>

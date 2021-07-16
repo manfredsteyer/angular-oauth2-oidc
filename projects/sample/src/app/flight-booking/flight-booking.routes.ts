@@ -14,19 +14,19 @@ let FLIGHT_BOOKING_ROUTES: Routes = [
     children: [
       {
         path: 'flight-search',
-        component: FlightSearchComponent
+        component: FlightSearchComponent,
       },
       {
         path: 'passenger-search',
-        component: PassengerSearchComponent
+        component: PassengerSearchComponent,
       },
       {
         path: 'flight-edit/:id',
         component: FlightEditComponent,
-        canDeactivate: [LeaveComponentGuard]
-      }
-    ]
-  }
+        canDeactivate: [LeaveComponentGuard],
+      },
+    ],
+  },
 ];
 
 export let FlightBookingRouterModule = RouterModule.forChild(

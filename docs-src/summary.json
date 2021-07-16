@@ -99,7 +99,11 @@
             {
                 "title": "Auth0",
                 "file": "authsvr-auth0.md"
-            }
+            },
+            {
+                "title": "Azure AD (Active Directory)",
+                "file": "authsvr-azure-ad.md"
+            }            
         ]
     }
 

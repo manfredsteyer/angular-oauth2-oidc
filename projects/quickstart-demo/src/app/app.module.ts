@@ -11,6 +11,6 @@ import { HttpClientModule } from '@angular/common/http';
   providers: [
     // { provide: OAuthStorage, useValue: localStorage }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

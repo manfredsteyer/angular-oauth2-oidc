@@ -8,7 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
-	      <link rel="stylesheet" href="../styles/style.css">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
     </head>
     <body>
 
@@ -58,10 +59,10 @@
                 <td class="col-md-4">
                     <ul class="index-list">
                         <li>
-                            <a href="#AUTH_CONFIG" title="projects/lib/src/tokens.ts"><b>AUTH_CONFIG</b>&nbsp;&nbsp;&nbsp;(projects/.../tokens.ts)</a>
+                            <a href="#AUTH_CONFIG" title="projects/lib/src/tokens.ts" ><b>AUTH_CONFIG</b>&nbsp;&nbsp;&nbsp;(projects/.../tokens.ts)</a>
                         </li>
                         <li>
-                            <a href="#err" title="projects/lib/src/token-validation/jwks-validation-handler.ts"><b>err</b>&nbsp;&nbsp;&nbsp;(projects/.../jwks-validation-handler.ts)</a>
+                            <a href="#err" title="projects/lib/src/token-validation/jwks-validation-handler.ts" ><b>err</b>&nbsp;&nbsp;&nbsp;(projects/.../jwks-validation-handler.ts)</a>
                         </li>
                     </ul>
                 </td>
@@ -72,45 +73,43 @@
 
     <h3>projects/lib/src/tokens.ts</h3>
     <section>
-    <h3></h3>        <table class="table table-sm table-bordered">
-            <tbody>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="AUTH_CONFIG"></a>
+                    <span class="name">
+                        <span ><b>AUTH_CONFIG</b></span>
+                        <a href="#AUTH_CONFIG"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
                 <tr>
                     <td class="col-md-4">
-                        <a name="AUTH_CONFIG"></a>
-                        <span class="name">
-                            <b>
-                            AUTH_CONFIG</b>
-                            <a href="#AUTH_CONFIG"><span class="icon ion-ios-link"></span></a>
-                        </span>
+                        <i>Default value : </i><code>new InjectionToken&lt;AuthConfig&gt;(&#x27;AUTH_CONFIG&#x27;)</code>
                     </td>
                 </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Default value : </i><code>new InjectionToken&lt;AuthConfig&gt;(&#x27;AUTH_CONFIG&#x27;)</code>
-                        </td>
-                    </tr>
 
 
-            </tbody>
-        </table>
+        </tbody>
+    </table>
 </section>
     <h3>projects/lib/src/token-validation/jwks-validation-handler.ts</h3>
     <section>
-    <h3></h3>        <table class="table table-sm table-bordered">
-            <tbody>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="err"></a>
+                    <span class="name">
+                        <span ><b>err</b></span>
+                        <a href="#err"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
                 <tr>
                     <td class="col-md-4">
-                        <a name="err"></a>
-                        <span class="name">
-                            <b>
-                            err</b>
-                            <a href="#err"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Default value : </i><code>&#x60;PLEASE READ THIS CAREFULLY:
+                        <i>Default value : </i><code>&#x60;PLEASE READ THIS CAREFULLY:
 
 Beginning with angular-oauth2-oidc version 9, the JwksValidationHandler
 has been moved to an library of its own. If you need it for implementing
@@ -126,12 +125,12 @@ Please note, that this dependency is not needed for the **code flow**,
 which is nowadays the **recommented** one for single page applications.
 This also results in smaller bundle sizes.
 &#x60;</code>
-                        </td>
-                    </tr>
+                    </td>
+                </tr>
 
 
-            </tbody>
-        </table>
+        </tbody>
+    </table>
 </section>
 
 
@@ -159,9 +158,9 @@ This also results in smaller bundle sizes.
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
-       <script src="../js/menu-wc.js" defer></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 

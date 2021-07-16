@@ -8,7 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
-	      <link rel="stylesheet" href="./styles/style.css">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css" media="(prefers-color-scheme: dark)">
     </head>
     <body>
 
@@ -35,7 +36,7 @@
 <p><img src="https://raw.githubusercontent.com/manfredsteyer/angular-oauth2-oidc/master/oidc.png" alt="OIDC Certified Logo" class="img-responsive"></p>
 <h2 id="credits">Credits</h2>
 <ul>
-<li><a href="https://kjur.github.io/jsrsasign/">jsrasign</a> for validating token signature and for hashing</li>
+<li><a href="https://kjur.github.io/jsrsasign/">jsrsasign</a> for validating token signature and for hashing</li>
 <li><a href="https://github.com/identityserver">Identity Server</a> for testing with an .NET/.NET Core Backend</li>
 <li><a href="http://www.keycloak.org/">Keycloak (Redhat)</a> for testing with Java</li>
 <li><a href="https://auth0.com/">Auth0</a></li>
@@ -58,6 +59,8 @@ Now the reverse is true <strong>if you&#39;re upgrading from before 9.0.0</stron
 <h2 id="tested-environment">Tested Environment</h2>
 <p>Successfully tested with <strong>Angular 9</strong> and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. At server side we&#39;ve used IdentityServer (.NET / .NET Core), Redhat&#39;s Keycloak (Java), and Auth0 (Auth0 is officially supported since version 10 of this lib). For Auth0, please have a look into the respective documentation page here.</p>
 <p>Also, the Okta community created some guidelines on how to use this lib with Okta. See the links at the end of this page for more information.</p>
+<p><strong>Angular 12</strong>: Use 12.x versions of this library (<strong>should also work with older Angular versions!</strong>).</p>
+<p><strong>Angular 11</strong>: Use 10.x versions of this library (<strong>should also work with older Angular versions!</strong>).</p>
 <p><strong>Angular 10</strong>: Use 10.x versions of this library (<strong>should also work with older Angular versions!</strong>).</p>
 <p><strong>Angular 9</strong>: Use 9.x versions of this library (<strong>should also work with older Angular versions!</strong>).</p>
 <p><strong>Angular 8</strong>: Use 8.x versions of this library.</p>
@@ -267,9 +270,9 @@ this.oauthService.loadDiscoveryDocumentAndTryLogin();</code></pre></div><h3 id="
 
        <script src="./js/libs/custom-elements.min.js"></script>
        <script src="./js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="./js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
-       <script src="./js/menu-wc.js" defer></script>
+       
+       <script type="module" src="./js/menu-wc.js" defer></script>
+       <script nomodule src="./js/menu-wc_es5.js" defer></script>
 
        <script src="./js/libs/bootstrap-native.js"></script>
 

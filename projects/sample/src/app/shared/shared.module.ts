@@ -13,7 +13,7 @@ import { CustomPreloadingStrategy } from './preload/custom-preloading.strategy';
 @NgModule({
   imports: [
     FormsModule, // [(ngModel)]
-    CommonModule // ngFor, ngIf, ngStyle, ngClass, date, json
+    CommonModule, // ngFor, ngIf, ngStyle, ngClass, date, json
   ],
   providers: [],
   declarations: [
@@ -21,21 +21,21 @@ import { CustomPreloadingStrategy } from './preload/custom-preloading.strategy';
     CityValidatorDirective,
     AsyncCityValidatorDirective,
     RoundTrip,
-    DateComponent
+    DateComponent,
   ],
   exports: [
     CityPipe,
     CityValidatorDirective,
     AsyncCityValidatorDirective,
     RoundTrip,
-    DateComponent
-  ]
+    DateComponent,
+  ],
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders<SharedModule> {
     return {
       providers: [AuthGuard, LeaveComponentGuard, CustomPreloadingStrategy],
-      ngModule: SharedModule
+      ngModule: SharedModule,
     };
   }
 }

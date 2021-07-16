@@ -8,7 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
-	      <link rel="stylesheet" href="../styles/style.css">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
     </head>
     <body>
 
@@ -58,16 +59,16 @@
                 <td class="col-md-4">
                     <ul class="index-list">
                         <li>
-                            <a href="#b64DecodeUnicode" title="projects/lib/src/base64-helper.ts"><b>b64DecodeUnicode</b>&nbsp;&nbsp;&nbsp;(projects/.../base64-helper.ts)</a>
+                            <a href="#b64DecodeUnicode" title="projects/lib/src/base64-helper.ts" ><b>b64DecodeUnicode</b>&nbsp;&nbsp;&nbsp;(projects/.../base64-helper.ts)</a>
                         </li>
                         <li>
-                            <a href="#base64UrlEncode" title="projects/lib/src/base64-helper.ts"><b>base64UrlEncode</b>&nbsp;&nbsp;&nbsp;(projects/.../base64-helper.ts)</a>
+                            <a href="#base64UrlEncode" title="projects/lib/src/base64-helper.ts" ><b>base64UrlEncode</b>&nbsp;&nbsp;&nbsp;(projects/.../base64-helper.ts)</a>
                         </li>
                         <li>
-                            <a href="#createDefaultLogger" title="projects/lib/src/factories.ts"><b>createDefaultLogger</b>&nbsp;&nbsp;&nbsp;(projects/.../factories.ts)</a>
+                            <a href="#createDefaultLogger" title="projects/lib/src/factories.ts" ><b>createDefaultLogger</b>&nbsp;&nbsp;&nbsp;(projects/.../factories.ts)</a>
                         </li>
                         <li>
-                            <a href="#createDefaultStorage" title="projects/lib/src/factories.ts"><b>createDefaultStorage</b>&nbsp;&nbsp;&nbsp;(projects/.../factories.ts)</a>
+                            <a href="#createDefaultStorage" title="projects/lib/src/factories.ts" ><b>createDefaultStorage</b>&nbsp;&nbsp;&nbsp;(projects/.../factories.ts)</a>
                         </li>
                     </ul>
                 </td>
@@ -84,9 +85,7 @@
                 <td class="col-md-4">
                     <a name="b64DecodeUnicode"></a>
                     <span class="name">
-                        <b>
-                            b64DecodeUnicode
-                        </b>
+                        <span ><b>b64DecodeUnicode</b></span>
                         <a href="#b64DecodeUnicode"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -137,9 +136,7 @@
                 <td class="col-md-4">
                     <a name="base64UrlEncode"></a>
                     <span class="name">
-                        <b>
-                            base64UrlEncode
-                        </b>
+                        <span ><b>base64UrlEncode</b></span>
                         <a href="#base64UrlEncode"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -199,9 +196,7 @@
                 <td class="col-md-4">
                     <a name="createDefaultLogger"></a>
                     <span class="name">
-                        <b>
-                            createDefaultLogger
-                        </b>
+                        <span ><b>createDefaultLogger</b></span>
                         <a href="#createDefaultLogger"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -223,9 +218,7 @@
                 <td class="col-md-4">
                     <a name="createDefaultStorage"></a>
                     <span class="name">
-                        <b>
-                            createDefaultStorage
-                        </b>
+                        <span ><b>createDefaultStorage</b></span>
                         <a href="#createDefaultStorage"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
@@ -267,9 +260,9 @@
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
-       <script src="../js/menu-wc.js" defer></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
 

@@ -7,9 +7,7 @@ import { ActivatedRoute } from '@angular/router';
     <p>Hier könnte auch der Datensatz mit der Id {{ id }} stehen!</p>
 
     <div *ngIf="exitWarning.show" class="alert alert-warning">
-      <div>
-        Daten wurden nicht gespeichert! Trotzdem Maske verlassen?
-      </div>
+      <div>Daten wurden nicht gespeichert! Trotzdem Maske verlassen?</div>
       <div>
         <a
           href="javascript:void(0)"
@@ -25,13 +23,13 @@ import { ActivatedRoute } from '@angular/router';
         >
       </div>
     </div>
-  `
+  `,
 })
 export class FlightEditComponent implements OnInit {
   public id: string;
 
   constructor(private route: ActivatedRoute) {
-    route.params.subscribe(p => {
+    route.params.subscribe((p) => {
       this.id = p['id'];
     });
   }
@@ -40,7 +38,7 @@ export class FlightEditComponent implements OnInit {
 
   exitWarning = {
     show: false,
-    resolve: null
+    resolve: null,
   };
 
   decide(decision: boolean) {
@@ -50,7 +48,7 @@ export class FlightEditComponent implements OnInit {
 
   canDeactivate() {
     this.exitWarning.show = true;
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       this.exitWarning.resolve = resolve;
     });
   }

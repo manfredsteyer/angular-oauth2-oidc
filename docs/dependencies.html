@@ -8,7 +8,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
-	      <link rel="stylesheet" href="./styles/style.css">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css" media="(prefers-color-scheme: dark)">
     </head>
     <body>
 
@@ -48,49 +49,51 @@
     </ol>
     <ul class="dependencies-list">
         <li>
-            <b>@angular/animations</b> : 10.0.1</li>
+            <b>@angular/animations</b> : 12.1.2</li>
         <li>
-            <b>@angular/common</b> : 10.0.1</li>
+            <b>@angular/common</b> : 12.1.2</li>
         <li>
-            <b>@angular/compiler</b> : 10.0.1</li>
+            <b>@angular/compiler</b> : 12.1.2</li>
         <li>
-            <b>@angular/core</b> : 10.0.1</li>
+            <b>@angular/core</b> : 12.1.2</li>
         <li>
-            <b>@angular/elements</b> : 10.0.1</li>
+            <b>@angular/elements</b> : 12.1.2</li>
         <li>
-            <b>@angular/forms</b> : 10.0.1</li>
+            <b>@angular/forms</b> : 12.1.2</li>
         <li>
-            <b>@angular/platform-browser</b> : 10.0.1</li>
+            <b>@angular/platform-browser</b> : 12.1.2</li>
         <li>
-            <b>@angular/platform-browser-dynamic</b> : 10.0.1</li>
+            <b>@angular/platform-browser-dynamic</b> : 12.1.2</li>
         <li>
-            <b>@angular/router</b> : 10.0.1</li>
+            <b>@angular/router</b> : 12.1.2</li>
         <li>
-            <b>@webcomponents/custom-elements</b> : ^1.2.4</li>
+            <b>@popperjs/core</b> : ^2.9.2</li>
         <li>
-            <b>angular-oauth2-oidc</b> : ^9.0.1</li>
+            <b>@webcomponents/custom-elements</b> : ^1.4.3</li>
+        <li>
+            <b>angular-oauth2-oidc</b> : ^10.0.3</li>
         <li>
             <b>angular-oauth2-oidc-jwks</b> : ^9.0.0</li>
         <li>
-            <b>base64-js</b> : ^1.3.0</li>
+            <b>base64-js</b> : ^1.5.1</li>
         <li>
-            <b>bootstrap</b> : ^3.3.7</li>
+            <b>bootstrap</b> : ^3.4.1</li>
         <li>
-            <b>jsrsasign</b> : ^8.0.19</li>
+            <b>jsrsasign</b> : ^10.3.0</li>
         <li>
-            <b>ngx-semantic-version</b> : ^1.2.1</li>
+            <b>ngx-semantic-version</b> : ^2.3.0</li>
         <li>
-            <b>rxjs</b> : 6.5.4</li>
+            <b>rxjs</b> : ^6.5.3</li>
         <li>
-            <b>rxjs-compat</b> : ^6.5.2</li>
+            <b>rxjs-compat</b> : ^6.6.7</li>
         <li>
-            <b>text-encoder-lite</b> : ^1.0.1</li>
+            <b>text-encoder-lite</b> : ^2.0.0</li>
         <li>
-            <b>tsickle</b> : ^0.38.1</li>
+            <b>tsickle</b> : ^0.43.0</li>
         <li>
-            <b>tslib</b> : ^2.0.0</li>
+            <b>tslib</b> : ^2.3.0</li>
         <li>
-            <b>zone.js</b> : ^0.10.3</li>
+            <b>zone.js</b> : ~0.11.4</li>
     </ul>
 
                    
@@ -121,9 +124,9 @@
 
        <script src="./js/libs/custom-elements.min.js"></script>
        <script src="./js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="./js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
-       <script src="./js/menu-wc.js" defer></script>
+       
+       <script type="module" src="./js/menu-wc.js" defer></script>
+       <script nomodule src="./js/menu-wc_es5.js" defer></script>
 
        <script src="./js/libs/bootstrap-native.js"></script>
 
