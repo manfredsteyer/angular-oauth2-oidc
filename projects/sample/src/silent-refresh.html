@@ -9,7 +9,6 @@
       ];
 
       function isResponse(str) {
-        var count = 0;
         if (!str) return false;
         for (var i = 0; i < checks.length; i++) {
           if (str.match(checks[i])) return true;
@@ -21,7 +20,18 @@
         ? location.hash
         : '#' + location.search;
 
-      (window.opener || window.parent).postMessage(message, location.origin);
+      if (window.parent && window.parent !== window) {
+          // if loaded as an iframe during silent refresh
+          window.parent.postMessage(message, location.origin);
+      } else if (window.opener && window.opener !== window) {
+          // if loaded as a popup during initial login
+          window.opener.postMessage(message, location.origin);
+      } else {
+          // last resort for a popup which has been through redirects and can't use window.opener
+          localStorage.setItem('auth_hash', message);
+          localStorage.removeItem('auth_hash');
+      }
+
     </script>
   </body>
 </html>
