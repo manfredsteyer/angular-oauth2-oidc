@@ -2692,7 +2692,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * up any security credentials associated with the authorization
    */
   public revokeTokenAndLogout(
-    customParameters: object = {},
+    customParameters: boolean | object = {},
     ignoreCorsIssues = false
   ): Promise<any> {
     let revokeEndpoint = this.revocationEndpoint;
