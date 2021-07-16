@@ -1699,11 +1699,14 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     const sessionState = parts['session_state'];
 
     if (!options.preventClearHashAfterLogin) {
-      const href = location.href
-        .replace(/[&\?]code=[^&\$]*/, '')
-        .replace(/[&\?]scope=[^&\$]*/, '')
-        .replace(/[&\?]state=[^&\$]*/, '')
-        .replace(/[&\?]session_state=[^&\$]*/, '');
+      const href = location.origin + location.pathname +
+        location.search.replace(/code=[^&\$]*/, '')
+        .replace(/scope=[^&\$]*/, '')
+        .replace(/state=[^&\$]*/, '')
+        .replace(/session_state=[^&\$]*/, '')
+        .replace(/^\?&/, '?')
+        .replace(/&$/, '')
+        .replace(/^\?$/, '') + location.hash;
 
       history.replaceState(null, window.name, href);
     }
