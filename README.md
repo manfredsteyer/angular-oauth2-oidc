@@ -6,7 +6,7 @@ Support for OAuth 2 and OpenId Connect (OIDC) in Angular. Already prepared for t
 
 ## Credits
 
-- [jsrasign](https://kjur.github.io/jsrsasign/) for validating token signature and for hashing
+- [jsrsasign](https://kjur.github.io/jsrsasign/) for validating token signature and for hashing
 - [Identity Server](https://github.com/identityserver) for testing with an .NET/.NET Core Backend
 - [Keycloak (Redhat)](http://www.keycloak.org/) for testing with Java
 - [Auth0](https://auth0.com/)
