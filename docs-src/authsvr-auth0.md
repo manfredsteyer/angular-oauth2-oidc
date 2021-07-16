@@ -41,7 +41,7 @@ This should work as shown in the other examples in this documentation and in the
 
 ## Logging out
 
-Auth0's logout endpoint expects the parameters ``client_id and ``returnTo``:
+Auth0's logout endpoint expects the parameters ``client_id`` and ``returnTo``:
 
 ```typescript
 this.oauthService.revokeTokenAndLogout({

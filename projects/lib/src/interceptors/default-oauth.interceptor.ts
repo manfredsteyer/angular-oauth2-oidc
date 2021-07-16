@@ -17,13 +17,11 @@ import {
 } from 'rxjs/operators';
 import { OAuthResourceServerErrorHandler } from './resource-server-error-handler';
 import { OAuthModuleConfig } from '../oauth-module.config';
-import { OAuthStorage } from '../types';
 import { OAuthService } from '../oauth-service';
 
 @Injectable()
 export class DefaultOAuthInterceptor implements HttpInterceptor {
   constructor(
-    private authStorage: OAuthStorage,
     private oAuthService: OAuthService,
     private errorHandler: OAuthResourceServerErrorHandler,
     @Optional() private moduleConfig: OAuthModuleConfig
@@ -67,7 +65,7 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
 
     return merge(
       of(this.oAuthService.getAccessToken()).pipe(
-        filter(token => (token ? true : false))
+        filter(token => !!token)
       ),
       this.oAuthService.events.pipe(
         filter(e => e.type === 'token_received'),

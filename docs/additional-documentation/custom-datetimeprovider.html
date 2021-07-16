@@ -27,7 +27,7 @@
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
-               <div class="content miscellaneous-typealiases">
+               <div class="content additional-page">
                    <div class="content-data">
 
 
@@ -45,49 +45,43 @@
 
                    
 
-<ol class="breadcrumb">
-  <li>Miscellaneous</li>
-  <li>Type aliases</li>
-</ol>
-
-<section>
-    <h3 id="index">Index</h3>
-    <table class="table table-sm table-bordered index-table">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <ul class="index-list">
-                        <li>
-                            <a href="#EventType" title="projects/lib/src/events.ts"><b>EventType</b>&nbsp;&nbsp;&nbsp;(projects/.../events.ts)</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</section>
-
-    <h3>projects/lib/src/events.ts</h3>
-    <section>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="EventType"></a>
-                    <span class="name"><b>EventType</b><a href="#EventType"><span class="icon ion-ios-link"></span></a></span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                    <code>        <code><a href="../miscellaneous/variables.html#err" target="_self" >&quot;discovery_document_loaded&quot; | &quot;jwks_load_error&quot; | &quot;invalid_nonce_in_state&quot; | &quot;discovery_document_load_error&quot; | &quot;discovery_document_validation_error&quot; | &quot;user_profile_loaded&quot; | &quot;user_profile_load_error&quot; | &quot;token_received&quot; | &quot;token_error&quot; | &quot;code_error&quot; | &quot;token_refreshed&quot; | &quot;token_refresh_error&quot; | &quot;silent_refresh_error&quot; | &quot;silently_refreshed&quot; | &quot;silent_refresh_timeout&quot; | &quot;token_validation_error&quot; | &quot;token_expires&quot; | &quot;session_changed&quot; | &quot;session_error&quot; | &quot;session_terminated&quot; | &quot;session_unchanged&quot; | &quot;logout&quot; | &quot;popup_closed&quot; | &quot;popup_blocked&quot; | &quot;token_revoke_error&quot;</a></code>
-</code>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</section>
 
 
+
+<h1 id="custom-datetimeprovider">Custom DateTimeProvider</h1>
+<p>If your Identity Provider&#39;s clock is not synchronized, the validation of the token could fail.
+If the deviation is only some seconds, you can use the <code>AuthConfig.clockSkewInSec</code> setting to allow a bigger time window deviation.</p>
+<p>However, you may need to adjust the base time, that is used for the token validation and make sure, that the <code>AuthConfig.clockSkewInSec</code> is still a small reasonable number, then you can implement a custom <code>DateTimeProvider</code>.</p>
+<p>To do so, create a new service that derives from <code>DateTimeProvider</code>:</p>
+<div><pre class="line-numbers"><code class="language-typescript">export class MyCustomDateTimeProvider extends DateTimeProvider {
+  now(): number {
+    // Return your custom now.
+    return Date.now();
+  }
+
+  new(): Date {
+    // Return your custom new Date().
+    return new Date();
+  }
+}</code></pre></div><p>Then, override the provider via dependency injection in your application:</p>
+<div><pre class="line-numbers"><code class="language-typescript">&#64;NgModule({
+  imports: [
+    // etc.
+    OAuthModule.forRoot()
+  ],
+  providers: [
+    { provide: DateTimeProvider, useClass: MyCustomDateTimeProvider } // &lt;- add this
+  ],
+  declarations: [
+    AppComponent,
+    // etc.
+  ],
+  bootstrap: [
+    AppComponent
+  ]
+})
+export class AppModule {
+}</code></pre></div>
                    </div><div class="search-results">
     <div class="has-results">
         <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
@@ -104,8 +98,8 @@
 
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
-            var COMPODOC_CURRENT_PAGE_CONTEXT = 'miscellaneous-typealiases';
-            var COMPODOC_CURRENT_PAGE_URL = 'typealiases.html';
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
+            var COMPODOC_CURRENT_PAGE_URL = 'custom-datetimeprovider.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

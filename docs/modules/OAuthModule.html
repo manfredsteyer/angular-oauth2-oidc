@@ -94,8 +94,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="29"
-                            class="link-to-prism">projects/lib/src/angular-oauth-oidc.module.ts:29</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="30"
+                            class="link-to-prism">projects/lib/src/angular-oauth-oidc.module.ts:30</a></div>
                 </td>
             </tr>
 
@@ -165,7 +165,8 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { OAuthStorage, OAuthLogger } from &#x27;./types&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { DateTimeProvider, SystemDateTimeProvider } from &#x27;./date-time-provider&#x27;;
+import { OAuthStorage, OAuthLogger } from &#x27;./types&#x27;;
 import { NgModule, ModuleWithProviders } from &#x27;@angular/core&#x27;;
 import { CommonModule } from &#x27;@angular/common&#x27;;
 import { HTTP_INTERCEPTORS } from &#x27;@angular/common/http&#x27;;
@@ -215,7 +216,8 @@ export class OAuthModule {
           provide: HTTP_INTERCEPTORS,
           useClass: DefaultOAuthInterceptor,
           multi: true
-        }
+        },
+        { provide: DateTimeProvider, useClass: SystemDateTimeProvider }
       ]
     };
   }

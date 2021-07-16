@@ -42,7 +42,7 @@
 
 <ol class="breadcrumb">
   <li>Classes</li>
-  <li>OAuthEvent</li>
+  <li>DateTimeProvider</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -60,65 +60,136 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>projects/lib/src/events.ts</code>
+            <code>projects/lib/src/date-time-provider.ts</code>
         </p>
 
 
 
 
 
-
             <section>
-    <h3 id="constructor">Constructor</h3>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-<code>constructor(type: <a href="../undefineds/EventType.html">EventType</a>)</code>
-                    </td>
-                </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">projects/lib/src/events.ts:28</a></div>
-                            </td>
-                        </tr>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
 
                 <tr>
                     <td class="col-md-4">
-                            <div>
-                                    <b>Parameters :</b>
-                                    <table class="params">
-                                        <thead>
-                                            <tr>
-                                                <td>Name</td>
-                                                    <td>Type</td>
-                                                <td>Optional</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                                <tr>
-                                                        <td>type</td>
-                                                  
-                                                        <td>
-                                                                        <code><a href="../miscellaneous/typealiases.html#EventType" target="_self" >EventType</a></code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
-                                        </tbody>
-                                    </table>
-                            </div>
+                        <h6><b>Methods</b></h6>
                     </td>
                 </tr>
-            </tbody>
-        </table>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Abstract</span>
+                                <a href="#new">new</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Abstract</span>
+                                <a href="#now">now</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
 </section>
 
 
 
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="new"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Abstract</span>
+                            new
+                        </b>
+                        <a href="#new"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>new()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="5"
+                            class="link-to-prism">projects/lib/src/date-time-provider.ts:5</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank" >Date</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="now"></a>
+                    <span class="name">
+                        <b>
+                            <span class="modifier">Abstract</span>
+                            now
+                        </b>
+                        <a href="#now"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+                    <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>now()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="4"
+                            class="link-to-prism">projects/lib/src/date-time-provider.ts:4</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
 
 
 
@@ -128,56 +199,21 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export type EventType &#x3D;
-  | &#x27;discovery_document_loaded&#x27;
-  | &#x27;jwks_load_error&#x27;
-  | &#x27;invalid_nonce_in_state&#x27;
-  | &#x27;discovery_document_load_error&#x27;
-  | &#x27;discovery_document_validation_error&#x27;
-  | &#x27;user_profile_loaded&#x27;
-  | &#x27;user_profile_load_error&#x27;
-  | &#x27;token_received&#x27;
-  | &#x27;token_error&#x27;
-  | &#x27;code_error&#x27;
-  | &#x27;token_refreshed&#x27;
-  | &#x27;token_refresh_error&#x27;
-  | &#x27;silent_refresh_error&#x27;
-  | &#x27;silently_refreshed&#x27;
-  | &#x27;silent_refresh_timeout&#x27;
-  | &#x27;token_validation_error&#x27;
-  | &#x27;token_expires&#x27;
-  | &#x27;session_changed&#x27;
-  | &#x27;session_error&#x27;
-  | &#x27;session_terminated&#x27;
-  | &#x27;session_unchanged&#x27;
-  | &#x27;logout&#x27;
-  | &#x27;popup_closed&#x27;
-  | &#x27;popup_blocked&#x27;
-  | &#x27;token_revoke_error&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
 
-export abstract class OAuthEvent {
-  constructor(readonly type: EventType) {}
+export abstract class DateTimeProvider {
+  abstract now(): number;
+  abstract new(): Date;
 }
 
-export class OAuthSuccessEvent extends OAuthEvent {
-  constructor(type: EventType, readonly info: any &#x3D; null) {
-    super(type);
+@Injectable()
+export class SystemDateTimeProvider extends DateTimeProvider {
+  now(): number {
+    return Date.now();
   }
-}
 
-export class OAuthInfoEvent extends OAuthEvent {
-  constructor(type: EventType, readonly info: any &#x3D; null) {
-    super(type);
-  }
-}
-
-export class OAuthErrorEvent extends OAuthEvent {
-  constructor(
-    type: EventType,
-    readonly reason: object,
-    readonly params: object &#x3D; null
-  ) {
-    super(type);
+  new(): Date {
+    return new Date();
   }
 }
 </code></pre>
@@ -208,7 +244,7 @@ export class OAuthErrorEvent extends OAuthEvent {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
-            var COMPODOC_CURRENT_PAGE_URL = 'OAuthEvent.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'DateTimeProvider.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
 

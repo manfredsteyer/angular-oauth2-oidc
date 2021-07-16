@@ -1,13 +1,13 @@
 {
-  "name": "starter",
-  "version": "10.0.3",
+  "name": "angular-oauth2-oidc",
+  "version": "10.0.2",
   "license": "MIT",
   "scripts": {
     "release": "standard-version",
     "ng": "ng",
     "start": "ng serve --project sample -o",
     "build": "npm run prettier && ng build --prod --project lib && npm run copy:readme && npm run copy:license && npm run docs",
-    "build:jwks": "npm run prettier && ng build angular-oauth2-oidc-jwks --ts-config tsconfig.npm.json",
+    "build:jwks": "npm run prettier && ng build angular-oauth2-oidc-jwks --ts-config tsconfig.npm.json && npm run copyfiles:jwks",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -20,6 +20,7 @@
     "format": "prettier --single-quote --write projects/**/*.ts",
     "copy:readme": "cpr README.md dist/lib/README.md --overwrite",
     "copy:license": "cpr LICENSE dist/lib/LICENSE --overwrite",
+    "copyfiles:jwks": "cpr README.md dist/angular-oauth2-oidc-jwks/README.md --overwrite && cpr LICENSE dist/angular-oauth2-oidc-jwks/LICENSE --overwrite",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "contributer": "git shortlog -s 9.0.0..HEAD"
   },

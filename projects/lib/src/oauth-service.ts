@@ -26,6 +26,7 @@ import {
   catchError
 } from 'rxjs/operators';
 import { DOCUMENT } from '@angular/common';
+import { DateTimeProvider } from './date-time-provider';
 
 import {
   ValidationHandler,
@@ -102,6 +103,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   protected accessTokenTimeoutSubscription: Subscription;
   protected idTokenTimeoutSubscription: Subscription;
   protected tokenReceivedSubscription: Subscription;
+  protected automaticRefreshSubscription: Subscription;
   protected sessionCheckEventListener: EventListener;
   protected jwksUri: string;
   protected sessionCheckTimer: any;
@@ -120,7 +122,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     protected urlHelper: UrlHelperService,
     protected logger: OAuthLogger,
     @Optional() protected crypto: HashHandler,
-    @Inject(DOCUMENT) document: any
+    @Inject(DOCUMENT) document: any,
+    protected dateTimeService: DateTimeProvider
   ) {
     super();
 
@@ -226,7 +229,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     noPrompt = true
   ): void {
     let shouldRunSilentRefresh = true;
-    this.events
+    this.clearAutomaticRefreshTimer();
+    this.automaticRefreshSubscription = this.events
       .pipe(
         tap(e => {
           if (e.type === 'token_received') {
@@ -235,15 +239,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             shouldRunSilentRefresh = false;
           }
         }),
-        filter(e => e.type === 'token_expires'),
+        filter((e: OAuthInfoEvent) => e.type === 'token_expires' && (listenTo == null || listenTo === 'any' || e.info === listenTo)),
         debounceTime(1000)
       )
-      .subscribe(e => {
-        const event = e as OAuthInfoEvent;
-        if (
-          (listenTo == null || listenTo === 'any' || event.info === listenTo) &&
-          shouldRunSilentRefresh
-        ) {
+      .subscribe(_ => {
+        if (shouldRunSilentRefresh) {
           // this.silentRefresh(params, noPrompt).catch(_ => {
           this.refreshInternal(params, noPrompt).catch(_ => {
             this.debug('Automatic silent refresh did not work');
@@ -452,6 +452,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   public stopAutomaticRefresh() {
     this.clearAccessTokenTimer();
     this.clearIdTokenTimer();
+    this.clearAutomaticRefreshTimer();
   }
 
   protected clearAccessTokenTimer(): void {
@@ -466,8 +467,14 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
   }
 
+  protected clearAutomaticRefreshTimer(): void {
+    if (this.automaticRefreshSubscription) {
+      this.automaticRefreshSubscription.unsubscribe();
+    }
+  }
+
   protected calcTimeout(storedAt: number, expiration: number): number {
-    const now = Date.now();
+    const now = this.dateTimeService.now();
     const delta =
       (expiration - storedAt) * this.timeoutFactor - (now - storedAt);
     return Math.max(0, delta);
@@ -541,7 +548,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
           this.discoveryDocumentLoaded = true;
           this.discoveryDocumentLoadedSubject.next(doc);
-          this.revocationEndpoint = doc.revocation_endpoint;
+          this.revocationEndpoint = doc.revocation_endpoint || this.revocationEndpoint;
 
           if (this.sessionChecksEnabled) {
             this.restartSessionChecksIfStillLoggedIn();
@@ -698,7 +705,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     userName: string,
     password: string,
     headers: HttpHeaders = new HttpHeaders()
-  ): Promise<UserInfo> {
+  ): Promise<UserInfo | string> {
     return this.fetchTokenUsingPasswordFlow(
       userName,
       password,
@@ -712,7 +719,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * When using this with OAuth2 password flow, make sure that the property oidc is set to false.
    * Otherwise stricter validations take place that make this operation fail.
    */
-  public loadUserProfile(): Promise<UserInfo> {
+  public loadUserProfile(): Promise<UserInfo | string> {
     if (!this.hasValidAccessToken()) {
       throw new Error('Can not load User Profile without access_token');
     }
@@ -729,35 +736,54 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       );
 
       this.http
-        .get<UserInfo>(this.userinfoEndpoint, { headers })
+        .get(this.userinfoEndpoint, {
+          headers,
+          observe: 'response',
+          responseType: 'text'
+        })
         .subscribe(
-          info => {
-            this.debug('userinfo received', info);
+          response => {
+            this.debug('userinfo received', JSON.stringify(response));
+            if (
+              response.headers
+                .get('content-type')
+                .startsWith('application/json')
+            ) {
+              let info = response.body;
+              const existingClaims = this.getIdentityClaims() || {};
 
-            const existingClaims = this.getIdentityClaims() || {};
+              if (!this.skipSubjectCheck) {
+                if (
+                  this.oidc &&
+                  (!existingClaims['sub'] || info.sub !== existingClaims['sub'])
+                ) {
+                  const err =
+                    'if property oidc is true, the received user-id (sub) has to be the user-id ' +
+                    'of the user that has logged in with oidc.\n' +
+                    'if you are not using oidc but just oauth2 password flow set oidc to false';
 
-            if (!this.skipSubjectCheck) {
-              if (
-                this.oidc &&
-                (!existingClaims['sub'] || info.sub !== existingClaims['sub'])
-              ) {
-                const err =
-                  'if property oidc is true, the received user-id (sub) has to be the user-id ' +
-                  'of the user that has logged in with oidc.\n' +
-                  'if you are not using oidc but just oauth2 password flow set oidc to false';
-
-                reject(err);
-                return;
+                  reject(err);
+                  return;
+                }
               }
+
+              info = Object.assign({}, existingClaims, info);
+
+              this._storage.setItem(
+                'id_token_claims_obj',
+                JSON.stringify(info)
+              );
+              this.eventsSubject.next(
+                new OAuthSuccessEvent('user_profile_loaded')
+              );
+              resolve(info);
+            } else {
+              this.debug('userinfo is not JSON, treating it as JWE/JWS');
+              this.eventsSubject.next(
+                new OAuthSuccessEvent('user_profile_loaded')
+              );
+              resolve(response.body);
             }
-
-            info = Object.assign({}, existingClaims, info);
-
-            this._storage.setItem('id_token_claims_obj', JSON.stringify(info));
-            this.eventsSubject.next(
-              new OAuthSuccessEvent('user_profile_loaded')
-            );
-            resolve(info);
           },
           err => {
             this.logger.error('error loading user info', err);
@@ -781,48 +807,65 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     password: string,
     headers: HttpHeaders = new HttpHeaders()
   ): Promise<TokenResponse> {
+    const parameters = {
+        username: userName,
+        password: password,
+    };
+    return this.fetchTokenUsingGrant('password', parameters, headers);
+}
+
+  /**
+   * Uses a custom grant type to retrieve tokens.
+   * @param grantType Grant type.
+   * @param parameters Parameters to pass.
+   * @param headers Optional additional HTTP headers.
+   */
+  public fetchTokenUsingGrant(grantType: string, parameters: object, headers: HttpHeaders = new HttpHeaders()): Promise<TokenResponse> {
     this.assertUrlNotNullAndCorrectProtocol(
       this.tokenEndpoint,
       'tokenEndpoint'
     );
 
+    /**
+     * A `HttpParameterCodec` that uses `encodeURIComponent` and `decodeURIComponent` to
+     * serialize and parse URL parameter keys and values.
+     *
+     * @stable
+     */
+    let params = new HttpParams({ encoder: new WebHttpUrlEncodingCodec() })
+      .set('grant_type', grantType)
+      .set('scope', this.scope);
+
+    if (this.useHttpBasicAuth) {
+      const header = btoa(`${this.clientId}:${this.dummyClientSecret}`);
+      headers = headers.set('Authorization', 'Basic ' + header);
+    }
+
+    if (!this.useHttpBasicAuth) {
+      params = params.set('client_id', this.clientId);
+    }
+
+    if (!this.useHttpBasicAuth && this.dummyClientSecret) {
+      params = params.set('client_secret', this.dummyClientSecret);
+    }
+
+    if (this.customQueryParams) {
+      for (const key of Object.getOwnPropertyNames(this.customQueryParams)) {
+        params = params.set(key, this.customQueryParams[key]);
+      }
+    }
+
+    // set explicit parameters last, to allow overwriting
+    for (const key of Object.keys(parameters)) {
+      params = params.set(key, parameters[key]);
+    }
+
+    headers = headers.set(
+      'Content-Type',
+      'application/x-www-form-urlencoded'
+    );
+
     return new Promise((resolve, reject) => {
-      /**
-       * A `HttpParameterCodec` that uses `encodeURIComponent` and `decodeURIComponent` to
-       * serialize and parse URL parameter keys and values.
-       *
-       * @stable
-       */
-      let params = new HttpParams({ encoder: new WebHttpUrlEncodingCodec() })
-        .set('grant_type', 'password')
-        .set('scope', this.scope)
-        .set('username', userName)
-        .set('password', password);
-
-      if (this.useHttpBasicAuth) {
-        const header = btoa(`${this.clientId}:${this.dummyClientSecret}`);
-        headers = headers.set('Authorization', 'Basic ' + header);
-      }
-
-      if (!this.useHttpBasicAuth) {
-        params = params.set('client_id', this.clientId);
-      }
-
-      if (!this.useHttpBasicAuth && this.dummyClientSecret) {
-        params = params.set('client_secret', this.dummyClientSecret);
-      }
-
-      if (this.customQueryParams) {
-        for (const key of Object.getOwnPropertyNames(this.customQueryParams)) {
-          params = params.set(key, this.customQueryParams[key]);
-        }
-      }
-
-      headers = headers.set(
-        'Content-Type',
-        'application/x-www-form-urlencoded'
-      );
-
       this.http
         .post<TokenResponse>(this.tokenEndpoint, params, { headers })
         .subscribe(
@@ -831,21 +874,26 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             this.storeAccessTokenResponse(
               tokenResponse.access_token,
               tokenResponse.refresh_token,
-              tokenResponse.expires_in ||
-                this.fallbackAccessTokenExpirationTimeInSec,
+              tokenResponse.expires_in || this.fallbackAccessTokenExpirationTimeInSec,
               tokenResponse.scope,
               this.extractRecognizedCustomParameters(tokenResponse)
             );
-
+            if (this.oidc && tokenResponse.id_token) {
+              this.processIdToken(tokenResponse.id_token, tokenResponse.access_token)
+                .then(result => {
+                  this.storeIdToken(result);
+                  resolve(tokenResponse);
+                });
+            }
             this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
             resolve(tokenResponse);
           },
           err => {
-            this.logger.error('Error performing password flow', err);
+            this.logger.error('Error performing ${grantType} flow', err);
             this.eventsSubject.next(new OAuthErrorEvent('token_error', err));
             reject(err);
           }
-        );
+        )
     });
   }
 
@@ -1059,11 +1107,12 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   public initImplicitFlowInPopup(options?: {
     height?: number;
     width?: number;
+    windowRef?: Window
   }) {
     return this.initLoginFlowInPopup(options);
   }
 
-  public initLoginFlowInPopup(options?: { height?: number; width?: number }) {
+  public initLoginFlowInPopup(options?: { height?: number; width?: number; windowRef?: Window }) {
     options = options || {};
     return this.createLoginUrl(
       null,
@@ -1079,12 +1128,37 @@ export class OAuthService extends AuthConfig implements OnDestroy {
          * Error handling section
          */
         const checkForPopupClosedInterval = 500;
-        let windowRef = window.open(
-          url,
-          '_blank',
-          this.calculatePopupFeatures(options)
-        );
+
+        let windowRef = null;
+        // If we got no window reference we open a window
+        // else we are using the window already opened
+        if(!options.windowRef) {
+          windowRef = window.open(
+            url,
+            '_blank',
+            this.calculatePopupFeatures(options)
+          );
+        } else if(options.windowRef && !options.windowRef.closed) {
+          windowRef = options.windowRef;
+          windowRef.location.href = url;
+        }
+
         let checkForPopupClosedTimer: any;
+
+        const tryLogin = (hash: string) => {
+          this.tryLogin({
+            customHashFragment: hash,
+            preventClearHashAfterLogin: true,
+            customRedirectUri: this.silentRefreshRedirectUri,
+          }).then(() => {
+            cleanup();
+            resolve(true);
+          }, err => {
+            cleanup();
+            reject(err);
+          });
+        };
+
         const checkForPopupClosed = () => {
           if (!windowRef || windowRef.closed) {
             cleanup();
@@ -1102,6 +1176,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
         const cleanup = () => {
           window.clearInterval(checkForPopupClosedTimer);
+          window.removeEventListener('storage', storageListener);
           window.removeEventListener('message', listener);
           if (windowRef !== null) {
             windowRef.close();
@@ -1113,26 +1188,22 @@ export class OAuthService extends AuthConfig implements OnDestroy {
           const message = this.processMessageEventMessage(e);
 
           if (message && message !== null) {
-            this.tryLogin({
-              customHashFragment: message,
-              preventClearHashAfterLogin: true,
-              customRedirectUri: this.silentRefreshRedirectUri
-            }).then(
-              () => {
-                cleanup();
-                resolve();
-              },
-              err => {
-                cleanup();
-                reject(err);
-              }
-            );
+            window.removeEventListener('storage', storageListener);
+            tryLogin(message);
           } else {
             console.log('false event firing');
           }
         };
 
+        const storageListener = (event: StorageEvent) => {
+          if (event.key === 'auth_hash') {
+            window.removeEventListener('message', listener);
+            tryLogin(event.newValue);
+          }
+        };
+
         window.addEventListener('message', listener);
+        window.addEventListener('storage', storageListener);
       });
     });
   }
@@ -1220,7 +1291,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       // only run in Angular zone if it is 'changed' or 'error'
       switch (e.data) {
         case 'unchanged':
-          this.handleSessionUnchanged();
+          this.ngZone.run(() => {
+            this.handleSessionUnchanged();
+          });
           break;
         case 'changed':
           this.ngZone.run(() => {
@@ -1245,6 +1318,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
   protected handleSessionUnchanged(): void {
     this.debug('session check', 'session unchanged');
+    this.eventsSubject.next(new OAuthInfoEvent('session_unchanged'));
   }
 
   protected handleSessionChange(): void {
@@ -1576,10 +1650,13 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       this._storage.setItem('granted_scopes', JSON.stringify(grantedScopes));
     }
 
-    this._storage.setItem('access_token_stored_at', '' + Date.now());
+    this._storage.setItem(
+      'access_token_stored_at',
+      '' + this.dateTimeService.now()
+    );
     if (expiresIn) {
       const expiresInMilliSeconds = expiresIn * 1000;
-      const now = new Date();
+      const now = this.dateTimeService.new();
       const expiresAt = now.getTime() + expiresInMilliSeconds;
       this._storage.setItem('expires_at', '' + expiresAt);
     }
@@ -1633,11 +1710,14 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     const sessionState = parts['session_state'];
 
     if (!options.preventClearHashAfterLogin) {
-      const href = location.href
-        .replace(/[&\?]code=[^&\$]*/, '')
-        .replace(/[&\?]scope=[^&\$]*/, '')
-        .replace(/[&\?]state=[^&\$]*/, '')
-        .replace(/[&\?]session_state=[^&\$]*/, '');
+      const href = location.origin + location.pathname +
+        location.search.replace(/code=[^&\$]*/, '')
+        .replace(/scope=[^&\$]*/, '')
+        .replace(/state=[^&\$]*/, '')
+        .replace(/session_state=[^&\$]*/, '')
+        .replace(/^\?&/, '?')
+        .replace(/&$/, '')
+        .replace(/^\?$/, '') + location.hash;
 
       history.replaceState(null, window.name, href);
     }
@@ -1647,23 +1727,26 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
     if (parts['error']) {
       this.debug('error trying to login');
-      this.handleLoginError({}, parts);
+      this.handleLoginError(options, parts);
       const err = new OAuthErrorEvent('code_error', {}, parts);
       this.eventsSubject.next(err);
       return Promise.reject(err);
     }
 
-    if (!nonceInState) {
-      return Promise.resolve();
-    }
+    if (!options.disableNonceCheck) {
+      if (!nonceInState) {
+        return Promise.resolve();
+      }
 
-    const success = this.validateNonce(nonceInState);
-    if (!success) {
-      const event = new OAuthErrorEvent('invalid_nonce_in_state', null);
-      this.eventsSubject.next(event);
-      return Promise.reject(event);
+    if(!options.disableOAuth2StateCheck) {
+      const success = this.validateNonce(nonceInState);
+      if (!success) {
+        const event = new OAuthErrorEvent('invalid_nonce_in_state', null);
+        this.eventsSubject.next(event);
+        return Promise.reject(event);
+      }
     }
-
+    
     this.storeSessionState(sessionState);
 
     if (code) {
@@ -1721,10 +1804,15 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       }
     }
 
-    return this.fetchAndProcessToken(params);
+    return this.fetchAndProcessToken(params, options);
   }
 
-  private fetchAndProcessToken(params: HttpParams): Promise<TokenResponse> {
+  private fetchAndProcessToken(
+    params: HttpParams,
+    options: LoginOptions
+  ): Promise<TokenResponse> {
+    options = options || {};
+
     this.assertUrlNotNullAndCorrectProtocol(
       this.tokenEndpoint,
       'tokenEndpoint'
@@ -1771,7 +1859,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             if (this.oidc && tokenResponse.id_token) {
               this.processIdToken(
                 tokenResponse.id_token,
-                tokenResponse.access_token
+                tokenResponse.access_token,
+                options.disableNonceCheck
               )
                 .then(result => {
                   this.storeIdToken(result);
@@ -1875,7 +1964,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       );
     }
 
-    if (this.requestAccessToken && !options.disableOAuth2StateCheck) {
+    if (this.requestAccessToken && !options.disableNonceCheck) {
       const success = this.validateNonce(nonceInState);
 
       if (!success) {
@@ -1897,14 +1986,14 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     if (!this.oidc) {
       this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
       if (this.clearHashAfterLogin && !options.preventClearHashAfterLogin) {
-        location.hash = '';
+        this.clearLocationHash();
       }
 
       this.callOnTokenReceivedIfExists(options);
       return Promise.resolve(true);
     }
 
-    return this.processIdToken(idToken, accessToken)
+    return this.processIdToken(idToken, accessToken, options.disableNonceCheck)
       .then(result => {
         if (options.validationHandler) {
           return options
@@ -1922,7 +2011,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         this.storeIdToken(result);
         this.storeSessionState(sessionState);
         if (this.clearHashAfterLogin && !options.preventClearHashAfterLogin) {
-          location.hash = '';
+          this.clearLocationHash();
         }
         this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
         this.callOnTokenReceivedIfExists(options);
@@ -1977,7 +2066,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     this._storage.setItem('id_token', idToken.idToken);
     this._storage.setItem('id_token_claims_obj', idToken.idTokenClaimsJson);
     this._storage.setItem('id_token_expires_at', '' + idToken.idTokenExpiresAt);
-    this._storage.setItem('id_token_stored_at', '' + Date.now());
+    this._storage.setItem(
+      'id_token_stored_at',
+      '' + this.dateTimeService.now()
+    );
   }
 
   protected storeSessionState(sessionState: string): void {
@@ -1993,7 +2085,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       options.onLoginError(parts);
     }
     if (this.clearHashAfterLogin && !options.preventClearHashAfterLogin) {
-      location.hash = '';
+      this.clearLocationHash();
     }
   }
 
@@ -2098,7 +2190,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       return Promise.reject(err);
     }
 
-    const now = Date.now();
+    const now = this.dateTimeService.now();
     const issuedAtMSec = claims.iat * 1000;
     const expiresAtMSec = claims.exp * 1000;
     const clockSkewInMSec = (this.clockSkewInSec || 600) * 1000;
@@ -2258,7 +2350,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   public hasValidAccessToken(): boolean {
     if (this.getAccessToken()) {
       const expiresAt = this._storage.getItem('expires_at');
-      const now = new Date();
+      const now = this.dateTimeService.new();
       if (expiresAt && parseInt(expiresAt, 10) < now.getTime()) {
         return false;
       }
@@ -2275,7 +2367,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   public hasValidIdToken(): boolean {
     if (this.getIdToken()) {
       const expiresAt = this._storage.getItem('id_token_expires_at');
-      const now = new Date();
+      const now = this.dateTimeService.new();
       if (expiresAt && parseInt(expiresAt, 10) < now.getTime()) {
         return false;
       }
@@ -2375,8 +2467,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     // For backward compatibility
     if (this.logoutUrl.indexOf('{{') > -1) {
       logoutUrl = this.logoutUrl
-        .replace(/\{\{id_token\}\}/, id_token)
-        .replace(/\{\{client_id\}\}/, this.clientId);
+        .replace(/\{\{id_token\}\}/, encodeURIComponent(id_token))
+        .replace(/\{\{client_id\}\}/, encodeURIComponent(this.clientId));
     } else {
       let params = new HttpParams();
 
@@ -2384,7 +2476,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         params = params.set('id_token_hint', id_token);
       }
 
-      const postLogoutUrl = this.postLogoutRedirectUri || this.redirectUri;
+      const postLogoutUrl = this.postLogoutRedirectUri || (this.redirectUriAsPostLogoutRedirectUriFallback && this.redirectUri || '');
       if (postLogoutUrl) {
         params = params.set('post_logout_redirect_uri', postLogoutUrl);
 
@@ -2547,8 +2639,17 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         "loginUrl  must use HTTPS (with TLS), or config value for property 'requireHttps' must be set to 'false' and allow HTTP (without TLS)."
       );
     }
+    
+    let addParams = {};
+    let loginHint = null;
+    if (typeof params === 'string') {
+        loginHint = params;
+    }
+    else if (typeof params === 'object') {
+        addParams = params;
+    }
 
-    this.createLoginUrl(additionalState, '', null, false, params)
+    this.createLoginUrl(additionalState, loginHint, null, false, addParams)
       .then(this.config.openUri)
       .catch(error => {
         console.error('Error in initAuthorizationCodeFlow');
@@ -2596,7 +2697,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * up any security credentials associated with the authorization
    */
   public revokeTokenAndLogout(
-    customParameters: object = {},
+    customParameters: boolean | object = {},
     ignoreCorsIssues = false
   ): Promise<any> {
     let revokeEndpoint = this.revocationEndpoint;
@@ -2698,5 +2799,16 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         }
       );
     });
+  }
+
+  /**
+   * Clear location.hash if it's present
+   */
+  private clearLocationHash() {
+    // Checking for empty hash is necessary for Firefox
+    // as setting an empty hash to an empty string adds # to the URL
+    if(location.hash != '') {
+      location.hash = '';
+    }
   }
 }
