@@ -103,6 +103,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   protected accessTokenTimeoutSubscription: Subscription;
   protected idTokenTimeoutSubscription: Subscription;
   protected tokenReceivedSubscription: Subscription;
+  protected automaticRefreshSubscription: Subscription;
   protected sessionCheckEventListener: EventListener;
   protected jwksUri: string;
   protected sessionCheckTimer: any;
@@ -224,7 +225,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     noPrompt = true
   ): void {
     let shouldRunSilentRefresh = true;
-    this.events
+    this.clearAutomaticRefreshTimer();
+    this.automaticRefreshSubscription = this.events
       .pipe(
         tap(e => {
           if (e.type === 'token_received') {
@@ -450,6 +452,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   public stopAutomaticRefresh() {
     this.clearAccessTokenTimer();
     this.clearIdTokenTimer();
+    this.clearAutomaticRefreshTimer();
   }
 
   protected clearAccessTokenTimer(): void {
@@ -461,6 +464,12 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   protected clearIdTokenTimer(): void {
     if (this.idTokenTimeoutSubscription) {
       this.idTokenTimeoutSubscription.unsubscribe();
+    }
+  }
+
+  protected clearAutomaticRefreshTimer(): void {
+    if (this.automaticRefreshSubscription) {
+      this.automaticRefreshSubscription.unsubscribe();
     }
   }
 
