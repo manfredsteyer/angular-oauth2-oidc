@@ -1649,15 +1649,17 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       return Promise.reject(err);
     }
 
-    if (!nonceInState) {
-      return Promise.resolve();
-    }
+    if (!options.disableNonceCheck) {
+      if (!nonceInState) {
+        return Promise.resolve();
+      }
 
-    const success = this.validateNonce(nonceInState);
-    if (!success) {
-      const event = new OAuthErrorEvent('invalid_nonce_in_state', null);
-      this.eventsSubject.next(event);
-      return Promise.reject(event);
+      const success = this.validateNonce(nonceInState);
+      if (!success) {
+        const event = new OAuthErrorEvent('invalid_nonce_in_state', null);
+        this.eventsSubject.next(event);
+        return Promise.reject(event);
+      }
     }
 
     this.storeSessionState(sessionState);
@@ -1717,10 +1719,15 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       }
     }
 
-    return this.fetchAndProcessToken(params);
+    return this.fetchAndProcessToken(params, options);
   }
 
-  private fetchAndProcessToken(params: HttpParams): Promise<TokenResponse> {
+  private fetchAndProcessToken(
+    params: HttpParams,
+    options: LoginOptions
+  ): Promise<TokenResponse> {
+    options = options || {};
+
     this.assertUrlNotNullAndCorrectProtocol(
       this.tokenEndpoint,
       'tokenEndpoint'
@@ -1767,7 +1774,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             if (this.oidc && tokenResponse.id_token) {
               this.processIdToken(
                 tokenResponse.id_token,
-                tokenResponse.access_token
+                tokenResponse.access_token,
+                options.disableNonceCheck
               )
                 .then(result => {
                   this.storeIdToken(result);
@@ -1871,7 +1879,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       );
     }
 
-    if (this.requestAccessToken && !options.disableOAuth2StateCheck) {
+    if (this.requestAccessToken && !options.disableNonceCheck) {
       const success = this.validateNonce(nonceInState);
 
       if (!success) {
@@ -1900,7 +1908,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       return Promise.resolve(true);
     }
 
-    return this.processIdToken(idToken, accessToken)
+    return this.processIdToken(idToken, accessToken, options.disableNonceCheck)
       .then(result => {
         if (options.validationHandler) {
           return options

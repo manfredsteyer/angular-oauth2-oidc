@@ -50,6 +50,15 @@ export class LoginOptions {
   disableOAuth2StateCheck?: boolean;
 
   /**
+   * Set this to true to disable the nonce
+   * check which is used to avoid
+   * replay attacks.
+   * This flag should never be true in
+   * production environments.
+   */
+  disableNonceCheck? = false;
+
+  /**
    * Normally, you want to clear your hash fragment after
    * the lib read the token(s) so that they are not displayed
    * anymore in the url. If not, set this to true. For code flow
