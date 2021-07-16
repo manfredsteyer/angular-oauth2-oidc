@@ -19,6 +19,7 @@ export type EventType =
   | 'session_changed'
   | 'session_error'
   | 'session_terminated'
+  | 'session_unchanged'
   | 'logout'
   | 'popup_closed'
   | 'popup_blocked'
