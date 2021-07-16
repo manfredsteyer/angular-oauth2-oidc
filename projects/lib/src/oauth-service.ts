@@ -1084,7 +1084,6 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     return this.initLoginFlowInPopup(options);
   }
 
-
   public initLoginFlowInPopup(options?: { height?: number; width?: number; windowRef?: Window }) {
     options = options || {};
     return this.createLoginUrl(
