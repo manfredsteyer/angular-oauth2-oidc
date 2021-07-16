@@ -174,6 +174,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/AuthConfig.html" data-type="entity-link">AuthConfig</a>
                             </li>
                             <li class="link">
+                                <a href="classes/DateTimeProvider.html" data-type="entity-link">DateTimeProvider</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/HashHandler.html" data-type="entity-link">HashHandler</a>
                             </li>
                             <li class="link">
@@ -242,6 +245,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                                 <li class="link">
                                     <a href="injectables/OAuthService.html" data-type="entity-link">OAuthService</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/SystemDateTimeProvider.html" data-type="entity-link">SystemDateTimeProvider</a>
                                 </li>
                                 <li class="link">
                                     <a href="injectables/UrlHelperService.html" data-type="entity-link">UrlHelperService</a>

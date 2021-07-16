@@ -1,3 +1,4 @@
+import { DateTimeProvider, SystemDateTimeProvider } from './date-time-provider';
 import { OAuthStorage, OAuthLogger } from './types';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -48,7 +49,8 @@ export class OAuthModule {
           provide: HTTP_INTERCEPTORS,
           useClass: DefaultOAuthInterceptor,
           multi: true
-        }
+        },
+        { provide: DateTimeProvider, useClass: SystemDateTimeProvider }
       ]
     };
   }

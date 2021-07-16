@@ -26,6 +26,7 @@ import {
   catchError
 } from 'rxjs/operators';
 import { DOCUMENT } from '@angular/common';
+import { DateTimeProvider } from './date-time-provider';
 
 import {
   ValidationHandler,
@@ -120,7 +121,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     protected urlHelper: UrlHelperService,
     protected logger: OAuthLogger,
     @Optional() protected crypto: HashHandler,
-    @Inject(DOCUMENT) document: any
+    @Inject(DOCUMENT) document: any,
+    protected dateTimeService: DateTimeProvider
   ) {
     super();
 
@@ -463,7 +465,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   }
 
   protected calcTimeout(storedAt: number, expiration: number): number {
-    const now = Date.now();
+    const now = this.dateTimeService.now();
     const delta =
       (expiration - storedAt) * this.timeoutFactor - (now - storedAt);
     return Math.max(0, delta);
@@ -1572,10 +1574,13 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       this._storage.setItem('granted_scopes', JSON.stringify(grantedScopes));
     }
 
-    this._storage.setItem('access_token_stored_at', '' + Date.now());
+    this._storage.setItem(
+      'access_token_stored_at',
+      '' + this.dateTimeService.now()
+    );
     if (expiresIn) {
       const expiresInMilliSeconds = expiresIn * 1000;
-      const now = new Date();
+      const now = this.dateTimeService.new();
       const expiresAt = now.getTime() + expiresInMilliSeconds;
       this._storage.setItem('expires_at', '' + expiresAt);
     }
@@ -1981,7 +1986,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     this._storage.setItem('id_token', idToken.idToken);
     this._storage.setItem('id_token_claims_obj', idToken.idTokenClaimsJson);
     this._storage.setItem('id_token_expires_at', '' + idToken.idTokenExpiresAt);
-    this._storage.setItem('id_token_stored_at', '' + Date.now());
+    this._storage.setItem(
+      'id_token_stored_at',
+      '' + this.dateTimeService.now()
+    );
   }
 
   protected storeSessionState(sessionState: string): void {
@@ -2102,7 +2110,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       return Promise.reject(err);
     }
 
-    const now = Date.now();
+    const now = this.dateTimeService.now();
     const issuedAtMSec = claims.iat * 1000;
     const expiresAtMSec = claims.exp * 1000;
     const clockSkewInMSec = (this.clockSkewInSec || 600) * 1000;
@@ -2262,7 +2270,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   public hasValidAccessToken(): boolean {
     if (this.getAccessToken()) {
       const expiresAt = this._storage.getItem('expires_at');
-      const now = new Date();
+      const now = this.dateTimeService.new();
       if (expiresAt && parseInt(expiresAt, 10) < now.getTime()) {
         return false;
       }
@@ -2279,7 +2287,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   public hasValidIdToken(): boolean {
     if (this.getIdToken()) {
       const expiresAt = this._storage.getItem('id_token_expires_at');
-      const now = new Date();
+      const now = this.dateTimeService.new();
       if (expiresAt && parseInt(expiresAt, 10) < now.getTime()) {
         return false;
       }
