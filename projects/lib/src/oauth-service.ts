@@ -91,7 +91,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * The received (passed around) state, when logging
    * in with implicit flow.
    */
-  public state? = '';
+  public state?= '';
 
   protected eventsSubject: Subject<OAuthEvent> = new Subject<OAuthEvent>();
   protected discoveryDocumentLoadedSubject: Subject<
@@ -156,7 +156,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     } catch (e) {
       console.error(
         'No OAuthStorage provided and cannot access default (sessionStorage).' +
-          'Consider providing a custom OAuthStorage implementation in your module.',
+        'Consider providing a custom OAuthStorage implementation in your module.',
         e
       );
     }
@@ -322,7 +322,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     if (!issuerCheck) {
       errors.push(
         'Every url in discovery document has to start with the issuer url.' +
-          'Also see property strictDiscoveryDocumentValidation.'
+        'Also see property strictDiscoveryDocumentValidation.'
       );
     }
 
@@ -680,7 +680,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     if (this.sessionChecksEnabled && !doc.check_session_iframe) {
       this.logger.warn(
         'sessionChecksEnabled is activated but discovery document' +
-          ' does not contain a check_session_iframe field'
+        ' does not contain a check_session_iframe field'
       );
     }
 
@@ -705,7 +705,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     userName: string,
     password: string,
     headers: HttpHeaders = new HttpHeaders()
-  ): Promise<UserInfo | string> {
+  ): Promise<object> {
     return this.fetchTokenUsingPasswordFlow(
       userName,
       password,
@@ -719,7 +719,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * When using this with OAuth2 password flow, make sure that the property oidc is set to false.
    * Otherwise stricter validations take place that make this operation fail.
    */
-  public loadUserProfile(): Promise<UserInfo | string> {
+  public loadUserProfile(): Promise<object> {
     if (!this.hasValidAccessToken()) {
       throw new Error('Can not load User Profile without access_token');
     }
@@ -749,7 +749,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                 .get('content-type')
                 .startsWith('application/json')
             ) {
-              let info = response.body;
+              let info = JSON.parse(response.body);
               const existingClaims = this.getIdentityClaims() || {};
 
               if (!this.skipSubjectCheck) {
@@ -776,13 +776,13 @@ export class OAuthService extends AuthConfig implements OnDestroy {
               this.eventsSubject.next(
                 new OAuthSuccessEvent('user_profile_loaded')
               );
-              resolve(info);
+              resolve({info});
             } else {
               this.debug('userinfo is not JSON, treating it as JWE/JWS');
               this.eventsSubject.next(
                 new OAuthSuccessEvent('user_profile_loaded')
               );
-              resolve(response.body);
+              resolve(JSON.parse(response.body));
             }
           },
           err => {
@@ -808,11 +808,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     headers: HttpHeaders = new HttpHeaders()
   ): Promise<TokenResponse> {
     const parameters = {
-        username: userName,
-        password: password,
+      username: userName,
+      password: password,
     };
     return this.fetchTokenUsingGrant('password', parameters, headers);
-}
+  }
 
   /**
    * Uses a custom grant type to retrieve tokens.
@@ -967,7 +967,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
               tokenResponse.access_token,
               tokenResponse.refresh_token,
               tokenResponse.expires_in ||
-                this.fallbackAccessTokenExpirationTimeInSec,
+              this.fallbackAccessTokenExpirationTimeInSec,
               tokenResponse.scope,
               this.extractRecognizedCustomParameters(tokenResponse)
             );
@@ -1132,13 +1132,13 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         let windowRef = null;
         // If we got no window reference we open a window
         // else we are using the window already opened
-        if(!options.windowRef) {
+        if (!options.windowRef) {
           windowRef = window.open(
             url,
-            '_blank',
+            'ngx-oauth2-oidc-login',
             this.calculatePopupFeatures(options)
           );
-        } else if(options.windowRef && !options.windowRef.closed) {
+        } else if (options.windowRef && !options.windowRef.closed) {
           windowRef = options.windowRef;
           windowRef.location.href = url;
         }
@@ -1712,12 +1712,12 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     if (!options.preventClearHashAfterLogin) {
       const href = location.origin + location.pathname +
         location.search.replace(/code=[^&\$]*/, '')
-        .replace(/scope=[^&\$]*/, '')
-        .replace(/state=[^&\$]*/, '')
-        .replace(/session_state=[^&\$]*/, '')
-        .replace(/^\?&/, '?')
-        .replace(/&$/, '')
-        .replace(/^\?$/, '') + location.hash;
+          .replace(/scope=[^&\$]*/, '')
+          .replace(/state=[^&\$]*/, '')
+          .replace(/session_state=[^&\$]*/, '')
+          .replace(/^\?&/, '?')
+          .replace(/&$/, '')
+          .replace(/^\?$/, '') + location.hash;
 
       history.replaceState(null, window.name, href);
     }
@@ -1738,21 +1738,22 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         return Promise.resolve();
       }
 
-    if(!options.disableOAuth2StateCheck) {
-      const success = this.validateNonce(nonceInState);
-      if (!success) {
-        const event = new OAuthErrorEvent('invalid_nonce_in_state', null);
-        this.eventsSubject.next(event);
-        return Promise.reject(event);
+      if (!options.disableOAuth2StateCheck) {
+        const success = this.validateNonce(nonceInState);
+        if (!success) {
+          const event = new OAuthErrorEvent('invalid_nonce_in_state', null);
+          this.eventsSubject.next(event);
+          return Promise.reject(event);
+        }
       }
-    }
-    
-    this.storeSessionState(sessionState);
 
-    if (code) {
-      return this.getTokenFromCode(code, options).then(_ => null);
-    } else {
-      return Promise.resolve();
+      this.storeSessionState(sessionState);
+
+      if (code) {
+        return this.getTokenFromCode(code, options).then(_ => null);
+      } else {
+        return Promise.resolve();
+      }
     }
   }
 
@@ -1851,7 +1852,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
               tokenResponse.access_token,
               tokenResponse.refresh_token,
               tokenResponse.expires_in ||
-                this.fallbackAccessTokenExpirationTimeInSec,
+              this.fallbackAccessTokenExpirationTimeInSec,
               tokenResponse.scope,
               this.extractRecognizedCustomParameters(tokenResponse)
             );
@@ -1959,8 +1960,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     if (this.sessionChecksEnabled && !sessionState) {
       this.logger.warn(
         'session checks (Session Status Change Notification) ' +
-          'were activated in the configuration but the id_token ' +
-          'does not contain a session_state claim'
+        'were activated in the configuration but the id_token ' +
+        'does not contain a session_state claim'
       );
     }
 
@@ -2406,7 +2407,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * @param state
    */
   public logOut(): void;
-  public logOut(customParameters: object): void;
+  public logOut(customParameters: boolean | object): void;
   public logOut(noRedirectToLogoutUrl: boolean): void;
   public logOut(noRedirectToLogoutUrl: boolean, state: string): void;
   public logOut(customParameters: boolean | object = {}, state = ''): void {
@@ -2502,7 +2503,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    */
   public createAndSaveNonce(): Promise<string> {
     const that = this;
-    return this.createNonce().then(function(nonce: any) {
+    return this.createNonce().then(function (nonce: any) {
       // Use localStorage for nonce if possible
       // localStorage is the only storage who survives a
       // redirect in ALL browsers (also IE)
@@ -2639,14 +2640,14 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         "loginUrl  must use HTTPS (with TLS), or config value for property 'requireHttps' must be set to 'false' and allow HTTP (without TLS)."
       );
     }
-    
+
     let addParams = {};
     let loginHint = null;
     if (typeof params === 'string') {
-        loginHint = params;
+      loginHint = params;
     }
     else if (typeof params === 'object') {
-        addParams = params;
+      addParams = params;
     }
 
     this.createLoginUrl(additionalState, loginHint, null, false, addParams)
@@ -2807,7 +2808,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   private clearLocationHash() {
     // Checking for empty hash is necessary for Firefox
     // as setting an empty hash to an empty string adds # to the URL
-    if(location.hash != '') {
+    if (location.hash != '') {
       location.hash = '';
     }
   }

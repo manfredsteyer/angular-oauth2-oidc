@@ -21,16 +21,11 @@ import { CustomPreloadingStrategy } from './shared/preload/custom-preloading.str
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { useHash } from '../flags';
 
-const ROUTING_OPTIONS: ExtraOptions = {
-  // preloadingStrategy: CustomPreloadingStrategy,
-  useHash: useHash,
-  initialNavigation: !useHash
-};
 
 @NgModule({
   imports: [
     BrowserModule,
-    RouterModule.forRoot(APP_ROUTES, ROUTING_OPTIONS),
+    RouterModule.forRoot(APP_ROUTES, { useHash }),
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
