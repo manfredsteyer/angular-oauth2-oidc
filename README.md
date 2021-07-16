@@ -52,6 +52,10 @@ Successfully tested with **Angular 9** and its Router, PathLocationStrategy as w
 
 Also, the Okta community created some guidelines on how to use this lib with Okta. See the links at the end of this page for more information.
 
+**Angular 12**: Use 12.x versions of this library (**should also work with older Angular versions!**).
+
+**Angular 11**: Use 10.x versions of this library (**should also work with older Angular versions!**).
+
 **Angular 10**: Use 10.x versions of this library (**should also work with older Angular versions!**).
 
 **Angular 9**: Use 9.x versions of this library (**should also work with older Angular versions!**).
