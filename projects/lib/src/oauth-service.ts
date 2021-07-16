@@ -544,7 +544,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
           this.discoveryDocumentLoaded = true;
           this.discoveryDocumentLoadedSubject.next(doc);
-          this.revocationEndpoint = doc.revocation_endpoint;
+          this.revocationEndpoint = doc.revocation_endpoint || this.revocationEndpoint;
 
           if (this.sessionChecksEnabled) {
             this.restartSessionChecksIfStillLoggedIn();
