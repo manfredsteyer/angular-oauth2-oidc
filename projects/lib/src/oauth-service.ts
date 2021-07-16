@@ -1079,11 +1079,13 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   public initImplicitFlowInPopup(options?: {
     height?: number;
     width?: number;
+    windowRef?: Window
   }) {
     return this.initLoginFlowInPopup(options);
   }
 
-  public initLoginFlowInPopup(options?: { height?: number; width?: number }): Promise<boolean> {
+
+  public initLoginFlowInPopup(options?: { height?: number; width?: number; windowRef?: Window }) {
     options = options || {};
     return this.createLoginUrl(
       null,
@@ -1099,11 +1101,21 @@ export class OAuthService extends AuthConfig implements OnDestroy {
          * Error handling section
          */
         const checkForPopupClosedInterval = 500;
-        let windowRef = window.open(
-          url,
-          '_blank',
-          this.calculatePopupFeatures(options)
-        );
+
+        let windowRef = null;
+        // If we got no window reference we open a window
+        // else we are using the window already opened
+        if(!options.windowRef) {
+          windowRef = window.open(
+            url,
+            '_blank',
+            this.calculatePopupFeatures(options)
+          );
+        } else if(options.windowRef && !options.windowRef.closed) {
+          windowRef = options.windowRef;
+          windowRef.location.href = url;
+        }
+
         let checkForPopupClosedTimer: any;
 
         const tryLogin = (hash: string) => {
