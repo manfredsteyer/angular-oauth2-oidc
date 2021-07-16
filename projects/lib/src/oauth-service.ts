@@ -911,7 +911,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     );
 
     return new Promise((resolve, reject) => {
-      let params = new HttpParams()
+      let params = new HttpParams({ encoder: new WebHttpUrlEncodingCodec() })
         .set('grant_type', 'refresh_token')
         .set('scope', this.scope)
         .set('refresh_token', this._storage.getItem('refresh_token'));
@@ -1644,7 +1644,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     if (grantedScopes && !Array.isArray(grantedScopes)) {
       this._storage.setItem(
         'granted_scopes',
-        JSON.stringify(grantedScopes.split('+'))
+        JSON.stringify(grantedScopes.split(' '))
       );
     } else if (grantedScopes && Array.isArray(grantedScopes)) {
       this._storage.setItem('granted_scopes', JSON.stringify(grantedScopes));
@@ -1717,7 +1717,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
           .replace(/session_state=[^&\$]*/, '')
           .replace(/^\?&/, '?')
           .replace(/&$/, '')
-          .replace(/^\?$/, '') + location.hash;
+          .replace(/^\?$/, '') 
+          .replace(/&+/g, '&')
+          .replace(/\?&/, '?')
+          .replace(/\?$/, '')
+          + location.hash;
 
       history.replaceState(null, window.name, href);
     }
@@ -1781,7 +1785,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     code: string,
     options: LoginOptions
   ): Promise<object> {
-    let params = new HttpParams()
+    let params = new HttpParams({ encoder: new WebHttpUrlEncodingCodec() })
       .set('grant_type', 'authorization_code')
       .set('code', code)
       .set('redirect_uri', options.customRedirectUri || this.redirectUri);
@@ -2352,7 +2356,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     if (this.getAccessToken()) {
       const expiresAt = this._storage.getItem('expires_at');
       const now = this.dateTimeService.new();
-      if (expiresAt && parseInt(expiresAt, 10) < now.getTime()) {
+      if (expiresAt && parseInt(expiresAt, 10) < now.getTime() + this.clockSkewInSec) {
         return false;
       }
 
@@ -2369,7 +2373,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     if (this.getIdToken()) {
       const expiresAt = this._storage.getItem('id_token_expires_at');
       const now = this.dateTimeService.new();
-      if (expiresAt && parseInt(expiresAt, 10) < now.getTime()) {
+      if (expiresAt && parseInt(expiresAt, 10) < now.getTime() + this.clockSkewInSec) {
         return false;
       }
 
@@ -2471,7 +2475,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         .replace(/\{\{id_token\}\}/, encodeURIComponent(id_token))
         .replace(/\{\{client_id\}\}/, encodeURIComponent(this.clientId));
     } else {
-      let params = new HttpParams();
+      let params = new HttpParams({ encoder: new WebHttpUrlEncodingCodec() });
 
       if (id_token) {
         params = params.set('id_token_hint', id_token);
@@ -2709,7 +2713,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       return;
     }
 
-    let params = new HttpParams();
+    let params = new HttpParams({ encoder: new WebHttpUrlEncodingCodec() });
 
     let headers = new HttpHeaders().set(
       'Content-Type',

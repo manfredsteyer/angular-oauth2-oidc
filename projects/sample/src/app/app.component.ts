@@ -28,6 +28,10 @@ export class AppComponent {
       .subscribe(_ => {
         console.debug('state', this.oauthService.state);
         this.oauthService.loadUserProfile();
+
+        const scopes = this.oauthService.getGrantedScopes();
+        console.debug('scopes', scopes);
+
       });
   }
 

@@ -34,7 +34,7 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
 
     if (this.moduleConfig.resourceServer.allowedUrls) {
       return !!this.moduleConfig.resourceServer.allowedUrls.find(u =>
-        url.startsWith(u)
+        url.toLowerCase().startsWith(u.toLowerCase())
       );
     }
 
