@@ -696,7 +696,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     userName: string,
     password: string,
     headers: HttpHeaders = new HttpHeaders()
-  ): Promise<UserInfo> {
+  ): Promise<UserInfo | string> {
     return this.fetchTokenUsingPasswordFlow(
       userName,
       password,
@@ -710,7 +710,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * When using this with OAuth2 password flow, make sure that the property oidc is set to false.
    * Otherwise stricter validations take place that make this operation fail.
    */
-  public loadUserProfile(): Promise<UserInfo> {
+  public loadUserProfile(): Promise<UserInfo | string> {
     if (!this.hasValidAccessToken()) {
       throw new Error('Can not load User Profile without access_token');
     }
@@ -727,35 +727,54 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       );
 
       this.http
-        .get<UserInfo>(this.userinfoEndpoint, { headers })
+        .get(this.userinfoEndpoint, {
+          headers,
+          observe: 'response',
+          responseType: 'text'
+        })
         .subscribe(
-          info => {
-            this.debug('userinfo received', info);
+          response => {
+            this.debug('userinfo received', JSON.stringify(response));
+            if (
+              response.headers
+                .get('content-type')
+                .startsWith('application/json')
+            ) {
+              let info = response.body;
+              const existingClaims = this.getIdentityClaims() || {};
 
-            const existingClaims = this.getIdentityClaims() || {};
+              if (!this.skipSubjectCheck) {
+                if (
+                  this.oidc &&
+                  (!existingClaims['sub'] || info.sub !== existingClaims['sub'])
+                ) {
+                  const err =
+                    'if property oidc is true, the received user-id (sub) has to be the user-id ' +
+                    'of the user that has logged in with oidc.\n' +
+                    'if you are not using oidc but just oauth2 password flow set oidc to false';
 
-            if (!this.skipSubjectCheck) {
-              if (
-                this.oidc &&
-                (!existingClaims['sub'] || info.sub !== existingClaims['sub'])
-              ) {
-                const err =
-                  'if property oidc is true, the received user-id (sub) has to be the user-id ' +
-                  'of the user that has logged in with oidc.\n' +
-                  'if you are not using oidc but just oauth2 password flow set oidc to false';
-
-                reject(err);
-                return;
+                  reject(err);
+                  return;
+                }
               }
+
+              info = Object.assign({}, existingClaims, info);
+
+              this._storage.setItem(
+                'id_token_claims_obj',
+                JSON.stringify(info)
+              );
+              this.eventsSubject.next(
+                new OAuthSuccessEvent('user_profile_loaded')
+              );
+              resolve(info);
+            } else {
+              this.debug('userinfo is not JSON, treating it as JWE/JWS');
+              this.eventsSubject.next(
+                new OAuthSuccessEvent('user_profile_loaded')
+              );
+              resolve(response.body);
             }
-
-            info = Object.assign({}, existingClaims, info);
-
-            this._storage.setItem('id_token_claims_obj', JSON.stringify(info));
-            this.eventsSubject.next(
-              new OAuthSuccessEvent('user_profile_loaded')
-            );
-            resolve(info);
           },
           err => {
             this.logger.error('error loading user info', err);
