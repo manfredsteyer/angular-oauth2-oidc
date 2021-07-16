@@ -1734,6 +1734,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         return Promise.resolve();
       }
 
+    if(!options.disableOAuth2StateCheck) {
       const success = this.validateNonce(nonceInState);
       if (!success) {
         const event = new OAuthErrorEvent('invalid_nonce_in_state', null);
@@ -1741,7 +1742,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         return Promise.reject(event);
       }
     }
-
+    
     this.storeSessionState(sessionState);
 
     if (code) {
