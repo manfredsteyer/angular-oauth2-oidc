@@ -2116,6 +2116,14 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
   }
 
+
+  private getClockSkewInMsec(defaultSkewMsc = 600_000) {
+    if (!this.clockSkewInSec) {
+      return defaultSkewMsc;
+    }
+    return this.clockSkewInSec * 1000;
+  }
+
   /**
    * @ignore
    */
@@ -2220,7 +2228,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     const now = this.dateTimeService.now();
     const issuedAtMSec = claims.iat * 1000;
     const expiresAtMSec = claims.exp * 1000;
-    const clockSkewInMSec = (this.clockSkewInSec || 600) * 1000;
+    const clockSkewInMSec = (this.getClockSkewInMsec() || 600) * 1000;
 
     if (
       issuedAtMSec - clockSkewInMSec >= now ||
@@ -2380,7 +2388,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       const now = this.dateTimeService.new();
       if (
         expiresAt &&
-        parseInt(expiresAt, 10) < now.getTime() + this.clockSkewInSec
+        parseInt(expiresAt, 10) < now.getTime() - this.getClockSkewInMsec()
       ) {
         return false;
       }
@@ -2400,7 +2408,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       const now = this.dateTimeService.new();
       if (
         expiresAt &&
-        parseInt(expiresAt, 10) < now.getTime() + this.clockSkewInSec
+        parseInt(expiresAt, 10) < now.getTime() - this.getClockSkewInMsec()
       ) {
         return false;
       }

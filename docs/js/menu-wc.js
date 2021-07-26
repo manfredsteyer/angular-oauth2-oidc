@@ -140,6 +140,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                             <li class="link for-chapter2">
                                                 <a href="additional-documentation/authorization-servers/auth0.html" data-type="entity-link" data-context="sub-entity" data-context-id="additional">Auth0</a>
                                             </li>
+                                            <li class="link for-chapter2">
+                                                <a href="additional-documentation/authorization-servers/azure-ad-(active-directory).html" data-type="entity-link" data-context="sub-entity" data-context-id="additional">Azure AD (Active Directory)</a>
+                                            </li>
                                         </ul>
                                     </li>
                         </ul>

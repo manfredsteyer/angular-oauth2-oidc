@@ -18,7 +18,17 @@ export class HomeComponent implements OnInit {
     private oauthService: OAuthService
   ) {}
 
+
+  get hasValidAccessToken() {
+    return this.oauthService.hasValidAccessToken();
+  }
+
+  get hasValidIdToken() {
+    return this.oauthService.hasValidIdToken();
+  }
+
   ngOnInit() {
+
     this.route.params.subscribe((p) => {
       this.login = p['login'];
     });
