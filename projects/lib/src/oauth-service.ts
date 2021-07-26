@@ -2116,7 +2116,6 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
   }
 
-
   private getClockSkewInMsec(defaultSkewMsc = 600_000) {
     if (!this.clockSkewInSec) {
       return defaultSkewMsc;
