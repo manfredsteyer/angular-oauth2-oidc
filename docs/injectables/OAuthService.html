@@ -11221,7 +11221,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     const now &#x3D; this.dateTimeService.now();
     const issuedAtMSec &#x3D; claims.iat * 1000;
     const expiresAtMSec &#x3D; claims.exp * 1000;
-    const clockSkewInMSec &#x3D; (this.getClockSkewInMsec() || 600) * 1000;
+    const clockSkewInMSec &#x3D; this.getClockSkewInMsec(); // (this.getClockSkewInMsec() || 600) * 1000;
 
     if (
       issuedAtMSec - clockSkewInMSec &gt;&#x3D; now ||
