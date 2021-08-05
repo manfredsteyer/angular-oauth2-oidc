@@ -1873,6 +1873,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         .post<TokenResponse>(this.tokenEndpoint, params, { headers })
         .subscribe(
           (tokenResponse) => {
+            console.log(tokenResponse);
             this.debug('refresh tokenResponse', tokenResponse);
             this.storeAccessTokenResponse(
               tokenResponse.access_token,
