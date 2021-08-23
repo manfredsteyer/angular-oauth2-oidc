@@ -127,8 +127,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="14"
-                            class="link-to-prism">projects/lib/src/token-validation/hash-handler.ts:14</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="16"
+                            class="link-to-prism">projects/lib/src/token-validation/hash-handler.ts:16</a></div>
                 </td>
             </tr>
 
@@ -207,8 +207,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="34"
-                            class="link-to-prism">projects/lib/src/token-validation/hash-handler.ts:34</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="36"
+                            class="link-to-prism">projects/lib/src/token-validation/hash-handler.ts:36</a></div>
                 </td>
             </tr>
 
@@ -275,8 +275,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="26"
-                            class="link-to-prism">projects/lib/src/token-validation/hash-handler.ts:26</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="28"
+                            class="link-to-prism">projects/lib/src/token-validation/hash-handler.ts:28</a></div>
                 </td>
             </tr>
 
@@ -331,7 +331,9 @@
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
 
-import { sha256 } from &#x27;./js-sha256&#x27;;
+import { factory } from &#x27;./js-sha256&#x27;;
+
+const sha256 &#x3D; factory();
 
 /**
  * Abstraction for crypto algorithms
