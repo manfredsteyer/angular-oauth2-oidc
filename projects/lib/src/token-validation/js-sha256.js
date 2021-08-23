@@ -8,6 +8,9 @@
  */
 /*jslint bitwise: true */
 
+
+function factory() {
+
   
     var ERROR = 'input is invalid type';
     var WINDOW = typeof window === 'object';
@@ -502,5 +505,8 @@
     exports.sha224 = createMethod(true);
     exports.sha256.hmac = createHmacMethod();
     exports.sha224.hmac = createHmacMethod(true);
-  
-    export  { exports as sha256 };
+
+    return exports;
+}
+
+export  { factory };

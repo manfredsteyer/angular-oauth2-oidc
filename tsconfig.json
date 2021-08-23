@@ -10,7 +10,7 @@
     "experimentalDecorators": true,
     "downlevelIteration": true,
     "module": "esnext",
-    "target": "es5",
+    "target": "es2017",
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2017", "dom"],
     "paths": {
@@ -23,6 +23,6 @@
     }
   },
   "angularCompilerOptions": {
-    "enableIvy": false
+    "enableIvy": true
   }
 }
