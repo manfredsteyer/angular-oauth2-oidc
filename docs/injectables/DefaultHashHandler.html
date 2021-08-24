@@ -127,8 +127,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="16"
-                            class="link-to-prism">projects/lib/src/token-validation/hash-handler.ts:16</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="33"
+                            class="link-to-prism">projects/lib/src/token-validation/hash-handler.ts:33</a></div>
                 </td>
             </tr>
 
@@ -207,8 +207,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="36"
-                            class="link-to-prism">projects/lib/src/token-validation/hash-handler.ts:36</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="60"
+                            class="link-to-prism">projects/lib/src/token-validation/hash-handler.ts:60</a></div>
                 </td>
             </tr>
 
@@ -275,8 +275,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="28"
-                            class="link-to-prism">projects/lib/src/token-validation/hash-handler.ts:28</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="52"
+                            class="link-to-prism">projects/lib/src/token-validation/hash-handler.ts:52</a></div>
                 </td>
             </tr>
 
@@ -332,14 +332,31 @@
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
 
 import { factory } from &#x27;./js-sha256&#x27;;
-
 const sha256 &#x3D; factory();
+
+import fsha256 from &#x27;fast-sha256&#x27;;
 
 /**
  * Abstraction for crypto algorithms
  */
 export abstract class HashHandler {
   abstract calcHash(valueToHash: string, algorithm: string): Promise&lt;string&gt;;
+}
+
+function decodeUTF8(s) {
+  if (typeof s !&#x3D;&#x3D; &#x27;string&#x27;) throw new TypeError(&#x27;expected string&#x27;);
+  var i,
+    d &#x3D; s,
+    b &#x3D; new Uint8Array(d.length);
+  for (i &#x3D; 0; i &lt; d.length; i++) b[i] &#x3D; d.charCodeAt(i);
+  return b;
+}
+
+function encodeUTF8(arr) {
+  var i,
+    s &#x3D; [];
+  for (i &#x3D; 0; i &lt; arr.length; i++) s.push(String.fromCharCode(arr[i]));
+  return s.join(&#x27;&#x27;);
 }
 
 @Injectable()
@@ -349,11 +366,18 @@ export class DefaultHashHandler implements HashHandler {
     // const hashArray &#x3D; await window.crypto.subtle.digest(algorithm, data);
     // const data &#x3D; encoder.encode(valueToHash);
 
-    const hashArray &#x3D; (sha256 as any).array(valueToHash);
-    // const hashString &#x3D; this.toHashString(hashArray);
-    const hashString &#x3D; this.toHashString2(hashArray);
+    // const fhash &#x3D; fsha256(valueToHash);
 
-    return hashString;
+    const candHash &#x3D; encodeUTF8(fsha256(decodeUTF8(valueToHash)));
+
+    // const hashArray &#x3D; (sha256 as any).array(valueToHash);
+    // // const hashString &#x3D; this.toHashString(hashArray);
+    // const hashString &#x3D; this.toHashString2(hashArray);
+
+    // console.debug(&#x27;hash orig - cand&#x27;, candHash, hashString);
+    // alert(1);
+
+    return candHash;
   }
 
   toHashString2(byteArray: number[]) {
