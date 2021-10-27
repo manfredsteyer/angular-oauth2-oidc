@@ -50,4 +50,6 @@ export const authCodeFlowConfig: AuthConfig = {
   // disablePKCI: true,
 
   clearHashAfterLogin: true,
+
+  maxRefreshRetries: 3,
 };
