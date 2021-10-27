@@ -149,6 +149,11 @@
                             <li>
                                     <span class="modifier">Public</span>
                                     <span class="modifier">Optional</span>
+                                <a href="#maxRefreshRetries" >maxRefreshRetries</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Optional</span>
                                 <a href="#nonceStateSeparator" >nonceStateSeparator</a>
                             </li>
                             <li>
@@ -340,7 +345,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="258" class="link-to-prism">projects/lib/src/auth.config.ts:258</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="264" class="link-to-prism">projects/lib/src/auth.config.ts:264</a></div>
                             </td>
                         </tr>
 
@@ -883,6 +888,46 @@ the user in when using implicit flow.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="maxRefreshRetries"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Optional</span>
+                        <span ><b>maxRefreshRetries</b></span>
+                        <a href="#maxRefreshRetries"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>1</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="264" class="link-to-prism">projects/lib/src/auth.config.ts:264</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Give a max number of retries that can be used for refreshing a token.
+Exponential back-off is used to prevent overloading the iDP.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="nonceStateSeparator"></a>
                     <span class="name">
                             <span class="modifier">Public</span>
@@ -981,7 +1026,7 @@ implicit flow.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="271" class="link-to-prism">projects/lib/src/auth.config.ts:271</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="277" class="link-to-prism">projects/lib/src/auth.config.ts:277</a></div>
                         </td>
                     </tr>
 
@@ -2377,6 +2422,12 @@ this case.</p>
    * https://tools.ietf.org/html/rfc7636#section-1.1
    */
   public disablePKCE? &#x3D; false;
+
+  /**
+   * Give a max number of retries that can be used for refreshing a token.
+   * Exponential back-off is used to prevent overloading the iDP.
+   */
+  public maxRefreshRetries? &#x3D; 1;
 
   constructor(json?: Partial&lt;AuthConfig&gt;) {
     if (json) {
