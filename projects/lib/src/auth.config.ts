@@ -257,6 +257,12 @@ export class AuthConfig {
    */
   public disablePKCE? = false;
 
+  /**
+   * Give a max number of retries that can be used for refreshing a token.
+   * Exponential back-off is used to prevent overloading the iDP.
+   */
+  public maxRefreshRetries? = 1;
+
   constructor(json?: Partial<AuthConfig>) {
     if (json) {
       Object.assign(this, json);
