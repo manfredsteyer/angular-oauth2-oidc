@@ -1714,7 +1714,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     return this.urlHelper.parseQueryString(queryString);
   }
 
-  public tryLoginCodeFlow(options: LoginOptions = null): Promise<void> {
+  public async tryLoginCodeFlow(options: LoginOptions = null): Promise<void> {
     options = options || {};
 
     const querySource = options.customHashFragment
@@ -1761,6 +1761,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
     if (!options.disableNonceCheck) {
       if (!nonceInState) {
+        this.saveRequestedRoute();
         return Promise.resolve();
       }
 
@@ -1776,10 +1777,30 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       this.storeSessionState(sessionState);
 
       if (code) {
-        return this.getTokenFromCode(code, options).then((_) => null);
+        await this.getTokenFromCode(code, options);
+        this.restoreRequestedRoute();
+        return Promise.resolve();
       } else {
         return Promise.resolve();
       }
+    }
+
+    return Promise.reject();
+  }
+
+  private saveRequestedRoute() {
+    if (this.config.preserveRequestedRoute) {
+      this._storage.setItem(
+        'requested_route',
+        window.location.pathname + window.location.search
+      );
+    }
+  }
+
+  private restoreRequestedRoute() {
+    const requestedRoute = this._storage.getItem('requested_route');
+    if (requestedRoute) {
+      history.replaceState(null, '', window.location.origin + requestedRoute);
     }
   }
 
