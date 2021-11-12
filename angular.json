@@ -21,16 +21,6 @@
               "tsConfig": "projects/lib/tsconfig.lib.prod.json"
             }
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/lib/tsconfig.lib.json",
-              "projects/lib/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**"]
-          }
         }
       }
     },
@@ -125,16 +115,6 @@
               "projects/sample/src/assets"
             ]
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/sample/tsconfig.app.json",
-              "projects/sample/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**"]
-          }
         }
       }
     },
@@ -227,17 +207,6 @@
             "scripts": []
           }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/quickstart-demo/tsconfig.app.json",
-              "projects/quickstart-demo/tsconfig.spec.json",
-              "projects/quickstart-demo/e2e/tsconfig.json"
-            ],
-            "exclude": ["**/node_modules/**"]
-          }
-        },
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
@@ -272,16 +241,6 @@
             "main": "projects/angular-oauth2-oidc-jwks/src/test.ts",
             "tsConfig": "projects/angular-oauth2-oidc-jwks/tsconfig.spec.json",
             "karmaConfig": "projects/angular-oauth2-oidc-jwks/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/angular-oauth2-oidc-jwks/tsconfig.lib.json",
-              "projects/angular-oauth2-oidc-jwks/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**"]
           }
         }
       }

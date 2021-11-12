@@ -72,6 +72,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                         <a href="additional-documentation/silent-refresh.html" data-type="entity-link" data-context-id="additional">Silent Refresh</a>
                                     </li>
                                     <li class="link ">
+                                        <a href="additional-documentation/token-refresh.html" data-type="entity-link" data-context-id="additional">Token Refresh</a>
+                                    </li>
+                                    <li class="link ">
                                         <a href="additional-documentation/working-with-httpinterceptors.html" data-type="entity-link" data-context-id="additional">Working with HttpInterceptors</a>
                                     </li>
                                     <li class="link ">

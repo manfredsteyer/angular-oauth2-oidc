@@ -174,19 +174,17 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     this.setupRefreshTimer();
   }
 
-  private checkLocalStorageAccessable(){
-    if(typeof window === 'undefined')
-      return false;
+  private checkLocalStorageAccessable() {
+    if (typeof window === 'undefined') return false;
 
     const test = 'test';
     try {
-      if(typeof window['localStorage'] === 'undefined')
-        return false;
+      if (typeof window['localStorage'] === 'undefined') return false;
 
       localStorage.setItem(test, test);
       localStorage.removeItem(test);
       return true;
-    } catch(e) {
+    } catch (e) {
       return false;
     }
   }
