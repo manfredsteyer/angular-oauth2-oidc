@@ -162,10 +162,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
 
     // in IE, sessionStorage does not always survive a redirect
-    if (
-      typeof window !== 'undefined' &&
-      typeof window['localStorage'] !== 'undefined'
-    ) {
+    if (this.checkLocalStorageAccessable()) {
       const ua = window?.navigator?.userAgent;
       const msie = ua?.includes('MSIE ') || ua?.includes('Trident');
 
@@ -175,6 +172,23 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
 
     this.setupRefreshTimer();
+  }
+
+  private checkLocalStorageAccessable(){
+    if(typeof window === 'undefined')
+      return false;
+
+    const test = 'test';
+    try {
+      if(typeof window['localStorage'] === 'undefined')
+        return false;
+
+      localStorage.setItem(test, test);
+      localStorage.removeItem(test);
+      return true;
+    } catch(e) {
+      return false;
+    }
   }
 
   /**
