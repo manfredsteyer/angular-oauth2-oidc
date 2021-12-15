@@ -145,6 +145,14 @@ export class AuthConfig {
   public strictDiscoveryDocumentValidation? = true;
 
   /**
+   * Set this to true to force overwrite of discovery
+   * document urls with config parameters instead of
+   * using config parameters as fallback if discovery
+   * document urls are missing
+   */
+  public overwriteDiscoveryDocumentUrls? = false;
+
+  /**
    * JSON Web Key Set (https://tools.ietf.org/html/rfc7517)
    * with keys used to validate received id_tokens.
    * This is taken out of the disovery document. Can be set manually too.

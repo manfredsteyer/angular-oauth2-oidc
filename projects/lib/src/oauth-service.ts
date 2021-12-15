@@ -553,20 +553,38 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             return;
           }
 
-          this.loginUrl = doc.authorization_endpoint;
-          this.logoutUrl = doc.end_session_endpoint || this.logoutUrl;
+          this.loginUrl = this.overwriteDiscoveryDocumentUrls ?
+            this.loginUrl || doc.authorization_endpoint :
+            doc.authorization_endpoint || this.loginUrl;
+
+          this.logoutUrl = this.overwriteDiscoveryDocumentUrls ?
+            this.logoutUrl || doc.end_session_endpoint :
+            doc.end_session_endpoint || this.logoutUrl;
+
           this.grantTypesSupported = doc.grant_types_supported;
+
           this.issuer = doc.issuer;
-          this.tokenEndpoint = doc.token_endpoint;
-          this.userinfoEndpoint =
+
+          this.tokenEndpoint = this.overwriteDiscoveryDocumentUrls ?
+            this.tokenEndpoint || doc.token_endpoint :
+            doc.token_endpoint || this.tokenEndpoint;
+
+          this.userinfoEndpoint = this.overwriteDiscoveryDocumentUrls ?
+            this.userinfoEndpoint || doc.userinfo_endpoint :
             doc.userinfo_endpoint || this.userinfoEndpoint;
-          this.jwksUri = doc.jwks_uri;
-          this.sessionCheckIFrameUrl =
+
+          this.jwksUri = this.overwriteDiscoveryDocumentUrls ?
+            this.jwksUri || doc.jwks_uri :
+            doc.jwks_uri || this.jwksUri;
+
+          this.sessionCheckIFrameUrl = this.overwriteDiscoveryDocumentUrls ?
+            this.sessionCheckIFrameUrl || doc.check_session_iframe :
             doc.check_session_iframe || this.sessionCheckIFrameUrl;
 
           this.discoveryDocumentLoaded = true;
           this.discoveryDocumentLoadedSubject.next(doc);
-          this.revocationEndpoint =
+          this.revocationEndpoint = this.overwriteDiscoveryDocumentUrls ?
+            this.revocationEndpoint || doc.revocation_endpoint :
             doc.revocation_endpoint || this.revocationEndpoint;
 
           if (this.sessionChecksEnabled) {
