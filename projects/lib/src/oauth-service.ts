@@ -1785,16 +1785,16 @@ export class OAuthService extends AuthConfig implements OnDestroy {
           return Promise.reject(event);
         }
       }
+    }
 
-      this.storeSessionState(sessionState);
+    this.storeSessionState(sessionState);
 
-      if (code) {
-        await this.getTokenFromCode(code, options);
-        this.restoreRequestedRoute();
-        return Promise.resolve();
-      } else {
-        return Promise.resolve();
-      }
+    if (code) {
+      await this.getTokenFromCode(code, options);
+      this.restoreRequestedRoute();
+      return Promise.resolve();
+    } else {
+      return Promise.resolve();
     }
 
     return Promise.reject();
