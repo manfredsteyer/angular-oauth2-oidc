@@ -1745,20 +1745,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         location.origin +
         location.pathname +
         location.search
-          .replace(/\?code=[^&\$]*/, '?')
-          .replace(/&code=[^&\$]*/, '')
-          .replace(/\?scope=[^&\$]*/, '?')
-          .replace(/&scope=[^&\$]*/, '')
-          .replace(/\?state=[^&\$]*/, '?')
-          .replace(/&state=[^&\$]*/, '')
-          .replace(/\?session_state=[^&\$]*/, '?')
-          .replace(/&session_state=[^&\$]*/, '')
-          .replace(/^\?&/, '?')
-          .replace(/&$/, '')
-          .replace(/^\?$/, '')
-          .replace(/&+/g, '&')
-          .replace(/\?&/, '?')
-          .replace(/\?$/, '') +
+          .replace(/[&?]code=[^&\$]*/, '')
+          .replace(/[&?]scope=[^&\$]*/, '')
+          .replace(/[&?]state=[^&\$]*/, '')
+          .replace(/[&?]session_state=[^&\$]*/, '')
+          .replace(/^&/, '?') +
         location.hash;
 
       history.replaceState(null, window.name, href);
