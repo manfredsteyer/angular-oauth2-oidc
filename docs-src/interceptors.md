@@ -1,6 +1,8 @@
 # Interceptors
 
-Since 3.1 the library uses a default HttpInterceptor that takes care about transmitting the access_token to the resource server and about error handling for security related errors (HTTP status codes 401 and 403) received from the resource server. To put in on, just set ``sendAccessToken`` to ``true`` and set ``allowedUrls`` to an array with prefixes for the respective urls. Use lower case for the prefixes:
+Since 3.1 the library uses HttpInterceptors. A default ``HttpInterceptor`` takes care about transmitting the ``access_token`` to the resource server (if configured, see example below). For handling security related errors (HTTP status codes 401 and 403), received from the resource server, applications should implement their own [custom interceptors](#custom-interceptors). 
+
+To enable the default ``HttpInterceptor``, just set ``sendAccessToken`` to ``true`` and set ``allowedUrls`` to an array with prefixes for the respective urls. Use lower case for the prefixes:
 
 ```TypeScript
 OAuthModule.forRoot({

@@ -50,7 +50,8 @@
 
 
 <h1 id="interceptors">Interceptors</h1>
-<p>Since 3.1 the library uses a default HttpInterceptor that takes care about transmitting the access_token to the resource server and about error handling for security related errors (HTTP status codes 401 and 403) received from the resource server. To put in on, just set <code>sendAccessToken</code> to <code>true</code> and set <code>allowedUrls</code> to an array with prefixes for the respective urls. Use lower case for the prefixes:</p>
+<p>Since 3.1 the library uses HttpInterceptors. A default <code>HttpInterceptor</code> takes care about transmitting the <code>access_token</code> to the resource server (if configured, see example below). For handling security related errors (HTTP status codes 401 and 403), received from the resource server, applications should implement their own <a href="#custom-interceptors">custom interceptors</a>. </p>
+<p>To enable the default <code>HttpInterceptor</code>, just set <code>sendAccessToken</code> to <code>true</code> and set <code>allowedUrls</code> to an array with prefixes for the respective urls. Use lower case for the prefixes:</p>
 <div><pre class="line-numbers"><code class="language-TypeScript">OAuthModule.forRoot({
     resourceServer: {
         allowedUrls: [&#39;http://www.angular.at/api&#39;],
