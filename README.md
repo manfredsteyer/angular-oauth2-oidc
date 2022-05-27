@@ -1,3 +1,17 @@
+# Artifactory
+
+Artifactory is used to store the forked version for this library.
+This can be achieved using the workflow action in GitHub.
+
+- create a new branch for the fix
+- create PR for the updated code
+- merge into master
+- execute the GitHub action to publish the library to Artifactory
+
+**Before pushing the code, update the 'version' in package.json!** The version should at least contain the postfix "-entrnce" to mark it as our own version.
+This avoids any conflicts with the original library when it is updated. 
+
+
 # angular-oauth2-oidc
 
 Support for OAuth 2 and OpenId Connect (OIDC) in Angular. Already prepared for the upcoming OAuth 2.1.

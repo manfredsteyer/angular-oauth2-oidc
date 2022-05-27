@@ -1,0 +1,53 @@
+name: Publish package
+
+on:
+  push:
+    branches:
+      - 'master'
+  workflow_dispatch:
+    inputs:
+      namespace:
+        description: 'Click'
+        required: true
+        default: 'test'
+
+jobs:
+  build:
+    timeout-minutes: 60
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 16.x ]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+      - uses: actions/cache@v3
+        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        env:
+          aws-access-key-id: ${{ secrets.NPC_GITHUB_ECR_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.NPC_GITHUB_ECR_AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
+       - run: |
+          # login to aws
+          npm run aws:login
+
+      - run: npm ci
+      - run: cd /dist/lib
+      - run: npm publish
