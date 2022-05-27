@@ -44,8 +44,8 @@ jobs:
           aws-access-key-id: ${{ secrets.NPC_GITHUB_ECR_AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.NPC_GITHUB_ECR_AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-central-1
-      - run: npm run aws:login
-
-      - run: npm ci
-      - run: cd /dist/lib
-      - run: npm publish
+#      - run: npm run aws:login
+#
+#      - run: npm ci
+#      - run: cd /dist/lib
+#      - run: npm publish
