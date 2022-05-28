@@ -1,9 +1,9 @@
 name: Publish package
 
 on:
-#  push:
-#    branches:
-#      - 'master'
+  push:
+    branches:
+      - 'master'
   workflow_dispatch:
     inputs:
       namespace:
