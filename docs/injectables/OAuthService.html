@@ -11305,8 +11305,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     const clockSkewInMSec &#x3D; this.getClockSkewInMsec(); // (this.getClockSkewInMsec() || 600) * 1000;
 
     if (
-      issuedAtMSec - clockSkewInMSec &gt;&#x3D; now ||
-      expiresAtMSec + clockSkewInMSec &lt;&#x3D; now
+      issuedAtMSec &gt;&#x3D; now - clockSkewInMSec ||
+      expiresAtMSec &lt;&#x3D; now + clockSkewInMSec
     ) {
       const err &#x3D; &#x27;Token has expired&#x27;;
       console.error(err);
@@ -11462,7 +11462,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       const now &#x3D; this.dateTimeService.new();
       if (
         expiresAt &amp;&amp;
-        parseInt(expiresAt, 10) &lt; now.getTime() - this.getClockSkewInMsec()
+        parseInt(expiresAt, 10) &lt; now.getTime() + this.getClockSkewInMsec()
       ) {
         return false;
       }
@@ -11482,7 +11482,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       const now &#x3D; this.dateTimeService.new();
       if (
         expiresAt &amp;&amp;
-        parseInt(expiresAt, 10) &lt; now.getTime() - this.getClockSkewInMsec()
+        parseInt(expiresAt, 10) &lt; now.getTime() + this.getClockSkewInMsec()
       ) {
         return false;
       }

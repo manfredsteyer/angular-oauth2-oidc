@@ -2263,8 +2263,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     const clockSkewInMSec = this.getClockSkewInMsec(); // (this.getClockSkewInMsec() || 600) * 1000;
 
     if (
-      issuedAtMSec - clockSkewInMSec >= now ||
-      expiresAtMSec + clockSkewInMSec <= now
+      issuedAtMSec >= now - clockSkewInMSec ||
+      expiresAtMSec <= now + clockSkewInMSec
     ) {
       const err = 'Token has expired';
       console.error(err);
@@ -2420,7 +2420,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       const now = this.dateTimeService.new();
       if (
         expiresAt &&
-        parseInt(expiresAt, 10) < now.getTime() - this.getClockSkewInMsec()
+        parseInt(expiresAt, 10) < now.getTime() + this.getClockSkewInMsec()
       ) {
         return false;
       }
@@ -2440,7 +2440,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       const now = this.dateTimeService.new();
       if (
         expiresAt &&
-        parseInt(expiresAt, 10) < now.getTime() - this.getClockSkewInMsec()
+        parseInt(expiresAt, 10) < now.getTime() + this.getClockSkewInMsec()
       ) {
         return false;
       }
