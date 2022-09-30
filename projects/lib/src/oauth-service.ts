@@ -55,8 +55,8 @@ import { HashHandler } from './token-validation/hash-handler';
 
 /**
  * Service for logging in and logging out with
- * OIDC and OAuth2. Supports implicit flow and
- * password flow.
+ * OIDC and OAuth2. Supports code flow, implicit flow
+ * and password flow.
  */
 @Injectable()
 export class OAuthService extends AuthConfig implements OnDestroy {
