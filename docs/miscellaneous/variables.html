@@ -62,10 +62,19 @@
                             <a href="#AUTH_CONFIG" title="projects/lib/src/tokens.ts" ><b>AUTH_CONFIG</b>&nbsp;&nbsp;&nbsp;(projects/.../tokens.ts)</a>
                         </li>
                         <li>
+                            <a href="#blockSize" title="projects/lib/src/token-validation/fast-sha256js.ts" ><b>blockSize</b>&nbsp;&nbsp;&nbsp;(projects/.../fast-sha256js.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#digestLength" title="projects/lib/src/token-validation/fast-sha256js.ts" ><b>digestLength</b>&nbsp;&nbsp;&nbsp;(projects/.../fast-sha256js.ts)</a>
+                        </li>
+                        <li>
                             <a href="#err" title="projects/lib/src/token-validation/jwks-validation-handler.ts" ><b>err</b>&nbsp;&nbsp;&nbsp;(projects/.../jwks-validation-handler.ts)</a>
                         </li>
                         <li>
-                            <a href="#sha256" title="projects/lib/src/token-validation/hash-handler.ts" ><b>sha256</b>&nbsp;&nbsp;&nbsp;(projects/.../hash-handler.ts)</a>
+                            <a href="#hkdfSalt" title="projects/lib/src/token-validation/fast-sha256js.ts" ><b>hkdfSalt</b>&nbsp;&nbsp;&nbsp;(projects/.../fast-sha256js.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#K" title="projects/lib/src/token-validation/fast-sha256js.ts" ><b>K</b>&nbsp;&nbsp;&nbsp;(projects/.../fast-sha256js.ts)</a>
                         </li>
                     </ul>
                 </td>
@@ -90,6 +99,113 @@
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>new InjectionToken&lt;AuthConfig&gt;(&#x27;AUTH_CONFIG&#x27;)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+</section>
+    <h3>projects/lib/src/token-validation/fast-sha256js.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="blockSize"></a>
+                    <span class="name">
+                        <span ><b>blockSize</b></span>
+                        <a href="#blockSize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>64</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="digestLength"></a>
+                    <span class="name">
+                        <span ><b>digestLength</b></span>
+                        <a href="#digestLength"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>32</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hkdfSalt"></a>
+                    <span class="name">
+                        <span ><b>hkdfSalt</b></span>
+                        <a href="#hkdfSalt"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Uint8Array(digestLength)</code>
+                    </td>
+                </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="K"></a>
+                    <span class="name">
+                        <span ><b>K</b></span>
+                        <a href="#K"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>new Uint32Array([
+  0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1,
+  0x923f82a4, 0xab1c5ed5, 0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3,
+  0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174, 0xe49b69c1, 0xefbe4786,
+  0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+  0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147,
+  0x06ca6351, 0x14292967, 0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13,
+  0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85, 0xa2bfe8a1, 0xa81a664b,
+  0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+  0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a,
+  0x5b9cca4f, 0x682e6ff3, 0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
+  0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2,
+])</code>
                     </td>
                 </tr>
 
@@ -128,29 +244,6 @@ Please note, that this dependency is not needed for the **code flow**,
 which is nowadays the **recommented** one for single page applications.
 This also results in smaller bundle sizes.
 &#x60;</code>
-                    </td>
-                </tr>
-
-
-        </tbody>
-    </table>
-</section>
-    <h3>projects/lib/src/token-validation/hash-handler.ts</h3>
-    <section>
-    <h3></h3>    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="sha256"></a>
-                    <span class="name">
-                        <span ><b>sha256</b></span>
-                        <a href="#sha256"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-                <tr>
-                    <td class="col-md-4">
-                        <i>Default value : </i><code>factory()</code>
                     </td>
                 </tr>
 

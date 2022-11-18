@@ -92,7 +92,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * in with implicit flow.
    */
   public state? = '';
- 
+
   protected eventsSubject: Subject<OAuthEvent> = new Subject<OAuthEvent>();
   protected discoveryDocumentLoadedSubject: Subject<OidcDiscoveryDoc> =
     new Subject<OidcDiscoveryDoc>();
@@ -1022,6 +1022,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
     this.silentRefreshPostMessageEventListener = (e: MessageEvent) => {
       const message = this.processMessageEventMessage(e);
+
+      if (this.checkOrigin && e.origin !== location.origin) {
+        console.error('wrong origin requested silent refresh!');
+      }
 
       this.tryLogin({
         customHashFragment: message,
@@ -2148,7 +2152,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   }
 
   private getClockSkewInMsec(defaultSkewMsc = 600_000) {
-    if (!this.clockSkewInSec) {
+    if (!this.clockSkewInSec && this.clockSkewInSec !== 0) {
       return defaultSkewMsc;
     }
     return this.clockSkewInSec * 1000;

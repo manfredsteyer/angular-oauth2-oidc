@@ -14,3 +14,4 @@ export * from './interceptors/resource-server-error-handler';
 export * from './oauth-module.config';
 export * from './date-time-provider';
 export * from './token-validation/hash-handler';
+export * from './provider';

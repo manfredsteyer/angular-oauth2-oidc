@@ -1,0 +1,1212 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>angular-oauth2-oidc</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">angular-oauth2-oidc</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content class">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Classes</li>
+  <li >Hash</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>projects/lib/src/token-validation/fast-sha256js.ts</code>
+        </p>
+
+
+
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#blockSize" >blockSize</a>
+                            </li>
+                            <li>
+                                <a href="#digestLength" >digestLength</a>
+                            </li>
+                            <li>
+                                <a href="#finished" >finished</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#_restoreState" >_restoreState</a>
+                            </li>
+                            <li>
+                                <a href="#_saveState" >_saveState</a>
+                            </li>
+                            <li>
+                                <a href="#clean" >clean</a>
+                            </li>
+                            <li>
+                                <a href="#digest" >digest</a>
+                            </li>
+                            <li>
+                                <a href="#finish" >finish</a>
+                            </li>
+                            <li>
+                                <a href="#reset" >reset</a>
+                            </li>
+                            <li>
+                                <a href="#update" >update</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor()</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="149" class="link-to-prism">projects/lib/src/token-validation/fast-sha256js.ts:149</a></div>
+                            </td>
+                        </tr>
+
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="blockSize"></a>
+                    <span class="name">
+                        <span ><b>blockSize</b></span>
+                        <a href="#blockSize"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>blockSize</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="140" class="link-to-prism">projects/lib/src/token-validation/fast-sha256js.ts:140</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="digestLength"></a>
+                    <span class="name">
+                        <span ><b>digestLength</b></span>
+                        <a href="#digestLength"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>digestLength</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="139" class="link-to-prism">projects/lib/src/token-validation/fast-sha256js.ts:139</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="finished"></a>
+                    <span class="name">
+                        <span ><b>finished</b></span>
+                        <a href="#finished"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="149" class="link-to-prism">projects/lib/src/token-validation/fast-sha256js.ts:149</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_restoreState"></a>
+                    <span class="name">
+                        <span ><b>_restoreState</b></span>
+                        <a href="#_restoreState"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>_restoreState(from: Uint32Array, bytesHashed: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="271"
+                            class="link-to-prism">projects/lib/src/token-validation/fast-sha256js.ts:271</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>from</td>
+                                    <td>
+                                            <code>Uint32Array</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>bytesHashed</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="_saveState"></a>
+                    <span class="name">
+                        <span ><b>_saveState</b></span>
+                        <a href="#_saveState"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>_saveState(out: Uint32Array)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="264"
+                            class="link-to-prism">projects/lib/src/token-validation/fast-sha256js.ts:264</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>out</td>
+                                    <td>
+                                            <code>Uint32Array</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="clean"></a>
+                    <span class="name">
+                        <span ><b>clean</b></span>
+                        <a href="#clean"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>clean()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="173"
+                            class="link-to-prism">projects/lib/src/token-validation/fast-sha256js.ts:173</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="digest"></a>
+                    <span class="name">
+                        <span ><b>digest</b></span>
+                        <a href="#digest"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>digest()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="257"
+                            class="link-to-prism">projects/lib/src/token-validation/fast-sha256js.ts:257</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Uint8Array</code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="finish"></a>
+                    <span class="name">
+                        <span ><b>finish</b></span>
+                        <a href="#finish"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>finish(out: Uint8Array)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="220"
+                            class="link-to-prism">projects/lib/src/token-validation/fast-sha256js.ts:220</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>out</td>
+                                    <td>
+                                            <code>Uint8Array</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="reset"></a>
+                    <span class="name">
+                        <span ><b>reset</b></span>
+                        <a href="#reset"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>reset()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="157"
+                            class="link-to-prism">projects/lib/src/token-validation/fast-sha256js.ts:157</a></div>
+                </td>
+            </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="update"></a>
+                    <span class="name">
+                        <span ><b>update</b></span>
+                        <a href="#update"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>update(data: Uint8Array, dataLength: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="190"
+                            class="link-to-prism">projects/lib/src/token-validation/fast-sha256js.ts:190</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Default value</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>data</td>
+                                    <td>
+                                            <code>Uint8Array</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>dataLength</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+                                    <td>
+                                        <code>data.length</code>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export const digestLength: number &#x3D; 32;
+export const blockSize: number &#x3D; 64;
+
+// SHA-256 constants
+const K &#x3D; new Uint32Array([
+  0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1,
+  0x923f82a4, 0xab1c5ed5, 0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3,
+  0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174, 0xe49b69c1, 0xefbe4786,
+  0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
+  0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147,
+  0x06ca6351, 0x14292967, 0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13,
+  0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85, 0xa2bfe8a1, 0xa81a664b,
+  0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
+  0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a,
+  0x5b9cca4f, 0x682e6ff3, 0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
+  0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2,
+]);
+
+function hashBlocks(
+  w: Int32Array,
+  v: Int32Array,
+  p: Uint8Array,
+  pos: number,
+  len: number
+): number {
+  let a: number,
+    b: number,
+    c: number,
+    d: number,
+    e: number,
+    f: number,
+    g: number,
+    h: number,
+    u: number,
+    i: number,
+    j: number,
+    t1: number,
+    t2: number;
+  while (len &gt;&#x3D; 64) {
+    a &#x3D; v[0];
+    b &#x3D; v[1];
+    c &#x3D; v[2];
+    d &#x3D; v[3];
+    e &#x3D; v[4];
+    f &#x3D; v[5];
+    g &#x3D; v[6];
+    h &#x3D; v[7];
+
+    for (i &#x3D; 0; i &lt; 16; i++) {
+      j &#x3D; pos + i * 4;
+      w[i] &#x3D;
+        ((p[j] &amp; 0xff) &lt;&lt; 24) |
+        ((p[j + 1] &amp; 0xff) &lt;&lt; 16) |
+        ((p[j + 2] &amp; 0xff) &lt;&lt; 8) |
+        (p[j + 3] &amp; 0xff);
+    }
+
+    for (i &#x3D; 16; i &lt; 64; i++) {
+      u &#x3D; w[i - 2];
+      t1 &#x3D;
+        ((u &gt;&gt;&gt; 17) | (u &lt;&lt; (32 - 17))) ^
+        ((u &gt;&gt;&gt; 19) | (u &lt;&lt; (32 - 19))) ^
+        (u &gt;&gt;&gt; 10);
+
+      u &#x3D; w[i - 15];
+      t2 &#x3D;
+        ((u &gt;&gt;&gt; 7) | (u &lt;&lt; (32 - 7))) ^
+        ((u &gt;&gt;&gt; 18) | (u &lt;&lt; (32 - 18))) ^
+        (u &gt;&gt;&gt; 3);
+
+      w[i] &#x3D; ((t1 + w[i - 7]) | 0) + ((t2 + w[i - 16]) | 0);
+    }
+
+    for (i &#x3D; 0; i &lt; 64; i++) {
+      t1 &#x3D;
+        ((((((e &gt;&gt;&gt; 6) | (e &lt;&lt; (32 - 6))) ^
+          ((e &gt;&gt;&gt; 11) | (e &lt;&lt; (32 - 11))) ^
+          ((e &gt;&gt;&gt; 25) | (e &lt;&lt; (32 - 25)))) +
+          ((e &amp; f) ^ (~e &amp; g))) |
+          0) +
+          ((h + ((K[i] + w[i]) | 0)) | 0)) |
+        0;
+
+      t2 &#x3D;
+        ((((a &gt;&gt;&gt; 2) | (a &lt;&lt; (32 - 2))) ^
+          ((a &gt;&gt;&gt; 13) | (a &lt;&lt; (32 - 13))) ^
+          ((a &gt;&gt;&gt; 22) | (a &lt;&lt; (32 - 22)))) +
+          ((a &amp; b) ^ (a &amp; c) ^ (b &amp; c))) |
+        0;
+
+      h &#x3D; g;
+      g &#x3D; f;
+      f &#x3D; e;
+      e &#x3D; (d + t1) | 0;
+      d &#x3D; c;
+      c &#x3D; b;
+      b &#x3D; a;
+      a &#x3D; (t1 + t2) | 0;
+    }
+
+    v[0] +&#x3D; a;
+    v[1] +&#x3D; b;
+    v[2] +&#x3D; c;
+    v[3] +&#x3D; d;
+    v[4] +&#x3D; e;
+    v[5] +&#x3D; f;
+    v[6] +&#x3D; g;
+    v[7] +&#x3D; h;
+
+    pos +&#x3D; 64;
+    len -&#x3D; 64;
+  }
+  return pos;
+}
+
+// Hash implements SHA256 hash algorithm.
+export class Hash {
+  digestLength: number &#x3D; digestLength;
+  blockSize: number &#x3D; blockSize;
+
+  // Note: Int32Array is used instead of Uint32Array for performance reasons.
+  private state: Int32Array &#x3D; new Int32Array(8); // hash state
+  private temp: Int32Array &#x3D; new Int32Array(64); // temporary state
+  private buffer: Uint8Array &#x3D; new Uint8Array(128); // buffer for data to hash
+  private bufferLength: number &#x3D; 0; // number of bytes in buffer
+  private bytesHashed: number &#x3D; 0; // number of total bytes hashed
+
+  finished: boolean &#x3D; false; // indicates whether the hash was finalized
+
+  constructor() {
+    this.reset();
+  }
+
+  // Resets hash state making it possible
+  // to re-use this instance to hash other data.
+  reset(): this {
+    this.state[0] &#x3D; 0x6a09e667;
+    this.state[1] &#x3D; 0xbb67ae85;
+    this.state[2] &#x3D; 0x3c6ef372;
+    this.state[3] &#x3D; 0xa54ff53a;
+    this.state[4] &#x3D; 0x510e527f;
+    this.state[5] &#x3D; 0x9b05688c;
+    this.state[6] &#x3D; 0x1f83d9ab;
+    this.state[7] &#x3D; 0x5be0cd19;
+    this.bufferLength &#x3D; 0;
+    this.bytesHashed &#x3D; 0;
+    this.finished &#x3D; false;
+    return this;
+  }
+
+  // Cleans internal buffers and re-initializes hash state.
+  clean() {
+    for (let i &#x3D; 0; i &lt; this.buffer.length; i++) {
+      this.buffer[i] &#x3D; 0;
+    }
+    for (let i &#x3D; 0; i &lt; this.temp.length; i++) {
+      this.temp[i] &#x3D; 0;
+    }
+    this.reset();
+  }
+
+  // Updates hash state with the given data.
+  //
+  // Optionally, length of the data can be specified to hash
+  // fewer bytes than data.length.
+  //
+  // Throws error when trying to update already finalized hash:
+  // instance must be reset to use it again.
+  update(data: Uint8Array, dataLength: number &#x3D; data.length): this {
+    if (this.finished) {
+      throw new Error(&quot;SHA256: can&#x27;t update because hash was finished.&quot;);
+    }
+    let dataPos &#x3D; 0;
+    this.bytesHashed +&#x3D; dataLength;
+    if (this.bufferLength &gt; 0) {
+      while (this.bufferLength &lt; 64 &amp;&amp; dataLength &gt; 0) {
+        this.buffer[this.bufferLength++] &#x3D; data[dataPos++];
+        dataLength--;
+      }
+      if (this.bufferLength &#x3D;&#x3D;&#x3D; 64) {
+        hashBlocks(this.temp, this.state, this.buffer, 0, 64);
+        this.bufferLength &#x3D; 0;
+      }
+    }
+    if (dataLength &gt;&#x3D; 64) {
+      dataPos &#x3D; hashBlocks(this.temp, this.state, data, dataPos, dataLength);
+      dataLength %&#x3D; 64;
+    }
+    while (dataLength &gt; 0) {
+      this.buffer[this.bufferLength++] &#x3D; data[dataPos++];
+      dataLength--;
+    }
+    return this;
+  }
+
+  // Finalizes hash state and puts hash into out.
+  //
+  // If hash was already finalized, puts the same value.
+  finish(out: Uint8Array): this {
+    if (!this.finished) {
+      const bytesHashed &#x3D; this.bytesHashed;
+      const left &#x3D; this.bufferLength;
+      const bitLenHi &#x3D; (bytesHashed / 0x20000000) | 0;
+      const bitLenLo &#x3D; bytesHashed &lt;&lt; 3;
+      const padLength &#x3D; bytesHashed % 64 &lt; 56 ? 64 : 128;
+
+      this.buffer[left] &#x3D; 0x80;
+      for (let i &#x3D; left + 1; i &lt; padLength - 8; i++) {
+        this.buffer[i] &#x3D; 0;
+      }
+      this.buffer[padLength - 8] &#x3D; (bitLenHi &gt;&gt;&gt; 24) &amp; 0xff;
+      this.buffer[padLength - 7] &#x3D; (bitLenHi &gt;&gt;&gt; 16) &amp; 0xff;
+      this.buffer[padLength - 6] &#x3D; (bitLenHi &gt;&gt;&gt; 8) &amp; 0xff;
+      this.buffer[padLength - 5] &#x3D; (bitLenHi &gt;&gt;&gt; 0) &amp; 0xff;
+      this.buffer[padLength - 4] &#x3D; (bitLenLo &gt;&gt;&gt; 24) &amp; 0xff;
+      this.buffer[padLength - 3] &#x3D; (bitLenLo &gt;&gt;&gt; 16) &amp; 0xff;
+      this.buffer[padLength - 2] &#x3D; (bitLenLo &gt;&gt;&gt; 8) &amp; 0xff;
+      this.buffer[padLength - 1] &#x3D; (bitLenLo &gt;&gt;&gt; 0) &amp; 0xff;
+
+      hashBlocks(this.temp, this.state, this.buffer, 0, padLength);
+
+      this.finished &#x3D; true;
+    }
+
+    for (let i &#x3D; 0; i &lt; 8; i++) {
+      out[i * 4 + 0] &#x3D; (this.state[i] &gt;&gt;&gt; 24) &amp; 0xff;
+      out[i * 4 + 1] &#x3D; (this.state[i] &gt;&gt;&gt; 16) &amp; 0xff;
+      out[i * 4 + 2] &#x3D; (this.state[i] &gt;&gt;&gt; 8) &amp; 0xff;
+      out[i * 4 + 3] &#x3D; (this.state[i] &gt;&gt;&gt; 0) &amp; 0xff;
+    }
+
+    return this;
+  }
+
+  // Returns the final hash digest.
+  digest(): Uint8Array {
+    const out &#x3D; new Uint8Array(this.digestLength);
+    this.finish(out);
+    return out;
+  }
+
+  // Internal function for use in HMAC for optimization.
+  _saveState(out: Uint32Array) {
+    for (let i &#x3D; 0; i &lt; this.state.length; i++) {
+      out[i] &#x3D; this.state[i];
+    }
+  }
+
+  // Internal function for use in HMAC for optimization.
+  _restoreState(from: Uint32Array, bytesHashed: number) {
+    for (let i &#x3D; 0; i &lt; this.state.length; i++) {
+      this.state[i] &#x3D; from[i];
+    }
+    this.bytesHashed &#x3D; bytesHashed;
+    this.finished &#x3D; false;
+    this.bufferLength &#x3D; 0;
+  }
+}
+
+// HMAC implements HMAC-SHA256 message authentication algorithm.
+export class HMAC {
+  private inner: Hash &#x3D; new Hash();
+  private outer: Hash &#x3D; new Hash();
+
+  blockSize: number &#x3D; this.inner.blockSize;
+  digestLength: number &#x3D; this.inner.digestLength;
+
+  // Copies of hash states after keying.
+  // Need for quick reset without hashing they key again.
+  private istate: Uint32Array;
+  private ostate: Uint32Array;
+
+  constructor(key: Uint8Array) {
+    const pad &#x3D; new Uint8Array(this.blockSize);
+    if (key.length &gt; this.blockSize) {
+      new Hash().update(key).finish(pad).clean();
+    } else {
+      for (let i &#x3D; 0; i &lt; key.length; i++) {
+        pad[i] &#x3D; key[i];
+      }
+    }
+    for (let i &#x3D; 0; i &lt; pad.length; i++) {
+      pad[i] ^&#x3D; 0x36;
+    }
+    this.inner.update(pad);
+
+    for (let i &#x3D; 0; i &lt; pad.length; i++) {
+      pad[i] ^&#x3D; 0x36 ^ 0x5c;
+    }
+    this.outer.update(pad);
+
+    this.istate &#x3D; new Uint32Array(8);
+    this.ostate &#x3D; new Uint32Array(8);
+
+    this.inner._saveState(this.istate);
+    this.outer._saveState(this.ostate);
+
+    for (let i &#x3D; 0; i &lt; pad.length; i++) {
+      pad[i] &#x3D; 0;
+    }
+  }
+
+  // Returns HMAC state to the state initialized with key
+  // to make it possible to run HMAC over the other data with the same
+  // key without creating a new instance.
+  reset(): this {
+    this.inner._restoreState(this.istate, this.inner.blockSize);
+    this.outer._restoreState(this.ostate, this.outer.blockSize);
+    return this;
+  }
+
+  // Cleans HMAC state.
+  clean() {
+    for (let i &#x3D; 0; i &lt; this.istate.length; i++) {
+      this.ostate[i] &#x3D; this.istate[i] &#x3D; 0;
+    }
+    this.inner.clean();
+    this.outer.clean();
+  }
+
+  // Updates state with provided data.
+  update(data: Uint8Array): this {
+    this.inner.update(data);
+    return this;
+  }
+
+  // Finalizes HMAC and puts the result in out.
+  finish(out: Uint8Array): this {
+    if (this.outer.finished) {
+      this.outer.finish(out);
+    } else {
+      this.inner.finish(out);
+      this.outer.update(out, this.digestLength).finish(out);
+    }
+    return this;
+  }
+
+  // Returns message authentication code.
+  digest(): Uint8Array {
+    const out &#x3D; new Uint8Array(this.digestLength);
+    this.finish(out);
+    return out;
+  }
+}
+
+// Returns SHA256 hash of data.
+export function hash(data: Uint8Array): Uint8Array {
+  const h &#x3D; new Hash().update(data);
+  const digest &#x3D; h.digest();
+  h.clean();
+  return digest;
+}
+
+// Function hash is both available as module.hash and as default export.
+export default hash;
+
+// Returns HMAC-SHA256 of data under the key.
+export function hmac(key: Uint8Array, data: Uint8Array) {
+  const h &#x3D; new HMAC(key).update(data);
+  const digest &#x3D; h.digest();
+  h.clean();
+  return digest;
+}
+
+// Fills hkdf buffer like this:
+// T(1) &#x3D; HMAC-Hash(PRK, T(0) | info | 0x01)
+function fillBuffer(
+  buffer: Uint8Array,
+  hmac: HMAC,
+  info: Uint8Array | undefined,
+  counter: Uint8Array
+) {
+  // Counter is a byte value: check if it overflowed.
+  const num &#x3D; counter[0];
+
+  if (num &#x3D;&#x3D;&#x3D; 0) {
+    throw new Error(&#x27;hkdf: cannot expand more&#x27;);
+  }
+
+  // Prepare HMAC instance for new data with old key.
+  hmac.reset();
+
+  // Hash in previous output if it was generated
+  // (i.e. counter is greater than 1).
+  if (num &gt; 1) {
+    hmac.update(buffer);
+  }
+
+  // Hash in info if it exists.
+  if (info) {
+    hmac.update(info);
+  }
+
+  // Hash in the counter.
+  hmac.update(counter);
+
+  // Output result to buffer and clean HMAC instance.
+  hmac.finish(buffer);
+
+  // Increment counter inside typed array, this works properly.
+  counter[0]++;
+}
+
+const hkdfSalt &#x3D; new Uint8Array(digestLength); // Filled with zeroes.
+export function hkdf(
+  key: Uint8Array,
+  salt: Uint8Array &#x3D; hkdfSalt,
+  info?: Uint8Array,
+  length: number &#x3D; 32
+) {
+  const counter &#x3D; new Uint8Array([1]);
+
+  // HKDF-Extract uses salt as HMAC key, and key as data.
+  const okm &#x3D; hmac(salt, key);
+
+  // Initialize HMAC for expanding with extracted key.
+  // Ensure no collisions with &#x60;hmac&#x60; function.
+  const hmac_ &#x3D; new HMAC(okm);
+
+  // Allocate buffer.
+  const buffer &#x3D; new Uint8Array(hmac_.digestLength);
+  let bufpos &#x3D; buffer.length;
+
+  const out &#x3D; new Uint8Array(length);
+  for (let i &#x3D; 0; i &lt; length; i++) {
+    if (bufpos &#x3D;&#x3D;&#x3D; buffer.length) {
+      fillBuffer(buffer, hmac_, info, counter);
+      bufpos &#x3D; 0;
+    }
+    out[i] &#x3D; buffer[bufpos++];
+  }
+
+  hmac_.clean();
+  buffer.fill(0);
+  counter.fill(0);
+  return out;
+}
+
+// Derives a key from password and salt using PBKDF2-HMAC-SHA256
+// with the given number of iterations.
+//
+// The number of bytes returned is equal to dkLen.
+//
+// (For better security, avoid dkLen greater than hash length - 32 bytes).
+export function pbkdf2(
+  password: Uint8Array,
+  salt: Uint8Array,
+  iterations: number,
+  dkLen: number
+) {
+  const prf &#x3D; new HMAC(password);
+  const len &#x3D; prf.digestLength;
+  const ctr &#x3D; new Uint8Array(4);
+  const t &#x3D; new Uint8Array(len);
+  const u &#x3D; new Uint8Array(len);
+  const dk &#x3D; new Uint8Array(dkLen);
+
+  for (let i &#x3D; 0; i * len &lt; dkLen; i++) {
+    let c &#x3D; i + 1;
+    ctr[0] &#x3D; (c &gt;&gt;&gt; 24) &amp; 0xff;
+    ctr[1] &#x3D; (c &gt;&gt;&gt; 16) &amp; 0xff;
+    ctr[2] &#x3D; (c &gt;&gt;&gt; 8) &amp; 0xff;
+    ctr[3] &#x3D; (c &gt;&gt;&gt; 0) &amp; 0xff;
+    prf.reset();
+    prf.update(salt);
+    prf.update(ctr);
+    prf.finish(u);
+    for (let j &#x3D; 0; j &lt; len; j++) {
+      t[j] &#x3D; u[j];
+    }
+    for (let j &#x3D; 2; j &lt;&#x3D; iterations; j++) {
+      prf.reset();
+      prf.update(u).finish(u);
+      for (let k &#x3D; 0; k &lt; len; k++) {
+        t[k] ^&#x3D; u[k];
+      }
+    }
+    for (let j &#x3D; 0; j &lt; len &amp;&amp; i * len + j &lt; dkLen; j++) {
+      dk[i * len + j] &#x3D; t[j];
+    }
+  }
+  for (let i &#x3D; 0; i &lt; len; i++) {
+    t[i] &#x3D; u[i] &#x3D; 0;
+  }
+  for (let i &#x3D; 0; i &lt; 4; i++) {
+    ctr[i] &#x3D; 0;
+  }
+  prf.clean();
+  return dk;
+}
+</code></pre>
+    </div>
+</div>
+
+
+
+                   
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'class';
+            var COMPODOC_CURRENT_PAGE_URL = 'Hash.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       
+       <script type="module" src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

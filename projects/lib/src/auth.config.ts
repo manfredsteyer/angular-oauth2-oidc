@@ -269,6 +269,10 @@ export class AuthConfig {
    */
   public disableIdTokenTimer? = false;
 
+  /**
+   * Blocks other origins requesting a silent refresh
+   */
+  public checkOrigin? = false;
 
   constructor(json?: Partial<AuthConfig>) {
     if (json) {

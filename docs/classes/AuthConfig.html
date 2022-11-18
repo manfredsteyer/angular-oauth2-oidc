@@ -84,6 +84,11 @@
                             <li>
                                     <span class="modifier">Public</span>
                                     <span class="modifier">Optional</span>
+                                <a href="#checkOrigin" >checkOrigin</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Optional</span>
                                 <a href="#clearHashAfterLogin" >clearHashAfterLogin</a>
                             </li>
                             <li>
@@ -110,6 +115,11 @@
                                     <span class="modifier">Public</span>
                                     <span class="modifier">Optional</span>
                                 <a href="#disableAtHashCheck" >disableAtHashCheck</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                    <span class="modifier">Optional</span>
+                                <a href="#disableIdTokenTimer" >disableIdTokenTimer</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
@@ -345,7 +355,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="264" class="link-to-prism">projects/lib/src/auth.config.ts:264</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="275" class="link-to-prism">projects/lib/src/auth.config.ts:275</a></div>
                             </td>
                         </tr>
 
@@ -388,6 +398,39 @@
     <h3 id="inputs">
         Properties
     </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="checkOrigin"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Optional</span>
+                        <span ><b>checkOrigin</b></span>
+                        <a href="#checkOrigin"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="275" class="link-to-prism">projects/lib/src/auth.config.ts:275</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Blocks other origins requesting a silent refresh</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
     <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -614,6 +657,40 @@ a security check which means we are more vulnerable.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
+                    <a name="disableIdTokenTimer"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                            <span class="modifier">Optional</span>
+                        <span ><b>disableIdTokenTimer</b></span>
+                        <a href="#disableIdTokenTimer"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>false</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="270" class="link-to-prism">projects/lib/src/auth.config.ts:270</a></div>
+                        </td>
+                    </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Allows to disable the timer for the id_token used
+for token refresh</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
                     <a name="disablePKCE"></a>
                     <span class="name">
                             <span class="modifier">Public</span>
@@ -666,7 +743,7 @@ You can disbale it here by setting this flag to true.
                 </tr>
                 <tr>
                     <td class="col-md-4">
-                        <i>Default value : </i><code>null</code>
+                        <i>Default value : </i><code>&#x27;&#x27;</code>
                     </td>
                 </tr>
                     <tr>
@@ -986,7 +1063,7 @@ implicit flow.</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="277" class="link-to-prism">projects/lib/src/auth.config.ts:277</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="288" class="link-to-prism">projects/lib/src/auth.config.ts:288</a></div>
                         </td>
                     </tr>
 
@@ -2288,7 +2365,7 @@ this case.</p>
    * it does not bring additional security and is therefore
    * as good as using no password.
    */
-  public dummyClientSecret?: string &#x3D; null;
+  public dummyClientSecret?: string &#x3D; &#x27;&#x27;;
 
   /**
    * Defines whether https is required.
@@ -2422,6 +2499,17 @@ this case.</p>
    * This setting enables deep linking for the code flow.
    */
   public preserveRequestedRoute? &#x3D; false;
+
+  /**
+   * Allows to disable the timer for the id_token used
+   * for token refresh
+   */
+  public disableIdTokenTimer? &#x3D; false;
+
+  /**
+   * Blocks other origins requesting a silent refresh
+   */
+  public checkOrigin? &#x3D; false;
 
   constructor(json?: Partial&lt;AuthConfig&gt;) {
     if (json) {

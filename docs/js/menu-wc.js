@@ -183,7 +183,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="classes/DateTimeProvider.html" data-type="entity-link" >DateTimeProvider</a>
                             </li>
                             <li class="link">
+                                <a href="classes/Hash.html" data-type="entity-link" >Hash</a>
+                            </li>
+                            <li class="link">
                                 <a href="classes/HashHandler.html" data-type="entity-link" >HashHandler</a>
+                            </li>
+                            <li class="link">
+                                <a href="classes/HMAC.html" data-type="entity-link" >HMAC</a>
                             </li>
                             <li class="link">
                                 <a href="classes/JwksValidationHandler.html" data-type="entity-link" >JwksValidationHandler</a>

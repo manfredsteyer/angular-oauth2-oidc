@@ -1,0 +1,18 @@
+<div *ngIf="idToken">
+  <div style="text-align:center">
+    <h1>Welcome to {{ title }}!</h1>
+  </div>
+
+  <h2>User</h2>
+  <p>{{ userName }}</p>
+
+  <h2>Id-Token</h2>
+  <p>{{ idToken }}</p>
+
+  <h2>Access Token</h2>
+  <p>{{ accessToken }}</p>
+
+  <p>
+    <button (click)="refresh()">Refresh</button>
+  </p>
+</div>

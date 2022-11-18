@@ -32,6 +32,8 @@
     "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
-    "enableIvy": false
+    "enableIvy": true,
+    "compilationMode": "full"
+
   }
 }

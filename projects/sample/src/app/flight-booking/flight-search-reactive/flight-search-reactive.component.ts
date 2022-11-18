@@ -23,7 +23,10 @@ export class FlightSearchReactiveComponent {
 
   public formDesc = [];
 
-  constructor(private flightService: FlightService, private fb: UntypedFormBuilder) {
+  constructor(
+    private flightService: FlightService,
+    private fb: UntypedFormBuilder
+  ) {
     this.formDesc.push({
       label: 'Von',
       name: 'from',

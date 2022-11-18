@@ -94,8 +94,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="30"
-                            class="link-to-prism">projects/lib/src/angular-oauth-oidc.module.ts:30</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="14"
+                            class="link-to-prism">projects/lib/src/angular-oauth-oidc.module.ts:14</a></div>
                 </td>
             </tr>
 
@@ -165,28 +165,12 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { DateTimeProvider, SystemDateTimeProvider } from &#x27;./date-time-provider&#x27;;
-import { OAuthStorage, OAuthLogger } from &#x27;./types&#x27;;
-import { NgModule, ModuleWithProviders } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { NgModule, ModuleWithProviders } from &#x27;@angular/core&#x27;;
 import { CommonModule } from &#x27;@angular/common&#x27;;
-import { HTTP_INTERCEPTORS } from &#x27;@angular/common/http&#x27;;
-
-import { OAuthService } from &#x27;./oauth-service&#x27;;
-import { UrlHelperService } from &#x27;./url-helper.service&#x27;;
 
 import { OAuthModuleConfig } from &#x27;./oauth-module.config&#x27;;
-import {
-  OAuthResourceServerErrorHandler,
-  OAuthNoopResourceServerErrorHandler,
-} from &#x27;./interceptors/resource-server-error-handler&#x27;;
-import { DefaultOAuthInterceptor } from &#x27;./interceptors/default-oauth.interceptor&#x27;;
-import { ValidationHandler } from &#x27;./token-validation/validation-handler&#x27;;
 import { NullValidationHandler } from &#x27;./token-validation/null-validation-handler&#x27;;
-import { createDefaultLogger, createDefaultStorage } from &#x27;./factories&#x27;;
-import {
-  HashHandler,
-  DefaultHashHandler,
-} from &#x27;./token-validation/hash-handler&#x27;;
+import { provideOAuthClient } from &#x27;./provider&#x27;;
 
 @NgModule({
   imports: [CommonModule],
@@ -200,25 +184,7 @@ export class OAuthModule {
   ): ModuleWithProviders&lt;OAuthModule&gt; {
     return {
       ngModule: OAuthModule,
-      providers: [
-        OAuthService,
-        UrlHelperService,
-        { provide: OAuthLogger, useFactory: createDefaultLogger },
-        { provide: OAuthStorage, useFactory: createDefaultStorage },
-        { provide: ValidationHandler, useClass: validationHandlerClass },
-        { provide: HashHandler, useClass: DefaultHashHandler },
-        {
-          provide: OAuthResourceServerErrorHandler,
-          useClass: OAuthNoopResourceServerErrorHandler,
-        },
-        { provide: OAuthModuleConfig, useValue: config },
-        {
-          provide: HTTP_INTERCEPTORS,
-          useClass: DefaultOAuthInterceptor,
-          multi: true,
-        },
-        { provide: DateTimeProvider, useClass: SystemDateTimeProvider },
-      ],
+      providers: [provideOAuthClient(config, validationHandlerClass)],
     };
   }
 }
