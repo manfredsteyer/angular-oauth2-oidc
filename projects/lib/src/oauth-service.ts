@@ -495,7 +495,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     const now = this.dateTimeService.now();
     const delta =
       (expiration - storedAt) * this.timeoutFactor - (now - storedAt);
-    return Math.max(0, delta);
+    const duration = Math.max(0, delta);
+    const maxTimeoutValue = 2_147_483_647;
+    return duration > maxTimeoutValue ? maxTimeoutValue : duration;
   }
 
   /**
