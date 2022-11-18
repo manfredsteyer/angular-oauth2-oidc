@@ -1,4 +1,4 @@
-import { makeEnvironmentProviders, EnvironmentProviders } from '@angular/core';
+import { Provider } from '@angular/core';
 import { OAuthModuleConfig } from './oauth-module.config';
 import { NullValidationHandler } from './token-validation/null-validation-handler';
 import { DateTimeProvider, SystemDateTimeProvider } from './date-time-provider';
@@ -23,8 +23,8 @@ import {
 export function provideOAuthClient(
   config: OAuthModuleConfig = null,
   validationHandlerClass = NullValidationHandler
-): EnvironmentProviders {
-  return makeEnvironmentProviders([
+): Provider[] {
+  return [
     OAuthService,
     UrlHelperService,
     { provide: OAuthLogger, useFactory: createDefaultLogger },
@@ -42,5 +42,5 @@ export function provideOAuthClient(
       multi: true,
     },
     { provide: DateTimeProvider, useClass: SystemDateTimeProvider },
-  ]);
+  ];
 }
