@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
 import { factory } from './js-sha256';
-const sha256 = factory();
+// const sha256 = factory();
 
-import fsha256 from 'fast-sha256';
+import fsha256 from './fast-sha256js';
 
 /**
  * Abstraction for crypto algorithms

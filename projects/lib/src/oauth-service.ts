@@ -92,7 +92,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * in with implicit flow.
    */
   public state? = '';
-
+ 
   protected eventsSubject: Subject<OAuthEvent> = new Subject<OAuthEvent>();
   protected discoveryDocumentLoadedSubject: Subject<OidcDiscoveryDoc> =
     new Subject<OidcDiscoveryDoc>();
@@ -422,7 +422,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       this.setupAccessTokenTimer();
     }
 
-    if (this.hasValidIdToken()) {
+    if (!this.disableIdTokenTimer && this.hasValidIdToken()) {
       this.setupIdTokenTimer();
     }
   }
@@ -613,9 +613,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         this.http.get(this.jwksUri).subscribe(
           (jwks) => {
             this.jwks = jwks;
-            this.eventsSubject.next(
-              new OAuthSuccessEvent('discovery_document_loaded')
-            );
+            // this.eventsSubject.next(
+            //   new OAuthSuccessEvent('discovery_document_loaded')
+            // );
             resolve(jwks);
           },
           (err) => {
@@ -964,7 +964,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         .post<TokenResponse>(this.tokenEndpoint, params, { headers })
         .pipe(
           switchMap((tokenResponse) => {
-            if (tokenResponse.id_token) {
+            if (this.oidc && tokenResponse.id_token) {
               return from(
                 this.processIdToken(
                   tokenResponse.id_token,
@@ -1785,19 +1785,17 @@ export class OAuthService extends AuthConfig implements OnDestroy {
           return Promise.reject(event);
         }
       }
-
-      this.storeSessionState(sessionState);
-
-      if (code) {
-        await this.getTokenFromCode(code, options);
-        this.restoreRequestedRoute();
-        return Promise.resolve();
-      } else {
-        return Promise.resolve();
-      }
     }
 
-    return Promise.reject();
+    this.storeSessionState(sessionState);
+
+    if (code) {
+      await this.getTokenFromCode(code, options);
+      this.restoreRequestedRoute();
+      return Promise.resolve();
+    } else {
+      return Promise.resolve();
+    }
   }
 
   private saveRequestedRoute() {
@@ -2525,9 +2523,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       return;
     }
 
-    if (!id_token && !this.postLogoutRedirectUri) {
-      return;
-    }
+    // if (!id_token && !this.postLogoutRedirectUri) {
+    //   return;
+    // }
 
     let logoutUrl: string;
 
@@ -2780,7 +2778,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     let refreshToken = this.getRefreshToken();
 
     if (!accessToken) {
-      return;
+      return Promise.resolve();
     }
 
     let params = new HttpParams({ encoder: new WebHttpUrlEncodingCodec() });

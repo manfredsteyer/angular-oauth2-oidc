@@ -128,7 +128,7 @@ export class AuthConfig {
    * it does not bring additional security and is therefore
    * as good as using no password.
    */
-  public dummyClientSecret?: string = null;
+  public dummyClientSecret?: string = '';
 
   /**
    * Defines whether https is required.
@@ -262,6 +262,13 @@ export class AuthConfig {
    * This setting enables deep linking for the code flow.
    */
   public preserveRequestedRoute? = false;
+
+  /**
+   * Allows to disable the timer for the id_token used
+   * for token refresh
+   */
+  public disableIdTokenTimer? = false;
+
 
   constructor(json?: Partial<AuthConfig>) {
     if (json) {
