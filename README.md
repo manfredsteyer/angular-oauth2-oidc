@@ -117,7 +117,7 @@ npm i angular-oauth2-oidc --save
 If you use Standalone Components introduced with Angular 14, you can use our standalone API (call to ``provideOAuthClient``) in your ``main.ts`` to setup the ``OAuthClient``:
 
 ```TypeScript
-// main.ts
+// main.ts -- Angular 15+ version
 import { bootstrapApplication } from '@angular/platform-browser';
 
 import { provideHttpClient } from '@angular/common/http';
@@ -128,6 +128,26 @@ import { provideOAuthClient } from 'angular-oauth2-oidc';
 bootstrapApplication(AppComponent, {
   providers: [
     provideHttpClient(),
+    provideOAuthClient()
+  ]
+});
+```
+
+As Angular 14 does have Standalone Components but no Standalone API for its ``HttpClient``, you need to go with the traditional ``HttpClientModule`` in this version:
+
+```TypeScript
+// main.ts -- Angular 14 version
+import { bootstrapApplication } from '@angular/platform-browser';
+
+import { HttpClientModule } from '@angular/common/http';
+
+import { AppComponent } from './app/app.component';
+import { provideOAuthClient } from 'angular-oauth2-oidc';
+import { importProvidersFrom } from '@angular/core';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    importProvidersFrom(HttpClientModule),
     provideOAuthClient()
   ]
 });
