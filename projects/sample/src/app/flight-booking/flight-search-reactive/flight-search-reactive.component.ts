@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { Flight } from '../../entities/flight';
 import { FlightService } from '../services/flight.service';
 import {
-  FormGroup,
-  FormBuilder,
+  UntypedFormGroup,
+  UntypedFormBuilder,
   Validators,
   AbstractControl,
 } from '@angular/forms';
@@ -19,11 +19,11 @@ export class FlightSearchReactiveComponent {
   public flights: Array<Flight> = [];
   public selectedFlight: Flight;
 
-  public filter: FormGroup;
+  public filter: UntypedFormGroup;
 
   public formDesc = [];
 
-  constructor(private flightService: FlightService, private fb: FormBuilder) {
+  constructor(private flightService: FlightService, private fb: UntypedFormBuilder) {
     this.formDesc.push({
       label: 'Von',
       name: 'from',

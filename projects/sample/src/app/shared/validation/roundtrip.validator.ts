@@ -1,6 +1,6 @@
 import { Directive } from '@angular/core';
 import {
-  FormGroup,
+  UntypedFormGroup,
   Validator,
   AbstractControl,
   NG_VALIDATORS,
@@ -13,7 +13,7 @@ import {
 })
 export class RoundTrip implements Validator {
   validate(control: AbstractControl): any {
-    let formGroup = <FormGroup>control;
+    let formGroup = <UntypedFormGroup>control;
     let fromCtrl = formGroup.controls['from'];
     let toCtrl = formGroup.controls['to'];
 

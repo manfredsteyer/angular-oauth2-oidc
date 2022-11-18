@@ -3,7 +3,7 @@ import {
   NG_VALIDATORS,
   Validator,
   AbstractControl,
-  FormGroup,
+  UntypedFormGroup,
 } from '@angular/forms';
 
 @Directive({
@@ -22,7 +22,7 @@ export class CityValidatorDirective implements Validator {
   constructor(@Attribute('city') private city: string) {}
 
   validate(c: AbstractControl): any {
-    let formGroup = <FormGroup>c.root;
+    let formGroup = <UntypedFormGroup>c.root;
     let otherValueCtrl = formGroup.controls['to'];
 
     if (!otherValueCtrl) return {};
