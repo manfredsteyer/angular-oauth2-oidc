@@ -30,5 +30,7 @@ export const authConfig: AuthConfig = {
 
   sessionChecksEnabled: true,
 
-  // timeoutFactor: 0.01,
+  checkOrigin: true,
+
+  timeoutFactor: 0.01,
 };

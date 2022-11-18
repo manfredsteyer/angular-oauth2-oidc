@@ -57,7 +57,7 @@ export class AppComponent {
     });
 
     // Optional
-    this.oauthService.setupAutomaticSilentRefresh();
+    // this.oauthService.setupAutomaticSilentRefresh();
 
     // Display all events
     this.oauthService.events.subscribe((e) => {

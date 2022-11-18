@@ -9,9 +9,7 @@ import { NgIf } from '@angular/common';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  imports: [
-    NgIf
-  ]
+  imports: [NgIf],
 })
 export class AppComponent {
   title = 'Quickstart Demo';

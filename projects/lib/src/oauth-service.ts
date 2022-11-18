@@ -2268,7 +2268,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
     if (
       issuedAtMSec - clockSkewInMSec >= now ||
-      expiresAtMSec + clockSkewInMSec <= now
+      expiresAtMSec + clockSkewInMSec - this.decreaseExpirationBySec <= now
     ) {
       const err = 'Token has expired';
       console.error(err);
@@ -2340,7 +2340,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   /**
    * Returns the received claims about the user.
    */
-  public getIdentityClaims(): object {
+  public getIdentityClaims(): Record<string, any> {
     const claims = this._storage.getItem('id_token_claims_obj');
     if (!claims) {
       return null;
@@ -2424,7 +2424,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       const now = this.dateTimeService.new();
       if (
         expiresAt &&
-        parseInt(expiresAt, 10) < now.getTime() - this.getClockSkewInMsec()
+        parseInt(expiresAt, 10) - this.decreaseExpirationBySec <
+          now.getTime() - this.getClockSkewInMsec()
       ) {
         return false;
       }
@@ -2444,7 +2445,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       const now = this.dateTimeService.new();
       if (
         expiresAt &&
-        parseInt(expiresAt, 10) < now.getTime() - this.getClockSkewInMsec()
+        parseInt(expiresAt, 10) - this.decreaseExpirationBySec <
+          now.getTime() - this.getClockSkewInMsec()
       ) {
         return false;
       }

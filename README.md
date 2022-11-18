@@ -20,13 +20,17 @@ Support for OAuth 2 and OpenId Connect (OIDC) in Angular. Already prepared for t
 
 ## Tested Environment
 
-Successfully tested with **Angular 4.3 to Angular 12** and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. 
+Successfully tested with **Angular 4.3 to Angular 15** and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. 
 
 At server side we've used **IdentityServer** (.NET / .NET Core), Redhat's **Keycloak** (Java), and **Auth0** (Auth0 is officially supported since version 10 of this lib). For Auth0, please have a look into the respective documentation page here.
 
 For using this library with **Azure Active Directory** (**Azure AD**), we recommend an additional look to this [blog post](https://dev.to/yuriburger/azure-active-directory-b2c-with-pkce-for-your-angular-app-1dcg) and the example linked at the end of this blog post.
 
 Also, the Okta community created some guidelines on how to use this lib with Okta. See the links at the end of this page for more information.
+
+**Angular 15**: Use 15.x versions of this library (**should also work with older Angular versions!**).
+
+**Angular 14**: Use 14.x versions of this library (**should also work with older Angular versions!**).
 
 **Angular 13**: Use 13.x versions of this library (**should also work with older Angular versions!**).
 
@@ -107,7 +111,31 @@ _redirectUris:_
 npm i angular-oauth2-oidc --save
 ```
 
-## Importing the NgModule
+
+## Option 1: Standalone APIs
+
+If you use Standalone Components introduced with Angular 14, you can use our standalone API (call to ``provideOAuthClient``) in your ``main.ts`` to setup the ``OAuthClient``:
+
+```TypeScript
+// main.ts
+import { bootstrapApplication } from '@angular/platform-browser';
+
+import { provideHttpClient } from '@angular/common/http';
+
+import { AppComponent } from './app/app.component';
+import { provideOAuthClient } from 'angular-oauth2-oidc';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideHttpClient(),
+    provideOAuthClient()
+  ]
+});
+```
+
+The ``provideOAuthClient`` function takes the same parameters as the forRoot function of the OAuthModule that is still in place for the sake of compatibility with existing code bases.
+
+## Option 2: Using NgModules
 
 ```TypeScript
 import { HttpClientModule } from '@angular/common/http';

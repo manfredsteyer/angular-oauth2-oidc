@@ -238,6 +238,11 @@ export class AuthConfig {
   public clockSkewInSec?: number;
 
   /**
+   * Decreases the Expiration time of tokens by this number of seconds
+   */
+  public decreaseExpirationBySec? = 0;
+
+  /**
    * The interceptors waits this time span if there is no token
    */
   public waitForTokenInMsec? = 0;

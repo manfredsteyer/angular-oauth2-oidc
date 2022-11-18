@@ -48,10 +48,12 @@
 <li>Community-provided sample implementation: <a href="https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/">https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/</a></li>
 </ul>
 <h2 id="tested-environment">Tested Environment</h2>
-<p>Successfully tested with <strong>Angular 4.3 to Angular 12</strong> and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. </p>
+<p>Successfully tested with <strong>Angular 4.3 to Angular 15</strong> and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. </p>
 <p>At server side we&#39;ve used <strong>IdentityServer</strong> (.NET / .NET Core), Redhat&#39;s <strong>Keycloak</strong> (Java), and <strong>Auth0</strong> (Auth0 is officially supported since version 10 of this lib). For Auth0, please have a look into the respective documentation page here.</p>
 <p>For using this library with <strong>Azure Active Directory</strong> (<strong>Azure AD</strong>), we recommend an additional look to this <a href="https://dev.to/yuriburger/azure-active-directory-b2c-with-pkce-for-your-angular-app-1dcg">blog post</a> and the example linked at the end of this blog post.</p>
 <p>Also, the Okta community created some guidelines on how to use this lib with Okta. See the links at the end of this page for more information.</p>
+<p><strong>Angular 15</strong>: Use 15.x versions of this library (<strong>should also work with older Angular versions!</strong>).</p>
+<p><strong>Angular 14</strong>: Use 14.x versions of this library (<strong>should also work with older Angular versions!</strong>).</p>
 <p><strong>Angular 13</strong>: Use 13.x versions of this library (<strong>should also work with older Angular versions!</strong>).</p>
 <p><strong>Angular 12</strong>: Use 12.x versions of this library (<strong>should also work with older Angular versions!</strong>).</p>
 <p><strong>Angular 11</strong>: Use 10.x versions of this library (<strong>should also work with older Angular versions!</strong>).</p>
@@ -118,7 +120,23 @@ npm run docs</code></pre></div></li>
 <li>localhost:[4200-4202]/silent-refresh.html</li>
 </ul>
 <h2 id="installing">Installing</h2>
-<div><pre class="line-numbers"><code class="language-sh">npm i angular-oauth2-oidc --save</code></pre></div><h2 id="importing-the-ngmodule">Importing the NgModule</h2>
+<div><pre class="line-numbers"><code class="language-sh">npm i angular-oauth2-oidc --save</code></pre></div><h2 id="option-1-standalone-apis">Option 1: Standalone APIs</h2>
+<p>If you use Standalone Components introduced with Angular 14, you can use our standalone API (call to <code>provideOAuthClient</code>) in your <code>main.ts</code> to setup the <code>OAuthClient</code>:</p>
+<div><pre class="line-numbers"><code class="language-TypeScript">// main.ts
+import { bootstrapApplication } from &#39;&#64;angular/platform-browser&#39;;
+
+import { provideHttpClient } from &#39;&#64;angular/common/http&#39;;
+
+import { AppComponent } from &#39;./app/app.component&#39;;
+import { provideOAuthClient } from &#39;angular-oauth2-oidc&#39;;
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideHttpClient(),
+    provideOAuthClient()
+  ]
+});</code></pre></div><p>The <code>provideOAuthClient</code> function takes the same parameters as the forRoot function of the OAuthModule that is still in place for the sake of compatibility with existing code bases.</p>
+<h2 id="option-2-using-ngmodules">Option 2: Using NgModules</h2>
 <div><pre class="line-numbers"><code class="language-TypeScript">import { HttpClientModule } from &#39;&#64;angular/common/http&#39;;
 import { OAuthModule } from &#39;angular-oauth2-oidc&#39;;
 // etc.

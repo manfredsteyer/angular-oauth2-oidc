@@ -1,6 +1,6 @@
 {
   "name": "angular-oauth2-oidc",
-  "version": "13.0.0",
+  "version": "15.0.0",
   "license": "MIT",
   "scripts": {
     "release": "standard-version",

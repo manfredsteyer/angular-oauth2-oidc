@@ -8,4 +8,5 @@ export const authCodeFlowConfig: AuthConfig = {
   scope: 'openid profile email offline_access api',
   showDebugInformation: true,
   timeoutFactor: 0.01,
+  checkOrigin: false,
 };
