@@ -42,7 +42,7 @@
     "base64-js": "^1.5.1",
     "bootstrap": "^3.4.1",
     "fast-sha256": "^1.3.0",
-    "jsrsasign": "^10.3.0",
+    "jsrsasign": "^10.5.25",
     "ngx-semantic-version": "^2.3.0",
     "rxjs": "^6.5.3",
     "rxjs-compat": "^6.6.7",
