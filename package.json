@@ -63,7 +63,7 @@
     "@types/jasminewd2": "~2.0.10",
     "@types/node": "^16.3.2",
     "codelyzer": "^6.0.2",
-    "commitizen": "^4.2.4",
+    "commitizen": "^4.3.0",
     "conventional-changelog-cli": "^2.1.1",
     "cpr": "^3.0.1",
     "cz-conventional-changelog": "^3.3.0",
