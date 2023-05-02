@@ -565,6 +565,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
           this.jwksUri = doc.jwks_uri;
           this.sessionCheckIFrameUrl =
             doc.check_session_iframe || this.sessionCheckIFrameUrl;
+          this.authorizationResponseIssParameterSupported =
+            doc.authorization_response_iss_parameter_supported || false;
 
           this.discoveryDocumentLoaded = true;
           this.discoveryDocumentLoadedSubject.next(doc);
@@ -1743,6 +1745,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
     const code = parts['code'];
     const state = parts['state'];
+    const iss = parts['iss'];
 
     const sessionState = parts['session_state'];
 
@@ -1754,6 +1757,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
           .replace(/code=[^&\$]*/, '')
           .replace(/scope=[^&\$]*/, '')
           .replace(/state=[^&\$]*/, '')
+          .replace(/iss=[^&\$]*/, '')
           .replace(/session_state=[^&\$]*/, '')
           .replace(/^\?&/, '?')
           .replace(/&$/, '')
@@ -1764,6 +1768,21 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         location.hash;
 
       history.replaceState(null, window.name, href);
+    }
+
+    // if Authorization Response or Error Response
+    if ((code || parts['error']) && !this.skipIssuerCheck) {
+      if (
+        (this.authorizationResponseIssParameterSupported &&
+          iss !== this.issuer) ||
+        (!this.authorizationResponseIssParameterSupported && iss)
+      ) {
+        const err = 'Wrong issuer: ' + iss;
+        this.logger.warn(err);
+        const event = new OAuthErrorEvent('code_error', {}, parts);
+        this.eventsSubject.next(event);
+        return Promise.reject(err);
+      }
     }
 
     let [nonceInState, userState] = this.parseState(state);
@@ -1987,6 +2006,23 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     this.debug('parsed url', parts);
 
     const state = parts['state'];
+    const accessToken = parts['access_token'];
+    const iss = parts['iss'];
+
+    // if Access Token Response or Error Response
+    if ((accessToken || parts['error']) && !this.skipIssuerCheck) {
+      if (
+        (this.authorizationResponseIssParameterSupported &&
+          iss !== this.issuer) ||
+        (!this.authorizationResponseIssParameterSupported && iss)
+      ) {
+        const err = 'Wrong issuer: ' + iss;
+        this.logger.warn(err);
+        const event = new OAuthErrorEvent('token_error', {}, parts);
+        this.eventsSubject.next(event);
+        return Promise.reject(err);
+      }
+    }
 
     let [nonceInState, userState] = this.parseState(state);
     this.state = userState;
@@ -1999,7 +2035,6 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       return Promise.reject(err);
     }
 
-    const accessToken = parts['access_token'];
     const idToken = parts['id_token'];
     const sessionState = parts['session_state'];
     const grantedScopes = parts['scope'];

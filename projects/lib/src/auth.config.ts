@@ -279,6 +279,12 @@ export class AuthConfig {
    */
   public checkOrigin? = false;
 
+  /**
+   * Defines whether the authorization server provides the iss parameter in the authorization response.
+   * Set to false if you don't fetch metadata and want to skip iss parameter validation.
+   */
+  public authorizationResponseIssParameterSupported? = true;
+
   constructor(json?: Partial<AuthConfig>) {
     if (json) {
       Object.assign(this, json);

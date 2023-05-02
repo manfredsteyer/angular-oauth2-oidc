@@ -197,4 +197,5 @@ export interface OidcDiscoveryDoc {
   service_documentation: string;
   ui_locales_supported: string[];
   revocation_endpoint: string;
+  authorization_response_iss_parameter_supported: boolean;
 }
