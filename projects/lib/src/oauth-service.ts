@@ -2035,7 +2035,6 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       return Promise.reject(err);
     }
 
-    //const accessToken = parts['access_token'];
     const idToken = parts['id_token'];
     const sessionState = parts['session_state'];
     const grantedScopes = parts['scope'];
