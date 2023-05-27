@@ -8,6 +8,6 @@
   "repository": "manfredsteyer/angular-oauth2-oidc",
   "dependencies": {
     "jsrsasign": "^10.3.0",
-    "tslib": "^2.0.0"
+    "tslib": "^2.5.2"
   }
 }

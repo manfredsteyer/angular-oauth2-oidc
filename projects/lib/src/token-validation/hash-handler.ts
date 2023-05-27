@@ -14,17 +14,15 @@ export abstract class HashHandler {
 
 function decodeUTF8(s) {
   if (typeof s !== 'string') throw new TypeError('expected string');
-  var i,
-    d = s,
+  const d = s,
     b = new Uint8Array(d.length);
-  for (i = 0; i < d.length; i++) b[i] = d.charCodeAt(i);
+  for (let i = 0; i < d.length; i++) b[i] = d.charCodeAt(i);
   return b;
 }
 
 function encodeUTF8(arr) {
-  var i,
-    s = [];
-  for (i = 0; i < arr.length; i++) s.push(String.fromCharCode(arr[i]));
+  const s = [];
+  for (let i = 0; i < arr.length; i++) s.push(String.fromCharCode(arr[i]));
   return s.join('');
 }
 
@@ -51,7 +49,7 @@ export class DefaultHashHandler implements HashHandler {
 
   toHashString2(byteArray: number[]) {
     let result = '';
-    for (let e of byteArray) {
+    for (const e of byteArray) {
       result += String.fromCharCode(e);
     }
     return result;
@@ -60,7 +58,7 @@ export class DefaultHashHandler implements HashHandler {
   toHashString(buffer: ArrayBuffer) {
     const byteArray = new Uint8Array(buffer);
     let result = '';
-    for (let e of byteArray) {
+    for (const e of byteArray) {
       result += String.fromCharCode(e);
     }
     return result;
