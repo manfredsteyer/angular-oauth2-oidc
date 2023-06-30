@@ -912,7 +912,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             resolve(tokenResponse);
           },
           (err) => {
-            this.logger.error('Error performing ${grantType} flow', err);
+            this.logger.error(`Error performing ${grantType} flow`, err);
             this.eventsSubject.next(new OAuthErrorEvent('token_error', err));
             reject(err);
           }
