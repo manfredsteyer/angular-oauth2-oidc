@@ -28,7 +28,7 @@ For using this library with **Azure Active Directory** (**Azure AD**), we recomm
 
 Also, the Okta community created some guidelines on how to use this lib with Okta. See the links at the end of this page for more information.
 
-**Angular 15**: Use 15.x versions of this library (**should also work with older Angular versions!**).
+**Angular 15**: Use 15.x versions of this library (doesn't work with versions older than 15, due to missing makeEnviromentProvides in @angular/core).
 
 **Angular 14**: Use 14.x versions of this library (**should also work with older Angular versions!**).
 
