@@ -36,7 +36,7 @@ To configure your solution for code flow + PKCE you have to set the `responseTyp
 
 	showDebugInformation: true,
 
-	// Not recommented:
+	// Not recommended:
 	// disablePKCI: true,
 	};
 	```
