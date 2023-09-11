@@ -20,7 +20,7 @@ Support for OAuth 2 and OpenId Connect (OIDC) in Angular. Already prepared for t
 
 ## Tested Environment
 
-Successfully tested with **Angular 4.3 to Angular 15** and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. 
+Successfully tested with **Angular 4.3 to Angular 16** and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack.
 
 At server side we've used **IdentityServer** (.NET / .NET Core), Redhat's **Keycloak** (Java), and **Auth0** (Auth0 is officially supported since version 10 of this lib). For Auth0, please have a look into the respective documentation page here.
 
@@ -28,7 +28,7 @@ For using this library with **Azure Active Directory** (**Azure AD**), we recomm
 
 Also, the Okta community created some guidelines on how to use this lib with Okta. See the links at the end of this page for more information.
 
-**Angular 15**: Use 15.x versions of this library (**should also work with older Angular versions!**).
+**Angular 15 & 16**: Use 15.x versions of this library (**should also work with older Angular versions!**).
 
 **Angular 14**: Use 14.x versions of this library (**should also work with older Angular versions!**).
 

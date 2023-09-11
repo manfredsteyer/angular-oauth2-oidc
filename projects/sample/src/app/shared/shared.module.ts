@@ -7,7 +7,6 @@ import { RoundTrip } from './validation/roundtrip.validator';
 import { AsyncCityValidatorDirective } from './validation/async-city.validator';
 import { DateComponent } from './date/date.component';
 import { AuthGuard } from './auth/auth.guard';
-import { LeaveComponentGuard } from './deactivation/LeaveComponentGuard';
 import { CustomPreloadingStrategy } from './preload/custom-preloading.strategy';
 
 @NgModule({
@@ -34,7 +33,7 @@ import { CustomPreloadingStrategy } from './preload/custom-preloading.strategy';
 export class SharedModule {
   static forRoot(): ModuleWithProviders<SharedModule> {
     return {
-      providers: [AuthGuard, LeaveComponentGuard, CustomPreloadingStrategy],
+      providers: [AuthGuard, CustomPreloadingStrategy],
       ngModule: SharedModule,
     };
   }
