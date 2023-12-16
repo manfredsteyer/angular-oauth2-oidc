@@ -13,7 +13,7 @@ import { provideOAuthClient } from './provider';
 export class OAuthModule {
   static forRoot(
     config: OAuthModuleConfig = null,
-    validationHandlerClass = NullValidationHandler
+    validationHandlerClass = NullValidationHandler,
   ): ModuleWithProviders<OAuthModule> {
     return {
       ngModule: OAuthModule,

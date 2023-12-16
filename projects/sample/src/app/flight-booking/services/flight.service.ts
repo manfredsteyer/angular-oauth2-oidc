@@ -10,7 +10,7 @@ export class FlightService {
   constructor(
     private oauthService: OAuthService,
     private http: HttpClient,
-    @Inject(BASE_URL) private baseUrl: string
+    @Inject(BASE_URL) private baseUrl: string,
   ) {}
 
   public flights: Array<Flight> = [];
@@ -28,7 +28,7 @@ export class FlightService {
       },
       (err) => {
         console.warn('status', err.status);
-      }
+      },
     );
   }
 }

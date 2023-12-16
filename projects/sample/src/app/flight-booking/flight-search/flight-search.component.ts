@@ -15,7 +15,7 @@ export class FlightSearchComponent {
 
   constructor(
     private flightService: FlightService,
-    private oauthService: OAuthService
+    private oauthService: OAuthService,
   ) {
     console.debug('access-token', this.oauthService.getAccessToken());
   }

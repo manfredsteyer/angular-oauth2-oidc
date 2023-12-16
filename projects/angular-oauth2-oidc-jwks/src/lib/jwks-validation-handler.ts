@@ -61,7 +61,7 @@ export class JwksValidationHandler extends AbstractValidationHandler {
     } else {
       let kty = this.alg2kty(alg);
       let matchingKeys = keys.filter(
-        (k) => k['kty'] === kty && k['use'] === 'sig'
+        (k) => k['kty'] === kty && k['use'] === 'sig',
       );
 
       /*
@@ -113,7 +113,7 @@ export class JwksValidationHandler extends AbstractValidationHandler {
     let isValid = rs.KJUR.jws.JWS.verifyJWT(
       params.idToken,
       keyObj,
-      validationOptions
+      validationOptions,
     );
 
     if (isValid) {

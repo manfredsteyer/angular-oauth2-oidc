@@ -6,10 +6,12 @@ round-trip
 
 <form novalidate [formGroup]="filter">
   <h2>Dynamisches Formular</h2>
-  <div *ngFor="let item of formDesc">
-    <label>{{ item.label }}</label>
-    <input [formControlName]="item.name" class="form-control" />
-  </div>
+  @for (item of formDesc; track item) {
+    <div>
+      <label>{{ item.label }}</label>
+      <input [formControlName]="item.name" class="form-control" />
+    </div>
+  }
 
   <h2>Statisches Formular</h2>
 
@@ -17,17 +19,23 @@ round-trip
     <label>From</label>
     <input class="form-control" formControlName="from" />
 
-    <div *ngIf="!filter.controls.from.valid && !filter.controls.from.pending">
-      Validierungsfehler. Bitte prüfen Sie Ihre Eingaben.
-    </div>
+    @if (!filter.controls.from.valid && !filter.controls.from.pending) {
+      <div>
+        Validierungsfehler. Bitte prüfen Sie Ihre Eingaben.
+      </div>
+    }
 
-    <div *ngIf="filter.controls.from.hasError('city')">
-      Diese Stadt wird nicht angefolgen
-    </div>
+    @if (filter.controls.from.hasError('city')) {
+      <div>
+        Diese Stadt wird nicht angefolgen
+      </div>
+    }
 
-    <div *ngIf="filter.controls.from.hasError('required')">
-      Dieses Feld ist ein Pflichtfeld
-    </div>
+    @if (filter.controls.from.hasError('required')) {
+      <div>
+        Dieses Feld ist ein Pflichtfeld
+      </div>
+    }
   </div>
 
   <div class="form-group">
@@ -40,7 +48,7 @@ round-trip
       name="btnSearch"
       [disabled]="!filter.valid"
       (click)="search()"
-    >
+      >
       Search
     </button>
   </div>
@@ -51,32 +59,32 @@ round-trip
 <!--
 <table class="table table-striped">
 
-    <tr *ngFor="let f of flights" [ngStyle]="{ 'background-color': (f == selectedFlight) ? 'orange': '' } ">
-        <td>{{f.id}}</td>
-        <td>{{f.from | city:'short' }}</td>
-        <td>{{f.to | city:'long' }}</td>
-        <td>{{f.date | date:'dd.MM.yyyy HH:mm'}}</td>
-        <td><a (click)="select(f)">Auswählen</a></td>
-    </tr>
+  <tr *ngFor="let f of flights" [ngStyle]="{ 'background-color': (f == selectedFlight) ? 'orange': '' } ">
+    <td>{{f.id}}</td>
+    <td>{{f.from | city:'short' }}</td>
+    <td>{{f.to | city:'long' }}</td>
+    <td>{{f.date | date:'dd.MM.yyyy HH:mm'}}</td>
+    <td><a (click)="select(f)">Auswählen</a></td>
+  </tr>
 </table>
 -->
 
 <div class="row">
-  <div *ngFor="let f of flights" class="col-sm-6 col-md-4 col-lg-3 ">
-    <flight-card [item]="f" [(selectedItem)]="selectedFlight"> </flight-card>
-
-    <!--
-        [selectedItem]="selectedFlight"
-                     (selectedItemChange)="selectedFlight = $event"
-        -->
-
-    <alt-flight-card
-      [item]="f"
-      [selected]="f == selectedFlight"
-      (selectedChange)="selectedFlight = f"
-    >
-    </alt-flight-card>
-  </div>
+  @for (f of flights; track f) {
+    <div class="col-sm-6 col-md-4 col-lg-3 ">
+      <flight-card [item]="f" [(selectedItem)]="selectedFlight"> </flight-card>
+      <!--
+      [selectedItem]="selectedFlight"
+      (selectedItemChange)="selectedFlight = $event"
+      -->
+      <alt-flight-card
+        [item]="f"
+        [selected]="f == selectedFlight"
+        (selectedChange)="selectedFlight = f"
+        >
+      </alt-flight-card>
+    </div>
+  }
 </div>
 
 <!--
@@ -86,9 +94,8 @@ round-trip
 
 <div class="row" style="margin-top:40px">
   <pre>
-Warenkorb
-----------------------
-{{ selectedFlight | json }}
-</pre
-  >
+    Warenkorb
+    ----------------------
+    {{ selectedFlight | json }}
+  </pre>
 </div>

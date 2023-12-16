@@ -25,7 +25,7 @@ export class FlightSearchReactiveComponent {
 
   constructor(
     private flightService: FlightService,
-    private fb: UntypedFormBuilder
+    private fb: UntypedFormBuilder,
   ) {
     this.formDesc.push({
       label: 'Von',

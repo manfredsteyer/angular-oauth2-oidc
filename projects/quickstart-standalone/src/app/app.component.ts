@@ -2,14 +2,13 @@ import { Component } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { filter } from 'rxjs/operators';
 import { authCodeFlowConfig } from './auth.config';
-import { NgIf } from '@angular/common';
 
 @Component({
   standalone: true,
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  imports: [NgIf],
+  imports: [],
 })
 export class AppComponent {
   title = 'Quickstart Demo';

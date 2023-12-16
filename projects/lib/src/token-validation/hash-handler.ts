@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { factory } from './js-sha256';
-// const sha256 = factory();
-
 import fsha256 from './fast-sha256js';
 
 /**

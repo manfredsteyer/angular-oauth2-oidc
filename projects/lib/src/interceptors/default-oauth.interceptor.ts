@@ -24,7 +24,7 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
   constructor(
     private oAuthService: OAuthService,
     private errorHandler: OAuthResourceServerErrorHandler,
-    @Optional() private moduleConfig: OAuthModuleConfig
+    @Optional() private moduleConfig: OAuthModuleConfig,
   ) {}
 
   private checkUrl(url: string): boolean {
@@ -34,7 +34,7 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
 
     if (this.moduleConfig.resourceServer.allowedUrls) {
       return !!this.moduleConfig.resourceServer.allowedUrls.find((u) =>
-        url.toLowerCase().startsWith(u.toLowerCase())
+        url.toLowerCase().startsWith(u.toLowerCase()),
       );
     }
 
@@ -43,7 +43,7 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
 
   public intercept(
     req: HttpRequest<any>,
-    next: HttpHandler
+    next: HttpHandler,
   ): Observable<HttpEvent<any>> {
     const url = req.url.toLowerCase();
 
@@ -69,8 +69,8 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
         filter((e) => e.type === 'token_received'),
         timeout(this.oAuthService.waitForTokenInMsec || 0),
         catchError(() => of(null)), // timeout is not an error
-        map(() => this.oAuthService.getAccessToken())
-      )
+        map(() => this.oAuthService.getAccessToken()),
+      ),
     ).pipe(
       take(1),
       mergeMap((token) => {
@@ -83,7 +83,7 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
         return next
           .handle(req)
           .pipe(catchError((err) => this.errorHandler.handleError(err)));
-      })
+      }),
     );
   }
 }

@@ -18,14 +18,14 @@ export abstract class ValidationHandler {
    * Validates the signature of an id_token.
    */
   public abstract validateSignature(
-    validationParams: ValidationParams
+    validationParams: ValidationParams,
   ): Promise<any>;
 
   /**
    * Validates the at_hash in an id_token against the received access_token.
    */
   public abstract validateAtHash(
-    validationParams: ValidationParams
+    validationParams: ValidationParams,
   ): Promise<boolean>;
 }
 
@@ -87,6 +87,6 @@ export abstract class AbstractValidationHandler implements ValidationHandler {
    */
   protected abstract calcHash(
     valueToHash: string,
-    algorithm: string
+    algorithm: string,
   ): Promise<string>;
 }

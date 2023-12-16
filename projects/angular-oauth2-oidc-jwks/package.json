@@ -7,7 +7,7 @@
   "version": "16.0.0",
   "repository": "manfredsteyer/angular-oauth2-oidc",
   "dependencies": {
-    "jsrsasign": "^10.3.0",
-    "tslib": "^2.5.2"
+    "jsrsasign": "^10.9.0",
+    "tslib": "^2.6.2"
   }
 }

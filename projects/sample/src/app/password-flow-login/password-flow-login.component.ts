@@ -51,7 +51,7 @@ export class PasswordFlowLoginComponent implements OnInit {
     this.oauthService
       .fetchTokenUsingPasswordFlowAndLoadUserProfile(
         this.userName,
-        this.password
+        this.password,
       )
       .then(() => {
         console.debug('successfully logged in');

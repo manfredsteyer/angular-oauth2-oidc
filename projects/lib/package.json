@@ -7,10 +7,10 @@
   "version": "16.0.0",
   "repository": "manfredsteyer/angular-oauth2-oidc",
   "peerDependencies": {
-    "@angular/common": ">=14.0.0",
-    "@angular/core": ">=14.0.0"
+    "@angular/common": ">=15.0.0",
+    "@angular/core": ">=15.0.0"
   },
   "dependencies": {
-    "tslib": "^2.5.2"
+    "tslib": "^2.6.2"
   }
 }
