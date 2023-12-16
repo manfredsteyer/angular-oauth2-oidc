@@ -1,3 +1,38 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+## [16.1.0](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/v10.0.3...v16.1.0) (2023-12-16)
+
+
+### Features
+
+* introduce DateTimeProvider ([0c0a4a7](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/0c0a4a7a2574c8c134fa839f7ccdee06273a0676))
+* **logout:** postLogoutRedirectUri should not default to redirectUri ([ff7d1d9](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/ff7d1d915aa19f87bcb1c2d18ac3eb280db78d3b))
+* provide standalone api ([e38c99c](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/e38c99c5f70f23fad892328e2a6f01f1e813af4c))
+* support JWT response on userinfo endpoint ([da16494](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/da1649499376863b0ebf884748176f3b38d91899))
+* update for angular 13 ([d95d7da](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/d95d7da788e2c1390346c66de62dc31f10d2b852))
+* update project to Angular 16 ([b999024](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/b999024b1bb7fdb40f07810a75add60f47fe5f08))
+
+
+### Bug Fixes
+
+* [#728](https://github.com/manfredsteyer/angular-oauth2-oidc/issues/728) ([51e438a](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/51e438a942773948f17ab108332d704b459fd789)), closes [/github.com/manfredsteyer/angular-oauth2-oidc/issues/728#issuecomment-808969225](https://github.com/manfredsteyer//github.com/manfredsteyer/angular-oauth2-oidc/issues/728/issues/issuecomment-808969225)
+* clear location.hash only if it is present ([c2b2753](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/c2b2753943d59a6b4b5149f1003371338ac1a210)), closes [#970](https://github.com/manfredsteyer/angular-oauth2-oidc/issues/970)
+* clock skew bug ([f30098d](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/f30098df4213671871cf9cd5667ca9751ff29ddd))
+* correctly handle ? and & in location replacements ([70fd826](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/70fd8268832aba954956542e37896252dde5cdab))
+* correctly use clockSkew for hasValid[Access|Id]Token ([68238fb](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/68238fb6ea4a2f88ada97b03b13663d1454b001c))
+* Disable nonce validation for id token for e2e tests ([f5bd96c](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/f5bd96ca81ec6b7af868de72b1098541264347cf))
+* fix scope/state removal for implicit flow with hash ([9e257d0](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/9e257d0d267942d716607f2a1c78700bd9d6e9ef))
+* in code flow pass options to error handler ([c9a2c55](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/c9a2c557178af26154adfbcf39e3db2d12ee0503)), closes [#972](https://github.com/manfredsteyer/angular-oauth2-oidc/issues/972)
+* issue with sha256 and prod build [#1120](https://github.com/manfredsteyer/angular-oauth2-oidc/issues/1120) ([b44e19a](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/b44e19a2f5c758e3b5dab259336ee1974bfe99c8))
+* **js-sha256:** wrap logic in a function to prevent optimizer destroy lib ([ae26fba](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/ae26fba258cc3effd693d23473ff51b63005b9ae))
+* **jwks:** update jsrsasign dependency to 10.2.0 ([a05bd8a](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/a05bd8a106035acb51fb06fd62e17de0de8decb4)), closes [#1061](https://github.com/manfredsteyer/angular-oauth2-oidc/issues/1061)
+* multiplying calls to token endpoint in code flow ([59f65d2](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/59f65d2eb9cd1a724301fb3de0b3def796920bd4))
+* Refresh tokens with a plus sign get corrupted before sending to token endpoint ([2204c5a](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/2204c5a307640d11b847a0c266b44ca2c18fd9a7))
+* **revoketokenandlogout:** 'customParameters' should accept boolean ([9761bad](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/9761baded0d85bd831947de4607296fb029579ab))
+* While Using POPUP mode, we click on login button multiple time it opens multiple popup instead of focusing already opened ([bbff95b](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/bbff95b86173fa9262bf962e7fa4cfe4121b787e))
+
 ## [12.0.0](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/v10.0.3...v10.0.2) (2021-07-16)
 
 
