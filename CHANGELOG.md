@@ -1,17 +1,7 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
-
-## [16.1.0](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/v10.0.3...v16.1.0) (2023-12-16)
-
-
 ### Features
 
-* introduce DateTimeProvider ([0c0a4a7](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/0c0a4a7a2574c8c134fa839f7ccdee06273a0676))
-* **logout:** postLogoutRedirectUri should not default to redirectUri ([ff7d1d9](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/ff7d1d915aa19f87bcb1c2d18ac3eb280db78d3b))
-* provide standalone api ([e38c99c](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/e38c99c5f70f23fad892328e2a6f01f1e813af4c))
-* support JWT response on userinfo endpoint ([da16494](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/da1649499376863b0ebf884748176f3b38d91899))
-* update for angular 13 ([d95d7da](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/d95d7da788e2c1390346c66de62dc31f10d2b852))
 * update project to Angular 16 ([b999024](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/b999024b1bb7fdb40f07810a75add60f47fe5f08))
 
 

@@ -9,11 +9,11 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">angular-oauth2-oidc</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -44,19 +44,21 @@
 
 
 
-                   
 
 
 
 
-<h1 id="session-checks">Session Checks</h1>
+
+
+
+<h1>Session Checks</h1>
 <p>Beginning with version 2.1, you can receive a notification when the user signs out with the identity provider.
 This is implemented as defined by the OpenID Connect Session Management 1.0 spec.</p>
 <p>When this option is activated, the library also automatically ends your local session. This means, the current tokens
 are deleted by calling <code>logOut</code>. In addition to that, the library sends a session_terminated event, you can register
 for to perform a custom action.</p>
 <p>Please note that this option can only be used when also the identity provider in question supports it.</p>
-<h2 id="configuration">Configuration</h2>
+<h2>Configuration</h2>
 <p>To activate the session checks that leads to the mentioned notifications, set the configuration property
 <code>sessionChecksEnabled</code>:</p>
 <div><pre class="line-numbers"><code class="language-TypeScript">import { AuthConfig } from &#39;angular-oauth2-oidc&#39;;
@@ -70,17 +72,17 @@ export const authConfig: AuthConfig = {
 
   // Activate Session Checks:
   sessionChecksEnabled: true,
-}</code></pre></div><h2 id="refresh">Refresh</h2>
+}</code></pre></div><h2>Refresh</h2>
 <p>Please note that the lib performs a token refresh when the session changes to get the newest information about the current session. When using implicit flow, this means you have to configure <a href="./silent-refresh.html">silent refresh</a>; when using code flow you either need silent refresh or a <a href="./refreshing-a-token.html">refresh token</a>.</p>
 <p>If using refresh tokens, your Auth Server needs to bind them to the current session&#39;s lifetime. Unfortunately, the used version of Identity Server 4, shown in the docs and in the example applications, does not support this at the moment.</p>
-<h2 id="events">Events</h2>
+<h2>Events</h2>
 <p>To get notified, you can hook up for the event <code>session_terminated</code>:</p>
 <div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.events.pipe(filter(e =&gt; e.type === &#39;session_terminated&#39;)).subscribe(e =&gt; {
   console.debug(&#39;Your session has been terminated!&#39;);
 })</code></pre></div>
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -92,6 +94,15 @@ export const authConfig: AuthConfig = {
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
@@ -101,8 +112,8 @@ export const authConfig: AuthConfig = {
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

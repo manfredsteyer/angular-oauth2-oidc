@@ -9,11 +9,11 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">angular-oauth2-oidc</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -44,12 +44,14 @@
 
 
 
-                   
 
 
 
 
-<h2 id="refreshing-when-using-implicit-flow-implicit-flow-and-code-flow">Refreshing when using Implicit Flow (Implicit Flow and Code Flow)</h2>
+
+
+
+<h2>Refreshing when using Implicit Flow (Implicit Flow and Code Flow)</h2>
 <p><strong>Notes for Code Flow</strong>: You can also use this strategy for refreshing tokens when using code flow. However, please note, the strategy described within <a href="./token-refresh.html">Token Refresh</a> is far easier in this case.</p>
 <p>To refresh your tokens when using implicit flow you can use a silent refresh. This is a well-known solution that compensates the fact that implicit flow does not allow for issuing a refresh token. It uses a hidden iframe to get another token from the auth server. When the user is there still logged in (by using a cookie) it will respond without user interaction and provide new tokens.</p>
 <p>To use this approach, setup a redirect uri for the silent refresh.</p>
@@ -129,13 +131,13 @@ export const authConfig: AuthConfig = {
     .silentRefresh()
     .then(info =&gt; console.debug(&#39;refresh ok&#39;, info))
     .catch(err =&gt; console.error(&#39;refresh error&#39;, err));</code></pre></div><p>When there is an error in the iframe that prevents the communication with the main application, silentRefresh will give you a timeout. To configure the timespan for this, you can set the property <code>silentRefreshTimeout</code> (msec). The default value is 20.000 (20 seconds).</p>
-<h3 id="automatically-refreshing-a-token-when-before-it-expires-code-flow-and-implicit-flow">Automatically refreshing a token when/ before it expires (Code Flow and Implicit Flow)</h3>
+<h3>Automatically refreshing a token when/ before it expires (Code Flow and Implicit Flow)</h3>
 <p>To automatically refresh a token when/ some time before it expires, just call the following method after configuring the OAuthService:</p>
 <div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.setupAutomaticSilentRefresh();</code></pre></div><p>By default, this event is fired after 75% of the token&#39;s life time is over. You can adjust this factor by setting the property <code>timeoutFactor</code> to a value between 0 and 1. For instance, 0.5 means, that the event is fired after half of the life time is over and 0.33 triggers the event after a third.</p>
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -147,6 +149,15 @@ export const authConfig: AuthConfig = {
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
@@ -156,8 +167,8 @@ export const authConfig: AuthConfig = {
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

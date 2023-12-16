@@ -9,11 +9,11 @@
 
         <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
 	   <link rel="stylesheet" href="./styles/style.css">
-        <link rel="stylesheet" href="./styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="./styles/dark.css">
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="./" class="navbar-brand">angular-oauth2-oidc</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -31,27 +31,28 @@
                <div class="content getting-started">
                    <div class="content-data">
 
-<h1 id="angular-oauth2-oidc">angular-oauth2-oidc</h1>
+<h1>angular-oauth2-oidc</h1>
 <p>Support for OAuth 2 and OpenId Connect (OIDC) in Angular. Already prepared for the upcoming OAuth 2.1.</p>
 <p><img src="https://raw.githubusercontent.com/manfredsteyer/angular-oauth2-oidc/master/oidc.png" alt="OIDC Certified Logo" class="img-responsive"></p>
-<h2 id="credits">Credits</h2>
+<h2>Credits</h2>
 <ul>
 <li><a href="https://kjur.github.io/jsrsasign/">jsrsasign</a> for validating token signature and for hashing</li>
 <li><a href="https://github.com/identityserver">Identity Server</a> for testing with an .NET/.NET Core Backend</li>
 <li><a href="http://www.keycloak.org/">Keycloak (Redhat)</a> for testing with Java</li>
 <li><a href="https://auth0.com/">Auth0</a></li>
 </ul>
-<h2 id="resources">Resources</h2>
+<h2>Resources</h2>
 <ul>
 <li>Sources and Sample: <a href="https://github.com/manfredsteyer/angular-oauth2-oidc">https://github.com/manfredsteyer/angular-oauth2-oidc</a></li>
 <li>Source Code Documentation: <a href="https://manfredsteyer.github.io/angular-oauth2-oidc/docs">https://manfredsteyer.github.io/angular-oauth2-oidc/docs</a></li>
 <li>Community-provided sample implementation: <a href="https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/">https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards/</a></li>
 </ul>
-<h2 id="tested-environment">Tested Environment</h2>
-<p>Successfully tested with <strong>Angular 4.3 to Angular 15</strong> and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack. </p>
+<h2>Tested Environment</h2>
+<p>Successfully tested with <strong>Angular 4.3 to Angular 16</strong> and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack.</p>
 <p>At server side we&#39;ve used <strong>IdentityServer</strong> (.NET / .NET Core), Redhat&#39;s <strong>Keycloak</strong> (Java), and <strong>Auth0</strong> (Auth0 is officially supported since version 10 of this lib). For Auth0, please have a look into the respective documentation page here.</p>
 <p>For using this library with <strong>Azure Active Directory</strong> (<strong>Azure AD</strong>), we recommend an additional look to this <a href="https://dev.to/yuriburger/azure-active-directory-b2c-with-pkce-for-your-angular-app-1dcg">blog post</a> and the example linked at the end of this blog post.</p>
 <p>Also, the Okta community created some guidelines on how to use this lib with Okta. See the links at the end of this page for more information.</p>
+<p><strong>Angular 16</strong>: Use 16.x versions of this library (<strong>should also work with older Angular versions!</strong>).</p>
 <p><strong>Angular 15</strong>: Use 15.x versions of this library (<strong>should also work with older Angular versions!</strong>).</p>
 <p><strong>Angular 14</strong>: Use 14.x versions of this library (<strong>should also work with older Angular versions!</strong>).</p>
 <p><strong>Angular 13</strong>: Use 13.x versions of this library (<strong>should also work with older Angular versions!</strong>).</p>
@@ -63,7 +64,7 @@
 <p><strong>Angular 7</strong>: Use 7.x versions of this library.</p>
 <p><strong>Angular 6</strong>: Use Version 4.x of this library. Version 4.x was tested with Angular 6. You can also try the newer version 5.x of this library which has a much smaller bundle size.</p>
 <p><strong>Angular 5.x or 4.3</strong>: If you need support for Angular &lt; 6 (4.3 to 5.x) you can download the former version 3.1.4 (npm i angular-oauth2-oidc@^3 --save).</p>
-<h2 id="release-cycle">Release Cycle</h2>
+<h2>Release Cycle</h2>
 <ul>
 <li>We plan one major release for each Angular version<ul>
 <li>Will contain new features</li>
@@ -72,7 +73,7 @@
 </li>
 <li>Critical bugfixes on demand</li>
 </ul>
-<h2 id="contributions">Contributions</h2>
+<h2>Contributions</h2>
 <ul>
 <li><p>Feel free to file pull requests</p>
 </li>
@@ -82,7 +83,7 @@
 <div><pre class="line-numbers"><code class="language-sh">npm install -g &#64;compodoc/compodoc
 npm run docs</code></pre></div></li>
 </ul>
-<h2 id="features">Features</h2>
+<h2>Features</h2>
 <ul>
 <li>Logging in via Code Flow + PKCE<ul>
 <li>Hence, you are safe for the upcoming OAuth 2.1</li>
@@ -100,7 +101,7 @@ npm run docs</code></pre></div></li>
 <li>Tested with all modern browsers and IE</li>
 <li>Token Revocation according to <a href="https://tools.ietf.org/html/rfc7009#section-2.2">RFC 7009</a></li>
 </ul>
-<h2 id="sample-auth-server">Sample-Auth-Server</h2>
+<h2>Sample-Auth-Server</h2>
 <p>You can use the OIDC-Sample-Server used in our examples. It assumes, that your Web-App runs on <a href="http://localhost:4200">http://localhost:4200</a></p>
 <p>Username/Password:</p>
 <ul>
@@ -119,8 +120,8 @@ npm run docs</code></pre></div></li>
 <li>localhost:[4200-4202]/index.html</li>
 <li>localhost:[4200-4202]/silent-refresh.html</li>
 </ul>
-<h2 id="installing">Installing</h2>
-<div><pre class="line-numbers"><code class="language-sh">npm i angular-oauth2-oidc --save</code></pre></div><h2 id="option-1-standalone-apis">Option 1: Standalone APIs</h2>
+<h2>Installing</h2>
+<div><pre class="line-numbers"><code class="language-sh">npm i angular-oauth2-oidc --save</code></pre></div><h2>Option 1: Standalone APIs</h2>
 <p>If you use Standalone Components introduced with Angular 14, you can use our standalone API (call to <code>provideOAuthClient</code>) in your <code>main.ts</code> to setup the <code>OAuthClient</code>:</p>
 <div><pre class="line-numbers"><code class="language-TypeScript">// main.ts -- Angular 15+ version
 import { bootstrapApplication } from &#39;&#64;angular/platform-browser&#39;;
@@ -151,7 +152,7 @@ bootstrapApplication(AppComponent, {
     provideOAuthClient()
   ]
 });</code></pre></div><p>The <code>provideOAuthClient</code> function takes the same parameters as the forRoot function of the OAuthModule that is still in place for the sake of compatibility with existing code bases.</p>
-<h2 id="option-2-using-ngmodules">Option 2: Using NgModules</h2>
+<h2>Option 2: Using NgModules</h2>
 <div><pre class="line-numbers"><code class="language-TypeScript">import { HttpClientModule } from &#39;&#64;angular/common/http&#39;;
 import { OAuthModule } from &#39;angular-oauth2-oidc&#39;;
 // etc.
@@ -172,7 +173,7 @@ import { OAuthModule } from &#39;angular-oauth2-oidc&#39;;
   ]
 })
 export class AppModule {
-}</code></pre></div><h1 id="logging-in">Logging in</h1>
+}</code></pre></div><h1>Logging in</h1>
 <p>Since Version 8, this library supports code flow and <a href="https://tools.ietf.org/html/rfc7636">PKCE</a> to align with the current draft of the <a href="https://tools.ietf.org/html/draft-ietf-oauth-security-topics-13">OAuth 2.0 Security Best Current Practice</a> document. This is also the foundation of the upcoming OAuth 2.1.</p>
 <p>To configure your solution for code flow + PKCE you have to set the <code>responseType</code> to <code>code</code>:</p>
 <div><pre class="line-numbers"><code class="language-TypeScript">  import { AuthConfig } from &#39;angular-oauth2-oidc&#39;;
@@ -207,13 +208,13 @@ export class AppModule {
 <div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.initCodeFlow();</code></pre></div><p>There is also a convenience method <code>initLoginFlow</code> which initializes either the code flow or the implicit flow depending on your configuration.</p>
 <div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.initLoginFlow();</code></pre></div><p>Also -- as shown in the readme -- you have to execute the following code when bootstrapping to make the library to fetch the token:</p>
 <div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.configure(authCodeFlowConfig);
-this.oauthService.loadDiscoveryDocumentAndTryLogin();</code></pre></div><h3 id="logging-out">Logging out</h3>
+this.oauthService.loadDiscoveryDocumentAndTryLogin();</code></pre></div><h3>Logging out</h3>
 <p>The logOut method clears the used token store (by default <code>sessionStorage</code>) and forwards the user to the auth servers logout endpoint if one was configured (manually or via the discovery document).</p>
 <div><pre class="line-numbers"><code class="language-typescript">this.oauthService.logOut();</code></pre></div><p>If you want to revoke the existing access token and the existing refresh token before logging out, use the following method:</p>
-<div><pre class="line-numbers"><code class="language-typescript">this.oauthService.revokeTokenAndLogout();</code></pre></div><h3 id="skipping-the-login-form">Skipping the Login Form</h3>
+<div><pre class="line-numbers"><code class="language-typescript">this.oauthService.revokeTokenAndLogout();</code></pre></div><h3>Skipping the Login Form</h3>
 <p>If you don&#39;t want to display a login form that tells the user that they are redirected to the identity server, you can use the convenience function <code>this.oauthService.loadDiscoveryDocumentAndLogin();</code> instead of <code>this.oauthService.loadDiscoveryDocumentAndTryLogin();</code> when setting up the library.</p>
 <p>This directly redirects the user to the identity server if there are no valid tokens. Ensure you have your <code>issuer</code> set to your discovery document endpoint!</p>
-<h3 id="calling-a-web-api-with-an-access-token">Calling a Web API with an Access Token</h3>
+<h3>Calling a Web API with an Access Token</h3>
 <p>You can automate this task by switching <code>sendAccessToken</code> on and by setting <code>allowedUrls</code> to an array with prefixes for the respective URLs. Use lower case for the prefixes.</p>
 <div><pre class="line-numbers"><code class="language-TypeScript">OAuthModule.forRoot({
     resourceServer: {
@@ -221,24 +222,24 @@ this.oauthService.loadDiscoveryDocumentAndTryLogin();</code></pre></div><h3 id="
         sendAccessToken: true
     }
 })</code></pre></div><p>If you need more versatility, you can look in the <a href="https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/working-with-httpinterceptors.html">documentation</a> how to setup a custom interceptor.</p>
-<h2 id="token-refresh">Token Refresh</h2>
+<h2>Token Refresh</h2>
 <p>See docs: <a href="https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/refreshing-a-token.html">https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/refreshing-a-token.html</a></p>
-<h2 id="routing">Routing</h2>
+<h2>Routing</h2>
 <p>If you use the <code>PathLocationStrategy</code> (which is on by default) and have a general catch-all-route (<code>path: &#39;**&#39;</code>) you should be fine. Otherwise look up the section <code>Routing with the HashStrategy</code> in the <a href="https://manfredsteyer.github.io/angular-oauth2-oidc/docs/">documentation</a>.</p>
-<h2 id="implicit-flow">Implicit Flow</h2>
+<h2>Implicit Flow</h2>
 <p>Nowadays, using code flow + PKCE -- as shown above -- is the recommended OAuth 2/OIDC flow for SPAs. To use the older implicit flow, lookup this docs: <a href="https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/using-implicit-flow.html">https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/using-implicit-flow.html</a></p>
-<h2 id="more-documentation-">More Documentation (!)</h2>
+<h2>More Documentation (!)</h2>
 <p>See the <a href="https://manfredsteyer.github.io/angular-oauth2-oidc/docs/">documentation</a> for more information about this library.</p>
-<h2 id="breaking-change-in-version-9">Breaking Change in Version 9</h2>
+<h2>Breaking Change in Version 9</h2>
 <p>With regards to tree shaking, beginning with version 9, the <code>JwksValidationHandler</code> has been moved to a library of its own. If you need it for implementing <strong>implicit flow</strong>, please install it using npm:</p>
 <div><pre class="line-numbers"><code class="language-none">npm i angular-oauth2-oidc-jwks --save</code></pre></div><p>After that, you can import it into your application by using this:</p>
 <div><pre class="line-numbers"><code class="language-typescript">import { JwksValidationHandler } from &#39;angular-oauth2-oidc-jwks&#39;;</code></pre></div><p>instead of that:</p>
 <div><pre class="line-numbers"><code class="language-typescript">import { JwksValidationHandler } from &#39;angular-oauth2-oidc&#39;;</code></pre></div><p>Please note, that this dependency is not needed for the <strong>code flow</strong>, which is nowadays the <strong>recommended</strong> flow for single page applications. This also results in smaller bundle sizes.</p>
-<h3 id="breaking-change-in-910">Breaking change in 9.1.0</h3>
+<h3>Breaking change in 9.1.0</h3>
 <p>The use of <code>encodeURIComponent</code> on the argument passed to <code>initImplicitFlow</code> and its Code Flow counterparts was mandatory before this version.</p>
 <p>Since that was considered a <em>bug</em>, the need to do so was removed.
 Now the reverse is true <strong>if you&#39;re upgrading from before 9.0.0</strong>: you need to remove any call to encode URI components in your own application, as the library will now do it for you.</p>
-<h2 id="tutorials">Tutorials</h2>
+<h2>Tutorials</h2>
 <ul>
 <li><a href="https://www.softwarearchitekt.at/post/2016/07/03/authentication-in-angular-2-with-oauth2-oidc-and-guards-for-the-newest-new-router-english-version.aspx">Tutorial with Demo Servers available online</a></li>
 <li><a href="https://developer.okta.com/blog/2017/04/17/angular-authentication-with-oidc">Angular Authentication with OpenID Connect and Okta in 20 Minutes</a></li>
@@ -247,7 +248,7 @@ Now the reverse is true <strong>if you&#39;re upgrading from before 9.0.0</stron
 <li><a href="https://www.softwarearchitekt.at">On-Site Workshops</a></li>
 <li><a href="https://github.com/jeroenheijmans/sample-auth0-angular-oauth2-oidc">Angular 6 with Auth0 using this library</a></li>
 </ul>
-<h2 id="thanks-to-all-contributors">Thanks to all Contributors</h2>
+<h2>Thanks to all Contributors</h2>
 <p><a href="https://github.com/alexandis"><img alt="alexandis" src="https://avatars.githubusercontent.com/u/6149843?v=4&s=117" width="117"></a><a href="https://github.com/anbiniyar"><img alt="anbiniyar" src="https://avatars.githubusercontent.com/u/407653?v=4&s=117" width="117"></a><a href="https://github.com/anoordende"><img alt="anoordende" src="https://avatars.githubusercontent.com/u/11973801?v=4&s=117" width="117"></a><a href="https://github.com/ArsProgramma"><img alt="ArsProgramma" src="https://avatars.githubusercontent.com/u/4572729?v=4&s=117" width="117"></a><a href="https://github.com/nihanth007"><img alt="nihanth007" src="https://avatars.githubusercontent.com/u/14851784?v=4&s=117" width="117"></a></p>
 <p><a href="https://github.com/bobvandevijver"><img alt="bobvandevijver" src="https://avatars.githubusercontent.com/u/1835343?v=4&s=117" width="117"></a><a href="https://github.com/BobCui20"><img alt="BobCui20" src="https://avatars.githubusercontent.com/u/59807069?v=4&s=117" width="117"></a><a href="https://github.com/Bottswana"><img alt="Bottswana" src="https://avatars.githubusercontent.com/u/6907460?v=4&s=117" width="117"></a><a href="https://github.com/ErazerBrecht"><img alt="ErazerBrecht" src="https://avatars.githubusercontent.com/u/6287467?v=4&s=117" width="117"></a><a href="https://github.com/Chris3773"><img alt="Chris3773" src="https://avatars.githubusercontent.com/u/22506071?v=4&s=117" width="117"></a></p>
 <p><a href="https://github.com/ChristianMurphy"><img alt="ChristianMurphy" src="https://avatars.githubusercontent.com/u/3107513?v=4&s=117" width="117"></a><a href="https://github.com/d-moos"><img alt="d-moos" src="https://avatars.githubusercontent.com/u/14070689?v=4&s=117" width="117"></a><a href="https://github.com/enterprisebug"><img alt="enterprisebug" src="https://avatars.githubusercontent.com/u/1539741?v=4&s=117" width="117"></a><a href="https://github.com/craniodev"><img alt="craniodev" src="https://avatars.githubusercontent.com/u/8593824?v=4&s=117" width="117"></a><a href="https://github.com/FabianGosebrink"><img alt="FabianGosebrink" src="https://avatars.githubusercontent.com/u/11268349?v=4&s=117" width="117"></a></p>
@@ -282,14 +283,16 @@ Now the reverse is true <strong>if you&#39;re upgrading from before 9.0.0</stron
 
 
 
-                   
+
+
+
 
 
 
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -301,6 +304,15 @@ Now the reverse is true <strong>if you&#39;re upgrading from before 9.0.0</stron
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 0;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
@@ -310,8 +322,8 @@ Now the reverse is true <strong>if you&#39;re upgrading from before 9.0.0</stron
 
        <script src="./js/libs/custom-elements.min.js"></script>
        <script src="./js/libs/lit-html.js"></script>
-       
-       <script type="module" src="./js/menu-wc.js" defer></script>
+
+       <script src="./js/menu-wc.js" defer></script>
        <script nomodule src="./js/menu-wc_es5.js" defer></script>
 
        <script src="./js/libs/bootstrap-native.js"></script>

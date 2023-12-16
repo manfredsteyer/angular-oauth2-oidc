@@ -9,11 +9,11 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">angular-oauth2-oidc</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -44,12 +44,14 @@
 
 
 
-                   
 
 
 
 
-<h2 id="configuring-for-implicit-flow">Configuring for Implicit Flow</h2>
+
+
+
+<h2>Configuring for Implicit Flow</h2>
 <p>This section shows how to implement login leveraging implicit flow. This is the OAuth2/OIDC flow which was originally intended for Single Page Application. </p>
 <p>Meanwhile using <strong>Code Flow</strong> instead is a <strong>best practice</strong> and with OAuth 2.1 implicit flow will be <strong>deprecated</strong>*.</p>
 <div><pre class="line-numbers"><code class="language-TypeScript">import { AuthConfig } from &#39;angular-oauth2-oidc&#39;;
@@ -88,7 +90,7 @@ export class AppComponent {
       this.oauthService.tokenValidationHandler = new JwksValidationHandler();
       this.oauthService.loadDiscoveryDocumentAndTryLogin();
     }
-}</code></pre></div><h3 id="implementing-a-login-form">Implementing a Login Form</h3>
+}</code></pre></div><h3>Implementing a Login Form</h3>
 <p>After you&#39;ve configured the library, you just have to call <code>initImplicitFlow</code> to login using OAuth2/ OIDC.</p>
 <div><pre class="line-numbers"><code class="language-TypeScript">import { Component } from &#39;&#64;angular/core&#39;;
 import { OAuthService } from &#39;angular-oauth2-oidc&#39;;
@@ -135,7 +137,7 @@ export class HomeComponent {
 &lt;/div&gt;</code></pre></div>
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -147,6 +149,15 @@ export class HomeComponent {
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
@@ -156,8 +167,8 @@ export class HomeComponent {
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>

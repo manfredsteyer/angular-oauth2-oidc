@@ -9,11 +9,11 @@
 
         <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
 	   <link rel="stylesheet" href="../styles/style.css">
-        <link rel="stylesheet" href="../styles/dark.css" media="(prefers-color-scheme: dark)">
+        <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="../" class="navbar-brand">angular-oauth2-oidc</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -44,14 +44,16 @@
 
 
 
-                   
+
+
+
 
 <ol class="breadcrumb">
-  <li>Miscellaneous</li>
-  <li>Functions</li>
+  <li class="breadcrumb-item">Miscellaneous</li>
+  <li class="breadcrumb-item">Functions</li>
 </ol>
 
-<section>
+<section data-compodoc="block-index">
     <h3 id="index">Index</h3>
     <table class="table table-sm table-bordered index-table">
         <tbody>
@@ -105,7 +107,7 @@
 </section>
 
     <h3>projects/lib/src/base64-helper.ts</h3>
-    <section>
+    <section data-compodoc="block-methods">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -131,6 +133,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
+                        
                         <table class="params">
                             <thead>
                                 <tr>
@@ -182,6 +185,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
+                        
                         <table class="params">
                             <thead>
                                 <tr>
@@ -216,7 +220,7 @@
         </tbody>
     </table>
 </section>    <h3>projects/lib/src/factories.ts</h3>
-    <section>
+    <section data-compodoc="block-methods">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -262,7 +266,7 @@
         </tbody>
     </table>
 </section>    <h3>projects/lib/src/token-validation/hash-handler.ts</h3>
-    <section>
+    <section data-compodoc="block-methods">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -288,6 +292,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
+                        
                         <table class="params">
                             <thead>
                                 <tr>
@@ -339,6 +344,7 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
+                        
                         <table class="params">
                             <thead>
                                 <tr>
@@ -366,7 +372,7 @@
         </tbody>
     </table>
 </section>    <h3>projects/lib/src/token-validation/fast-sha256js.ts</h3>
-    <section>
+    <section data-compodoc="block-methods">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -380,7 +386,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>fillBuffer(buffer, hmac, info, counter)</code>
+<code>fillBuffer(buffer: Uint8Array, hmac: <a href="../classes/HMAC.html" target="_self">HMAC</a>, info, counter: Uint8Array)</code>
                 </td>
             </tr>
 
@@ -392,16 +398,21 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
+                        
                         <table class="params">
                             <thead>
                                 <tr>
                                     <td>Name</td>
+                                    <td>Type</td>
                                     <td>Optional</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>buffer</td>
+                                    <td>
+                                            <code>Uint8Array</code>
+                                    </td>
 
                                     <td>
                                         No
@@ -411,6 +422,9 @@
                                 </tr>
                                 <tr>
                                     <td>hmac</td>
+                                    <td>
+                                                <code><a href="../classes/HMAC.html" target="_self" >HMAC</a></code>
+                                    </td>
 
                                     <td>
                                         No
@@ -420,6 +434,8 @@
                                 </tr>
                                 <tr>
                                     <td>info</td>
+                                    <td>
+                                    </td>
 
                                     <td>
                                         No
@@ -429,6 +445,9 @@
                                 </tr>
                                 <tr>
                                     <td>counter</td>
+                                    <td>
+                                            <code>Uint8Array</code>
+                                    </td>
 
                                     <td>
                                         No
@@ -458,7 +477,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>hash(data)</code>
+<code>hash(data: Uint8Array)</code>
                 </td>
             </tr>
 
@@ -470,16 +489,21 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
+                        
                         <table class="params">
                             <thead>
                                 <tr>
                                     <td>Name</td>
+                                    <td>Type</td>
                                     <td>Optional</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>data</td>
+                                    <td>
+                                            <code>Uint8Array</code>
+                                    </td>
 
                                     <td>
                                         No
@@ -516,7 +540,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>hashBlocks(w, v, p, pos, len)</code>
+<code>hashBlocks(w: Int32Array, v: Int32Array, p: Uint8Array, pos: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, len: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
                 </td>
             </tr>
 
@@ -528,16 +552,21 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
+                        
                         <table class="params">
                             <thead>
                                 <tr>
                                     <td>Name</td>
+                                    <td>Type</td>
                                     <td>Optional</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>w</td>
+                                    <td>
+                                            <code>Int32Array</code>
+                                    </td>
 
                                     <td>
                                         No
@@ -547,6 +576,9 @@
                                 </tr>
                                 <tr>
                                     <td>v</td>
+                                    <td>
+                                            <code>Int32Array</code>
+                                    </td>
 
                                     <td>
                                         No
@@ -556,6 +588,9 @@
                                 </tr>
                                 <tr>
                                     <td>p</td>
+                                    <td>
+                                            <code>Uint8Array</code>
+                                    </td>
 
                                     <td>
                                         No
@@ -565,6 +600,9 @@
                                 </tr>
                                 <tr>
                                     <td>pos</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
 
                                     <td>
                                         No
@@ -574,6 +612,9 @@
                                 </tr>
                                 <tr>
                                     <td>len</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
 
                                     <td>
                                         No
@@ -610,7 +651,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>hkdf(key, salt, info?, length)</code>
+<code>hkdf(key: Uint8Array, salt: Uint8Array, info?: Uint8Array, length: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
                 </td>
             </tr>
 
@@ -622,48 +663,73 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
+                        
                         <table class="params">
                             <thead>
                                 <tr>
                                     <td>Name</td>
+                                    <td>Type</td>
                                     <td>Optional</td>
+                                    <td>Default value</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>key</td>
+                                    <td>
+                                            <code>Uint8Array</code>
+                                    </td>
 
                                     <td>
                                         No
                                     </td>
 
+                                    <td>
+                                    </td>
 
                                 </tr>
                                 <tr>
                                     <td>salt</td>
+                                    <td>
+                                            <code>Uint8Array</code>
+                                    </td>
 
                                     <td>
                                         No
                                     </td>
 
+                                    <td>
+                                        <code>hkdfSalt</code>
+                                    </td>
 
                                 </tr>
                                 <tr>
                                     <td>info</td>
+                                    <td>
+                                            <code>Uint8Array</code>
+                                    </td>
 
                                     <td>
                                         Yes
                                     </td>
 
+                                    <td>
+                                    </td>
 
                                 </tr>
                                 <tr>
                                     <td>length</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
 
                                     <td>
                                         No
                                     </td>
 
+                                    <td>
+                                        <code>32</code>
+                                    </td>
 
                                 </tr>
                             </tbody>
@@ -688,7 +754,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>hmac(key, data)</code>
+<code>hmac(key: Uint8Array, data: Uint8Array)</code>
                 </td>
             </tr>
 
@@ -700,16 +766,21 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
+                        
                         <table class="params">
                             <thead>
                                 <tr>
                                     <td>Name</td>
+                                    <td>Type</td>
                                     <td>Optional</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>key</td>
+                                    <td>
+                                            <code>Uint8Array</code>
+                                    </td>
 
                                     <td>
                                         No
@@ -719,6 +790,9 @@
                                 </tr>
                                 <tr>
                                     <td>data</td>
+                                    <td>
+                                            <code>Uint8Array</code>
+                                    </td>
 
                                     <td>
                                         No
@@ -748,7 +822,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>pbkdf2(password, salt, iterations, dkLen)</code>
+<code>pbkdf2(password: Uint8Array, salt: Uint8Array, iterations: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>, dkLen: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
                 </td>
             </tr>
 
@@ -760,16 +834,21 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
+                        
                         <table class="params">
                             <thead>
                                 <tr>
                                     <td>Name</td>
+                                    <td>Type</td>
                                     <td>Optional</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>password</td>
+                                    <td>
+                                            <code>Uint8Array</code>
+                                    </td>
 
                                     <td>
                                         No
@@ -779,6 +858,9 @@
                                 </tr>
                                 <tr>
                                     <td>salt</td>
+                                    <td>
+                                            <code>Uint8Array</code>
+                                    </td>
 
                                     <td>
                                         No
@@ -788,6 +870,9 @@
                                 </tr>
                                 <tr>
                                     <td>iterations</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
 
                                     <td>
                                         No
@@ -797,6 +882,9 @@
                                 </tr>
                                 <tr>
                                     <td>dkLen</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                    </td>
 
                                     <td>
                                         No
@@ -814,7 +902,7 @@
         </tbody>
     </table>
 </section>    <h3>projects/lib/src/provider.ts</h3>
-    <section>
+    <section data-compodoc="block-methods">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
@@ -828,7 +916,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>provideOAuthClient(config, validationHandlerClass)</code>
+<code>provideOAuthClient(config: <a href="../classes/OAuthModuleConfig.html" target="_self">OAuthModuleConfig</a>, validationHandlerClass)</code>
                 </td>
             </tr>
 
@@ -840,30 +928,44 @@
 
                     <div class="io-description">
                         <b>Parameters :</b>
+                        
                         <table class="params">
                             <thead>
                                 <tr>
                                     <td>Name</td>
+                                    <td>Type</td>
                                     <td>Optional</td>
+                                    <td>Default value</td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>config</td>
+                                    <td>
+                                                <code><a href="../classes/OAuthModuleConfig.html" target="_self" >OAuthModuleConfig</a></code>
+                                    </td>
 
                                     <td>
                                         No
                                     </td>
 
+                                    <td>
+                                        <code>null</code>
+                                    </td>
 
                                 </tr>
                                 <tr>
                                     <td>validationHandlerClass</td>
+                                    <td>
+                                    </td>
 
                                     <td>
                                         No
                                     </td>
 
+                                    <td>
+                                        <code>NullValidationHandler</code>
+                                    </td>
 
                                 </tr>
                             </tbody>
@@ -887,7 +989,7 @@
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -899,6 +1001,15 @@
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'miscellaneous-functions';
@@ -908,8 +1019,8 @@
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>
-       
-       <script type="module" src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/menu-wc.js" defer></script>
        <script nomodule src="../js/menu-wc_es5.js" defer></script>
 
        <script src="../js/libs/bootstrap-native.js"></script>
