@@ -21,6 +21,15 @@
               "tsConfig": "projects/lib/tsconfig.lib.prod.json"
             }
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/lib/**/*.ts",
+              "projects/lib/**/*.html"
+            ]
+          }
         }
       }
     },
@@ -118,7 +127,6 @@
         }
       }
     },
-
     "quickstart-demo": {
       "projectType": "application",
       "schematics": {},
@@ -179,7 +187,6 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "quickstart-demo:build"
-
           },
           "configurations": {
             "production": {
@@ -207,22 +214,9 @@
             "styles": ["projects/quickstart-demo/src/styles.css"],
             "scripts": []
           }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "projects/quickstart-demo/e2e/protractor.conf.js",
-            "devServerTarget": "quickstart-demo:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "quickstart-demo:serve:production"
-            }
-          }
         }
       }
     },
-
     "angular-oauth2-oidc-jwks": {
       "projectType": "library",
       "root": "projects/angular-oauth2-oidc-jwks",
@@ -344,6 +338,8 @@
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "schematicCollections": ["@angular-eslint/schematics"],
+    "packageManager": "npm"
   }
 }

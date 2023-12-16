@@ -19,8 +19,8 @@
 //   new sha256.Hash()
 //   new sha256.HMAC(key)
 //
-export const digestLength: number = 32;
-export const blockSize: number = 64;
+export const digestLength = 32;
+export const blockSize = 64;
 
 // SHA-256 constants
 const K = new Uint32Array([
@@ -143,10 +143,10 @@ export class Hash {
   private state: Int32Array = new Int32Array(8); // hash state
   private temp: Int32Array = new Int32Array(64); // temporary state
   private buffer: Uint8Array = new Uint8Array(128); // buffer for data to hash
-  private bufferLength: number = 0; // number of bytes in buffer
-  private bytesHashed: number = 0; // number of total bytes hashed
+  private bufferLength = 0; // number of bytes in buffer
+  private bytesHashed = 0; // number of total bytes hashed
 
-  finished: boolean = false; // indicates whether the hash was finalized
+  finished = false; // indicates whether the hash was finalized
 
   constructor() {
     this.reset();
@@ -427,7 +427,7 @@ export function hkdf(
   key: Uint8Array,
   salt: Uint8Array = hkdfSalt,
   info?: Uint8Array,
-  length: number = 32
+  length = 32
 ) {
   const counter = new Uint8Array([1]);
 
@@ -477,7 +477,7 @@ export function pbkdf2(
   const dk = new Uint8Array(dkLen);
 
   for (let i = 0; i * len < dkLen; i++) {
-    let c = i + 1;
+    const c = i + 1;
     ctr[0] = (c >>> 24) & 0xff;
     ctr[1] = (c >>> 16) & 0xff;
     ctr[2] = (c >>> 8) & 0xff;

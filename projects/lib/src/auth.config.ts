@@ -111,7 +111,7 @@ export class AuthConfig {
   /**
    * Timeout for silent refresh.
    * @internal
-   * depreacted b/c of typo, see silentRefreshTimeout
+   * @deprecated use silentRefreshTimeout
    */
   public siletRefreshTimeout?: number = 1000 * 20;
 
