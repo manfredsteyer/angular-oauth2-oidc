@@ -1,19 +1,24 @@
 <strong>Status: {{ givenName ? 'logged in' : 'logged out' }} </strong>
-<h1 *ngIf="!givenName">Welcome!</h1>
-<h1 *ngIf="givenName">Welcome, {{ givenName }} {{ familyName }}!</h1>
+@if (givenName) {
+  <h1>Welcome, {{ givenName }} {{ familyName }}!</h1>
+}
+@else {
+  <h1>Welcome!</h1>
+}
 
-<div *ngIf="login" style="color: red">
-  You have to login before you can search for flights.
-</div>
+@if (login) {
+  <div style="color: red">
+    You have to login before you can search for flights.
+  </div>
+}
 
 <div class="panel panel-default">
   <div class="panel-body">
     <p>Login with Authorization Server</p>
     <div class="checkbox">
-      <label
-        ><input type="checkbox" [(ngModel)]="requestAccessToken" /> Request
-        AccessToken</label
-      >
+      <label><input type="checkbox" [(ngModel)]="requestAccessToken" /> Request
+        AccessToken
+      </label>
     </div>
   </div>
   <div class="panel-body">
@@ -22,103 +27,104 @@
       <label
         ><input type="checkbox" [(ngModel)]="useHashLocationStrategy" /> Use
         hash location strategy (Only works with Code Flow)</label
-      >
+        >
+      </div>
     </div>
   </div>
-</div>
 
-<div class="panel panel-default">
-  <div class="panel-body">
-    <h2>Login with Implicit Flow</h2>
-    <p>
-      <button class="btn btn-default" (click)="loginImplicit()">Login</button>
-      <button class="btn btn-default" (click)="logout()">Logout</button>
-    </p>
-    <b>Username/Password:</b> max/geheim
-  </div>
-</div>
-
-<div class="panel panel-default">
-  <div class="panel-body">
-    <h2>Login with Implicit Flow in popup</h2>
-    <p>
-      <button class="btn btn-default" (click)="loginImplicitInPopup()">
-        Login
-      </button>
-      <button class="btn btn-default" (click)="logout()">Logout</button>
-    </p>
-    <p><b>Username/Password:</b> max/geheim</p>
-    <p>
-      <b>Note:</b> When using IE, some security settings block the communication
-      with popups. This prevents that this feature works.
-    </p>
-  </div>
-</div>
-
-<div class="panel panel-default">
-  <div class="panel-body">
-    <h2>Login with Code Flow</h2>
-    <p>
-      <button class="btn btn-default" (click)="loginCode()">Login</button>
-      <button class="btn btn-default" (click)="logout()">Logout</button>
-    </p>
-    <b>Username/Password:</b> alice/alice
-  </div>
-</div>
-
-<div class="panel panel-default">
-  <div class="panel-body">
-    <h2>Login with Code Flow in popup</h2>
-    <p>
-      <button class="btn btn-default" (click)="loginCodeInPopup()">
-        Login
-      </button>
-      <button class="btn btn-default" (click)="logout()">Logout</button>
-    </p>
-    <p><b>Username/Password:</b> alice/alice</p>
-    <p>
-      <b>Note:</b> When using IE, some security settings block the communication
-      with popups. This prevents that this feature works.
-    </p>
-  </div>
-</div>
-
-<div class="panel panel-default">
-  <div class="panel-body">
-    <p><b>access_token_expiration:</b> {{ access_token_expiration }}</p>
-    <p><b>id_token_expiration:</b> {{ id_token_expiration }}</p>
-    <p><b>hasValidAccessToken:</b> {{ hasValidAccessToken }}</p>
-    <p><b>hasValidIdToken:</b> {{ hasValidIdToken }}</p>
-
-  </div>
-</div>
-
-<div class="panel panel-default">
-  <div class="panel-body">
-    <p><b>access_token:</b> {{ access_token }}</p>
-    <p><b>id_token:</b> {{ id_token }}</p>
-    <div *ngIf="userProfile">
-      <b>user profile:</b>
-      <pre>{{ userProfile | json }}</pre>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <h2>Login with Implicit Flow</h2>
+      <p>
+        <button class="btn btn-default" (click)="loginImplicit()">Login</button>
+        <button class="btn btn-default" (click)="logout()">Logout</button>
+      </p>
+      <b>Username/Password:</b> max/geheim
     </div>
   </div>
-</div>
 
-<div class="panel panel-default">
-  <div class="panel-body">
-    <h2>Further Actions</h2>
-    <button class="btn btn-default" (click)="refresh()">Refresh</button>
-
-    <button class="btn btn-default" (click)="loadUserProfile()">
-      Load User Profile
-    </button>
-
-    <button class="btn btn-default" (click)="startAutomaticRefresh()">
-      Start automatic refresh
-    </button>
-
-    <button class="btn btn-default" (click)="stopAutomaticRefresh()">
-      Stop automatic refresh
-    </button>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <h2>Login with Implicit Flow in popup</h2>
+      <p>
+        <button class="btn btn-default" (click)="loginImplicitInPopup()">
+          Login
+        </button>
+        <button class="btn btn-default" (click)="logout()">Logout</button>
+      </p>
+      <p><b>Username/Password:</b> max/geheim</p>
+      <p>
+        <b>Note:</b> When using IE, some security settings block the communication
+        with popups. This prevents that this feature works.
+      </p>
+    </div>
   </div>
-</div>
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <h2>Login with Code Flow</h2>
+      <p>
+        <button class="btn btn-default" (click)="loginCode()">Login</button>
+        <button class="btn btn-default" (click)="logout()">Logout</button>
+      </p>
+      <b>Username/Password:</b> alice/alice
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <h2>Login with Code Flow in popup</h2>
+      <p>
+        <button class="btn btn-default" (click)="loginCodeInPopup()">
+          Login
+        </button>
+        <button class="btn btn-default" (click)="logout()">Logout</button>
+      </p>
+      <p><b>Username/Password:</b> alice/alice</p>
+      <p>
+        <b>Note:</b> When using IE, some security settings block the communication
+        with popups. This prevents that this feature works.
+      </p>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <p><b>access_token_expiration:</b> {{ access_token_expiration }}</p>
+      <p><b>id_token_expiration:</b> {{ id_token_expiration }}</p>
+      <p><b>hasValidAccessToken:</b> {{ hasValidAccessToken }}</p>
+      <p><b>hasValidIdToken:</b> {{ hasValidIdToken }}</p>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <p><b>access_token:</b> {{ access_token }}</p>
+      <p><b>id_token:</b> {{ id_token }}</p>
+      @if (userProfile) {
+        <div>
+          <b>user profile:</b>
+          <pre>{{ userProfile | json }}</pre>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <h2>Further Actions</h2>
+      <button class="btn btn-default" (click)="refresh()">Refresh</button>
+
+      <button class="btn btn-default" (click)="loadUserProfile()">
+        Load User Profile
+      </button>
+
+      <button class="btn btn-default" (click)="startAutomaticRefresh()">
+        Start automatic refresh
+      </button>
+
+      <button class="btn btn-default" (click)="stopAutomaticRefresh()">
+        Stop automatic refresh
+      </button>
+    </div>
+  </div>

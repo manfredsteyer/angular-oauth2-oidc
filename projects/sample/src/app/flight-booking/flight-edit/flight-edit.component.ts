@@ -6,23 +6,25 @@ import { ActivatedRoute } from '@angular/router';
     <h1>Flight Edit!</h1>
     <p>Hier könnte auch der Datensatz mit der Id {{ id }} stehen!</p>
 
-    <div *ngIf="exitWarning.show" class="alert alert-warning">
-      <div>Daten wurden nicht gespeichert! Trotzdem Maske verlassen?</div>
-      <div>
-        <a
-          href="javascript:void(0)"
-          (click)="decide(true)"
-          class="btn btn-danger"
-          >Ja</a
-        >
-        <a
-          href="javascript:void(0)"
-          (click)="decide(false)"
-          class="btn btn-default"
-          >Nein</a
-        >
+    @if (exitWarning.show) {
+      <div class="alert alert-warning">
+        <div>Daten wurden nicht gespeichert! Trotzdem Maske verlassen?</div>
+        <div>
+          <a
+            href="javascript:void(0)"
+            (click)="decide(true)"
+            class="btn btn-danger"
+            >Ja</a
+          >
+          <a
+            href="javascript:void(0)"
+            (click)="decide(false)"
+            class="btn btn-default"
+            >Nein</a
+          >
+        </div>
       </div>
-    </div>
+    }
   `,
 })
 export class FlightEditComponent implements OnInit {

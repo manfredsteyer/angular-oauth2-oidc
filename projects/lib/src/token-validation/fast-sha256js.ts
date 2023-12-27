@@ -42,7 +42,7 @@ function hashBlocks(
   v: Int32Array,
   p: Uint8Array,
   pos: number,
-  len: number
+  len: number,
 ): number {
   let a: number,
     b: number,
@@ -389,7 +389,7 @@ function fillBuffer(
   buffer: Uint8Array,
   hmac: HMAC,
   info: Uint8Array | undefined,
-  counter: Uint8Array
+  counter: Uint8Array,
 ) {
   // Counter is a byte value: check if it overflowed.
   const num = counter[0];
@@ -427,7 +427,7 @@ export function hkdf(
   key: Uint8Array,
   salt: Uint8Array = hkdfSalt,
   info?: Uint8Array,
-  length = 32
+  length = 32,
 ) {
   const counter = new Uint8Array([1]);
 
@@ -467,7 +467,7 @@ export function pbkdf2(
   password: Uint8Array,
   salt: Uint8Array,
   iterations: number,
-  dkLen: number
+  dkLen: number,
 ) {
   const prf = new HMAC(password);
   const len = prf.digestLength;

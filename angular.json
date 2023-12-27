@@ -41,12 +41,12 @@
       "schematics": {},
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": "dist/sample",
             "index": "projects/sample/src/index.html",
-            "main": "projects/sample/src/main.ts",
-            "polyfills": "projects/sample/src/polyfills.ts",
+            "browser": "projects/sample/src/main.ts",
+            "polyfills": ["zone.js"],
             "tsConfig": "projects/sample/tsconfig.app.json",
             "assets": [
               "projects/sample/src/favicon.ico",
@@ -58,9 +58,7 @@
               "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": [],
-            "vendorChunk": true,
             "extractLicenses": false,
-            "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
             "namedChunks": true
@@ -83,9 +81,7 @@
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true
+              "extractLicenses": true
             }
           },
           "defaultConfiguration": ""
@@ -93,25 +89,25 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "sample:build"
+            "buildTarget": "sample:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "sample:build:production"
+              "buildTarget": "sample:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "sample:build"
+            "buildTarget": "sample:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "projects/sample/src/test.ts",
-            "polyfills": "projects/sample/src/polyfills.ts",
+            "polyfills": ["zone.js"],
             "tsConfig": "projects/sample/tsconfig.spec.json",
             "karmaConfig": "projects/sample/karma.conf.js",
             "styles": [
@@ -140,7 +136,7 @@
             "outputPath": "dist/quickstart-demo",
             "index": "projects/quickstart-demo/src/index.html",
             "main": "projects/quickstart-demo/src/main.ts",
-            "polyfills": "projects/quickstart-demo/src/polyfills.ts",
+            "polyfills": ["zone.js"],
             "tsConfig": "projects/quickstart-demo/tsconfig.app.json",
             "aot": false,
             "assets": [
@@ -186,25 +182,25 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "quickstart-demo:build"
+            "buildTarget": "quickstart-demo:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "quickstart-demo:build:production"
+              "buildTarget": "quickstart-demo:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "quickstart-demo:build"
+            "buildTarget": "quickstart-demo:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "projects/quickstart-demo/src/test.ts",
-            "polyfills": "projects/quickstart-demo/src/polyfills.ts",
+            "polyfills": ["zone.js"],
             "tsConfig": "projects/quickstart-demo/tsconfig.spec.json",
             "karmaConfig": "projects/quickstart-demo/karma.conf.js",
             "assets": [
@@ -297,10 +293,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "quickstart-standalone:build:production"
+              "buildTarget": "quickstart-standalone:build:production"
             },
             "development": {
-              "browserTarget": "quickstart-standalone:build:development"
+              "buildTarget": "quickstart-standalone:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -308,7 +304,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "quickstart-standalone:build"
+            "buildTarget": "quickstart-standalone:build"
           }
         },
         "test": {

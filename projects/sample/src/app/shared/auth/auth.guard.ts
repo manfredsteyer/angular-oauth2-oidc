@@ -4,7 +4,10 @@ import { OAuthService } from 'angular-oauth2-oidc';
 
 @Injectable()
 export class AuthGuard {
-  constructor(private router: Router, private oauthService: OAuthService) {}
+  constructor(
+    private router: Router,
+    private oauthService: OAuthService,
+  ) {}
 
   canActivate() {
     if (

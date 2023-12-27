@@ -1,6 +1,6 @@
 ## Configuring for Implicit Flow
 
-This section shows how to implement login leveraging implicit flow. This is the OAuth2/OIDC flow which was originally intended for Single Page Application. 
+This section shows how to implement login leveraging implicit flow. This is the OAuth2/OIDC flow which was originally intended for Single Page Application.
 
 Meanwhile using **Code Flow** instead is a **best practice** and with OAuth 2.1 implicit flow will be **deprecated***.
 
@@ -85,12 +85,15 @@ export class HomeComponent {
 The following snippet contains the template for the login page:
 
 ```HTML
-<h1 *ngIf="!name">
-    Hallo
-</h1>
-<h1 *ngIf="name">
+@if (name) {
+  <h1>
     Hallo, {{name}}
-</h1>
+  </h1>
+} @else {
+  <h1>
+    Hallo
+  </h1>
+}
 
 <button class="btn btn-default" (click)="login()">
     Login

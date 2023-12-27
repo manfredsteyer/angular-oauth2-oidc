@@ -22,7 +22,7 @@ import {
 
 export function provideOAuthClient(
   config: OAuthModuleConfig = null,
-  validationHandlerClass = NullValidationHandler
+  validationHandlerClass = NullValidationHandler,
 ): EnvironmentProviders {
   return makeEnvironmentProviders([
     OAuthService,
