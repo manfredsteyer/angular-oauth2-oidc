@@ -1,6 +1,6 @@
 {
   "name": "angular-oauth2-oidc",
-  "version": "16.1.0",
+  "version": "17.0.0",
   "license": "MIT",
   "scripts": {
     "release": "standard-version",
@@ -26,15 +26,15 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^16.0.3",
-    "@angular/common": "^16.0.3",
-    "@angular/compiler": "^16.0.3",
-    "@angular/core": "^16.0.3",
-    "@angular/elements": "^16.0.3",
-    "@angular/forms": "^16.0.3",
-    "@angular/platform-browser": "^16.0.3",
-    "@angular/platform-browser-dynamic": "^16.0.3",
-    "@angular/router": "^16.0.3",
+    "@angular/animations": "^17.0.7",
+    "@angular/common": "^17.0.7",
+    "@angular/compiler": "^17.0.7",
+    "@angular/core": "^17.0.7",
+    "@angular/elements": "^17.0.7",
+    "@angular/forms": "^17.0.7",
+    "@angular/platform-browser": "^17.0.7",
+    "@angular/platform-browser-dynamic": "^17.0.7",
+    "@angular/router": "^17.0.7",
     "@popperjs/core": "^2.9.2",
     "@webcomponents/custom-elements": "^1.4.3",
     "angular-oauth2-oidc": "^15.0.1",
@@ -47,18 +47,18 @@
     "rxjs-compat": "^6.6.7",
     "text-encoder-lite": "^2.0.0",
     "tslib": "^2.5.2",
-    "zone.js": "~0.13.0"
+    "zone.js": "~0.14.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^16.0.3",
+    "@angular-devkit/build-angular": "^17.0.7",
     "@angular-eslint/builder": "16.0.2",
     "@angular-eslint/eslint-plugin": "16.0.2",
     "@angular-eslint/eslint-plugin-template": "16.0.2",
     "@angular-eslint/schematics": "16.0.2",
     "@angular-eslint/template-parser": "16.0.2",
-    "@angular/cli": "^16.0.3",
-    "@angular/compiler-cli": "^16.0.3",
-    "@angular/language-service": "^16.0.3",
+    "@angular/cli": "^17.0.7",
+    "@angular/compiler-cli": "^17.0.7",
+    "@angular/language-service": "^17.0.7",
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
     "@compodoc/compodoc": "^1.1.14",
@@ -83,12 +83,12 @@
     "karma-coverage-istanbul-reporter": "~3.0.3",
     "karma-jasmine": "~4.0.1",
     "karma-jasmine-html-reporter": "^1.7.0",
-    "ng-packagr": "^16.0.1",
+    "ng-packagr": "^17.0.2",
     "prettier": "^2.3.2",
     "standard-version": "^9.3.1",
     "ts-node": "~10.1.0",
     "tslint": "~6.1.0",
-    "typescript": "~5.0.4"
+    "typescript": "~5.2.2"
   },
   "husky": {
     "hooks": {

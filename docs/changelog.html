@@ -31,6 +31,29 @@
                <div class="content getting-started">
                    <div class="content-data">
 
+<h1>Changelog</h1>
+<h3>Features</h3>
+<ul>
+<li>update project to Angular 16 (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/b999024b1bb7fdb40f07810a75add60f47fe5f08">b999024</a>)</li>
+</ul>
+<h3>Bug Fixes</h3>
+<ul>
+<li><a href="https://github.com/manfredsteyer/angular-oauth2-oidc/issues/728">#728</a> (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/51e438a942773948f17ab108332d704b459fd789">51e438a</a>), closes <a href="https://github.com/manfredsteyer//github.com/manfredsteyer/angular-oauth2-oidc/issues/728/issues/issuecomment-808969225">/github.com/manfredsteyer/angular-oauth2-oidc/issues/728#issuecomment-808969225</a></li>
+<li>clear location.hash only if it is present (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/c2b2753943d59a6b4b5149f1003371338ac1a210">c2b2753</a>), closes <a href="https://github.com/manfredsteyer/angular-oauth2-oidc/issues/970">#970</a></li>
+<li>clock skew bug (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/f30098df4213671871cf9cd5667ca9751ff29ddd">f30098d</a>)</li>
+<li>correctly handle ? and &amp; in location replacements (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/70fd8268832aba954956542e37896252dde5cdab">70fd826</a>)</li>
+<li>correctly use clockSkew for hasValid[Access|Id]Token (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/68238fb6ea4a2f88ada97b03b13663d1454b001c">68238fb</a>)</li>
+<li>Disable nonce validation for id token for e2e tests (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/f5bd96ca81ec6b7af868de72b1098541264347cf">f5bd96c</a>)</li>
+<li>fix scope/state removal for implicit flow with hash (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/9e257d0d267942d716607f2a1c78700bd9d6e9ef">9e257d0</a>)</li>
+<li>in code flow pass options to error handler (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/c9a2c557178af26154adfbcf39e3db2d12ee0503">c9a2c55</a>), closes <a href="https://github.com/manfredsteyer/angular-oauth2-oidc/issues/972">#972</a></li>
+<li>issue with sha256 and prod build <a href="https://github.com/manfredsteyer/angular-oauth2-oidc/issues/1120">#1120</a> (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/b44e19a2f5c758e3b5dab259336ee1974bfe99c8">b44e19a</a>)</li>
+<li><strong>js-sha256:</strong> wrap logic in a function to prevent optimizer destroy lib (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/ae26fba258cc3effd693d23473ff51b63005b9ae">ae26fba</a>)</li>
+<li><strong>jwks:</strong> update jsrsasign dependency to 10.2.0 (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/a05bd8a106035acb51fb06fd62e17de0de8decb4">a05bd8a</a>), closes <a href="https://github.com/manfredsteyer/angular-oauth2-oidc/issues/1061">#1061</a></li>
+<li>multiplying calls to token endpoint in code flow (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/59f65d2eb9cd1a724301fb3de0b3def796920bd4">59f65d2</a>)</li>
+<li>Refresh tokens with a plus sign get corrupted before sending to token endpoint (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/2204c5a307640d11b847a0c266b44ca2c18fd9a7">2204c5a</a>)</li>
+<li><strong>revoketokenandlogout:</strong> &#39;customParameters&#39; should accept boolean (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/9761baded0d85bd831947de4607296fb029579ab">9761bad</a>)</li>
+<li>While Using POPUP mode, we click on login button multiple time it opens multiple popup instead of focusing already opened (<a href="https://github.com/manfredsteyer/angular-oauth2-oidc/commit/bbff95b86173fa9262bf962e7fa4cfe4121b787e">bbff95b</a>)</li>
+</ul>
 <h2><a href="https://github.com/manfredsteyer/angular-oauth2-oidc/compare/v10.0.3...v10.0.2">12.0.0</a> (2021-07-16)</h2>
 <h3>Bug Fixes</h3>
 <ul>
