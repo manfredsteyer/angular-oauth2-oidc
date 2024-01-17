@@ -13,7 +13,7 @@ After that, you can import it into your application:
   import { JwksValidationHandler } from 'angular-oauth2-oidc-jwks';
 
 Please note, that this dependency is not needed for the **code flow**,
-which is nowadays the **recommented** one for single page applications.
+which is nowadays the **recommended** one for single page applications.
 This also results in smaller bundle sizes.
 `;
 
