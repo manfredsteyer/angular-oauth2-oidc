@@ -2175,7 +2175,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     const claimsJson = b64DecodeUnicode(claimsBase64);
     const claims = JSON.parse(claimsJson);
 
-    let savedNonce;
+    let savedNonce = undefined;
     if (
       this.saveNoncesInLocalStorage &&
       typeof window['localStorage'] !== 'undefined'
