@@ -41,12 +41,16 @@
       "schematics": {},
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/sample",
+            "outputPath": {
+              "base": "dist/sample",
+              "browser": ""
+            },
             "index": "projects/sample/src/index.html",
-            "main": "projects/sample/src/main.ts",
-            "polyfills": "projects/sample/src/polyfills.ts",
+            "polyfills": [
+              "projects/sample/src/polyfills.ts"
+            ],
             "tsConfig": "projects/sample/tsconfig.app.json",
             "assets": [
               "projects/sample/src/favicon.ico",
@@ -58,12 +62,11 @@
               "node_modules/bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": [],
-            "vendorChunk": true,
             "extractLicenses": false,
-            "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "browser": "projects/sample/src/main.ts"
           },
           "configurations": {
             "production": {
@@ -83,9 +86,7 @@
               "outputHashing": "all",
               "sourceMap": false,
               "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true
+              "extractLicenses": true
             }
           },
           "defaultConfiguration": ""
@@ -135,12 +136,16 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/quickstart-demo",
+            "outputPath": {
+              "base": "dist/quickstart-demo",
+              "browser": ""
+            },
             "index": "projects/quickstart-demo/src/index.html",
-            "main": "projects/quickstart-demo/src/main.ts",
-            "polyfills": "projects/quickstart-demo/src/polyfills.ts",
+            "polyfills": [
+              "projects/quickstart-demo/src/polyfills.ts"
+            ],
             "tsConfig": "projects/quickstart-demo/tsconfig.app.json",
             "aot": false,
             "assets": [
@@ -149,12 +154,11 @@
             ],
             "styles": ["projects/quickstart-demo/src/styles.css"],
             "scripts": [],
-            "vendorChunk": true,
             "extractLicenses": false,
-            "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "browser": "projects/quickstart-demo/src/main.ts"
           },
           "configurations": {
             "production": {
@@ -170,8 +174,6 @@
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -248,11 +250,13 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/quickstart-standalone",
+            "outputPath": {
+              "base": "dist/quickstart-standalone",
+              "browser": ""
+            },
             "index": "projects/quickstart-standalone/src/index.html",
-            "main": "projects/quickstart-standalone/src/main.ts",
             "polyfills": [
               "zone.js"
             ],
@@ -264,7 +268,8 @@
             "styles": [
               "projects/quickstart-standalone/src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "browser": "projects/quickstart-standalone/src/main.ts"
           },
           "configurations": {
             "production": {
@@ -283,9 +288,7 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
