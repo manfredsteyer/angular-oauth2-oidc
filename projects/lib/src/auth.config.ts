@@ -128,7 +128,7 @@ export class AuthConfig {
    * it does not bring additional security and is therefore
    * as good as using no password.
    */
-  public dummyClientSecret?: string = '';
+  public dummyClientSecret? = '';
 
   /**
    * Defines whether https is required.
@@ -278,6 +278,12 @@ export class AuthConfig {
    * Blocks other origins requesting a silent refresh
    */
   public checkOrigin? = false;
+
+  /**
+   * Allows to set prefix for entries stored in configured storage.
+   * Can be used to avoid multipple apps overriding each other values
+   */
+  public configId? = '';
 
   constructor(json?: Partial<AuthConfig>) {
     if (json) {
