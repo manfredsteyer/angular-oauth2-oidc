@@ -1,11 +1,11 @@
 {
-  "name": "@angular-redux3/angular-oauth2-oidc",
+  "name": "angular-oauth2-oidc",
   "license": "MIT",
   "author": {
     "name": "Manfred Steyer"
   },
   "version": "17.0.1",
-  "repository": "pakozlow/angular-oauth2-oidc",
+  "repository": "manfredsteyer/angular-oauth2-oidc",
   "peerDependencies": {
     "@angular/common": ">=14.0.0",
     "@angular/core": ">=14.0.0"
