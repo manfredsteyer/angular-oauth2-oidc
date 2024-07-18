@@ -788,7 +788,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
               info = Object.assign({}, existingClaims, info);
 
               this._storage.setItem(
-                `${this.getStoragePrefix()}id_token_claims_obj`,
+                `${this.getConfigId()}id_token_claims_obj`,
                 JSON.stringify(info)
               );
               this.eventsSubject.next(
@@ -937,7 +937,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         .set('scope', this.scope)
         .set(
           'refresh_token',
-          this._storage.getItem(`${this.getStoragePrefix()}refresh_token`)
+          this._storage.getItem(`${this.getConfigId()}refresh_token`)
         );
 
       let headers = new HttpHeaders().set(
@@ -1554,12 +1554,12 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         typeof window['localStorage'] !== 'undefined'
       ) {
         localStorage.setItem(
-          `${this.getStoragePrefix()}PKCE_verifier`,
+          `${this.getConfigId()}PKCE_verifier`,
           verifier
         );
       } else {
         this._storage.setItem(
-          `${this.getStoragePrefix()}PKCE_verifier`,
+          `${this.getConfigId()}PKCE_verifier`,
           verifier
         );
       }
@@ -1686,23 +1686,23 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     customParameters?: Map<string, string>
   ): void {
     this._storage.setItem(
-      `${this.getStoragePrefix()}access_token`,
+      `${this.getConfigId()}access_token`,
       accessToken
     );
     if (grantedScopes && !Array.isArray(grantedScopes)) {
       this._storage.setItem(
-        `${this.getStoragePrefix()}granted_scopes`,
+        `${this.getConfigId()}granted_scopes`,
         JSON.stringify(grantedScopes.split(' '))
       );
     } else if (grantedScopes && Array.isArray(grantedScopes)) {
       this._storage.setItem(
-        `${this.getStoragePrefix()}granted_scopes`,
+        `${this.getConfigId()}granted_scopes`,
         JSON.stringify(grantedScopes)
       );
     }
 
     this._storage.setItem(
-      `${this.getStoragePrefix()}access_token_stored_at`,
+      `${this.getConfigId()}access_token_stored_at`,
       '' + this.dateTimeService.now()
     );
     if (expiresIn) {
@@ -1710,20 +1710,20 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       const now = this.dateTimeService.new();
       const expiresAt = now.getTime() + expiresInMilliSeconds;
       this._storage.setItem(
-        `\`${this.getStoragePrefix()}expires_at`,
+        `${this.getConfigId()}expires_at`,
         '' + expiresAt
       );
     }
 
     if (refreshToken) {
       this._storage.setItem(
-        `${this.getStoragePrefix()}refresh_token`,
+        `${this.getConfigId()}refresh_token`,
         refreshToken
       );
     }
     if (customParameters) {
       customParameters.forEach((value: string, key: string) => {
-        this._storage.setItem(`${this.getStoragePrefix()}${key}`, value);
+        this._storage.setItem(`${this.getConfigId()}${key}`, value);
       });
     }
   }
@@ -1827,7 +1827,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   private saveRequestedRoute() {
     if (this.config.preserveRequestedRoute) {
       this._storage.setItem(
-        `${this.getStoragePrefix()}requested_route`,
+        `${this.getConfigId()}requested_route`,
         window.location.pathname + window.location.search
       );
     }
@@ -1835,7 +1835,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
   private restoreRequestedRoute() {
     const requestedRoute = this._storage.getItem(
-      `${this.getStoragePrefix()}requested_route`
+      `${this.getConfigId()}requested_route`
     );
     if (requestedRoute) {
       history.replaceState(null, '', window.location.origin + requestedRoute);
@@ -1879,11 +1879,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         typeof window['localStorage'] !== 'undefined'
       ) {
         PKCEVerifier = localStorage.getItem(
-          `${this.getStoragePrefix()}PKCE_verifier`
+          `${this.getConfigId()}PKCE_verifier`
         );
       } else {
         PKCEVerifier = this._storage.getItem(
-          `${this.getStoragePrefix()}PKCE_verifier`
+          `${this.getConfigId()}PKCE_verifier`
         );
       }
 
@@ -2139,9 +2139,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       this.saveNoncesInLocalStorage &&
       typeof window['localStorage'] !== 'undefined'
     ) {
-      savedNonce = localStorage.getItem(`${this.getStoragePrefix()}nonce`);
+      savedNonce = localStorage.getItem(`${this.getConfigId()}nonce`);
     } else {
-      savedNonce = this._storage.getItem(`${this.getStoragePrefix()}nonce`);
+      savedNonce = this._storage.getItem(`${this.getConfigId()}nonce`);
     }
 
     if (savedNonce !== nonceInState) {
@@ -2154,32 +2154,32 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
   protected storeIdToken(idToken: ParsedIdToken): void {
     this._storage.setItem(
-      `${this.getStoragePrefix()}id_token`,
+      `${this.getConfigId()}id_token`,
       idToken.idToken
     );
     this._storage.setItem(
-      `${this.getStoragePrefix()}id_token_claims_obj`,
+      `${this.getConfigId()}id_token_claims_obj`,
       idToken.idTokenClaimsJson
     );
     this._storage.setItem(
-      `${this.getStoragePrefix()}id_token_expires_at`,
+      `${this.getConfigId()}id_token_expires_at`,
       '' + idToken.idTokenExpiresAt
     );
     this._storage.setItem(
-      `${this.getStoragePrefix()}id_token_stored_at`,
+      `${this.getConfigId()}id_token_stored_at`,
       '' + this.dateTimeService.now()
     );
   }
 
   protected storeSessionState(sessionState: string): void {
     this._storage.setItem(
-      `${this.getStoragePrefix()}session_state`,
+      `${this.getConfigId()}session_state`,
       sessionState
     );
   }
 
   protected getSessionState(): string {
-    return this._storage.getItem(`${this.getStoragePrefix()}session_state`);
+    return this._storage.getItem(`${this.getConfigId()}session_state`);
   }
 
   protected handleLoginError(options: LoginOptions, parts: object): void {
@@ -2219,9 +2219,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       this.saveNoncesInLocalStorage &&
       typeof window['localStorage'] !== 'undefined'
     ) {
-      savedNonce = localStorage.getItem(`${this.getStoragePrefix()}nonce`);
+      savedNonce = localStorage.getItem(`${this.getConfigId()}nonce`);
     } else {
-      savedNonce = this._storage.getItem(`${this.getStoragePrefix()}nonce`);
+      savedNonce = this._storage.getItem(`${this.getConfigId()}nonce`);
     }
 
     if (Array.isArray(claims.aud)) {
@@ -2380,7 +2380,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    */
   public getIdentityClaims(): Record<string, any> {
     const claims = this._storage.getItem(
-      `${this.getStoragePrefix()}id_token_claims_obj`
+      `${this.getConfigId()}id_token_claims_obj`
     );
     if (!claims) {
       return null;
@@ -2393,7 +2393,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    */
   public getGrantedScopes(): object {
     const scopes = this._storage.getItem(
-      `${this.getStoragePrefix()}granted_scopes`
+      `${this.getConfigId()}granted_scopes`
     );
     if (!scopes) {
       return null;
@@ -2406,7 +2406,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    */
   public getIdToken(): string {
     return this._storage
-      ? this._storage.getItem(`${this.getStoragePrefix()}id_token`)
+      ? this._storage.getItem(`${this.getConfigId()}id_token`)
       : null;
   }
 
@@ -2422,13 +2422,13 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    */
   public getAccessToken(): string {
     return this._storage
-      ? this._storage.getItem(`${this.getStoragePrefix()}access_token`)
+      ? this._storage.getItem(`${this.getConfigId()}access_token`)
       : null;
   }
 
   public getRefreshToken(): string {
     return this._storage
-      ? this._storage.getItem(`${this.getStoragePrefix()}refresh_token`)
+      ? this._storage.getItem(`${this.getConfigId()}refresh_token`)
       : null;
   }
 
@@ -2437,25 +2437,25 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * as milliseconds since 1970.
    */
   public getAccessTokenExpiration(): number {
-    if (!this._storage.getItem(`${this.getStoragePrefix()}expires_at`)) {
+    if (!this._storage.getItem(`${this.getConfigId()}expires_at`)) {
       return null;
     }
     return parseInt(
-      this._storage.getItem(`${this.getStoragePrefix()}expires_at`),
+      this._storage.getItem(`${this.getConfigId()}expires_at`),
       10
     );
   }
 
   protected getAccessTokenStoredAt(): number {
     return parseInt(
-      this._storage.getItem(`${this.getStoragePrefix()}access_token_stored_at`),
+      this._storage.getItem(`${this.getConfigId()}access_token_stored_at`),
       10
     );
   }
 
   protected getIdTokenStoredAt(): number {
     return parseInt(
-      this._storage.getItem(`${this.getStoragePrefix()}id_token_stored_at`),
+      this._storage.getItem(`${this.getConfigId()}id_token_stored_at`),
       10
     );
   }
@@ -2466,13 +2466,13 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    */
   public getIdTokenExpiration(): number {
     if (
-      !this._storage.getItem(`${this.getStoragePrefix()}id_token_expires_at`)
+      !this._storage.getItem(`${this.getConfigId()}id_token_expires_at`)
     ) {
       return null;
     }
 
     return parseInt(
-      this._storage.getItem(`${this.getStoragePrefix()}id_token_expires_at`),
+      this._storage.getItem(`${this.getConfigId()}id_token_expires_at`),
       10
     );
   }
@@ -2483,7 +2483,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   public hasValidAccessToken(): boolean {
     if (this.getAccessToken()) {
       const expiresAt = this._storage.getItem(
-        `${this.getStoragePrefix()}expires_at`
+        `${this.getConfigId()}expires_at`
       );
       const now = this.dateTimeService.new();
       return !(
@@ -2502,7 +2502,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   public hasValidIdToken(): boolean {
     if (this.getIdToken()) {
       const expiresAt = this._storage.getItem(
-        `${this.getStoragePrefix()}id_token_expires_at`
+        `${this.getConfigId()}id_token_expires_at`
       );
       const now = this.dateTimeService.new();
       return !(
@@ -2522,11 +2522,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       this.config.customTokenParameters &&
       this.config.customTokenParameters.indexOf(requestedProperty) >= 0 &&
       this._storage.getItem(
-        `${this.getStoragePrefix()}${requestedProperty}`
+        `${this.getConfigId()}${requestedProperty}`
       ) !== null
       ? JSON.parse(
           this._storage.getItem(
-            `${this.getStoragePrefix()}${requestedProperty}`
+            `${this.getConfigId()}${requestedProperty}`
           )
         )
       : null;
@@ -2559,30 +2559,30 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
 
     const id_token = this.getIdToken();
-    this._storage.removeItem(`${this.getStoragePrefix()}access_token`);
-    this._storage.removeItem(`${this.getStoragePrefix()}id_token`);
-    this._storage.removeItem(`${this.getStoragePrefix()}refresh_token`);
+    this._storage.removeItem(`${this.getConfigId()}access_token`);
+    this._storage.removeItem(`${this.getConfigId()}id_token`);
+    this._storage.removeItem(`${this.getConfigId()}refresh_token`);
 
     if (this.saveNoncesInLocalStorage) {
-      localStorage.removeItem(`${this.getStoragePrefix()}nonce`);
-      localStorage.removeItem(`${this.getStoragePrefix()}PKCE_verifier`);
+      localStorage.removeItem(`${this.getConfigId()}nonce`);
+      localStorage.removeItem(`${this.getConfigId()}PKCE_verifier`);
     } else {
-      this._storage.removeItem(`${this.getStoragePrefix()}nonce`);
-      this._storage.removeItem(`${this.getStoragePrefix()}PKCE_verifier`);
+      this._storage.removeItem(`${this.getConfigId()}nonce`);
+      this._storage.removeItem(`${this.getConfigId()}PKCE_verifier`);
     }
 
-    this._storage.removeItem(`${this.getStoragePrefix()}expires_at`);
-    this._storage.removeItem(`${this.getStoragePrefix()}id_token_claims_obj`);
-    this._storage.removeItem(`${this.getStoragePrefix()}id_token_expires_at`);
-    this._storage.removeItem(`${this.getStoragePrefix()}id_token_stored_at`);
+    this._storage.removeItem(`${this.getConfigId()}expires_at`);
+    this._storage.removeItem(`${this.getConfigId()}id_token_claims_obj`);
+    this._storage.removeItem(`${this.getConfigId()}id_token_expires_at`);
+    this._storage.removeItem(`${this.getConfigId()}id_token_stored_at`);
     this._storage.removeItem(
-      `${this.getStoragePrefix()}access_token_stored_at`
+      `${this.getConfigId()}access_token_stored_at`
     );
-    this._storage.removeItem(`${this.getStoragePrefix()}granted_scopes`);
-    this._storage.removeItem(`${this.getStoragePrefix()}session_state`);
+    this._storage.removeItem(`${this.getConfigId()}granted_scopes`);
+    this._storage.removeItem(`${this.getConfigId()}session_state`);
     if (this.config.customTokenParameters) {
       this.config.customTokenParameters.forEach((customParam) =>
-        this._storage.removeItem(`${this.getStoragePrefix()}${customParam}`)
+        this._storage.removeItem(`${this.getConfigId()}${customParam}`)
       );
     }
     this.silentRefreshSubject = null;
@@ -2659,9 +2659,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         that.saveNoncesInLocalStorage &&
         typeof window['localStorage'] !== 'undefined'
       ) {
-        localStorage.setItem(`${that.getStoragePrefix()}nonce`, nonce);
+        localStorage.setItem(`${that.getConfigId()}nonce`, nonce);
       } else {
-        that._storage.setItem(`${that.getStoragePrefix()}nonce`, nonce);
+        that._storage.setItem(`${that.getConfigId()}nonce`, nonce);
       }
       return nonce;
     });
@@ -2958,9 +2958,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
   }
 
-  private getStoragePrefix(): string {
-    return this.config.storageKeyPrefix
-      ? `${this.config.storageKeyPrefix}.`
+  private getConfigId(): string {
+    return this.config.configId
+      ? `${this.config.configId}.`
       : '';
   }
 }

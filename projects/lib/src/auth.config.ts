@@ -283,7 +283,7 @@ export class AuthConfig {
    * Allows to set prefix for entries stored in configured storage.
    * Can be used to avoid multipple apps overriding each other values
    */
-  public storageKeyPrefix? = '';
+  public configId? = '';
 
   constructor(json?: Partial<AuthConfig>) {
     if (json) {
