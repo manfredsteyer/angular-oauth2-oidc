@@ -256,7 +256,7 @@ export class AuthConfig {
   public useSilentRefresh?;
 
   /**
-   * Code Flow is by defauld used together with PKCI which is also higly recommented.
+   * Code Flow is by default used together with PKCI which is also higly recommended.
    * You can disbale it here by setting this flag to true.
    * https://tools.ietf.org/html/rfc7636#section-1.1
    */
