@@ -32,5 +32,7 @@ export const authConfig: AuthConfig = {
 
   checkOrigin: true,
 
+  blockOtherOrigins: true,
+
   timeoutFactor: 0.01,
 };
