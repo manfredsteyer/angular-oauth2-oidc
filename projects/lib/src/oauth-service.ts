@@ -229,12 +229,12 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   }
 
   /**
-   * Will setup up silent refreshing for when the token is
+   * Will set up up silent refreshing for when the token is
    * about to expire. When the user is logged out via this.logOut method, the
    * silent refreshing will pause and not refresh the tokens until the user is
    * logged back in via receiving a new token.
    * @param params Additional parameter to pass
-   * @param listenTo Setup automatic refresh of a specific token type
+   * @param listenTo Set up automatic refresh of a specific token type
    */
   public setupAutomaticSilentRefresh(
     params: object = {},
@@ -521,7 +521,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * properties of this service. The url of the discovery
    * document is infered from the issuer's url according
    * to the OpenId Connect spec. To use another url you
-   * can pass it to to optional parameter fullUrl.
+   * can pass it to optional parameter fullUrl.
    *
    * @param fullUrl
    */
@@ -714,7 +714,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * about the user in question.
    *
    * When using this, make sure that the property oidc is set to false.
-   * Otherwise stricter validations take place that make this operation
+   * Otherwise, stricter validations take place that make this operation
    * fail.
    *
    * @param userName
@@ -735,7 +735,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * Loads the user profile by accessing the user info endpoint defined by OpenId Connect.
    *
    * When using this with OAuth2 password flow, make sure that the property oidc is set to false.
-   * Otherwise stricter validations take place that make this operation fail.
+   * Otherwise, stricter validations take place that make this operation fail.
    */
   public loadUserProfile(): Promise<object> {
     if (!this.hasValidAccessToken()) {
@@ -1248,7 +1248,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     height?: number;
     width?: number;
   }): string {
-    // Specify an static height and width and calculate centered position
+    // Specify a static height and width and calculate centered position
 
     const height = options.height || 470;
     const width = options.width || 500;
@@ -1708,7 +1708,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   }
 
   /**
-   * Delegates to tryLoginImplicitFlow for the sake of competability
+   * Delegates to tryLoginImplicitFlow for the sake of compatability
    * @param options Optional options.
    */
   public tryLogin(options: LoginOptions = null): Promise<boolean> {
