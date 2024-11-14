@@ -1956,7 +1956,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
           (err) => {
             console.error('Error getting token', err);
             this.eventsSubject.next(
-              new OAuthErrorEvent('token_refresh_error', err)
+              new OAuthErrorEvent('token_error', err)
             );
             reject(err);
           }
