@@ -155,7 +155,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     } catch (e) {
       console.error(
         'No OAuthStorage provided and cannot access default (sessionStorage).' +
-          'Consider providing a custom OAuthStorage implementation in your module.',
+        'Consider providing a custom OAuthStorage implementation in your module.',
         e
       );
     }
@@ -339,7 +339,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     if (!issuerCheck) {
       errors.push(
         'Every url in discovery document has to start with the issuer url.' +
-          'Also see property strictDiscoveryDocumentValidation.'
+        'Also see property strictDiscoveryDocumentValidation.'
       );
     }
 
@@ -700,7 +700,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     if (this.sessionChecksEnabled && !doc.check_session_iframe) {
       this.logger.warn(
         'sessionChecksEnabled is activated but discovery document' +
-          ' does not contain a check_session_iframe field'
+        ' does not contain a check_session_iframe field'
       );
     }
 
@@ -894,7 +894,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
               tokenResponse.access_token,
               tokenResponse.refresh_token,
               tokenResponse.expires_in ||
-                this.fallbackAccessTokenExpirationTimeInSec,
+              this.fallbackAccessTokenExpirationTimeInSec,
               tokenResponse.scope,
               this.extractRecognizedCustomParameters(tokenResponse)
             );
@@ -988,7 +988,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
               tokenResponse.access_token,
               tokenResponse.refresh_token,
               tokenResponse.expires_in ||
-                this.fallbackAccessTokenExpirationTimeInSec,
+              this.fallbackAccessTokenExpirationTimeInSec,
               tokenResponse.scope,
               this.extractRecognizedCustomParameters(tokenResponse)
             );
@@ -1914,7 +1914,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
               tokenResponse.access_token,
               tokenResponse.refresh_token,
               tokenResponse.expires_in ||
-                this.fallbackAccessTokenExpirationTimeInSec,
+              this.fallbackAccessTokenExpirationTimeInSec,
               tokenResponse.scope,
               this.extractRecognizedCustomParameters(tokenResponse)
             );
@@ -2022,8 +2022,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     if (this.sessionChecksEnabled && !sessionState) {
       this.logger.warn(
         'session checks (Session Status Change Notification) ' +
-          'were activated in the configuration but the id_token ' +
-          'does not contain a session_state claim'
+        'were activated in the configuration but the id_token ' +
+        'does not contain a session_state claim'
       );
     }
 
@@ -2223,7 +2223,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       return Promise.reject(err);
     }
 
-    if (!claims.iat) {
+    if (!this.skipIatCheck && !claims.iat) {
       const err = 'No iat claim in id_token';
       this.logger.warn(err);
       return Promise.reject(err);
@@ -2266,7 +2266,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     const clockSkewInMSec = this.getClockSkewInMsec(); // (this.getClockSkewInMsec() || 600) * 1000;
 
     if (
-      issuedAtMSec - clockSkewInMSec >= now ||
+      this.isIatClaimValid(issuedAtMSec, clockSkewInMSec, now) ||
       expiresAtMSec + clockSkewInMSec - this.decreaseExpirationBySec <= now
     ) {
       const err = 'Token has expired';
@@ -2334,6 +2334,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         }
       });
     });
+  }
+
+  private isIatClaimValid(issuedAtMSec: number, clockSkewInMSec: number, now: number) {
+    return this.skipIatCheck || issuedAtMSec - clockSkewInMSec >= now;
   }
 
   /**
@@ -2424,7 +2428,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       if (
         expiresAt &&
         parseInt(expiresAt, 10) - this.decreaseExpirationBySec <
-          now.getTime() - this.getClockSkewInMsec()
+        now.getTime() - this.getClockSkewInMsec()
       ) {
         return false;
       }
@@ -2445,7 +2449,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       if (
         expiresAt &&
         parseInt(expiresAt, 10) - this.decreaseExpirationBySec <
-          now.getTime() - this.getClockSkewInMsec()
+        now.getTime() - this.getClockSkewInMsec()
       ) {
         return false;
       }
@@ -2461,9 +2465,9 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    */
   public getCustomTokenResponseProperty(requestedProperty: string): any {
     return this._storage &&
-      this.config.customTokenParameters &&
-      this.config.customTokenParameters.indexOf(requestedProperty) >= 0 &&
-      this._storage.getItem(requestedProperty) !== null
+    this.config.customTokenParameters &&
+    this.config.customTokenParameters.indexOf(requestedProperty) >= 0 &&
+    this._storage.getItem(requestedProperty) !== null
       ? JSON.parse(this._storage.getItem(requestedProperty))
       : null;
   }

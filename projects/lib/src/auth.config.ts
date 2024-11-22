@@ -213,6 +213,11 @@ export class AuthConfig {
   public skipIssuerCheck? = false;
 
   /**
+   * Defined whether to skip the validation of the IAT claim in ID Token.
+   */
+  public skipIatCheck? = false;
+
+  /**
    * According to rfc6749 it is recommended (but not required) that the auth
    * server exposes the access_token's life time in seconds.
    * This is a fallback value for the case this value is not exposed.
