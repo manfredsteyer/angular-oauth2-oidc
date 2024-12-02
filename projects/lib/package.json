@@ -1,14 +1,18 @@
 {
   "name": "angular-oauth2-oidc",
+  "version": "18.0.0",
   "license": "MIT",
   "author": {
     "name": "Manfred Steyer"
   },
-  "version": "17.0.1",
-  "repository": "manfredsteyer/angular-oauth2-oidc",
+  "description": "Support for OAuth 2(.1) and OpenId Connect (OIDC) in Angular",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/manfredsteyer/angular-oauth2-oidc"
+  },
   "peerDependencies": {
-    "@angular/common": ">=14.0.0",
-    "@angular/core": ">=14.0.0"
+    "@angular/common": ">=18.0.0",
+    "@angular/core": ">=18.0.0"
   },
   "dependencies": {
     "tslib": "^2.5.2"
