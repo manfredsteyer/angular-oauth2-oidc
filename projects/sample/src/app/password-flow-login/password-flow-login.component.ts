@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-password-flow-login',
   templateUrl: './password-flow-login.component.html',
+  standalone: false,
 })
 export class PasswordFlowLoginComponent implements OnInit {
   userName: string;

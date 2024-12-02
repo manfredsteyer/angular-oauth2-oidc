@@ -15,6 +15,7 @@ import {
       multi: true,
     },
   ],
+  standalone: false,
 })
 export class CityValidatorDirective implements Validator {
   // @Input() city: string;

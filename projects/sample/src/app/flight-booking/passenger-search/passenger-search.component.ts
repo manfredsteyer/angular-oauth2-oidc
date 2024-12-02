@@ -7,6 +7,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
     <p>Platzhalter-Seite. Hier könnte auch Ihre Werbung stehen ;-)</p>
     <p><button (click)="refresh()">Refresh</button></p>
   `,
+  standalone: false,
 })
 export class PassengerSearchComponent implements OnInit {
   constructor(private oauthService: OAuthService) {}

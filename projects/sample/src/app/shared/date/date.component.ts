@@ -5,6 +5,7 @@ import { Component, Input, OnInit, OnChanges } from '@angular/core';
   template: `
     <div>{{ day }}.{{ month }}.{{ year }} {{ hour }}:{{ minute }}</div>
   `,
+  standalone: false,
 })
 export class DateComponent implements OnInit, OnChanges {
   @Input() date: string;

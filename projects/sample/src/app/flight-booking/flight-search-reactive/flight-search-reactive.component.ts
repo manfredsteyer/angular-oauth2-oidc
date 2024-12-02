@@ -14,6 +14,7 @@ import { CityValidatorDirective } from '../../shared/validation/city.validator';
   templateUrl: 'flight-search-reactive.component.html',
   providers: [FlightService],
   styleUrls: ['flight-search-reactive.component.css'],
+  standalone: false,
 })
 export class FlightSearchReactiveComponent {
   public flights: Array<Flight> = [];

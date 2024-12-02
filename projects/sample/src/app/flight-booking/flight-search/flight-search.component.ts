@@ -7,6 +7,7 @@ import { FlightService } from '../services/flight.service';
   selector: 'flight-search',
   templateUrl: './flight-search.component.html',
   styleUrls: ['./flight-search.component.css'],
+  standalone: false,
 })
 export class FlightSearchComponent {
   public from: string = 'Graz';

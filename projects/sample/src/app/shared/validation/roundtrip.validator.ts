@@ -10,6 +10,7 @@ import {
 @Directive({
   selector: 'form[round-trip]',
   providers: [{ provide: NG_VALIDATORS, useExisting: RoundTrip, multi: true }],
+  standalone: false,
 })
 export class RoundTrip implements Validator {
   validate(control: AbstractControl): any {

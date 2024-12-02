@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: './home.component.html',
+  standalone: false,
 })
 export class HomeComponent implements OnInit {
   loginFailed: boolean = false;

@@ -14,6 +14,7 @@ import { Flight } from '../../entities/flight';
       </div>
     </div>
   `,
+  standalone: false,
 })
 export class FlightListComponent {
   @Input() flights: Flight[] = [];

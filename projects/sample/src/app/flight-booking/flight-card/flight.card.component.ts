@@ -4,6 +4,7 @@ import { Flight } from '../../entities/flight';
 @Component({
   selector: 'flight-card',
   templateUrl: './flight-card.component.html',
+  standalone: false,
 })
 export class FlightCardComponent {
   @Input() item: Flight;

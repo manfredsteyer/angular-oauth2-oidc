@@ -12,6 +12,7 @@ import { useHash } from '../flags';
   // tslint:disable-next-line:component-selector
   selector: 'flight-app',
   templateUrl: './app.component.html',
+  standalone: false,
 })
 export class AppComponent {
   constructor(private router: Router, private oauthService: OAuthService) {

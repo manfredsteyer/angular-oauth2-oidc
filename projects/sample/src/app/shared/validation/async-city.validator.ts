@@ -10,6 +10,7 @@ import { NG_ASYNC_VALIDATORS, AbstractControl } from '@angular/forms';
       multi: true,
     },
   ],
+  standalone: false,
 })
 export class AsyncCityValidatorDirective {
   validate(ctrl: AbstractControl): Promise<any> {

@@ -24,6 +24,7 @@ import { ActivatedRoute } from '@angular/router';
       </div>
     </div>
   `,
+  standalone: false,
 })
 export class FlightEditComponent implements OnInit {
   public id: string;

@@ -5,7 +5,6 @@ import { authCodeFlowConfig } from './auth.config';
 import { NgIf } from '@angular/common';
 
 @Component({
-  standalone: true,
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],

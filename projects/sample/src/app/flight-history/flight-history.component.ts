@@ -9,5 +9,6 @@ import { Component } from '@angular/core';
       <li>Frankfurt - Graz</li>
     </ul>
   `,
+  standalone: false,
 })
 export class FlightHistoryComponent {}
