@@ -1,6 +1,6 @@
 {
   "name": "angular-oauth2-oidc",
-  "version": "18.0.0",
+  "version": "19.0.0",
   "license": "MIT",
   "author": {
     "name": "Manfred Steyer"
@@ -11,8 +11,8 @@
     "url": "https://github.com/manfredsteyer/angular-oauth2-oidc"
   },
   "peerDependencies": {
-    "@angular/common": ">=18.0.0",
-    "@angular/core": ">=18.0.0"
+    "@angular/common": ">=19.0.0",
+    "@angular/core": ">=19.0.0"
   },
   "dependencies": {
     "tslib": "^2.5.2"
