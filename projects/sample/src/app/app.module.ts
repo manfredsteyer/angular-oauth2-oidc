@@ -6,7 +6,10 @@ import {
   OAuthStorage,
   DateTimeProvider,
 } from 'angular-oauth2-oidc';
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { APP_ROUTES } from './app.routes';
@@ -22,12 +25,18 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { useHash } from '../flags';
 
 @NgModule({
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    FlightHistoryComponent,
+    PasswordFlowLoginComponent,
+  ],
+  bootstrap: [AppComponent],
   imports: [
     BrowserModule,
     RouterModule.forRoot(APP_ROUTES, { useHash }),
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
     SharedModule.forRoot(),
     OAuthModule.forRoot({
       resourceServer: {
@@ -35,12 +44,6 @@ import { useHash } from '../flags';
         sendAccessToken: true,
       },
     }),
-  ],
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    FlightHistoryComponent,
-    PasswordFlowLoginComponent,
   ],
   providers: [
     // (useHash) ? { provide: LocationStrategy, useClass: HashLocationStrategy } : [],
@@ -50,7 +53,7 @@ import { useHash } from '../flags';
     // Enabled the custom date time provider will make the sample fail to login, since the demo Idp time is correctly synced to the world time.
     // { provide: DateTimeProvider, useClass: CustomDateTimeProvider },
     { provide: BASE_URL, useValue: 'http://www.angular.at' },
+    provideHttpClient(withInterceptorsFromDi()),
   ],
-  bootstrap: [AppComponent],
 })
 export class AppModule {}

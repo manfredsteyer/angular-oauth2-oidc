@@ -3,14 +3,15 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 @NgModule({
-  imports: [BrowserModule, OAuthModule.forRoot(), HttpClientModule],
   declarations: [AppComponent],
-  providers: [
-    // { provide: OAuthStorage, useValue: localStorage }
-  ],
   bootstrap: [AppComponent],
+  imports: [BrowserModule, OAuthModule.forRoot()],
+  providers: [provideHttpClient(withInterceptorsFromDi())],
 })
 export class AppModule {}

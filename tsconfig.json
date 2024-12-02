@@ -5,10 +5,10 @@
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
+    "esModuleInterop": true,
     "moduleResolution": "node",
     "allowJs": true,
     "experimentalDecorators": true,
-    "downlevelIteration": true,
     "module": "esnext",
     "target": "ES2022",
     "typeRoots": [
