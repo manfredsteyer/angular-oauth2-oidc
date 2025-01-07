@@ -394,7 +394,6 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
   protected setupRefreshTimer(): void {
     if (typeof window === 'undefined') {
-      this.debug('timer not supported on this plattform');
       return;
     }
 
