@@ -2118,7 +2118,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
 
     if (savedNonce !== nonceInState) {
-      const err = 'Validating access_token failed, wrong state/nonce.';
+      const err = 'Validating access_token failed, wrong saved nonce versus nonce returned in state';
       console.error(err, savedNonce, nonceInState);
       return false;
     }
