@@ -1753,6 +1753,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
           .replace(/code=[^&$]*/, '')
           .replace(/scope=[^&$]*/, '')
           .replace(/state=[^&$]*/, '')
+          .replace(/iss=[^&$]*/, '')
           .replace(/session_state=[^&$]*/, '')
           .replace(/^\?&/, '?')
           .replace(/&$/, '')
