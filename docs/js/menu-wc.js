@@ -55,105 +55,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 </li>
                     </ul>
                 </li>
-                    <li class="chapter additional">
-                        <div class="simple menu-toggler" data-bs-toggle="collapse" ${ isNormalMode ? 'data-bs-target="#additional-pages"'
-                            : 'data-bs-target="#xs-additional-pages"' }>
-                            <span class="icon ion-ios-book"></span>
-                            <span>Additional documentation</span>
-                            <span class="icon ion-ios-arrow-down"></span>
-                        </div>
-                        <ul class="links collapse " ${ isNormalMode ? 'id="additional-pages"' : 'id="xs-additional-pages"' }>
-                                    <li class="link ">
-                                        <a href="additional-documentation/getting-started.html" data-type="entity-link" data-context-id="additional">Getting Started</a>
-                                    </li>
-                                    <li class="link ">
-                                        <a href="additional-documentation/preserving-state-(like-the-requested-url).html" data-type="entity-link" data-context-id="additional">Preserving State (like the Requested URL)</a>
-                                    </li>
-                                    <li class="link ">
-                                        <a href="additional-documentation/refreshing-a-token.html" data-type="entity-link" data-context-id="additional">Refreshing a Token</a>
-                                    </li>
-                                    <li class="link ">
-                                        <a href="additional-documentation/silent-refresh.html" data-type="entity-link" data-context-id="additional">Silent Refresh</a>
-                                    </li>
-                                    <li class="link ">
-                                        <a href="additional-documentation/token-refresh.html" data-type="entity-link" data-context-id="additional">Token Refresh</a>
-                                    </li>
-                                    <li class="link ">
-                                        <a href="additional-documentation/working-with-httpinterceptors.html" data-type="entity-link" data-context-id="additional">Working with HttpInterceptors</a>
-                                    </li>
-                                    <li class="link ">
-                                        <a href="additional-documentation/callback-after-login.html" data-type="entity-link" data-context-id="additional">Callback after login</a>
-                                    </li>
-                                    <li class="link ">
-                                        <a href="additional-documentation/popup-based-login.html" data-type="entity-link" data-context-id="additional">Popup-based Login</a>
-                                    </li>
-                                    <li class="link ">
-                                        <a href="additional-documentation/custom-query-parameters.html" data-type="entity-link" data-context-id="additional">Custom Query Parameters</a>
-                                    </li>
-                                    <li class="link ">
-                                        <a href="additional-documentation/events.html" data-type="entity-link" data-context-id="additional">Events</a>
-                                    </li>
-                                    <li class="link ">
-                                        <a href="additional-documentation/routing-with-the-hashstrategy.html" data-type="entity-link" data-context-id="additional">Routing with the HashStrategy</a>
-                                    </li>
-                                    <li class="link ">
-                                        <a href="additional-documentation/adapt-id_token-validation.html" data-type="entity-link" data-context-id="additional">Adapt id_token Validation</a>
-                                    </li>
-                                    <li class="link ">
-                                        <a href="additional-documentation/session-checks.html" data-type="entity-link" data-context-id="additional">Session Checks</a>
-                                    </li>
-                                    <li class="link ">
-                                        <a href="additional-documentation/server-side-rendering.html" data-type="entity-link" data-context-id="additional">Server Side Rendering</a>
-                                    </li>
-                                    <li class="link ">
-                                        <a href="additional-documentation/configure-library-for-implicit-flow-without-discovery-document.html" data-type="entity-link" data-context-id="additional">Configure Library for Implicit Flow without discovery document</a>
-                                    </li>
-                                    <li class="link ">
-                                        <a href="additional-documentation/using-an-id-provider-that-fails-discovery-document-validation.html" data-type="entity-link" data-context-id="additional">Using an ID Provider that Fails Discovery Document Validation</a>
-                                    </li>
-                                    <li class="link ">
-                                        <a href="additional-documentation/using-systemjs.html" data-type="entity-link" data-context-id="additional">Using SystemJS</a>
-                                    </li>
-                                    <li class="link ">
-                                        <a href="additional-documentation/using-implicit-flow.html" data-type="entity-link" data-context-id="additional">Using Implicit Flow</a>
-                                    </li>
-                                    <li class="link ">
-                                        <a href="additional-documentation/using-password-flow.html" data-type="entity-link" data-context-id="additional">Using Password Flow</a>
-                                    </li>
-                                    <li class="link ">
-                                        <a href="additional-documentation/configure-custom-oauthstorage.html" data-type="entity-link" data-context-id="additional">Configure custom OAuthStorage</a>
-                                    </li>
-                                    <li class="link ">
-                                        <a href="additional-documentation/manually-skipping-login-form.html" data-type="entity-link" data-context-id="additional">Manually Skipping Login Form</a>
-                                    </li>
-                                    <li class="link ">
-                                        <a href="additional-documentation/original-config-api.html" data-type="entity-link" data-context-id="additional">Original Config API</a>
-                                    </li>
-                                    <li class="chapter inner">
-                                        <a data-type="chapter-link" href="additional-documentation/authorization-servers.html" data-context-id="additional">
-                                            <div class="menu-toggler linked" data-bs-toggle="collapse" ${ isNormalMode ?
-                                            'data-bs-target="#additional-page-2b1a4fad9e52d9d4ab632322a359d13b5c56587ec14714f91791909bdea17673a33cbbec5bda9a4b51e251e1de7ba270a691c761e665ecc6891c73474d21d242"' : 'data-bs-target="#xs-additional-page-2b1a4fad9e52d9d4ab632322a359d13b5c56587ec14714f91791909bdea17673a33cbbec5bda9a4b51e251e1de7ba270a691c761e665ecc6891c73474d21d242"' }>
-                                                <span class="link-name">Authorization Servers</span>
-                                                <span class="icon ion-ios-arrow-down"></span>
-                                            </div>
-                                        </a>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="additional-page-2b1a4fad9e52d9d4ab632322a359d13b5c56587ec14714f91791909bdea17673a33cbbec5bda9a4b51e251e1de7ba270a691c761e665ecc6891c73474d21d242"' : 'id="xs-additional-page-2b1a4fad9e52d9d4ab632322a359d13b5c56587ec14714f91791909bdea17673a33cbbec5bda9a4b51e251e1de7ba270a691c761e665ecc6891c73474d21d242"' }>
-                                            <li class="link for-chapter2">
-                                                <a href="additional-documentation/authorization-servers/using-identity-server.html" data-type="entity-link" data-context="sub-entity" data-context-id="additional">Using Identity Server</a>
-                                            </li>
-                                            <li class="link for-chapter2">
-                                                <a href="additional-documentation/authorization-servers/using-keycloak.html" data-type="entity-link" data-context="sub-entity" data-context-id="additional">Using Keycloak</a>
-                                            </li>
-                                            <li class="link for-chapter2">
-                                                <a href="additional-documentation/authorization-servers/auth0.html" data-type="entity-link" data-context="sub-entity" data-context-id="additional">Auth0</a>
-                                            </li>
-                                            <li class="link for-chapter2">
-                                                <a href="additional-documentation/authorization-servers/azure-ad-(active-directory).html" data-type="entity-link" data-context="sub-entity" data-context-id="additional">Azure AD (Active Directory)</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                        </ul>
-                    </li>
                     <li class="chapter modules">
                         <a data-type="chapter-link" href="modules.html">
                             <div class="menu-toggler linked" data-bs-toggle="collapse" ${ isNormalMode ?
@@ -279,7 +180,7 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </div>
                         <ul class="links collapse " ${ isNormalMode ? 'id="interceptors-links"' : 'id="xs-interceptors-links"' }>
                             <li class="link">
-                                <a href="interceptors/DefaultOAuthInterceptor.html" data-type="entity-link" >DefaultOAuthInterceptor</a>
+                                <a href="interceptors/DefaultOAuthInterceptor.html" data-type="entity-link" class="deprecated-name">DefaultOAuthInterceptor</a>
                             </li>
                         </ul>
                     </li>
@@ -326,6 +227,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="miscellaneous/variables.html" data-type="entity-link">Variables</a>
                             </li>
                         </ul>
+                    </li>
+                    <li class="chapter">
+                        <a data-type="chapter-link" href="coverage.html"><span class="icon ion-ios-stats"></span>Documentation coverage</a>
                     </li>
             </ul>
         </nav>

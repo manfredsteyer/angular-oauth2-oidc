@@ -12,10 +12,61 @@
         <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
-            <a href="../" class="navbar-brand">angular-oauth2-oidc</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">angular-oauth2-oidc</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -41,7 +92,9 @@
 
 <ol class="breadcrumb">
   <li class="breadcrumb-item">Interceptors</li>
-  <li class="breadcrumb-item" >DefaultOAuthInterceptor</li>
+  <li class="breadcrumb-item" 
+        class="breadcrumb-item deprecated-name"
+    >DefaultOAuthInterceptor</li>
 </ol>
 
 <ul class="nav nav-tabs" role="tablist">
@@ -68,7 +121,36 @@
             <code>projects/lib/src/interceptors/default-oauth.interceptor.ts</code>
         </p>
 
+            <p class="comment">
+                <h3 class="deprecated">Deprecated</h3>
+            </p>
+            <p class="comment">
+                Since Angular v14, and thanks to the fact that inject function can be call outside an injection context
+we can create interceptor as a function
 
+As the package don't import the HttpClientModule or provide the HttpClient thanks to provideHttpClient.
+
+Currently, to benefit of the DefaultOAuthInterceptor we must add provideHttpClient(withInterceptorFromDI()).
+This looks like a little bit as a "Black Box"
+
+Moreover HttpClientModule is deprecated, that force the user to use provideHttpClient function
+
+Use the function defaultOAuthInterceptor instead
+            </p>
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Since Angular v14, and thanks to the fact that inject function can be call outside an injection context
+we can create interceptor as a function</p>
+<p>As the package don&#39;t import the HttpClientModule or provide the HttpClient thanks to provideHttpClient.</p>
+<p>Currently, to benefit of the DefaultOAuthInterceptor we must add provideHttpClient(withInterceptorFromDI()).
+This looks like a little bit as a &quot;Black Box&quot;</p>
+<p>Moreover HttpClientModule is deprecated, that force the user to use provideHttpClient function</p>
+<p>Use the function defaultOAuthInterceptor instead</p>
+
+            </p>
 
 
             <section data-compodoc="block-index">
@@ -111,7 +193,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">projects/lib/src/interceptors/default-oauth.interceptor.ts:23</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="122" class="link-to-prism">projects/lib/src/interceptors/default-oauth.interceptor.ts:122</a></div>
                             </td>
                         </tr>
 
@@ -184,7 +266,7 @@
                 <td class="col-md-4">
                     <a name="intercept"></a>
                     <span class="name">
-                        <span class="modifier">Public</span>
+                            <span class="modifier">Public</span>
                         <span ><b>intercept</b></span>
                         <a href="#intercept"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -192,71 +274,69 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-                    <span class="modifier-icon icon ion-ios-reset"></span>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
                     <code>intercept(req: HttpRequest<any>, next: HttpHandler)</code>
                 </td>
             </tr>
 
 
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="44"
-                            class="link-to-prism">projects/lib/src/interceptors/default-oauth.interceptor.ts:44</a></div>
-                </td>
-            </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="129"
+                                    class="link-to-prism">projects/lib/src/interceptors/default-oauth.interceptor.ts:129</a></div>
+                        </td>
+                    </tr>
 
 
             <tr>
                 <td class="col-md-4">
 
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>req</td>
-                                    <td>
-                                            <code>HttpRequest&lt;any&gt;</code>
-                                    </td>
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>req</td>
+                                            <td>
+                                                        <code>HttpRequest&lt;any&gt;</code>
+                                            </td>
 
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                                <tr>
-                                    <td>next</td>
-                                    <td>
-                                            <code>HttpHandler</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
+                                            <td>
+                                                    No
+                                            </td>
 
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Observable&lt;HttpEvent&lt;any&gt;&gt;</code>
+                                        </tr>
+                                        <tr>
+                                                <td>next</td>
+                                            <td>
+                                                        <code>HttpHandler</code>
+                                            </td>
 
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>    <code>Observable&lt;HttpEvent&lt;any&gt;&gt;</code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -267,27 +347,126 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable, Optional } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { inject, Injectable, Optional } from &#x27;@angular/core&#x27;;
 
 import {
   HttpEvent,
   HttpHandler,
+  type HttpHandlerFn,
   HttpInterceptor,
   HttpRequest,
 } from &#x27;@angular/common/http&#x27;;
-import { Observable, of, merge } from &#x27;rxjs&#x27;;
+import { merge, Observable, of } from &#x27;rxjs&#x27;;
 import {
   catchError,
   filter,
   map,
-  take,
   mergeMap,
+  take,
   timeout,
 } from &#x27;rxjs/operators&#x27;;
-import { OAuthResourceServerErrorHandler } from &#x27;./resource-server-error-handler&#x27;;
 import { OAuthModuleConfig } from &#x27;../oauth-module.config&#x27;;
 import { OAuthService } from &#x27;../oauth-service&#x27;;
+import { OAuthResourceServerErrorHandler } from &#x27;./resource-server-error-handler&#x27;;
 
+/**
+ * @ignore
+ */
+function checkUrl(moduleConfig: OAuthModuleConfig, url: string): boolean {
+  if (moduleConfig.resourceServer.customUrlValidation) {
+    return moduleConfig.resourceServer.customUrlValidation(url);
+  }
+
+  if (moduleConfig.resourceServer.allowedUrls) {
+    return !!moduleConfig.resourceServer.allowedUrls.find((u) &#x3D;&gt;
+      url.toLowerCase().startsWith(u.toLowerCase())
+    );
+  }
+
+  return true;
+}
+
+/**
+ * @ignore
+ * TODO: Remove this function when class DefaultOAuthInterceptor is removed\
+ * move the core of this function inside the function defaultOAuthInterceptor
+ */
+function interceptFn(
+  oAuthService: OAuthService,
+  errorHandler: OAuthResourceServerErrorHandler,
+  moduleConfig: OAuthModuleConfig,
+  request: HttpRequest&lt;any&gt;,
+  next: HttpHandlerFn | HttpHandler
+) {
+  const handler &#x3D; typeof next &#x3D;&#x3D;&#x3D; &#x27;function&#x27; ? next : next.handle;
+  const url &#x3D; request.url.toLowerCase();
+
+  if (
+    !moduleConfig ||
+    !moduleConfig.resourceServer ||
+    !checkUrl(moduleConfig, url)
+  ) {
+    return handler(request);
+  }
+
+  const sendAccessToken &#x3D; moduleConfig.resourceServer.sendAccessToken;
+
+  if (!sendAccessToken) {
+    return handler(request).pipe(
+      catchError((err) &#x3D;&gt; errorHandler.handleError(err))
+    );
+  }
+
+  return merge(
+    of(oAuthService.getAccessToken()).pipe(filter((token) &#x3D;&gt; !!token)),
+    oAuthService.events.pipe(
+      filter((e) &#x3D;&gt; e.type &#x3D;&#x3D;&#x3D; &#x27;token_received&#x27;),
+      timeout(oAuthService.waitForTokenInMsec || 0),
+      catchError(() &#x3D;&gt; of(null)), // timeout is not an error
+      map(() &#x3D;&gt; oAuthService.getAccessToken())
+    )
+  ).pipe(
+    take(1),
+    mergeMap((token) &#x3D;&gt; {
+      if (token) {
+        const header &#x3D; &#x27;Bearer &#x27; + token;
+        const headers &#x3D; request.headers.set(&#x27;Authorization&#x27;, header);
+        request &#x3D; request.clone({ headers });
+      }
+
+      return handler(request).pipe(
+        catchError((err) &#x3D;&gt; errorHandler.handleError(err))
+      );
+    })
+  );
+}
+
+export function defaultOAuthInterceptor(
+  request: HttpRequest&lt;any&gt;,
+  next: HttpHandlerFn
+) {
+  const oAuthService &#x3D; inject(OAuthService);
+  const errorHandler &#x3D; inject(OAuthResourceServerErrorHandler);
+  const moduleConfig &#x3D; inject(OAuthModuleConfig, { optional: true });
+
+  return interceptFn(oAuthService, errorHandler, moduleConfig, request, next);
+}
+
+/**
+ * @deprecated
+ *
+ * Since Angular v14, and thanks to the fact that inject function can be call outside an injection context
+ * we can create interceptor as a function
+ *
+ * As the package don&#x27;t import the HttpClientModule or provide the HttpClient thanks to provideHttpClient.
+ *
+ * Currently, to benefit of the DefaultOAuthInterceptor we must add provideHttpClient(withInterceptorFromDI()).
+ * This looks like a little bit as a &quot;Black Box&quot;
+ *
+ * Moreover HttpClientModule is deprecated, that force the user to use provideHttpClient function
+ *
+ * Use the function defaultOAuthInterceptor instead
+ */
 @Injectable()
 export class DefaultOAuthInterceptor implements HttpInterceptor {
   constructor(
@@ -296,63 +475,16 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
     @Optional() private moduleConfig: OAuthModuleConfig
   ) {}
 
-  private checkUrl(url: string): boolean {
-    if (this.moduleConfig.resourceServer.customUrlValidation) {
-      return this.moduleConfig.resourceServer.customUrlValidation(url);
-    }
-
-    if (this.moduleConfig.resourceServer.allowedUrls) {
-      return !!this.moduleConfig.resourceServer.allowedUrls.find((u) &#x3D;&gt;
-        url.toLowerCase().startsWith(u.toLowerCase())
-      );
-    }
-
-    return true;
-  }
-
   public intercept(
     req: HttpRequest&lt;any&gt;,
     next: HttpHandler
   ): Observable&lt;HttpEvent&lt;any&gt;&gt; {
-    const url &#x3D; req.url.toLowerCase();
-
-    if (
-      !this.moduleConfig ||
-      !this.moduleConfig.resourceServer ||
-      !this.checkUrl(url)
-    ) {
-      return next.handle(req);
-    }
-
-    const sendAccessToken &#x3D; this.moduleConfig.resourceServer.sendAccessToken;
-
-    if (!sendAccessToken) {
-      return next
-        .handle(req)
-        .pipe(catchError((err) &#x3D;&gt; this.errorHandler.handleError(err)));
-    }
-
-    return merge(
-      of(this.oAuthService.getAccessToken()).pipe(filter((token) &#x3D;&gt; !!token)),
-      this.oAuthService.events.pipe(
-        filter((e) &#x3D;&gt; e.type &#x3D;&#x3D;&#x3D; &#x27;token_received&#x27;),
-        timeout(this.oAuthService.waitForTokenInMsec || 0),
-        catchError(() &#x3D;&gt; of(null)), // timeout is not an error
-        map(() &#x3D;&gt; this.oAuthService.getAccessToken())
-      )
-    ).pipe(
-      take(1),
-      mergeMap((token) &#x3D;&gt; {
-        if (token) {
-          const header &#x3D; &#x27;Bearer &#x27; + token;
-          const headers &#x3D; req.headers.set(&#x27;Authorization&#x27;, header);
-          req &#x3D; req.clone({ headers });
-        }
-
-        return next
-          .handle(req)
-          .pipe(catchError((err) &#x3D;&gt; this.errorHandler.handleError(err)));
-      })
+    return interceptFn(
+      this.oAuthService,
+      this.errorHandler,
+      this.moduleConfig,
+      req,
+      next
     );
   }
 }
@@ -400,6 +532,19 @@ export class DefaultOAuthInterceptor implements HttpInterceptor {
             var COMPODOC_CURRENT_PAGE_URL = 'DefaultOAuthInterceptor.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

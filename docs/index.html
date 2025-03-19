@@ -12,10 +12,61 @@
         <link rel="stylesheet" href="./styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
-            <a href="./" class="navbar-brand">angular-oauth2-oidc</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="./" class="navbar-brand">angular-oauth2-oidc</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -49,9 +100,10 @@
 </ul>
 <h2>Tested Environment</h2>
 <p>Successfully tested with <strong>Angular 4.3 to Angular 16</strong> and its Router, PathLocationStrategy as well as HashLocationStrategy and CommonJS-Bundling via webpack.</p>
-<p>At server side we&#39;ve used <strong>IdentityServer</strong> (.NET / .NET Core), Redhat&#39;s <strong>Keycloak</strong> (Java), and <strong>Auth0</strong> (Auth0 is officially supported since version 10 of this lib). For Auth0, please have a look into the respective documentation page here.</p>
+<p>On the server-side we&#39;ve used <strong>IdentityServer</strong> (.NET / .NET Core), Redhat&#39;s <strong>Keycloak</strong> (Java), and <strong>Auth0</strong> (Auth0 is officially supported since version 10 of this lib). For Auth0, please have a look into the respective documentation page here.</p>
 <p>For using this library with <strong>Azure Active Directory</strong> (<strong>Azure AD</strong>), we recommend an additional look to this <a href="https://dev.to/yuriburger/azure-active-directory-b2c-with-pkce-for-your-angular-app-1dcg">blog post</a> and the example linked at the end of this blog post.</p>
 <p>Also, the Okta community created some guidelines on how to use this lib with Okta. See the links at the end of this page for more information.</p>
+<p><strong>Angular 19</strong>: Use 19.x versions of this library (<strong>should also work with older Angular versions!</strong>).</p>
 <p><strong>Angular 18</strong>: Use 18.x versions of this library (<strong>should also work with older Angular versions!</strong>).</p>
 <p><strong>Angular 17</strong>: Use 17.x versions of this library (<strong>should also work with older Angular versions!</strong>).</p>
 <p><strong>Angular 16</strong>: Use 16.x versions of this library (<strong>should also work with older Angular versions!</strong>).</p>
@@ -82,7 +134,7 @@
 <li><p>The issues contain some ideas for PRs and enhancements (see labels)</p>
 </li>
 <li><p>If you want to contribute to the docs, you can do so in the <code>docs-src</code> folder. Make sure you update <code>summary.json</code> as well. Then generate the docs with the following commands:</p>
-<div><pre class="line-numbers"><code class="language-sh">npm install -g &#64;compodoc/compodoc
+<b>Example :</b><div><pre class="line-numbers"><code class="language-sh">npm install -g &#64;compodoc/compodoc
 npm run docs</code></pre></div></li>
 </ul>
 <h2>Features</h2>
@@ -123,9 +175,9 @@ npm run docs</code></pre></div></li>
 <li>localhost:[4200-4202]/silent-refresh.html</li>
 </ul>
 <h2>Installing</h2>
-<div><pre class="line-numbers"><code class="language-sh">npm i angular-oauth2-oidc --save</code></pre></div><h2>Option 1: Standalone APIs</h2>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-sh">npm i angular-oauth2-oidc --save</code></pre></div><h2>Option 1: Standalone APIs</h2>
 <p>If you use Standalone Components introduced with Angular 14, you can use our standalone API (call to <code>provideOAuthClient</code>) in your <code>main.ts</code> to setup the <code>OAuthClient</code>:</p>
-<div><pre class="line-numbers"><code class="language-TypeScript">// main.ts -- Angular 15+ version
+<b>Example :</b><div><pre class="line-numbers"><code class="language-TypeScript">// main.ts -- Angular 15+ version
 import { bootstrapApplication } from &#39;&#64;angular/platform-browser&#39;;
 
 import { provideHttpClient } from &#39;&#64;angular/common/http&#39;;
@@ -139,7 +191,7 @@ bootstrapApplication(AppComponent, {
     provideOAuthClient()
   ]
 });</code></pre></div><p>As Angular 14 does have Standalone Components but no Standalone API for its <code>HttpClient</code>, you need to go with the traditional <code>HttpClientModule</code> in this version:</p>
-<div><pre class="line-numbers"><code class="language-TypeScript">// main.ts -- Angular 14 version
+<b>Example :</b><div><pre class="line-numbers"><code class="language-TypeScript">// main.ts -- Angular 14 version
 import { bootstrapApplication } from &#39;&#64;angular/platform-browser&#39;;
 
 import { HttpClientModule } from &#39;&#64;angular/common/http&#39;;
@@ -155,7 +207,7 @@ bootstrapApplication(AppComponent, {
   ]
 });</code></pre></div><p>The <code>provideOAuthClient</code> function takes the same parameters as the forRoot function of the OAuthModule that is still in place for the sake of compatibility with existing code bases.</p>
 <h2>Option 2: Using NgModules</h2>
-<div><pre class="line-numbers"><code class="language-TypeScript">import { HttpClientModule } from &#39;&#64;angular/common/http&#39;;
+<b>Example :</b><div><pre class="line-numbers"><code class="language-TypeScript">import { HttpClientModule } from &#39;&#64;angular/common/http&#39;;
 import { OAuthModule } from &#39;angular-oauth2-oidc&#39;;
 // etc.
 
@@ -178,7 +230,7 @@ export class AppModule {
 }</code></pre></div><h1>Logging in</h1>
 <p>Since Version 8, this library supports code flow and <a href="https://tools.ietf.org/html/rfc7636">PKCE</a> to align with the current draft of the <a href="https://tools.ietf.org/html/draft-ietf-oauth-security-topics-13">OAuth 2.0 Security Best Current Practice</a> document. This is also the foundation of the upcoming OAuth 2.1.</p>
 <p>To configure your solution for code flow + PKCE you have to set the <code>responseType</code> to <code>code</code>:</p>
-<div><pre class="line-numbers"><code class="language-TypeScript">  import { AuthConfig } from &#39;angular-oauth2-oidc&#39;;
+<b>Example :</b><div><pre class="line-numbers"><code class="language-TypeScript">  import { AuthConfig } from &#39;angular-oauth2-oidc&#39;;
 
   export const authCodeFlowConfig: AuthConfig = {
     // Url of the Identity Provider
@@ -207,24 +259,35 @@ export class AppModule {
 
     showDebugInformation: true,
   };</code></pre></div><p>After this, you can initialize the code flow using:</p>
-<div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.initCodeFlow();</code></pre></div><p>There is also a convenience method <code>initLoginFlow</code> which initializes either the code flow or the implicit flow depending on your configuration.</p>
-<div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.initLoginFlow();</code></pre></div><p>Also -- as shown in the readme -- you have to execute the following code when bootstrapping to make the library to fetch the token:</p>
-<div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.configure(authCodeFlowConfig);
+<b>Example :</b><div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.initCodeFlow();</code></pre></div><p>There is also a convenience method <code>initLoginFlow</code> which initializes either the code flow or the implicit flow depending on your configuration.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.initLoginFlow();</code></pre></div><p>Also -- as shown in the readme -- you have to execute the following code when bootstrapping to make the library to fetch the token:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.configure(authCodeFlowConfig);
 this.oauthService.loadDiscoveryDocumentAndTryLogin();</code></pre></div><h3>Logging out</h3>
 <p>The logOut method clears the used token store (by default <code>sessionStorage</code>) and forwards the user to the auth servers logout endpoint if one was configured (manually or via the discovery document).</p>
-<div><pre class="line-numbers"><code class="language-typescript">this.oauthService.logOut();</code></pre></div><p>If you want to revoke the existing access token and the existing refresh token before logging out, use the following method:</p>
-<div><pre class="line-numbers"><code class="language-typescript">this.oauthService.revokeTokenAndLogout();</code></pre></div><h3>Skipping the Login Form</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-typescript">this.oauthService.logOut();</code></pre></div><p>If you want to revoke the existing access token and the existing refresh token before logging out, use the following method:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-typescript">this.oauthService.revokeTokenAndLogout();</code></pre></div><h3>Skipping the Login Form</h3>
 <p>If you don&#39;t want to display a login form that tells the user that they are redirected to the identity server, you can use the convenience function <code>this.oauthService.loadDiscoveryDocumentAndLogin();</code> instead of <code>this.oauthService.loadDiscoveryDocumentAndTryLogin();</code> when setting up the library.</p>
 <p>This directly redirects the user to the identity server if there are no valid tokens. Ensure you have your <code>issuer</code> set to your discovery document endpoint!</p>
 <h3>Calling a Web API with an Access Token</h3>
 <p>You can automate this task by switching <code>sendAccessToken</code> on and by setting <code>allowedUrls</code> to an array with prefixes for the respective URLs. Use lower case for the prefixes.</p>
-<div><pre class="line-numbers"><code class="language-TypeScript">OAuthModule.forRoot({
+<b>Example :</b><div><pre class="line-numbers"><code class="language-TypeScript">OAuthModule.forRoot({
     resourceServer: {
         allowedUrls: [&#39;http://www.angular.at/api&#39;],
         sendAccessToken: true
     }
 })</code></pre></div><p>If you need more versatility, you can look in the <a href="https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/working-with-httpinterceptors.html">documentation</a> how to setup a custom interceptor.</p>
-<h2>Token Refresh</h2>
+<p>In case you are in a standalone application, you have to use provideHttpClient<code>with</code>defaultOAuthInterceptor`.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-Typescript">bootstrapApplication(App, {
+  providers: [
+    provideOAuthClient({
+      resourceServer: {
+        allowedUrls: [&#39;http://www.angular.at/api&#39;],
+        sendAccessToken: true
+    }
+    }),
+    provideHttpClient(withInterceptors([defaultOAuthInterceptor]))
+  ]
+})</code></pre></div><h2>Token Refresh</h2>
 <p>See docs: <a href="https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/refreshing-a-token.html">https://manfredsteyer.github.io/angular-oauth2-oidc/docs/additional-documentation/refreshing-a-token.html</a></p>
 <h2>Routing</h2>
 <p>If you use the <code>PathLocationStrategy</code> (which is on by default) and have a general catch-all-route (<code>path: &#39;**&#39;</code>) you should be fine. Otherwise look up the section <code>Routing with the HashStrategy</code> in the <a href="https://manfredsteyer.github.io/angular-oauth2-oidc/docs/">documentation</a>.</p>
@@ -234,9 +297,11 @@ this.oauthService.loadDiscoveryDocumentAndTryLogin();</code></pre></div><h3>Logg
 <p>See the <a href="https://manfredsteyer.github.io/angular-oauth2-oidc/docs/">documentation</a> for more information about this library.</p>
 <h2>Breaking Change in Version 9</h2>
 <p>With regards to tree shaking, beginning with version 9, the <code>JwksValidationHandler</code> has been moved to a library of its own. If you need it for implementing <strong>implicit flow</strong>, please install it using npm:</p>
-<div><pre class="line-numbers"><code class="language-none">npm i angular-oauth2-oidc-jwks --save</code></pre></div><p>After that, you can import it into your application by using this:</p>
-<div><pre class="line-numbers"><code class="language-typescript">import { JwksValidationHandler } from &#39;angular-oauth2-oidc-jwks&#39;;</code></pre></div><p>instead of that:</p>
-<div><pre class="line-numbers"><code class="language-typescript">import { JwksValidationHandler } from &#39;angular-oauth2-oidc&#39;;</code></pre></div><p>Please note, that this dependency is not needed for the <strong>code flow</strong>, which is nowadays the <strong>recommended</strong> flow for single page applications. This also results in smaller bundle sizes.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-none">
+npm i angular-oauth2-oidc-jwks --save
+</code></pre></div><p>After that, you can import it into your application by using this:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-typescript">import { JwksValidationHandler } from &#39;angular-oauth2-oidc-jwks&#39;;</code></pre></div><p>instead of that:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-typescript">import { JwksValidationHandler } from &#39;angular-oauth2-oidc&#39;;</code></pre></div><p>Please note, that this dependency is not needed for the <strong>code flow</strong>, which is nowadays the <strong>recommended</strong> flow for single page applications. This also results in smaller bundle sizes.</p>
 <h3>Breaking change in 9.1.0</h3>
 <p>The use of <code>encodeURIComponent</code> on the argument passed to <code>initImplicitFlow</code> and its Code Flow counterparts was mandatory before this version.</p>
 <p>Since that was considered a <em>bug</em>, the need to do so was removed.
@@ -321,6 +386,19 @@ Now the reverse is true <strong>if you&#39;re upgrading from before 9.0.0</stron
             var COMPODOC_CURRENT_PAGE_URL = 'index.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="./js/libs/custom-elements.min.js"></script>
        <script src="./js/libs/lit-html.js"></script>

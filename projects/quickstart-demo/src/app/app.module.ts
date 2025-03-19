@@ -2,16 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { OAuthModule, OAuthStorage } from 'angular-oauth2-oidc';
-import {
-  provideHttpClient,
-  withInterceptorsFromDi,
-} from '@angular/common/http';
+import { defaultOAuthInterceptor, OAuthModule } from 'angular-oauth2-oidc';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
   bootstrap: [AppComponent],
   imports: [BrowserModule, OAuthModule.forRoot()],
-  providers: [provideHttpClient(withInterceptorsFromDi())],
+  providers: [provideHttpClient(withInterceptors([defaultOAuthInterceptor]))],
 })
 export class AppModule {}

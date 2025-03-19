@@ -8,13 +8,65 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
-	      <link rel="stylesheet" href="./styles/style.css">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
-            <a href="./" class="navbar-brand">angular-oauth2-oidc</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="./" class="navbar-brand">angular-oauth2-oidc</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -23,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -43,11 +95,13 @@
 
 
 
-                   
+
+
+
 
 
 <ol class="breadcrumb">
-    <li>Documentation coverage</li>
+    <li class="breadcrumb-item">Documentation coverage</li>
 </ol>
 
 <div>
@@ -71,15 +125,15 @@
             </td>
             <td>class</td>
             <td>AuthConfig</td>
-            <td align="right" data-sort="81">
-                <span class="coverage-percent">81 %</span>
-                <span class="coverage-count">(39/48)</span>
+            <td align="right" data-sort="83">
+                <span class="coverage-percent">83 %</span>
+                <span class="coverage-count">(45/54)</span>
             </td>
         </tr>
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href=".//functions.html#b64DecodeUnicode">projects/lib/src/base64-helper.ts</a>
+                <a href="./miscellaneous/functions.html#b64DecodeUnicode">projects/lib/src/base64-helper.ts</a>
             </td>
             <td>function</td>
             <td>b64DecodeUnicode</td>
@@ -91,13 +145,37 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href=".//functions.html#base64UrlEncode">projects/lib/src/base64-helper.ts</a>
+                <a href="./miscellaneous/functions.html#base64UrlEncode">projects/lib/src/base64-helper.ts</a>
             </td>
             <td>function</td>
             <td>base64UrlEncode</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
                 <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/DateTimeProvider.html">projects/lib/src/date-time-provider.ts</a>
+            </td>
+            <td>class</td>
+            <td>DateTimeProvider</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./injectables/SystemDateTimeProvider.html">projects/lib/src/date-time-provider.ts</a>
+            </td>
+            <td>injectable</td>
+            <td>SystemDateTimeProvider</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/3)</span>
             </td>
         </tr>
         <tr class="low">
@@ -163,7 +241,7 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href=".//functions.html#createDefaultLogger">projects/lib/src/factories.ts</a>
+                <a href="./miscellaneous/functions.html#createDefaultLogger">projects/lib/src/factories.ts</a>
             </td>
             <td>function</td>
             <td>createDefaultLogger</td>
@@ -175,7 +253,7 @@
         <tr class="low">
             <td>
                 <!-- miscellaneous -->
-                <a href=".//functions.html#createDefaultStorage">projects/lib/src/factories.ts</a>
+                <a href="./miscellaneous/functions.html#createDefaultStorage">projects/lib/src/factories.ts</a>
             </td>
             <td>function</td>
             <td>createDefaultStorage</td>
@@ -184,16 +262,28 @@
                 <span class="coverage-count">(0/1)</span>
             </td>
         </tr>
-        <tr class="low">
+        <tr class="medium">
             <td>
                 <!-- miscellaneous -->
                 <a href="./interceptors/DefaultOAuthInterceptor.html">projects/lib/src/interceptors/default-oauth.interceptor.ts</a>
             </td>
             <td>interceptor</td>
             <td>DefaultOAuthInterceptor</td>
+            <td align="right" data-sort="33">
+                <span class="coverage-percent">33 %</span>
+                <span class="coverage-count">(1/3)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#defaultOAuthInterceptor">projects/lib/src/interceptors/default-oauth.interceptor.ts</a>
+            </td>
+            <td>function</td>
+            <td>defaultOAuthInterceptor</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/4)</span>
+                <span class="coverage-count">(0/1)</span>
             </td>
         </tr>
         <tr class="low">
@@ -251,9 +341,165 @@
             </td>
             <td>injectable</td>
             <td>OAuthService</td>
-            <td align="right" data-sort="47">
-                <span class="coverage-percent">47 %</span>
-                <span class="coverage-count">(73/154)</span>
+            <td align="right" data-sort="48">
+                <span class="coverage-percent">48 %</span>
+                <span class="coverage-count">(85/176)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#provideOAuthClient">projects/lib/src/provider.ts</a>
+            </td>
+            <td>function</td>
+            <td>provideOAuthClient</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/Hash.html">projects/lib/src/token-validation/fast-sha256js.ts</a>
+            </td>
+            <td>class</td>
+            <td>Hash</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/17)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./classes/HMAC.html">projects/lib/src/token-validation/fast-sha256js.ts</a>
+            </td>
+            <td>class</td>
+            <td>HMAC</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/13)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#fillBuffer">projects/lib/src/token-validation/fast-sha256js.ts</a>
+            </td>
+            <td>function</td>
+            <td>fillBuffer</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#hash">projects/lib/src/token-validation/fast-sha256js.ts</a>
+            </td>
+            <td>function</td>
+            <td>hash</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#hashBlocks">projects/lib/src/token-validation/fast-sha256js.ts</a>
+            </td>
+            <td>function</td>
+            <td>hashBlocks</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#hkdf">projects/lib/src/token-validation/fast-sha256js.ts</a>
+            </td>
+            <td>function</td>
+            <td>hkdf</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#hmac">projects/lib/src/token-validation/fast-sha256js.ts</a>
+            </td>
+            <td>function</td>
+            <td>hmac</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#pbkdf2">projects/lib/src/token-validation/fast-sha256js.ts</a>
+            </td>
+            <td>function</td>
+            <td>pbkdf2</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/variables.html#blockSize">projects/lib/src/token-validation/fast-sha256js.ts</a>
+            </td>
+            <td>variable</td>
+            <td>blockSize</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/variables.html#digestLength">projects/lib/src/token-validation/fast-sha256js.ts</a>
+            </td>
+            <td>variable</td>
+            <td>digestLength</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/variables.html#hkdfSalt">projects/lib/src/token-validation/fast-sha256js.ts</a>
+            </td>
+            <td>variable</td>
+            <td>hkdfSalt</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/variables.html#K">projects/lib/src/token-validation/fast-sha256js.ts</a>
+            </td>
+            <td>variable</td>
+            <td>K</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
             </td>
         </tr>
         <tr class="medium">
@@ -277,7 +523,31 @@
             <td>DefaultHashHandler</td>
             <td align="right" data-sort="0">
                 <span class="coverage-percent">0 %</span>
-                <span class="coverage-count">(0/3)</span>
+                <span class="coverage-count">(0/4)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#decodeUTF8">projects/lib/src/token-validation/hash-handler.ts</a>
+            </td>
+            <td>function</td>
+            <td>decodeUTF8</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
+            </td>
+        </tr>
+        <tr class="low">
+            <td>
+                <!-- miscellaneous -->
+                <a href="./miscellaneous/functions.html#encodeUTF8">projects/lib/src/token-validation/hash-handler.ts</a>
+            </td>
+            <td>function</td>
+            <td>encodeUTF8</td>
+            <td align="right" data-sort="0">
+                <span class="coverage-percent">0 %</span>
+                <span class="coverage-count">(0/1)</span>
             </td>
         </tr>
         <tr class="low">
@@ -373,7 +643,7 @@
             <td>LoginOptions</td>
             <td align="right" data-sort="100">
                 <span class="coverage-percent">100 %</span>
-                <span class="coverage-count">(8/8)</span>
+                <span class="coverage-count">(9/9)</span>
             </td>
         </tr>
         <tr class="low">
@@ -433,7 +703,7 @@
             <td>OidcDiscoveryDoc</td>
             <td align="right" data-sort="3">
                 <span class="coverage-percent">3 %</span>
-                <span class="coverage-count">(1/30)</span>
+                <span class="coverage-count">(1/31)</span>
             </td>
         </tr>
         <tr class="low">
@@ -495,7 +765,7 @@
 
                    </div><div class="search-results">
     <div class="has-results">
-        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
         <ul class="search-results-list"></ul>
     </div>
     <div class="no-results">
@@ -507,6 +777,15 @@
            </div>
        </div>
 
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 0;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'coverage';
@@ -514,11 +793,24 @@
             var MAX_SEARCH_RESULTS = 15;
        </script>
 
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
        <script src="./js/libs/custom-elements.min.js"></script>
        <script src="./js/libs/lit-html.js"></script>
-       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
-       <script src="./js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+
        <script src="./js/menu-wc.js" defer></script>
+       <script nomodule src="./js/menu-wc_es5.js" defer></script>
 
        <script src="./js/libs/bootstrap-native.js"></script>
 
