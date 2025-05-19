@@ -134,11 +134,11 @@ export class JwksValidationHandler extends AbstractValidationHandler {
   }
 
   getKey(key: object) {
-    return rs.KEYUTIL.getKey(key);
+    return this.rs.KEYUTIL.getKey(key);
   }
 
   verifyJWT(idToken: string, keyObj: object, validationOptions: object) {
-    return rs.KJUR.jws.JWS.verifyJWT(idToken, keyObj, validationOptions);
+    return this.rs.KJUR.jws.JWS.verifyJWT(idToken, keyObj, validationOptions);
   }
 
   alg2kty(alg: string) {
@@ -167,6 +167,10 @@ export class JwksValidationHandler extends AbstractValidationHandler {
       result += String.fromCharCode(num);
     }
     return result;
+  }
+
+  get rs() {
+    return rs;
   }
 
   private get dateTimeProvider() {
