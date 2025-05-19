@@ -13,10 +13,7 @@ import { Injector } from '@angular/core';
  * This jwks can be provided by the discovery document.
  */
 export class JwksValidationHandler extends AbstractValidationHandler {
-  constructor(
-    private injector?: Injector,
-    private validationOptions?: () => object
-  ) {
+  constructor(private injector?: Injector) {
     super();
   }
   /**
@@ -114,14 +111,10 @@ export class JwksValidationHandler extends AbstractValidationHandler {
     }
 
     const keyObj = this.getKey(key);
-    const customValidationOptions = {
-      ...(this.validationOptions ? this.validationOptions() : {}),
-    };
     const validationOptions = {
       alg: this.allowedAlgorithms,
       gracePeriod: this.gracePeriodInSec,
       verifyAt: this.verifyAt,
-      ...customValidationOptions,
     };
 
     const isValid = this.verifyJWT(params.idToken, keyObj, validationOptions);
@@ -153,17 +146,17 @@ export class JwksValidationHandler extends AbstractValidationHandler {
   }
 
   calcHash(valueToHash: string, algorithm: string): Promise<string> {
-    let hashAlg = new rs.KJUR.crypto.MessageDigest({ alg: algorithm });
-    let result = hashAlg.digestString(valueToHash);
-    let byteArrayAsString = this.toByteArrayAsString(result);
+    const hashAlg = new rs.KJUR.crypto.MessageDigest({ alg: algorithm });
+    const result = hashAlg.digestString(valueToHash);
+    const byteArrayAsString = this.toByteArrayAsString(result);
     return Promise.resolve(byteArrayAsString);
   }
 
   toByteArrayAsString(hexString: string) {
     let result = '';
     for (let i = 0; i < hexString.length; i += 2) {
-      let hexDigit = hexString.charAt(i) + hexString.charAt(i + 1);
-      let num = parseInt(hexDigit, 16);
+      const hexDigit = hexString.charAt(i) + hexString.charAt(i + 1);
+      const num = parseInt(hexDigit, 16);
       result += String.fromCharCode(num);
     }
     return result;
