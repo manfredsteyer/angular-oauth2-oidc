@@ -1,8 +1,10 @@
 import * as rs from 'jsrsasign';
 import {
   AbstractValidationHandler,
+  DateTimeProvider,
   ValidationParams,
 } from 'angular-oauth2-oidc';
+import { Injector } from '@angular/core';
 
 /**
  * Validates the signature of an id_token against one
@@ -11,6 +13,12 @@ import {
  * This jwks can be provided by the discovery document.
  */
 export class JwksValidationHandler extends AbstractValidationHandler {
+  constructor(
+    private injector?: Injector,
+    private validationOptions?: () => object
+  ) {
+    super();
+  }
   /**
    * Allowed algorithms
    */
@@ -50,17 +58,17 @@ export class JwksValidationHandler extends AbstractValidationHandler {
 
     // console.debug('validateSignature: retry', retry);
 
-    let kid: string = params.idTokenHeader['kid'];
-    let keys: object[] = params.jwks['keys'];
+    const kid: string = params.idTokenHeader['kid'];
+    const keys: object[] = params.jwks['keys'];
     let key: object;
 
-    let alg = params.idTokenHeader['alg'];
+    const alg = params.idTokenHeader['alg'];
 
     if (kid) {
       key = keys.find((k) => k['kid'] === kid /* && k['use'] === 'sig' */);
     } else {
-      let kty = this.alg2kty(alg);
-      let matchingKeys = keys.filter(
+      const kty = this.alg2kty(alg);
+      const matchingKeys = keys.filter(
         (k) => k['kty'] === kty && k['use'] === 'sig'
       );
 
@@ -71,7 +79,7 @@ export class JwksValidationHandler extends AbstractValidationHandler {
                 return Promise.reject(error);
             }*/
       if (matchingKeys.length > 1) {
-        let error =
+        const error =
           'More than one matching key found. Please specify a kid in the id_token header.';
         console.error(error);
         return Promise.reject(error);
@@ -88,13 +96,13 @@ export class JwksValidationHandler extends AbstractValidationHandler {
     }
 
     if (!key && retry && !kid) {
-      let error = 'No matching key found.';
+      const error = 'No matching key found.';
       console.error(error);
       return Promise.reject(error);
     }
 
     if (!key && retry && kid) {
-      let error =
+      const error =
         'expected key not found in property jwks. ' +
         'This property is most likely loaded with the ' +
         'discovery document. ' +
@@ -105,16 +113,18 @@ export class JwksValidationHandler extends AbstractValidationHandler {
       return Promise.reject(error);
     }
 
-    let keyObj = rs.KEYUTIL.getKey(key);
-    let validationOptions = {
+    const keyObj = this.getKey(key);
+    const customValidationOptions = {
+      ...(this.validationOptions ? this.validationOptions() : {}),
+    };
+    const validationOptions = {
       alg: this.allowedAlgorithms,
       gracePeriod: this.gracePeriodInSec,
+      verifyAt: this.verifyAt,
+      ...customValidationOptions,
     };
-    let isValid = rs.KJUR.jws.JWS.verifyJWT(
-      params.idToken,
-      keyObj,
-      validationOptions
-    );
+
+    const isValid = this.verifyJWT(params.idToken, keyObj, validationOptions);
 
     if (isValid) {
       return Promise.resolve();
@@ -123,7 +133,15 @@ export class JwksValidationHandler extends AbstractValidationHandler {
     }
   }
 
-  private alg2kty(alg: string) {
+  getKey(key: object) {
+    return rs.KEYUTIL.getKey(key);
+  }
+
+  verifyJWT(idToken: string, keyObj: object, validationOptions: object) {
+    return rs.KJUR.jws.JWS.verifyJWT(idToken, keyObj, validationOptions);
+  }
+
+  alg2kty(alg: string) {
     switch (alg.charAt(0)) {
       case 'R':
         return 'RSA';
@@ -149,5 +167,15 @@ export class JwksValidationHandler extends AbstractValidationHandler {
       result += String.fromCharCode(num);
     }
     return result;
+  }
+
+  private get dateTimeProvider() {
+    return this.injector?.get(DateTimeProvider);
+  }
+
+  private get verifyAt() {
+    const now = this.dateTimeProvider?.new() || new Date();
+    const verifyAt = Math.floor(now.getTime() / 1000);
+    return verifyAt;
   }
 }
