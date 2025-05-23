@@ -172,7 +172,7 @@ export class JwksValidationHandler extends AbstractValidationHandler {
 
   private get verifyAt() {
     const now = this.dateTimeProvider?.new() || new Date();
-    const verifyAt = Math.floor(now.getTime() / 1000);
+    const verifyAt = now.getTime() / 1000;
     return verifyAt;
   }
 }
