@@ -10,7 +10,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "tsConfig": "projects/lib/tsconfig.lib.json",
             "project": "projects/lib/ng-package.json"
@@ -41,7 +41,7 @@
       "schematics": {},
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular/build:application",
           "options": {
             "outputPath": {
               "base": "dist/sample",
@@ -92,7 +92,7 @@
           "defaultConfiguration": ""
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular/build:dev-server",
           "options": {
             "buildTarget": "sample:build"
           },
@@ -103,16 +103,18 @@
           }
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "builder": "@angular/build:extract-i18n",
           "options": {
             "buildTarget": "sample:build"
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:karma",
           "options": {
             "main": "projects/sample/src/test.ts",
-            "polyfills": "projects/sample/src/polyfills.ts",
+            "polyfills": [
+              "projects/sample/src/polyfills.ts"
+            ],
             "tsConfig": "projects/sample/tsconfig.spec.json",
             "karmaConfig": "projects/sample/karma.conf.js",
             "styles": [
@@ -136,7 +138,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular/build:application",
           "options": {
             "outputPath": {
               "base": "dist/quickstart-demo",
@@ -152,7 +154,9 @@
               "projects/quickstart-demo/src/favicon.ico",
               "projects/quickstart-demo/src/assets"
             ],
-            "styles": ["projects/quickstart-demo/src/styles.css"],
+            "styles": [
+              "projects/quickstart-demo/src/styles.css"
+            ],
             "scripts": [],
             "extractLicenses": false,
             "sourceMap": true,
@@ -186,7 +190,7 @@
           "defaultConfiguration": ""
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular/build:dev-server",
           "options": {
             "buildTarget": "quickstart-demo:build"
           },
@@ -197,23 +201,27 @@
           }
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "builder": "@angular/build:extract-i18n",
           "options": {
             "buildTarget": "quickstart-demo:build"
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:karma",
           "options": {
             "main": "projects/quickstart-demo/src/test.ts",
-            "polyfills": "projects/quickstart-demo/src/polyfills.ts",
+            "polyfills": [
+              "projects/quickstart-demo/src/polyfills.ts"
+            ],
             "tsConfig": "projects/quickstart-demo/tsconfig.spec.json",
             "karmaConfig": "projects/quickstart-demo/karma.conf.js",
             "assets": [
               "projects/quickstart-demo/src/favicon.ico",
               "projects/quickstart-demo/src/assets"
             ],
-            "styles": ["projects/quickstart-demo/src/styles.css"],
+            "styles": [
+              "projects/quickstart-demo/src/styles.css"
+            ],
             "scripts": []
           }
         }
@@ -226,14 +234,14 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "tsConfig": "projects/angular-oauth2-oidc-jwks/tsconfig.lib.json",
             "project": "projects/angular-oauth2-oidc-jwks/ng-package.json"
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:karma",
           "options": {
             "main": "projects/angular-oauth2-oidc-jwks/src/test.ts",
             "tsConfig": "projects/angular-oauth2-oidc-jwks/tsconfig.spec.json",
@@ -250,7 +258,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular/build:application",
           "options": {
             "outputPath": {
               "base": "dist/quickstart-standalone",
@@ -297,7 +305,7 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
               "buildTarget": "quickstart-standalone:build:production"
@@ -309,13 +317,13 @@
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "builder": "@angular/build:extract-i18n",
           "options": {
             "buildTarget": "quickstart-standalone:build"
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:karma",
           "options": {
             "polyfills": [
               "zone.js",
@@ -337,12 +345,36 @@
   },
   "schematics": {
     "@schematics/angular:component": {
-      "style": "css"
+      "style": "css",
+      "type": "component"
+    },
+    "@schematics/angular:directive": {
+      "type": "directive"
+    },
+    "@schematics/angular:service": {
+      "type": "service"
+    },
+    "@schematics/angular:guard": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:interceptor": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:module": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:pipe": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:resolver": {
+      "typeSeparator": "."
     }
   },
   "cli": {
     "analytics": false,
-    "schematicCollections": ["@angular-eslint/schematics"],
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ],
     "packageManager": "npm"
   }
 }
