@@ -6,7 +6,7 @@
     "sourceMap": true,
     "declaration": false,
     "esModuleInterop": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "allowJs": true,
     "experimentalDecorators": true,
     "module": "esnext",
