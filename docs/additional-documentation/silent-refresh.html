@@ -12,10 +12,61 @@
         <link rel="stylesheet" href="../styles/dark.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
-            <a href="../" class="navbar-brand">angular-oauth2-oidc</a>
-            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">angular-oauth2-oidc</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
         </div>
 
         <div class="xs-menu menu" id="mobile-menu">
@@ -24,7 +75,7 @@
 
         <div class="container-fluid main">
            <div class="row main">
-               <div class="hidden-xs menu">
+               <div class="d-none d-md-block menu">
                    <compodoc-menu mode="normal"></compodoc-menu>
                </div>
                <!-- START CONTENT -->
@@ -56,7 +107,7 @@
 <p>To refresh your tokens when using implicit flow you can use a silent refresh. This is a well-known solution that compensates the fact that implicit flow does not allow for issuing a refresh token. It uses a hidden iframe to get another token from the auth server. When the user is there still logged in (by using a cookie) it will respond without user interaction and provide new tokens.</p>
 <p>To use this approach, setup a redirect uri for the silent refresh.</p>
 <p>For this, you can set the property silentRefreshRedirectUri in the config object:</p>
-<div><pre class="line-numbers"><code class="language-TypeScript">// This api will come in the next version
+<b>Example :</b><div><pre class="line-numbers"><code class="language-TypeScript">// This api will come in the next version
 
 import { AuthConfig } from &#39;angular-oauth2-oidc&#39;;
 
@@ -83,16 +134,16 @@ export const authConfig: AuthConfig = {
   // The first three are defined by OIDC. The 4th is a usecase-specific one
   scope: &#39;openid profile email voucher&#39;,
 }</code></pre></div><p>As an alternative, you can set the same property directly with the OAuthService:</p>
-<div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.silentRefreshRedirectUri = window.location.origin + &quot;/silent-refresh.html&quot;;</code></pre></div><p>Please keep in mind that this uri has to be configured at the auth-server too.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.silentRefreshRedirectUri = window.location.origin + &quot;/silent-refresh.html&quot;;</code></pre></div><p>Please keep in mind that this uri has to be configured at the auth-server too.</p>
 <p>This file is loaded into the hidden iframe after getting new tokens. Its only task is to send the received tokens to the main application:</p>
-<div><pre class="line-numbers"><code class="language-HTML">&lt;html&gt;
+<b>Example :</b><div><pre class="line-numbers"><code class="language-HTML">&lt;html&gt;
 &lt;body&gt;
     &lt;script&gt;
         (window.opener || window.parent).postMessage(location.hash || (&#39;#&#39; + location.search), location.origin);
     &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre></div><p>This simple implementation within silent-refresh.html is sufficient in most cases. It takes care of the hash fragment as well as of the query string (property search). For <strong>edge cases</strong> you need to check if the received hash fragment is a token response. For this, please go with the following <strong>more advanced implementation</strong>:</p>
-<div><pre class="line-numbers"><code class="language-html">&lt;html&gt;
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">&lt;html&gt;
     &lt;body&gt;
         &lt;script&gt;
             var checks = [/[\?|&amp;|#]code=/, /[\?|&amp;|#]error=/, /[\?|&amp;|#]token=/, /[\?|&amp;|#]id_token=/];
@@ -122,18 +173,18 @@ export const authConfig: AuthConfig = {
     &lt;/body&gt;
 &lt;/html&gt;</code></pre></div><p>The above example checks if the message in the URL (either hash or query string) is indeed a message returned with a response from an authentication provider and not an arbitrary value and then attempts to forward this message to a parent widow either by <code>.parent</code> (when this html is loaded in an iframe as a result of silent refresh) or by <code>.opener</code> (when the html is loaded into a popup during initial login) or finally using a storage event (as a fallback for complex cases, e.g. initial login in a popup with a cross-domain auth provider).</p>
 <p>Please make sure that this file is copied to your output directory by your build task. When using the CLI you can define it as an asset for this. For this, you have to add the following line to the file <code>.angular-cli.json</code>:</p>
-<div><pre class="line-numbers"><code class="language-JSON">&quot;assets&quot;: [
+<b>Example :</b><div><pre class="line-numbers"><code class="language-JSON">&quot;assets&quot;: [
     [...],
     &quot;silent-refresh.html&quot;
 ],</code></pre></div><p>To perform a silent refresh, just call the following method:</p>
-<div><pre class="line-numbers"><code class="language-TypeScript">this
+<b>Example :</b><div><pre class="line-numbers"><code class="language-TypeScript">this
     .oauthService
     .silentRefresh()
     .then(info =&gt; console.debug(&#39;refresh ok&#39;, info))
     .catch(err =&gt; console.error(&#39;refresh error&#39;, err));</code></pre></div><p>When there is an error in the iframe that prevents the communication with the main application, silentRefresh will give you a timeout. To configure the timespan for this, you can set the property <code>silentRefreshTimeout</code> (msec). The default value is 20.000 (20 seconds).</p>
 <h3>Automatically refreshing a token when/ before it expires (Code Flow and Implicit Flow)</h3>
 <p>To automatically refresh a token when/ some time before it expires, just call the following method after configuring the OAuthService:</p>
-<div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.setupAutomaticSilentRefresh();</code></pre></div><p>By default, this event is fired after 75% of the token&#39;s life time is over. You can adjust this factor by setting the property <code>timeoutFactor</code> to a value between 0 and 1. For instance, 0.5 means, that the event is fired after half of the life time is over and 0.33 triggers the event after a third.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-TypeScript">this.oauthService.setupAutomaticSilentRefresh();</code></pre></div><p>By default, this event is fired after 75% of the token&#39;s life time is over. You can adjust this factor by setting the property <code>timeoutFactor</code> to a value between 0 and 1. For instance, 0.5 means, that the event is fired after half of the life time is over and 0.33 triggers the event after a third.</p>
 
                    </div><div class="search-results">
     <div class="has-results">
@@ -164,6 +215,19 @@ export const authConfig: AuthConfig = {
             var COMPODOC_CURRENT_PAGE_URL = 'silent-refresh.html';
             var MAX_SEARCH_RESULTS = 15;
        </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>
        <script src="../js/libs/lit-html.js"></script>

@@ -1,4 +1,11 @@
-import { Injectable, NgZone, Optional, OnDestroy, Inject } from '@angular/core';
+import {
+  Injectable,
+  NgZone,
+  Optional,
+  OnDestroy,
+  Inject,
+  DOCUMENT,
+} from '@angular/core';
 import {
   HttpClient,
   HttpHeaders,
@@ -25,7 +32,7 @@ import {
   debounceTime,
   catchError,
 } from 'rxjs/operators';
-import { DOCUMENT } from '@angular/common';
+
 import { DateTimeProvider } from './date-time-provider';
 
 import {
@@ -1955,9 +1962,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
           },
           (err) => {
             console.error('Error getting token', err);
-            this.eventsSubject.next(
-              new OAuthErrorEvent('token_error', err)
-            );
+            this.eventsSubject.next(new OAuthErrorEvent('token_error', err));
             reject(err);
           }
         );

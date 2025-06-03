@@ -4,7 +4,8 @@ import { Flight } from '../../entities/flight';
   selector: 'flight-list',
   template: `
     <div class="row">
-      <div *ngFor="let f of flights" class="col-sm-6 col-md-4 col-lg-3 ">
+      @for (f of flights; track f) {
+      <div class="col-sm-6 col-md-4 col-lg-3 ">
         <alt-flight-card
           [item]="f"
           [selected]="f == selectedFlight"
@@ -12,6 +13,7 @@ import { Flight } from '../../entities/flight';
         >
         </alt-flight-card>
       </div>
+      }
     </div>
   `,
   standalone: false,

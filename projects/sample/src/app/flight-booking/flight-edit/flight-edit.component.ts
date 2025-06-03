@@ -6,7 +6,8 @@ import { ActivatedRoute } from '@angular/router';
     <h1>Flight Edit!</h1>
     <p>Hier könnte auch der Datensatz mit der Id {{ id }} stehen!</p>
 
-    <div *ngIf="exitWarning.show" class="alert alert-warning">
+    @if (exitWarning.show) {
+    <div class="alert alert-warning">
       <div>Daten wurden nicht gespeichert! Trotzdem Maske verlassen?</div>
       <div>
         <a
@@ -23,6 +24,7 @@ import { ActivatedRoute } from '@angular/router';
         >
       </div>
     </div>
+    }
   `,
   standalone: false,
 })
