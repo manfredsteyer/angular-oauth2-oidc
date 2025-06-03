@@ -1317,7 +1317,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
       this.debug('sessionCheckEventListener');
 
-      if (!issuer.startsWith(origin)) {
+      if (this.checkOrigin && !issuer.startsWith(origin)) {
         this.debug(
           'sessionCheckEventListener',
           'wrong origin',
