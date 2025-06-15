@@ -2344,7 +2344,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   /**
    * Returns the received claims about the user.
    */
-  public getIdentityClaims(): Record<string, any> {
+  public getIdentityClaims(): Record<string, any> | null {
     const claims = this._storage.getItem('id_token_claims_obj');
     if (!claims) {
       return null;
