@@ -9,4 +9,5 @@ export const authCodeFlowConfig: AuthConfig = {
   showDebugInformation: true,
   timeoutFactor: 0.01,
   checkOrigin: false,
+  blockOtherOrigins: false,
 };

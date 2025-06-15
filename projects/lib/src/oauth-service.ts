@@ -1031,17 +1031,25 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     this.silentRefreshPostMessageEventListener = (e: MessageEvent) => {
       const message = this.processMessageEventMessage(e);
 
-      if (this.checkOrigin && e.origin !== location.origin) {
-        console.error('wrong origin requested silent refresh!');
+      const hasDifferentOrigin = e.origin !== location.origin;
+
+      const shouldLogErrorForWrongOrigin = hasDifferentOrigin && (this.checkOrigin || this.blockOtherOrigins);
+
+      if (shouldLogErrorForWrongOrigin) {
+        console.error(`wrong origin requested silent refresh! expected: "${location.origin}", got: "${e.origin}"`);
       }
 
-      this.tryLogin({
-        customHashFragment: message,
-        preventClearHashAfterLogin: true,
-        customRedirectUri: this.silentRefreshRedirectUri || this.redirectUri,
-      }).catch((err) =>
-        this.debug('tryLogin during silent refresh failed', err)
-      );
+      const isAllowedToSilentRefresh = !hasDifferentOrigin || !this.blockOtherOrigins;
+
+      if (isAllowedToSilentRefresh) {
+        this.tryLogin({
+          customHashFragment: message,
+          preventClearHashAfterLogin: true,
+          customRedirectUri: this.silentRefreshRedirectUri || this.redirectUri,
+        }).catch((err) =>
+          this.debug('tryLogin during silent refresh failed', err)
+        );
+      }
     };
 
     window.addEventListener(
