@@ -4,8 +4,8 @@ import {
   Optional,
   OnDestroy,
   Inject,
-  DOCUMENT,
 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import {
   HttpClient,
   HttpHeaders,
