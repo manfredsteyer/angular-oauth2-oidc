@@ -1,5 +1,5 @@
 import { Directive } from '@angular/core';
-import { NG_ASYNC_VALIDATORS, AbstractControl } from '@angular/forms';
+import { AbstractControl, NG_ASYNC_VALIDATORS } from '@angular/forms';
 
 @Directive({
   selector: 'input[async-city]',

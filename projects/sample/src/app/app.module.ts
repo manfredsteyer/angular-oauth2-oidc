@@ -1,15 +1,8 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import {
-  OAuthModule,
-  OAuthStorage,
-  DateTimeProvider,
-} from 'angular-oauth2-oidc';
-import {
-  provideHttpClient,
-  withInterceptorsFromDi,
-} from '@angular/common/http';
+import { OAuthModule } from 'angular-oauth2-oidc';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { APP_ROUTES } from './app.routes';
@@ -19,9 +12,7 @@ import { HomeComponent } from './home/home.component';
 import { PasswordFlowLoginComponent } from './password-flow-login/password-flow-login.component';
 // import { CustomDateTimeProvider } from './shared/date/custom-date-time-provider';
 import { SharedModule } from './shared/shared.module';
-import { RouterModule, ExtraOptions } from '@angular/router';
-import { CustomPreloadingStrategy } from './shared/preload/custom-preloading.strategy';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { useHash } from '../flags';
 
 @NgModule({

@@ -1,10 +1,5 @@
-import { Directive, Input, Attribute } from '@angular/core';
-import {
-  NG_VALIDATORS,
-  Validator,
-  AbstractControl,
-  UntypedFormGroup,
-} from '@angular/forms';
+import { Attribute, Directive } from '@angular/core';
+import { AbstractControl, NG_VALIDATORS, UntypedFormGroup, Validator } from '@angular/forms';
 
 @Directive({
   selector: 'input[city]', // <input city>
