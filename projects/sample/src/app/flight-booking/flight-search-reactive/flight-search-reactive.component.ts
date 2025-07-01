@@ -1,7 +1,12 @@
 import { Component } from '@angular/core';
 import { Flight } from '../../entities/flight';
 import { FlightService } from '../services/flight.service';
-import { AbstractControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'flight-search-reactive',

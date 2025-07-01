@@ -1,10 +1,4 @@
-import {
-  Injectable,
-  NgZone,
-  Optional,
-  OnDestroy,
-  Inject,
-} from '@angular/core';
+import { Injectable, NgZone, Optional, OnDestroy, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import {
   HttpClient,
