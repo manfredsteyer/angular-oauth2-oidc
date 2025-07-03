@@ -2338,7 +2338,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   /**
    * Returns the received claims about the user.
    */
-  public getIdentityClaims(): Record<string, any> {
+  public getIdentityClaims(): Record<string, any> | null {
     const claims = this._storage.getItem('id_token_claims_obj');
     if (!claims) {
       return null;
@@ -2349,7 +2349,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   /**
    * Returns the granted scopes from the server.
    */
-  public getGrantedScopes(): object {
+  public getGrantedScopes(): object | null {
     const scopes = this._storage.getItem('granted_scopes');
     if (!scopes) {
       return null;
@@ -2360,7 +2360,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   /**
    * Returns the current id_token.
    */
-  public getIdToken(): string {
+  public getIdToken(): string | null {
     return this._storage ? this._storage.getItem('id_token') : null;
   }
 
@@ -2374,11 +2374,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   /**
    * Returns the current access_token.
    */
-  public getAccessToken(): string {
+  public getAccessToken(): string | null {
     return this._storage ? this._storage.getItem('access_token') : null;
   }
 
-  public getRefreshToken(): string {
+  public getRefreshToken(): string | null {
     return this._storage ? this._storage.getItem('refresh_token') : null;
   }
 
@@ -2386,7 +2386,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * Returns the expiration date of the access_token
    * as milliseconds since 1970.
    */
-  public getAccessTokenExpiration(): number {
+  public getAccessTokenExpiration(): number | null {
     if (!this._storage.getItem('expires_at')) {
       return null;
     }
@@ -2405,7 +2405,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * Returns the expiration date of the id_token
    * as milliseconds since 1970.
    */
-  public getIdTokenExpiration(): number {
+  public getIdTokenExpiration(): number | null {
     if (!this._storage.getItem('id_token_expires_at')) {
       return null;
     }
