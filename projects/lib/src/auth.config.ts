@@ -112,7 +112,7 @@ export class AuthConfig {
    * it does not bring additional security and is therefore
    * as good as using no password.
    */
-  public dummyClientSecret?: string = null;
+  public dummyClientSecret?: string = '';
 
   /**
    * Defines whether https is required.
@@ -227,6 +227,12 @@ export class AuthConfig {
    * https://tools.ietf.org/html/rfc7636#section-1.1
    */
   public disablePKCE? = false;
+
+  /**
+   * Allows to disable the timer for the id_token used
+   * for token refresh
+   */
+  public disableIdTokenTimer? = false;
 
   constructor(json?: Partial<AuthConfig>) {
     if (json) {

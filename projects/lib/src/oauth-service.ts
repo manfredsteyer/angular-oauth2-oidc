@@ -320,7 +320,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             this.setupAccessTokenTimer();
         }
 
-        if (this.hasValidIdToken() && !useAccessTokenExp) {
+        if (!this.disableIdTokenTimer && this.hasValidIdToken()) {
             this.setupIdTokenTimer();
         }
     }
@@ -486,9 +486,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                 this.http.get(this.jwksUri).subscribe(
                     jwks => {
                         this.jwks = jwks;
-                        this.eventsSubject.next(
-                            new OAuthSuccessEvent('discovery_document_loaded')
-                        );
+                        // todo verify if this is still needed
+                        // this.eventsSubject.next(
+                        //     new OAuthSuccessEvent('discovery_document_loaded')
+                        // );
                         resolve(jwks);
                     },
                     err => {
@@ -772,7 +773,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             this.http
                 .post<TokenResponse>(this.tokenEndpoint, params, { headers })
                 .pipe(switchMap(tokenResponse => {
-                    if (tokenResponse.id_token) {
+                    if (this.oidc && tokenResponse.id_token) {
                         return from(this.processIdToken(tokenResponse.id_token, tokenResponse.access_token, true))
                             .pipe(
                                 tap(result => this.storeIdToken(result)),
@@ -1264,7 +1265,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         }
 
         return url;
-        
+
     }
 
     initImplicitFlowInternal(
@@ -1503,32 +1504,32 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                 (tokenResponse) => {
                     this.debug('refresh tokenResponse', tokenResponse);
                     this.storeAccessTokenResponse(
-                        tokenResponse.access_token, 
-                        tokenResponse.refresh_token, 
+                        tokenResponse.access_token,
+                        tokenResponse.refresh_token,
                         tokenResponse.expires_in,
                         tokenResponse.scope);
 
                     if (this.oidc && tokenResponse.id_token) {
-                        this.processIdToken(tokenResponse.id_token, tokenResponse.access_token).  
+                        this.processIdToken(tokenResponse.id_token, tokenResponse.access_token).
                         then(result => {
                             this.storeIdToken(result);
-            
+
                             this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
                             this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
-            
+
                             resolve(tokenResponse);
                         })
                         .catch(reason => {
                             this.eventsSubject.next(new OAuthErrorEvent('token_validation_error', reason));
                             console.error('Error validating tokens');
                             console.error(reason);
-            
+
                             reject(reason);
                         });
                     } else {
                         this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
                         this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
-            
+
                         resolve(tokenResponse);
                     }
                 },
@@ -1688,7 +1689,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     ): boolean {
         const savedNonce = this._storage.getItem('nonce');
         if (savedNonce !== nonceInState) {
-            
+
             const err = 'Validating access_token failed, wrong state/nonce.';
             console.error(err, savedNonce, nonceInState);
             return false;
@@ -2018,9 +2019,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             return;
         }
 
-        if (!id_token && !this.postLogoutRedirectUri) {
-            return;
-        }
+        // todo verify whether this is needed
+        // if (!id_token && !this.postLogoutRedirectUri) {
+        //     return;
+        // }
 
         let logoutUrl: string;
 
