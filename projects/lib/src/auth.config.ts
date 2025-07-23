@@ -229,6 +229,12 @@ export class AuthConfig {
   public disablePKCE? = false;
 
   /**
+   * Set this to true to preserve the requested route including query parameters after code flow login.
+   * This setting enables deep linking for the code flow.
+   */
+  public preserveRequestedRoute? = false;
+
+  /**
    * Allows to disable the timer for the id_token used
    * for token refresh
    */
