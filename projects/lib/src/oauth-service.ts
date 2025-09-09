@@ -1743,7 +1743,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
     const code = parts['code'];
     const state = parts['state'];
-
+    
     const sessionState = parts['session_state'];
 
     if (!options.preventClearHashAfterLogin) {
@@ -1757,6 +1757,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
           .replace(/session_state=[^&$]*/, '')
           .replace(/^\?&/, '?')
           .replace(/&$/, '')
+          .replace(/iss=[^&\$]*/, '')
           .replace(/^\?$/, '')
           .replace(/&+/g, '&')
           .replace(/\?&/, '?')
