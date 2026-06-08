@@ -11114,8 +11114,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         location.search
           .replace(/code&#x3D;[^&amp;$]*/, &#x27;&#x27;)
           .replace(/scope&#x3D;[^&amp;$]*/, &#x27;&#x27;)
-          .replace(/state&#x3D;[^&amp;$]*/, &#x27;&#x27;)
           .replace(/session_state&#x3D;[^&amp;$]*/, &#x27;&#x27;)
+          .replace(/state&#x3D;[^&amp;$]*/, &#x27;&#x27;)
           .replace(/^\?&amp;/, &#x27;?&#x27;)
           .replace(/&amp;$/, &#x27;&#x27;)
           .replace(/^\?$/, &#x27;&#x27;)
