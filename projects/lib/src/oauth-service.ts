@@ -1753,8 +1753,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         location.search
           .replace(/code=[^&$]*/, '')
           .replace(/scope=[^&$]*/, '')
-          .replace(/state=[^&$]*/, '')
           .replace(/session_state=[^&$]*/, '')
+          .replace(/state=[^&$]*/, '')
           .replace(/^\?&/, '?')
           .replace(/&$/, '')
           .replace(/^\?$/, '')
