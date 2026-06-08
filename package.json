@@ -1,6 +1,6 @@
 {
   "name": "angular-oauth2-oidc",
-  "version": "20.0.3",
+  "version": "21.0.0",
   "license": "MIT",
   "scripts": {
     "release": "standard-version",
@@ -25,15 +25,15 @@
     "contributer": "git shortlog -s 9.0.0..HEAD"
   },
   "dependencies": {
-    "@angular/animations": "^20.0.0",
-    "@angular/common": "^20.0.0",
-    "@angular/compiler": "^20.0.0",
-    "@angular/core": "^20.0.0",
-    "@angular/elements": "^20.0.0",
-    "@angular/forms": "^20.0.0",
-    "@angular/platform-browser": "^20.0.0",
-    "@angular/platform-browser-dynamic": "^20.0.0",
-    "@angular/router": "^20.0.0",
+    "@angular/animations": "^21.0.0",
+    "@angular/common": "^21.0.0",
+    "@angular/compiler": "^21.0.0",
+    "@angular/core": "^21.0.0",
+    "@angular/elements": "^21.0.0",
+    "@angular/forms": "^21.0.0",
+    "@angular/platform-browser": "^21.0.0",
+    "@angular/platform-browser-dynamic": "^21.0.0",
+    "@angular/router": "^21.0.0",
     "@popperjs/core": "^2.9.2",
     "@webcomponents/custom-elements": "^1.4.3",
     "angular-oauth2-oidc": "^20.0.0",
@@ -54,10 +54,10 @@
     "@angular-eslint/eslint-plugin-template": "19.0.0",
     "@angular-eslint/schematics": "19.0.0",
     "@angular-eslint/template-parser": "19.0.0",
-    "@angular/build": "^20.0.0",
-    "@angular/cli": "^20.0.0",
-    "@angular/compiler-cli": "^20.0.0",
-    "@angular/language-service": "^20.0.0",
+    "@angular/build": "^21.0.0",
+    "@angular/cli": "^21.0.0",
+    "@angular/compiler-cli": "^21.0.0",
+    "@angular/language-service": "^21.0.0",
     "@commitlint/cli": "^19.6.0",
     "@commitlint/config-conventional": "^12.1.4",
     "@compodoc/compodoc": "^1.1.14",
@@ -84,12 +84,12 @@
     "karma-coverage-istanbul-reporter": "~3.0.3",
     "karma-jasmine": "~4.0.2",
     "karma-jasmine-html-reporter": "^1.7.0",
-    "ng-packagr": "^20.0.0",
+    "ng-packagr": "^21.0.0",
     "prettier": "^2.8.8",
     "standard-version": "^9.3.1",
     "ts-node": "~10.1.0",
     "tslint": "~6.1.0",
-    "typescript": "~5.8.3"
+    "typescript": "~5.9.2"
   },
   "husky": {
     "hooks": {
