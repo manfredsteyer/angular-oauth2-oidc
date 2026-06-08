@@ -133,18 +133,25 @@ document.addEventListener('DOMContentLoaded', function () {
                     _name += '<tspan x="0" dy="1.4em">' + htmlEntities(d.name) + '</tspan>';
                 }
             } else if (d.kind === 'component') {
-                _name += '<tspan x="0" dy="1.4em">' + d.path + '</tspan>';
-                _name +=
-                    '<tspan x="0" dy="1.4em"><a href="./components/' +
-                    d.component +
-                    '.html">' +
-                    d.component +
-                    '</a></tspan>';
+                _name += '<tspan x="0" dy="1.4em">' + (d.path || d.name) + '</tspan>';
+                if (d.component) {
+                    _name +=
+                        '<tspan x="0" dy="1.4em"><a href="./components/' +
+                        d.component +
+                        '.html">' +
+                        d.component +
+                        '</a></tspan>';
+                } else if (d.name && d.name.includes('Component')) {
+                    _name +=
+                        '<tspan x="0" dy="1.4em">' +
+                        d.name +
+                        '</tspan>';
+                }
                 if (d.outlet) {
                     _name += '<tspan x="0" dy="1.4em">&lt;outlet&gt; : ' + d.outlet + '</tspan>';
                 }
             } else {
-                _name += '<tspan x="0" dy="1.4em">/' + d.path + '</tspan>';
+                _name += '<tspan x="0" dy="1.4em">/' + (d.path || d.name) + '</tspan>';
                 if (d.component) {
                     _name +=
                         '<tspan x="0" dy="1.4em"><a href="./components/' +

@@ -61,6 +61,20 @@
                }
                toggleDarkMode(darkModeState);
           </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
@@ -81,6 +95,10 @@
                <!-- START CONTENT -->
                <div class="content miscellaneous-functions">
                    <div class="content-data">
+
+
+
+
 
 
 
@@ -172,7 +190,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>b64DecodeUnicode(str)</code>
+<code>b64DecodeUnicode(str: unknown)</code>
                 </td>
             </tr>
 
@@ -189,12 +207,16 @@
                                     <thead>
                                         <tr>
                                             <td>Name</td>
+                                                <td>Type</td>
                                             <td>Optional</td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                                 <td>str</td>
+                                            <td>
+                                                        <code>unknown</code>
+                                            </td>
 
                                             <td>
                                                     No
@@ -222,7 +244,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>base64UrlEncode(str)</code>
+<code>base64UrlEncode(str: unknown)</code>
                 </td>
             </tr>
 
@@ -239,12 +261,16 @@
                                     <thead>
                                         <tr>
                                             <td>Name</td>
+                                                <td>Type</td>
                                             <td>Optional</td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                                 <td>str</td>
+                                            <td>
+                                                        <code>unknown</code>
+                                            </td>
 
                                             <td>
                                                     No
@@ -327,7 +353,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>decodeUTF8(s)</code>
+<code>decodeUTF8(s: unknown)</code>
                 </td>
             </tr>
 
@@ -344,12 +370,16 @@
                                     <thead>
                                         <tr>
                                             <td>Name</td>
+                                                <td>Type</td>
                                             <td>Optional</td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                                 <td>s</td>
+                                            <td>
+                                                        <code>unknown</code>
+                                            </td>
 
                                             <td>
                                                     No
@@ -377,7 +407,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>encodeUTF8(arr)</code>
+<code>encodeUTF8(arr: unknown)</code>
                 </td>
             </tr>
 
@@ -394,12 +424,16 @@
                                     <thead>
                                         <tr>
                                             <td>Name</td>
+                                                <td>Type</td>
                                             <td>Optional</td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                                 <td>arr</td>
+                                            <td>
+                                                        <code>unknown</code>
+                                            </td>
 
                                             <td>
                                                     No
@@ -947,7 +981,7 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>provideOAuthClient(config: <a href="../classes/OAuthModuleConfig.html" target="_self">OAuthModuleConfig</a>, validationHandlerClass)</code>
+<code>provideOAuthClient(config: <a href="../classes/OAuthModuleConfig.html" target="_self">OAuthModuleConfig</a>, validationHandlerClass: unknown)</code>
                 </td>
             </tr>
 
@@ -988,6 +1022,7 @@
                                         <tr>
                                                 <td>validationHandlerClass</td>
                                             <td>
+                                                        <code>unknown</code>
                                             </td>
 
                                             <td>
@@ -1070,7 +1105,6 @@
        <script src="../js/libs/es6-shim.min.js"></script>
        <script src="../js/libs/EventDispatcher.js"></script>
        <script src="../js/libs/promise.min.js"></script>
-       <script src="../js/libs/zepto.min.js"></script>
 
        <script src="../js/compodoc.js"></script>
 

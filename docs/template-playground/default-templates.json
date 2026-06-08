@@ -1,0 +1,192 @@
+{
+  "templates": [
+    {
+      "name": "page.hbs",
+      "path": "page.hbs",
+      "description": "Main page template - the base layout for all documentation pages",
+      "type": "hbs",
+      "category": "core",
+      "content": "<!-- This will be populated with the actual page.hbs content -->"
+    },
+    {
+      "name": "component.hbs",
+      "path": "partials/component.hbs",
+      "description": "Component detail template - displays Angular component documentation",
+      "type": "hbs",
+      "category": "partials",
+      "content": "<!-- This will be populated with the actual component.hbs content -->"
+    },
+    {
+      "name": "module.hbs",
+      "path": "partials/module.hbs",
+      "description": "Module detail template - displays Angular module documentation",
+      "type": "hbs",
+      "category": "partials",
+      "content": "<!-- This will be populated with the actual module.hbs content -->"
+    },
+    {
+      "name": "overview.hbs",
+      "path": "partials/overview.hbs",
+      "description": "Overview template - displays the main overview page",
+      "type": "hbs",
+      "category": "partials",
+      "content": "<!-- This will be populated with the actual overview.hbs content -->"
+    },
+    {
+      "name": "class.hbs",
+      "path": "partials/class.hbs",
+      "description": "Class detail template - displays TypeScript class documentation",
+      "type": "hbs",
+      "category": "partials",
+      "content": "<!-- This will be populated with the actual class.hbs content -->"
+    },
+    {
+      "name": "interface.hbs",
+      "path": "partials/interface.hbs",
+      "description": "Interface detail template - displays TypeScript interface documentation",
+      "type": "hbs",
+      "category": "partials",
+      "content": "<!-- This will be populated with the actual interface.hbs content -->"
+    },
+    {
+      "name": "injectable.hbs",
+      "path": "partials/injectable.hbs",
+      "description": "Injectable service template - displays Angular service documentation",
+      "type": "hbs",
+      "category": "partials",
+      "content": "<!-- This will be populated with the actual injectable.hbs content -->"
+    },
+    {
+      "name": "directive.hbs",
+      "path": "partials/directive.hbs",
+      "description": "Directive template - displays Angular directive documentation",
+      "type": "hbs",
+      "category": "partials",
+      "content": "<!-- This will be populated with the actual directive.hbs content -->"
+    },
+    {
+      "name": "pipe.hbs",
+      "path": "partials/pipe.hbs",
+      "description": "Pipe template - displays Angular pipe documentation",
+      "type": "hbs",
+      "category": "partials",
+      "content": "<!-- This will be populated with the actual pipe.hbs content -->"
+    },
+    {
+      "name": "guard.hbs",
+      "path": "partials/guard.hbs",
+      "description": "Guard template - displays Angular guard documentation",
+      "type": "hbs",
+      "category": "partials",
+      "content": "<!-- This will be populated with the actual guard.hbs content -->"
+    },
+    {
+      "name": "interceptor.hbs",
+      "path": "partials/interceptor.hbs",
+      "description": "Interceptor template - displays Angular interceptor documentation",
+      "type": "hbs",
+      "category": "partials",
+      "content": "<!-- This will be populated with the actual interceptor.hbs content -->"
+    },
+    {
+      "name": "menu.hbs",
+      "path": "partials/menu.hbs",
+      "description": "Navigation menu template - displays the sidebar navigation",
+      "type": "hbs",
+      "category": "partials",
+      "content": "<!-- This will be populated with the actual menu.hbs content -->"
+    }
+  ],
+  "styles": [
+    {
+      "name": "compodoc.css",
+      "path": "styles/compodoc.css",
+      "description": "Main stylesheet - contains the core styles for Compodoc",
+      "type": "css",
+      "category": "core",
+      "content": "/* This will be populated with the actual compodoc.css content */"
+    },
+    {
+      "name": "bootstrap.min.css",
+      "path": "styles/bootstrap.min.css",
+      "description": "Bootstrap CSS framework - provides base styling components",
+      "type": "css",
+      "category": "vendor",
+      "content": "/* This will be populated with the actual bootstrap.min.css content */"
+    },
+    {
+      "name": "dark.css",
+      "path": "styles/dark.css",
+      "description": "Dark mode styles - contains dark theme styling",
+      "type": "css",
+      "category": "theme",
+      "content": "/* This will be populated with the actual dark.css content */"
+    },
+    {
+      "name": "gitbook.css",
+      "path": "styles/gitbook.css",
+      "description": "GitBook theme styles - alternative theme styling",
+      "type": "css",
+      "category": "theme",
+      "content": "/* This will be populated with the actual gitbook.css content */"
+    },
+    {
+      "name": "material.css",
+      "path": "styles/material.css",
+      "description": "Material design theme styles - Material theme styling",
+      "type": "css",
+      "category": "theme",
+      "content": "/* This will be populated with the actual material.css content */"
+    }
+  ],
+  "scripts": [
+    {
+      "name": "compodoc.js",
+      "path": "js/compodoc.js",
+      "description": "Main JavaScript file - contains core Compodoc functionality",
+      "type": "js",
+      "category": "core",
+      "content": "// This will be populated with the actual compodoc.js content"
+    },
+    {
+      "name": "menu.js",
+      "path": "js/menu.js",
+      "description": "Menu functionality - handles navigation menu interactions",
+      "type": "js",
+      "category": "core",
+      "content": "// This will be populated with the actual menu.js content"
+    },
+    {
+      "name": "tabs.js",
+      "path": "js/tabs.js",
+      "description": "Tab functionality - handles tab navigation in documentation pages",
+      "type": "js",
+      "category": "core",
+      "content": "// This will be populated with the actual tabs.js content"
+    },
+    {
+      "name": "search.js",
+      "path": "js/search/search.js",
+      "description": "Search functionality - handles documentation search features",
+      "type": "js",
+      "category": "feature",
+      "content": "// This will be populated with the actual search.js content"
+    },
+    {
+      "name": "sourceCode.js",
+      "path": "js/sourceCode.js",
+      "description": "Source code display - handles syntax highlighting and code display",
+      "type": "js",
+      "category": "feature",
+      "content": "// This will be populated with the actual sourceCode.js content"
+    },
+    {
+      "name": "lazy-load-graphs.js",
+      "path": "js/lazy-load-graphs.js",
+      "description": "Graph loading - handles lazy loading of dependency graphs",
+      "type": "js",
+      "category": "feature",
+      "content": "// This will be populated with the actual lazy-load-graphs.js content"
+    }
+  ]
+}

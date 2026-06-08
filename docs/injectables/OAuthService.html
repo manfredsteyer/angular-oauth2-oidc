@@ -61,6 +61,20 @@
                }
                toggleDarkMode(darkModeState);
           </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
 
         <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
                <div class="d-flex">
@@ -81,6 +95,10 @@
                <!-- START CONTENT -->
                <div class="content injectable">
                    <div class="content-data">
+
+
+
+
 
 
 
@@ -866,7 +884,7 @@ password flow.</p>
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(ngZone: NgZone, http: HttpClient, storage: <a href="../classes/OAuthStorage.html" target="_self">OAuthStorage</a>, tokenValidationHandler: <a href="../classes/ValidationHandler.html" target="_self">ValidationHandler</a>, config: <a href="../classes/AuthConfig.html" target="_self">AuthConfig</a>, urlHelper: <a href="../injectables/UrlHelperService.html" target="_self">UrlHelperService</a>, logger: <a href="../classes/OAuthLogger.html" target="_self">OAuthLogger</a>, crypto: <a href="../classes/HashHandler.html" target="_self">HashHandler</a>, document: Document, dateTimeService: <a href="../classes/DateTimeProvider.html" target="_self">DateTimeProvider</a>)</code>
+<code>constructor(ngZone: <a href="https://angular.io/api/core/NgZone" target="_blank">NgZone</a>, http: <a href="https://angular.io/api/common/http/HttpClient" target="_blank">HttpClient</a>, storage: <a href="../classes/OAuthStorage.html" target="_self">OAuthStorage</a>, tokenValidationHandler: <a href="../classes/ValidationHandler.html" target="_self">ValidationHandler</a>, config: <a href="../classes/AuthConfig.html" target="_self">AuthConfig</a>, urlHelper: <a href="../injectables/UrlHelperService.html" target="_self">UrlHelperService</a>, logger: <a href="../classes/OAuthLogger.html" target="_self">OAuthLogger</a>, crypto: <a href="../classes/HashHandler.html" target="_self">HashHandler</a>, document: Document, dateTimeService: <a href="../classes/DateTimeProvider.html" target="_self">DateTimeProvider</a>)</code>
                     </td>
                 </tr>
                         <tr>
@@ -892,7 +910,7 @@ password flow.</p>
                                                         <td>ngZone</td>
                                                   
                                                         <td>
-                                                                    <code>NgZone</code>
+                                                                        <code><a href="https://angular.io/api/core/NgZone" target="_blank" >NgZone</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -904,7 +922,7 @@ password flow.</p>
                                                         <td>http</td>
                                                   
                                                         <td>
-                                                                    <code>HttpClient</code>
+                                                                        <code><a href="https://angular.io/api/common/http/HttpClient" target="_blank" >HttpClient</a></code>
                                                         </td>
                                                   
                                                     <td>
@@ -1846,7 +1864,7 @@ to transmit the access_token to a service</p>
                 <td class="col-md-4">
 
                         <div class="io-description">
-                            <b>Returns : </b>    <code>Promise&lt;&gt;</code>
+                            <b>Returns : </b>    <code>Promise&lt;unknown&gt;</code>
 
                         </div>
                 </td>
@@ -1869,7 +1887,7 @@ to transmit the access_token to a service</p>
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>createLoginUrl(state: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, loginHint: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, customRedirectUri: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, noPrompt, params: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank">object</a>)</code>
+                    <code>createLoginUrl(state: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, loginHint: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, customRedirectUri: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, noPrompt: unknown, params: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank">object</a>)</code>
                 </td>
             </tr>
 
@@ -1946,6 +1964,7 @@ to transmit the access_token to a service</p>
                                         <tr>
                                                 <td>noPrompt</td>
                                             <td>
+                                                        <code>unknown</code>
                                             </td>
 
                                             <td>
@@ -2109,7 +2128,7 @@ to transmit the access_token to a service</p>
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>fetchTokenUsingGrant(grantType: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, parameters: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank">object</a>, headers: HttpHeaders)</code>
+                    <code>fetchTokenUsingGrant(grantType: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, parameters: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank">object</a>, headers: <a href="https://angular.io/api/common/http/HttpHeaders" target="_blank">HttpHeaders</a>)</code>
                 </td>
             </tr>
 
@@ -2180,7 +2199,7 @@ to transmit the access_token to a service</p>
                                         <tr>
                                                 <td>headers</td>
                                             <td>
-                                                        <code>HttpHeaders</code>
+                                                            <code><a href="https://angular.io/api/common/http/HttpHeaders" target="_blank" >HttpHeaders</a></code>
                                             </td>
 
                                             <td>
@@ -2225,7 +2244,7 @@ to transmit the access_token to a service</p>
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>fetchTokenUsingPasswordFlow(userName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, password: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, headers: HttpHeaders)</code>
+                    <code>fetchTokenUsingPasswordFlow(userName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, password: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, headers: <a href="https://angular.io/api/common/http/HttpHeaders" target="_blank">HttpHeaders</a>)</code>
                 </td>
             </tr>
 
@@ -2292,7 +2311,7 @@ to transmit the access_token to a service</p>
                                         <tr>
                                                 <td>headers</td>
                                             <td>
-                                                        <code>HttpHeaders</code>
+                                                            <code><a href="https://angular.io/api/common/http/HttpHeaders" target="_blank" >HttpHeaders</a></code>
                                             </td>
 
                                             <td>
@@ -2337,7 +2356,7 @@ to transmit the access_token to a service</p>
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>fetchTokenUsingPasswordFlowAndLoadUserProfile(userName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, password: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, headers: HttpHeaders)</code>
+                    <code>fetchTokenUsingPasswordFlowAndLoadUserProfile(userName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, password: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, headers: <a href="https://angular.io/api/common/http/HttpHeaders" target="_blank">HttpHeaders</a>)</code>
                 </td>
             </tr>
 
@@ -2410,7 +2429,7 @@ fail.</p>
                                         <tr>
                                                 <td>headers</td>
                                             <td>
-                                                        <code>HttpHeaders</code>
+                                                            <code><a href="https://angular.io/api/common/http/HttpHeaders" target="_blank" >HttpHeaders</a></code>
                                             </td>
 
                                             <td>
@@ -3842,7 +3861,7 @@ can pass it to optional parameter fullUrl.</p>
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>loadDiscoveryDocumentAndLogin(options)</code>
+                    <code>loadDiscoveryDocumentAndLogin(options: unknown)</code>
                 </td>
             </tr>
 
@@ -3869,6 +3888,7 @@ IdToken or no valid AccessToken.</p>
                                     <thead>
                                         <tr>
                                             <td>Name</td>
+                                                <td>Type</td>
                                             <td>Optional</td>
                                                 <td>Default value</td>
                                                 <td>Description</td>
@@ -3877,6 +3897,9 @@ IdToken or no valid AccessToken.</p>
                                     <tbody>
                                         <tr>
                                                 <td>options</td>
+                                            <td>
+                                                        <code>unknown</code>
+                                            </td>
 
                                             <td>
                                                     No
@@ -4434,7 +4457,7 @@ redirected to it with optional state parameter.</p>
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>padBase64(base64data)</code>
+                    <code>padBase64(base64data: unknown)</code>
                 </td>
             </tr>
 
@@ -4457,12 +4480,16 @@ redirected to it with optional state parameter.</p>
                                     <thead>
                                         <tr>
                                             <td>Name</td>
+                                                <td>Type</td>
                                             <td>Optional</td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                                 <td>base64data</td>
+                                            <td>
+                                                        <code>unknown</code>
+                                            </td>
 
                                             <td>
                                                     No
@@ -4568,7 +4595,7 @@ redirected to it with optional state parameter.</p>
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>refreshInternal(params, noPrompt)</code>
+                    <code>refreshInternal(params: unknown, noPrompt: unknown)</code>
                 </td>
             </tr>
 
@@ -4591,12 +4618,16 @@ redirected to it with optional state parameter.</p>
                                     <thead>
                                         <tr>
                                             <td>Name</td>
+                                                <td>Type</td>
                                             <td>Optional</td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
                                                 <td>params</td>
+                                            <td>
+                                                        <code>unknown</code>
+                                            </td>
 
                                             <td>
                                                     No
@@ -4606,6 +4637,9 @@ redirected to it with optional state parameter.</p>
                                         </tr>
                                         <tr>
                                                 <td>noPrompt</td>
+                                            <td>
+                                                        <code>unknown</code>
+                                            </td>
 
                                             <td>
                                                     No
@@ -4884,7 +4918,7 @@ method silentRefresh.</p>
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>revokeTokenAndLogout(customParameters: boolean | object, ignoreCorsIssues)</code>
+                    <code>revokeTokenAndLogout(customParameters: boolean | object, ignoreCorsIssues: unknown)</code>
                 </td>
             </tr>
 
@@ -4935,6 +4969,7 @@ up any security credentials associated with the authorization</p>
                                         <tr>
                                                 <td>ignoreCorsIssues</td>
                                             <td>
+                                                        <code>unknown</code>
                                             </td>
 
                                             <td>
@@ -5014,7 +5049,7 @@ up any security credentials associated with the authorization</p>
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>setupAutomaticSilentRefresh(params: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank">object</a>, listenTo?: "access_token" | "id_token" | "any", noPrompt)</code>
+                    <code>setupAutomaticSilentRefresh(params: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank">object</a>, listenTo?: "access_token" | "id_token" | "any", noPrompt: unknown)</code>
                 </td>
             </tr>
 
@@ -5089,6 +5124,7 @@ logged back in via receiving a new token.</p>
                                         <tr>
                                                 <td>noPrompt</td>
                                             <td>
+                                                        <code>unknown</code>
                                             </td>
 
                                             <td>
@@ -5365,7 +5401,7 @@ logged back in via receiving a new token.</p>
             <tr>
                 <td class="col-md-4">
                         <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>silentRefresh(params: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank">object</a>, noPrompt)</code>
+                    <code>silentRefresh(params: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/object" target="_blank">object</a>, noPrompt: unknown)</code>
                 </td>
             </tr>
 
@@ -5416,6 +5452,7 @@ the existing tokens expire.</p>
                                         <tr>
                                                 <td>noPrompt</td>
                                             <td>
+                                                        <code>unknown</code>
                                             </td>
 
                                             <td>
@@ -6695,6 +6732,12 @@ See the string enum EventType for a full list of event types.</p>
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>false</code>
                     </td>
                 </tr>
@@ -6746,6 +6789,12 @@ See the string enum EventType for a full list of event types.</p>
                     </span>
                 </td>
             </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>false</code>
@@ -6984,6 +7033,12 @@ id_tokens.</p>
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>false</code>
                     </td>
                 </tr>
@@ -7022,6 +7077,12 @@ id_tokens.</p>
                     </span>
                 </td>
             </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>true</code>
@@ -7290,6 +7351,12 @@ the request when initializing implicit flow.</p>
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>false</code>
                     </td>
                 </tr>
@@ -7334,6 +7401,12 @@ a security check which means we are more vulnerable.</p>
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>false</code>
                     </td>
                 </tr>
@@ -7373,6 +7446,12 @@ for token refresh</p>
                     </span>
                 </td>
             </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>false</code>
@@ -7747,6 +7826,12 @@ In rare cases, this character might be forbidden or inconvenient to use by the i
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>true</code>
                     </td>
                 </tr>
@@ -7923,6 +8008,12 @@ redirects the user to after logging out.</p>
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>false</code>
                     </td>
                 </tr>
@@ -8010,6 +8101,12 @@ This setting enables deep linking for the code flow.</p>
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>true</code>
                     </td>
                 </tr>
@@ -8049,6 +8146,12 @@ of &#39;postLogoutRedirectUri&#39; if the latter is not set.</p>
                     </span>
                 </td>
             </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>true</code>
@@ -8445,6 +8548,12 @@ to be used with https.</p>
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>3 * 1000</code>
                     </td>
                 </tr>
@@ -8484,6 +8593,12 @@ according to <a href="http://openid.net/specs/openid-connect-session-1_0.html#Ch
                     </span>
                 </td>
             </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>false</code>
@@ -8526,6 +8641,12 @@ in <a href="http://openid.net/specs/openid-connect-session-1_0.html#ChangeNotifi
                     </span>
                 </td>
             </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>false</code>
@@ -8697,6 +8818,12 @@ to include Debug level messages.</p>
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>false</code>
                     </td>
                 </tr>
@@ -8784,6 +8911,12 @@ silent refresh for debugging.</p>
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>false</code>
                     </td>
                 </tr>
@@ -8825,6 +8958,12 @@ Normally, the discovey document&#39;s url starts with the url of the issuer.</p>
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>false</code>
                     </td>
                 </tr>
@@ -8864,6 +9003,12 @@ Normally, it should be the same as before.</p>
                     </span>
                 </td>
             </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>true</code>
@@ -9001,6 +9146,12 @@ is triggered after 75% of the token&#39;s life time.</p>
             </tr>
                 <tr>
                     <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
                         <i>Default value : </i><code>false</code>
                     </td>
                 </tr>
@@ -9039,6 +9190,12 @@ is triggered after 75% of the token&#39;s life time.</p>
                     </span>
                 </td>
             </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
                 <tr>
                     <td class="col-md-4">
                         <i>Default value : </i><code>false</code>
@@ -9119,6 +9276,12 @@ is triggered after 75% of the token&#39;s life time.</p>
                     </span>
                 </td>
             </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>    <code>unknown</code>
+
+                    </td>
+                </tr>
                         <tr>
                             <td class="col-md-4">
                                 <div class="io-line">Inherited from         <code><a href="../classes/AuthConfig.html" target="_self" >AuthConfig</a></code>
@@ -12160,7 +12323,6 @@ export class OAuthService extends AuthConfig implements OnDestroy {
        <script src="../js/libs/es6-shim.min.js"></script>
        <script src="../js/libs/EventDispatcher.js"></script>
        <script src="../js/libs/promise.min.js"></script>
-       <script src="../js/libs/zepto.min.js"></script>
 
        <script src="../js/compodoc.js"></script>
 

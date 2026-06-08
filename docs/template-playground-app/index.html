@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compodoc Template Playground</title>
+    <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+
+    <!-- Compodoc CSS files -->
+    <link rel="stylesheet" href="../styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles/compodoc.css">
+    <link rel="stylesheet" href="../styles/prism.css">
+    <link rel="stylesheet" href="../styles/dark.css">
+    <link rel="stylesheet" href="../styles/style.css">
+
+    <!-- Monaco Editor -->
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
+
+    <!-- JSZip for creating ZIP files -->
+    <script src="https://unpkg.com/jszip@3.10.1/dist/jszip.min.js"
+            onerror="console.error('Failed to load JSZip from unpkg, trying cdnjs fallback'); this.remove(); var script = document.createElement('script'); script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js'; script.onerror = function() { console.error('Failed to load JSZip from all CDNs'); window.JSZipLoadError = true; }; document.head.appendChild(script);"></script>
+
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .playground-container {
+            display: flex;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        .playground-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .playground-title {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .playground-subtitle {
+            margin: 0.25rem 0 0 0;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .playground-content {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .variables-panel {
+            width: 350px;
+            background: white;
+            border-right: 1px solid #e9ecef;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .template-panel {
+            flex: 1;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .panel-header {
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 60px;
+        }
+
+        .panel-content {
+            flex: 1;
+            overflow: auto;
+            padding: 1rem;
+        }
+
+        .template-selection {
+            margin-bottom: 1rem;
+        }
+
+        .template-select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 0.375rem;
+            font-size: 0.9rem;
+        }
+
+        .variable-item {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 0.375rem;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .variable-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #495057;
+            margin-bottom: 0.25rem;
+        }
+
+        .variable-type {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+        }
+
+        .variable-value {
+            width: 100%;
+            padding: 0.375rem;
+            border: 1px solid #ddd;
+            border-radius: 0.25rem;
+            font-size: 0.85rem;
+            font-family: 'Courier New', monospace;
+            background: white;
+        }
+
+        .variable-actions {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .btn-icon {
+            padding: 0.25rem;
+            width: 24px;
+            height: 24px;
+            border: none;
+            border-radius: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+
+        .btn-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .add-variable-section {
+            border-top: 1px solid #e9ecef;
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+
+        .add-variable-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .add-variable-input {
+            padding: 0.375rem;
+            border: 1px solid #ddd;
+            border-radius: 0.25rem;
+            font-size: 0.85rem;
+        }
+
+        .template-preview-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .template-editor-container {
+            height: 40%;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .template-preview {
+            flex: 1;
+            background: white;
+            overflow: auto;
+            padding: 1rem;
+            border: 1px solid #e9ecef;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .btn-toolbar {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 0.375rem;
+            background: white;
+            color: #495057;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .btn-toolbar:hover {
+            background: #f8f9fa;
+            border-color: #007bff;
+            color: #007bff;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background: #0056b3;
+            border-color: #0056b3;
+            color: white;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            margin-bottom: 1rem;
+            border: 1px solid #f5c6cb;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            margin-bottom: 1rem;
+            border: 1px solid #c3e6cb;
+        }
+
+        .resizer {
+            width: 4px;
+            background: #e9ecef;
+            cursor: col-resize;
+            transition: background-color 0.2s;
+        }
+
+        .resizer:hover {
+            background: #007bff;
+        }
+
+        .template-metadata {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            background: #f8f9fa;
+            border-radius: 0.375rem;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            color: #6c757d;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .playground-content {
+                flex-direction: column;
+            }
+
+            .variables-panel {
+                width: 100%;
+                height: 40%;
+            }
+
+            .template-panel {
+                height: 60%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="playground-container">
+        <!-- Header -->
+        <div class="playground-header">
+            <h1 class="playground-title">
+                <i class="fas fa-code"></i>
+                Compodoc Template Playground
+            </h1>
+            <p class="playground-subtitle">
+                Customize and preview Handlebars templates with live data
+            </p>
+        </div>
+
+        <!-- Main Content -->
+        <div class="playground-content">
+            <!-- Variables/Properties Panel -->
+            <div class="variables-panel">
+                <div class="panel-header">
+                    <span><i class="fas fa-sliders-h"></i> Configuration options</span>
+                    <div class="toolbar">
+                        <button class="btn-toolbar" id="resetVariables" title="Reset to default values">
+                            <i class="fas fa-undo"></i>
+                        </button>
+                        <button class="btn-toolbar" id="exportData" title="Export current data">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="panel-content">
+                    <!-- Template Selection -->
+                    <div class="template-selection">
+                        <label for="templateSelect" class="form-label">Template Type:</label>
+                        <select class="template-select" id="templateSelect">
+                            <option value="">Select a template...</option>
+                            <option value="component">Component</option>
+                            <option value="module">Module</option>
+                            <option value="interface">Interface</option>
+                            <option value="class">Class</option>
+                            <option value="injectable">Injectable/Service</option>
+                            <option value="directive">Directive</option>
+                            <option value="pipe">Pipe</option>
+                            <option value="guard">Guard</option>
+                            <option value="interceptor">Interceptor</option>
+                            <option value="entity">Entity</option>
+                            <option value="controller">Controller</option>
+                            <option value="overview">Overview</option>
+                            <option value="miscellaneous">Miscellaneous</option>
+                        </select>
+                    </div>
+
+                    <!-- Template Metadata -->
+                    <div class="template-metadata" id="templateMetadata" style="display: none;">
+                        <strong>Template:</strong> <span id="templateName">-</span><br>
+                        <strong>File:</strong> <span id="templateFile">-</span><br>
+                        <strong>Description:</strong> <span id="templateDescription">-</span>
+                    </div>
+
+                    <!-- Variables List -->
+                    <div id="variablesList">
+                        <div class="loading">
+                            <div class="spinner"></div>
+                            Select a template to see variables
+                        </div>
+                    </div>
+
+                    <!-- Add Variable Section -->
+
+                </div>
+            </div>
+
+            <!-- Resizer -->
+            <div class="resizer" id="resizer"></div>
+
+            <!-- Template Panel -->
+            <div class="template-panel">
+                <div class="panel-header">
+                    <span><i class="fas fa-eye"></i> Template Editor</span>
+                    <div class="toolbar">
+                        <button class="btn-toolbar" id="copyTemplate" title="Copy template content">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <button class="btn-toolbar" id="downloadTemplate" title="Download as ZIP">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                        <button class="btn-toolbar btn-primary" id="refreshPreview" title="Refresh preview">
+                            <i class="fas fa-sync"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="template-preview-container">
+                    <!-- Template Editor -->
+                    <div class="template-editor-container">
+                        <div id="templateEditor" style="height: 100%;"></div>
+                    </div>
+
+                    <!-- Template Preview -->
+                    <div class="panel-header" style="border-top: 1px solid #e9ecef;">
+                        <span><i class="fas fa-browser"></i> Live Preview</span>
+                        <div class="toolbar">
+                            <span class="btn-toolbar" id="previewStatus">Ready</span>
+                        </div>
+                    </div>
+                    <div class="template-preview-iframe-container" style="flex: 1; overflow: hidden;">
+                        <iframe id="templatePreviewFrame"
+                                name="templatePreviewFrame"
+                                style="width: 100%; height: 100%; border: none; background: white;"
+                                src="about:blank">
+                        </iframe>
+                        <div class="template-preview-loading" id="templatePreviewLoading" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                            <div class="loading">
+                                <div class="spinner"></div>
+                                Rendering template...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compodoc JavaScript files -->
+    <script src="../js/libs/bootstrap-native.js"></script>
+    <script src="../js/libs/prism.js"></script>
+    <script src="../js/compodoc.js"></script>
+    <script src="../js/tabs.js"></script>
+    <script src="../js/sourceCode.js"></script>
+
+    <!-- Template Playground App -->
+    <script src="app.js"></script>
+</body>
+</html>
