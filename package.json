@@ -49,11 +49,6 @@
     "zone.js": "~0.16.0"
   },
   "devDependencies": {
-    "@angular-eslint/builder": "21.4.0",
-    "@angular-eslint/eslint-plugin": "21.4.0",
-    "@angular-eslint/eslint-plugin-template": "21.4.0",
-    "@angular-eslint/schematics": "21.4.0",
-    "@angular-eslint/template-parser": "21.4.0",
     "@angular/build": "^21.0.0",
     "@angular/cli": "^21.0.0",
     "@angular/compiler-cli": "^21.0.0",
@@ -61,19 +56,17 @@
     "@commitlint/cli": "^19.6.0",
     "@commitlint/config-conventional": "^12.1.4",
     "@compodoc/compodoc": "^1.1.14",
+    "@eslint/js": "^9.39.4",
     "@types/jasmine": "~3.8.1",
     "@types/jasminewd2": "~2.0.10",
     "@types/node": "^24.13.1",
-    "@typescript-eslint/eslint-plugin": "^7.18.0",
-    "@typescript-eslint/parser": "^7.18.0",
-    "@typescript-eslint/types": "^7.18.0",
-    "@typescript-eslint/utils": "^7.18.0",
+    "angular-eslint": "21.4.0",
     "codelyzer": "^6.0.2",
     "commitizen": "^4.2.4",
     "conventional-changelog-cli": "^2.1.1",
     "cpr": "^3.0.1",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^8.57.0",
+    "eslint": "^9.39.4",
     "github-contributors-list": "^1.2.5",
     "husky": "^7.0.1",
     "jasmine-core": "~3.8.0",
@@ -89,7 +82,8 @@
     "standard-version": "^9.3.1",
     "ts-node": "~10.9.2",
     "tslint": "~6.1.0",
-    "typescript": "~5.9.2"
+    "typescript": "~5.9.2",
+    "typescript-eslint": "^8.61.0"
   },
   "husky": {
     "hooks": {
