@@ -30,6 +30,17 @@
               "projects/lib/**/*.html"
             ]
           }
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "projects/lib/tsconfig.spec.json",
+            "karmaConfig": "projects/lib/karma.conf.js"
+          }
         }
       }
     },
@@ -112,7 +123,9 @@
           "builder": "@angular/build:karma",
           "options": {
             "main": "projects/sample/src/test.ts",
-            "polyfills": "projects/sample/src/polyfills.ts",
+            "polyfills": [
+              "projects/sample/src/polyfills.ts"
+            ],
             "tsConfig": "projects/sample/tsconfig.spec.json",
             "karmaConfig": "projects/sample/karma.conf.js",
             "styles": [
@@ -152,7 +165,9 @@
               "projects/quickstart-demo/src/favicon.ico",
               "projects/quickstart-demo/src/assets"
             ],
-            "styles": ["projects/quickstart-demo/src/styles.css"],
+            "styles": [
+              "projects/quickstart-demo/src/styles.css"
+            ],
             "scripts": [],
             "extractLicenses": false,
             "sourceMap": true,
@@ -206,14 +221,18 @@
           "builder": "@angular/build:karma",
           "options": {
             "main": "projects/quickstart-demo/src/test.ts",
-            "polyfills": "projects/quickstart-demo/src/polyfills.ts",
+            "polyfills": [
+              "projects/quickstart-demo/src/polyfills.ts"
+            ],
             "tsConfig": "projects/quickstart-demo/tsconfig.spec.json",
             "karmaConfig": "projects/quickstart-demo/karma.conf.js",
             "assets": [
               "projects/quickstart-demo/src/favicon.ico",
               "projects/quickstart-demo/src/assets"
             ],
-            "styles": ["projects/quickstart-demo/src/styles.css"],
+            "styles": [
+              "projects/quickstart-demo/src/styles.css"
+            ],
             "scripts": []
           }
         }
@@ -364,7 +383,9 @@
   },
   "cli": {
     "analytics": false,
-    "schematicCollections": ["@angular-eslint/schematics"],
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ],
     "packageManager": "npm"
   }
 }
