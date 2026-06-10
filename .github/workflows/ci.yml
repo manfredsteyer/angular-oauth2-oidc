@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Build library
+        run: npx ng build lib --configuration production
+
+      - name: Build angular-oauth2-oidc-jwks
+        run: npx ng build angular-oauth2-oidc-jwks --ts-config tsconfig.npm.json
+
+      - name: Build sample app
+        run: npx ng build sample
+
+      - name: Run unit tests
+        run: npm run test:ci
