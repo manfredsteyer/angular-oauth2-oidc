@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   template: `
@@ -9,6 +9,7 @@ import { Component } from '@angular/core';
       <li>Frankfurt - Graz</li>
     </ul>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class FlightHistoryComponent {}

@@ -1,10 +1,17 @@
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
 @Component({
   selector: 'date-component',
   template: `
     <div>{{ day }}.{{ month }}.{{ year }} {{ hour }}:{{ minute }}</div>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class DateComponent implements OnInit, OnChanges {

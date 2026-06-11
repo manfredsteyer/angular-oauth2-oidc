@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Flight } from '../../entities/flight';
 import { FlightService } from '../services/flight.service';
 import {
@@ -13,6 +13,7 @@ import {
   templateUrl: 'flight-search-reactive.component.html',
   providers: [FlightService],
   styleUrls: ['flight-search-reactive.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class FlightSearchReactiveComponent {

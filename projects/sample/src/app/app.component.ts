@@ -1,6 +1,6 @@
 import { noDiscoveryAuthConfig } from './auth-no-discovery.config';
 import { authConfig } from './auth.config';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { NullValidationHandler, OAuthService } from 'angular-oauth2-oidc';
 import { Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
@@ -11,6 +11,7 @@ import { useHash } from '../flags';
   // tslint:disable-next-line:component-selector
   selector: 'flight-app',
   templateUrl: './app.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AppComponent {

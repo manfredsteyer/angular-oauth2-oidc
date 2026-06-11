@@ -5,6 +5,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import {
   provideHttpClient,
   withInterceptorsFromDi,
+  withXhr,
 } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
@@ -47,7 +48,7 @@ import { useHash } from '../flags';
     // Enabled the custom date time provider will make the sample fail to login, since the demo Idp time is correctly synced to the world time.
     // { provide: DateTimeProvider, useClass: CustomDateTimeProvider },
     { provide: BASE_URL, useValue: 'http://www.angular.at' },
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withXhr(), withInterceptorsFromDi()),
   ],
 })
 export class AppModule {}
