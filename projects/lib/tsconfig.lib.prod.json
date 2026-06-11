@@ -3,13 +3,5 @@
   "compilerOptions": {
     "declarationMap": false,
     "outDir": "../../out-tsc/lib-prod"
-  },
-  "angularCompilerOptions": {
-    "extendedDiagnostics": {
-      "checks": {
-        "nullishCoalescingNotNullable": "suppress",
-        "optionalChainNotNullable": "suppress"
-      }
-    }
   }
 }

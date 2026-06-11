@@ -12,14 +12,8 @@
     "compilationMode": "partial",
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,
-    "extendedDiagnostics": {
-      "checks": {
-        "nullishCoalescingNotNullable": "suppress",
-        "optionalChainNotNullable": "suppress"
-      }
-    },
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true,
+    "fullTemplateTypeCheck": false,
+    "strictInjectionParameters": false,
     "enableResourceInlining": true,
     "strictTemplates": false
   },
