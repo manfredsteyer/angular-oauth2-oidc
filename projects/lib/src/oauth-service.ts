@@ -902,7 +902,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             if (this.oidc && tokenResponse.id_token) {
               this.processIdToken(
                 tokenResponse.id_token,
-                tokenResponse.access_token
+                tokenResponse.access_token,
+                grantType !== 'password'
               ).then((result) => {
                 this.storeIdToken(result);
                 resolve(tokenResponse);
