@@ -1,10 +1,11 @@
 import { authPasswordFlowConfig } from '../auth-password-flow.config';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-password-flow-login',
   templateUrl: './password-flow-login.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class PasswordFlowLoginComponent implements OnInit {

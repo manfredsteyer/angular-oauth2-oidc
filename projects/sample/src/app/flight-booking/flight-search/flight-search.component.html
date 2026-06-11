@@ -6,9 +6,7 @@ round-trip
 
 <form #f="ngForm" novalidate round-trip>
   @if (f?.control?.hasError('round-trip')) {
-    <div>
-      Rund-Flüge sind nicht möglich.
-    </div>
+  <div>Rund-Flüge sind nicht möglich.</div>
   }
 
   <div class="form-group">
@@ -23,75 +21,54 @@ round-trip
       city="Hamburg,Wien,Graz,Frankfurt,Luxemburg,Luxembourg"
       async-city
       pattern="[a-zA-ZöäüßÖÄÜ]+"
-      />
+    />
 
     @if (!f?.controls?.from?.valid && !f?.controls?.from?.pending) {
-      <div>
-        Validierungsfehler. Bitte prüfen Sie Ihre Eingaben.
-        <pre>
-          {{ f.controls.from?.errors | json }}
+    <div>
+      Validierungsfehler. Bitte prüfen Sie Ihre Eingaben.
+      <pre>
+          {{$safeNavigationMigration( f.controls.from?.error)s | json }}
           </pre
-          >
-        </div>
-      }
-
-      @if (f?.controls?.from?.hasError('async-city')) {
-        <div>
-          Async-City: Die Stadt wird gerade wegen eines Unwetters nicht angeflogen.
-        </div>
-      }
-
-      @if (f?.controls?.from?.pending) {
-        <div>
-          <marquee>
-            Validierung wird ausgeführt. Bitte etwas warten!
-          </marquee>
-        </div>
-      }
-
-      @if (f?.controls?.from?.hasError('required')) {
-        <div>
-          Dieses Feld ist ein Pflichtfeld.
-        </div>
-      }
-
-      @if (f?.controls?.from?.hasError('city')) {
-        <div>
-          Diese Stadt wird nicht angeflogen.
-        </div>
-      }
-
-      @if (f?.controls?.from?.hasError('minlength')) {
-        <div>
-          Bitte erfassen Sie min. 3 Zeichen.
-        </div>
-      }
-      @if (f?.controls?.from?.hasError('pattern')) {
-        <div>
-          Bitte nur Buchstaben erfassen.
-        </div>
-      }
+      >
     </div>
+    } @if (f?.controls?.from?.hasError('async-city')) {
+    <div>
+      Async-City: Die Stadt wird gerade wegen eines Unwetters nicht angeflogen.
+    </div>
+    } @if (f?.controls?.from?.pending) {
+    <div>
+      <marquee> Validierung wird ausgeführt. Bitte etwas warten! </marquee>
+    </div>
+    } @if (f?.controls?.from?.hasError('required')) {
+    <div>Dieses Feld ist ein Pflichtfeld.</div>
+    } @if (f?.controls?.from?.hasError('city')) {
+    <div>Diese Stadt wird nicht angeflogen.</div>
+    } @if (f?.controls?.from?.hasError('minlength')) {
+    <div>Bitte erfassen Sie min. 3 Zeichen.</div>
+    } @if (f?.controls?.from?.hasError('pattern')) {
+    <div>Bitte nur Buchstaben erfassen.</div>
+    }
+  </div>
 
-    <div class="form-group">
-      <label>To</label>
-      <input class="form-control" [(ngModel)]="to" name="to" />
-    </div>
-    <div class="form-group">
-      <button
-        class="btn btn-primary"
-        name="btnSearch"
-        [disabled]="!f.valid"
-        (click)="search()"
-        >
-        Search
-      </button>
-    </div>
-  </form>
-  <!--
+  <div class="form-group">
+    <label>To</label>
+    <input class="form-control" [(ngModel)]="to" name="to" />
+  </div>
+  <div class="form-group">
+    <button
+      class="btn btn-primary"
+      name="btnSearch"
+      [disabled]="!f.valid"
+      (click)="search()"
+    >
+      Search
+    </button>
+  </div>
+</form>
+<!--
   [ngClass]="{ 'active': f == selectedFlight }"
   -->
-  <!--
+<!--
   <table class="table table-striped">
 
     <tr *ngFor="let f of flights" [ngStyle]="{ 'background-color': (f == selectedFlight) ? 'orange': '' } ">
@@ -104,37 +81,37 @@ round-trip
   </table>
   -->
 
-  <div class="row">
-    @for (f of flights; track f) {
-      <div class="col-sm-6 col-md-4 col-lg-3 ">
-        <flight-card [item]="f" [(selectedItem)]="selectedFlight"> </flight-card>
-        <!--
+<div class="row">
+  @for (f of flights; track f) {
+  <div class="col-sm-6 col-md-4 col-lg-3">
+    <flight-card [item]="f" [(selectedItem)]="selectedFlight"> </flight-card>
+    <!--
         [selectedItem]="selectedFlight"
         (selectedItemChange)="selectedFlight = $event"
         -->
-        <!--
+    <!--
         <alt-flight-card
           [item]="f"
           [selected]="f == selectedFlight"
           (selectedChange)="selectedFlight = f">
         </alt-flight-card>
         -->
-      </div>
-    }
   </div>
+  }
+</div>
 
-  <!--
+<!--
   <flight-list [flights]="flights" [(selectedFlight)]="selectedFlight">
   </flight-list>
   -->
 
-  <div class="row" style="margin-top:40px">
-    <pre>
+<div class="row" style="margin-top: 40px">
+  <pre>
       Warenkorb
       ----------------------
       {{ selectedFlight | json }}
       </pre
-      >
-    </div>
+  >
+</div>
 
-    <button class="btn btn-primary" (click)="refresh()">Refresh Token</button>
+<button class="btn btn-primary" (click)="refresh()">Refresh Token</button>

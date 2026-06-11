@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
@@ -7,6 +7,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
     <p>Platzhalter-Seite. Hier könnte auch Ihre Werbung stehen ;-)</p>
     <p><button (click)="refresh()">Refresh</button></p>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class PassengerSearchComponent implements OnInit {

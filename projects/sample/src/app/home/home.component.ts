@@ -1,11 +1,12 @@
 import { authConfig } from '../auth.config';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { authCodeFlowConfig } from '../auth-code-flow.config';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: './home.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class HomeComponent implements OnInit {
