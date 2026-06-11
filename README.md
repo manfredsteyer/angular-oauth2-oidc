@@ -28,6 +28,8 @@ For using this library with **Azure Active Directory** (**Azure AD**), we recomm
 
 Also, the Okta community created some guidelines on how to use this lib with Okta. See the links at the end of this page for more information.
 
+**Angular 21**: Use 21.x versions of this library (**should also work with older Angular versions!**).
+
 **Angular 20**: Use 20.x versions of this library (**should also work with older Angular versions!**).
 
 **Angular 19**: Use 19.x versions of this library (**should also work with older Angular versions!**).
