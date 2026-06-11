@@ -1,4 +1,7 @@
-import { AbstractValidationHandler, ValidationParams } from 'angular-oauth2-oidc';
+import {
+  AbstractValidationHandler,
+  ValidationParams,
+} from 'angular-oauth2-oidc';
 import { JwksValidationHandler } from './jwks-validation-handler';
 
 describe('JwksValidationHandler', () => {
