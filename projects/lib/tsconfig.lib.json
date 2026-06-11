@@ -16,12 +16,6 @@
   "exclude": ["src/test.ts", "**/*.spec.ts"],
   "angularCompilerOptions": {
     "compilationMode": "partial",
-    "extendedDiagnostics": {
-      "checks": {
-        "nullishCoalescingNotNullable": "suppress",
-        "optionalChainNotNullable": "suppress"
-      }
-    },
     "strictTemplates": false
   }
 }

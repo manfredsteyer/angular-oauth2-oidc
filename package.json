@@ -88,11 +88,6 @@
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.61.0"
   },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
