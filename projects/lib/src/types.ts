@@ -104,7 +104,7 @@ export abstract class OAuthStorage {
 export class MemoryStorage implements OAuthStorage {
   private data = new Map<string, string>();
 
-  getItem(key: string): string {
+  getItem(key: string): string | undefined {
     return this.data.get(key);
   }
 
