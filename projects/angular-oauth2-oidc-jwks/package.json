@@ -1,11 +1,14 @@
 {
   "name": "angular-oauth2-oidc-jwks",
-  "version": "22.0.0",
+  "version": "22.0.1",
   "license": "MIT",
   "author": {
     "name": "Manfred Steyer"
   },
-  "repository": "manfredsteyer/angular-oauth2-oidc",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/manfredsteyer/angular-oauth2-oidc"
+  },
   "peerDependencies": {
     "@angular/common": ">=22.0.0",
     "@angular/core": ">=22.0.0",
