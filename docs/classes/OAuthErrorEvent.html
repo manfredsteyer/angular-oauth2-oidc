@@ -163,7 +163,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">projects/lib/src/events.ts:44</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">projects/lib/src/events.ts:50</a></div>
                             </td>
                         </tr>
 
@@ -268,13 +268,19 @@ export abstract class OAuthEvent {
 }
 
 export class OAuthSuccessEvent extends OAuthEvent {
-  constructor(type: EventType, readonly info: any &#x3D; null) {
+  constructor(
+    type: EventType,
+    readonly info: any &#x3D; null
+  ) {
     super(type);
   }
 }
 
 export class OAuthInfoEvent extends OAuthEvent {
-  constructor(type: EventType, readonly info: any &#x3D; null) {
+  constructor(
+    type: EventType,
+    readonly info: any &#x3D; null
+  ) {
     super(type);
   }
 }

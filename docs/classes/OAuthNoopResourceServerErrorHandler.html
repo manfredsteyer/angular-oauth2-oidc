@@ -206,8 +206,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="11"
-                                    class="link-to-prism">projects/lib/src/interceptors/resource-server-error-handler.ts:11</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="9"
+                                    class="link-to-prism">projects/lib/src/interceptors/resource-server-error-handler.ts:9</a></div>
                         </td>
                     </tr>
 
@@ -270,9 +270,7 @@ export abstract class OAuthResourceServerErrorHandler {
   abstract handleError(err: HttpResponse&lt;any&gt;): Observable&lt;any&gt;;
 }
 
-export class OAuthNoopResourceServerErrorHandler
-  implements OAuthResourceServerErrorHandler
-{
+export class OAuthNoopResourceServerErrorHandler implements OAuthResourceServerErrorHandler {
   handleError(err: HttpResponse&lt;any&gt;): Observable&lt;any&gt; {
     return throwError(err);
   }

@@ -15,7 +15,10 @@ import { useHash } from '../flags';
   standalone: false,
 })
 export class AppComponent {
-  constructor(private router: Router, private oauthService: OAuthService) {
+  constructor(
+    private router: Router,
+    private oauthService: OAuthService
+  ) {
     // Remember the selected configuration
     if (sessionStorage.getItem('flow') === 'code') {
       this.configureCodeFlow();

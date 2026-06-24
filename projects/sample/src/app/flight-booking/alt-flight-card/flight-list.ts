@@ -12,14 +12,14 @@ import { Flight } from '../../entities/flight';
   template: `
     <div class="row">
       @for (f of flights; track f) {
-      <div class="col-sm-6 col-md-4 col-lg-3 ">
-        <alt-flight-card
-          [item]="f"
-          [selected]="f == selectedFlight"
-          (selectedChange)="change(f)"
-        >
-        </alt-flight-card>
-      </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 ">
+          <alt-flight-card
+            [item]="f"
+            [selected]="f == selectedFlight"
+            (selectedChange)="change(f)"
+          >
+          </alt-flight-card>
+        </div>
       }
     </div>
   `,

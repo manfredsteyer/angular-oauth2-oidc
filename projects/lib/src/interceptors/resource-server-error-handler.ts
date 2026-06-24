@@ -5,9 +5,7 @@ export abstract class OAuthResourceServerErrorHandler {
   abstract handleError(err: HttpResponse<any>): Observable<any>;
 }
 
-export class OAuthNoopResourceServerErrorHandler
-  implements OAuthResourceServerErrorHandler
-{
+export class OAuthNoopResourceServerErrorHandler implements OAuthResourceServerErrorHandler {
   handleError(err: HttpResponse<any>): Observable<any> {
     return throwError(err);
   }
