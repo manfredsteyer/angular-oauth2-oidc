@@ -8,7 +8,8 @@
   "repository": "manfredsteyer/angular-oauth2-oidc",
   "peerDependencies": {
     "@angular/common": ">=22.0.0",
-    "@angular/core": ">=22.0.0"
+    "@angular/core": ">=22.0.0",
+    "angular-oauth2-oidc": ">=22.0.0"
   },
   "dependencies": {
     "jsrsasign": "^11.1.3",
