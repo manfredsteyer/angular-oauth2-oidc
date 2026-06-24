@@ -50,6 +50,7 @@
     "zone.js": "~0.16.2"
   },
   "devDependencies": {
+    "@angular-eslint/builder": "^22.0.0",
     "@angular/build": "^22.0.1",
     "@angular/cli": "^22.0.1",
     "@angular/compiler-cli": "^22.0.1",
@@ -61,8 +62,7 @@
     "@types/jasmine": "~3.8.1",
     "@types/jasminewd2": "~2.0.10",
     "@types/node": "^24.13.1",
-    "angular-eslint": "21.4.0",
-    "codelyzer": "^6.0.2",
+    "angular-eslint": "^22.0.0",
     "commitizen": "^4.2.4",
     "conventional-changelog-cli": "^2.1.1",
     "cpr": "^3.0.1",
@@ -84,7 +84,6 @@
     "prettier": "^2.8.8",
     "standard-version": "^9.3.1",
     "ts-node": "~10.9.2",
-    "tslint": "~6.1.0",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.61.0"
   },

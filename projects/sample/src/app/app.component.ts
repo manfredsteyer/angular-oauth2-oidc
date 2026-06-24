@@ -8,7 +8,7 @@ import { authCodeFlowConfig } from './auth-code-flow.config';
 import { useHash } from '../flags';
 
 @Component({
-  // tslint:disable-next-line:component-selector
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'flight-app',
   templateUrl: './app.component.html',
   changeDetection: ChangeDetectionStrategy.Eager,
@@ -62,14 +62,14 @@ export class AppComponent {
 
     // Display all events
     this.oauthService.events.subscribe((e) => {
-      // tslint:disable-next-line:no-console
+      // eslint-disable-next-line no-console
       console.debug('oauth/oidc event', e);
     });
 
     this.oauthService.events
       .pipe(filter((e) => e.type === 'session_terminated'))
       .subscribe((e) => {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         console.debug('Your session has been terminated!');
       });
   }
@@ -110,7 +110,7 @@ export class AppComponent {
     this.oauthService.tokenValidationHandler = new NullValidationHandler();
 
     this.oauthService.events.subscribe((e) => {
-      // tslint:disable-next-line:no-console
+      // eslint-disable-next-line no-console
       console.debug('oauth/oidc event', e);
     });
 
@@ -122,7 +122,7 @@ export class AppComponent {
     this.oauthService.events
       .pipe(filter((e) => e.type === 'token_expires'))
       .subscribe((e) => {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         console.debug('received token_expires event', e);
         this.oauthService.silentRefresh();
       });
