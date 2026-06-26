@@ -2814,18 +2814,20 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
 
     return new Promise((resolve, reject) => {
-      let revokeAccessToken: Observable<void>;
-      let revokeRefreshToken: Observable<void>;
+      let revokeAccessToken: Observable<unknown>;
+      let revokeRefreshToken: Observable<unknown>;
 
       if (accessToken) {
         const revokationParams = params
           .set('token', accessToken)
           .set('token_type_hint', 'access_token');
-        revokeAccessToken = this.http.post<void>(
-          revokeEndpoint,
-          revokationParams,
-          { headers }
-        );
+        // Per RFC 7009 section 2.2 the response body is to be ignored, so we
+        // request it as text to avoid HttpClient's default JSON parsing failing
+        // on non-JSON (e.g. empty or plain-text) revocation responses.
+        revokeAccessToken = this.http.post(revokeEndpoint, revokationParams, {
+          headers,
+          responseType: 'text',
+        });
       } else {
         revokeAccessToken = of(null);
       }
@@ -2834,11 +2836,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         const revokationParams = params
           .set('token', refreshToken)
           .set('token_type_hint', 'refresh_token');
-        revokeRefreshToken = this.http.post<void>(
-          revokeEndpoint,
-          revokationParams,
-          { headers }
-        );
+        // See note above: ignore the response body (RFC 7009 section 2.2).
+        revokeRefreshToken = this.http.post(revokeEndpoint, revokationParams, {
+          headers,
+          responseType: 'text',
+        });
       } else {
         revokeRefreshToken = of(null);
       }
