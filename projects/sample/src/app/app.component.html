@@ -1,11 +1,21 @@
-<nav class="navbar navbar-default">
-  <ul class="nav navbar-nav">
-    <li><a [routerLink]="['/home']">Home</a></li>
-    <li><a [routerLink]="['/password-flow-login']">Password Flow Login</a></li>
-    <li>
-      <a [routerLink]="['/flight-booking/flight-search']">Book a Flight</a>
-    </li>
-  </ul>
+<nav class="navbar navbar-expand bg-body-tertiary">
+  <div class="container-fluid">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/home']">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/password-flow-login']"
+          >Password Flow Login</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/flight-booking/flight-search']"
+          >Book a Flight</a
+        >
+      </li>
+    </ul>
+  </div>
 </nav>
 
 <div class="container">

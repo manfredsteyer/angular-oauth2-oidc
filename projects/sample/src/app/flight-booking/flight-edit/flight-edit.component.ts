@@ -19,7 +19,7 @@ import { ActivatedRoute } from '@angular/router';
           <a
             href="javascript:void(0)"
             (click)="decide(false)"
-            class="btn btn-default"
+            class="btn btn-secondary"
             >Nein</a
           >
         </div>
