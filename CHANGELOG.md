@@ -1,29 +1,147 @@
 # Changelog
 
-### Features
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-* update project to Angular 16 ([b999024](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/b999024b1bb7fdb40f07810a75add60f47fe5f08))
-
+## [22.0.2](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/22.0.1...22.0.2) (2026-07-02)
 
 ### Bug Fixes
 
-* [#728](https://github.com/manfredsteyer/angular-oauth2-oidc/issues/728) ([51e438a](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/51e438a942773948f17ab108332d704b459fd789)), closes [/github.com/manfredsteyer/angular-oauth2-oidc/issues/728#issuecomment-808969225](https://github.com/manfredsteyer//github.com/manfredsteyer/angular-oauth2-oidc/issues/728/issues/issuecomment-808969225)
-* clear location.hash only if it is present ([c2b2753](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/c2b2753943d59a6b4b5149f1003371338ac1a210)), closes [#970](https://github.com/manfredsteyer/angular-oauth2-oidc/issues/970)
+* **token-revocation:** accept non-JSON responses from the revocation endpoint ([0f1613d](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/0f1613d))
+
+## [22.0.1](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/22.0.0...22.0.1) (2026-06-24)
+
+### Build & Dependencies
+
+* update rxjs to v7 ([5b6a2a2](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/5b6a2a2))
+* update eslint to v10 ([7613c69](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/7613c69)), migrate remaining TSLint config to ESLint ([a731faf](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/a731faf))
+* update prettier and prettify files ([62c206f](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/62c206f))
+* update npm packages ([cbfd6c8](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/cbfd6c8)), remove unused packages ([aa023d5](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/aa023d5))
+
+## [22.0.0](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/21.0.2...22.0.0) (2026-06-24)
+
+### Features
+
+* update to Angular 22 ([c8f9257](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/c8f9257))
+
+### Build & Dependencies
+
+* disable TypeScript 6.0 strict mode, silence TS 6.0 deprecations for now ([96aa71d](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/96aa71d))
+* update build config and docs ([17bd642](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/17bd642))
+
+## [21.0.3](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/21.0.2...21.0.3) (2026-07-02)
+
+### Bug Fixes
+
+* **token-revocation:** accept non-JSON responses from the revocation endpoint ([bd595a7](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/bd595a7)) — backport of the 22.0.2 fix
+
+## [21.0.2](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/21.0.1...21.0.2) (2026-06-24)
+
+### Build & Testing
+
+* repair test infrastructure, add lib unit tests and CI ([bb9d981](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/bb9d981))
+* migrate to ESLint 9 flat config ([81a59ca](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/81a59ca))
+
+## [21.0.1](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/21.0.0...21.0.1) (2026-06-24)
+
+### Bug Fixes
+
+* URL replacement fails when `preventClearHashAfterLogin` is false ([f47e17f](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/f47e17f)), closes [#1500](https://github.com/manfredsteyer/angular-oauth2-oidc/issues/1500)
+
+### Build & Dependencies
+
+* upgrade third-party dependencies ([e40d6a3](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/e40d6a3))
+* docs: fix link to "Token Refresh" page ([679d7cd](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/679d7cd))
+
+## [21.0.0](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/20.0.3...21.0.0) (2026-06-08)
+
+### Features
+
+* update to Angular 21 ([21339a5](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/21339a5))
+* update third-party dependencies and docs ([1fd26c4](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/1fd26c4))
+
+## [20.0.3](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/20.0.2...20.0.3) (2026-06-08)
+
+### Build & Dependencies
+
+* update npm packages ([94e8b2c](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/94e8b2c))
+
+## [20.0.2](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/20.0.1...20.0.2) (2025-07-01)
+
+### Build & Dependencies
+
+* update docs ([234901d](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/234901d))
+
+## [20.0.1](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/20.0.0...20.0.1) (2025-06-30)
+
+### Bug Fixes
+
+* fix import (v20) in quickstart-standalone ([3793c81](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/3793c81))
+
+### Build & Dependencies
+
+* update npm packages ([5d10af2](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/5d10af2)), clean up imports in demos ([47e05ce](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/47e05ce))
+
+## [20.0.0](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/19.0.0...20.0.0) (2025-06-30)
+
+### Features
+
+* update to Angular 20 ([a89c77b](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/a89c77b))
+
+### Bug Fixes
+
+* throw `token_error` instead of `token_refresh_error` on refresh errors ([a14935b](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/a14935b))
+
+## [19.0.0](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/18.0.0...19.0.0) (2024-12-02)
+
+### Features
+
+* update to Angular 19 ([14de410](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/14de410))
+
+## [18.0.0](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/17.0.2...18.0.0) (2024-12-02)
+
+### Features
+
+* update to Angular 18 ([1db94d4](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/1db94d4))
+
+### Bug Fixes
+
+* **ng18:** remove languageLevel from ng-package.json ([93ab420](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/93ab420))
+
+## [17.0.2](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/15.0.0...17.0.2) (2024-03-23)
+
+### Features
+
+* update to Angular 17 ([0211482](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/0211482))
+* update project to Angular 16 ([b999024](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/b999024b1bb7fdb40f07810a75add60f47fe5f08)) — released as 16.1.0 ([f5d940c](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/f5d940c))
+
+### Security
+
+* update jsrsasign due to CVE-2024-21484 (Marvin attack on RSA and RSAOAEP decryption) ([39be423](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/39be423))
+
+## [15.0.0](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/12.1...15.0.0) (2022-11-18)
+
+### Features
+
+* provide standalone API ([e38c99c](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/e38c99c))
+* update to Angular 13 ([d95d7da](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/d95d7da)), Angular 14 ([c483f38](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/c483f38)) and Angular 15 ([0feeaf0](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/0feeaf0))
+
+### Bug Fixes
+
+* `disableNonceCheck` always leads to an error ([7254e40](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/7254e40)), closes [#1210](https://github.com/manfredsteyer/angular-oauth2-oidc/issues/1210)
+* add max value on calcTimeout function ([e2fe6a4](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/e2fe6a4))
+* preserve requested route for code flow ([767e2e6](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/767e2e6))
+* add check for localStorage writeability ([a159bc8](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/a159bc8))
+
+## [12.1](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/12.0.0...12.1) (2021-08-24)
+
+### Bug Fixes
+
 * clock skew bug ([f30098d](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/f30098df4213671871cf9cd5667ca9751ff29ddd))
-* correctly handle ? and & in location replacements ([70fd826](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/70fd8268832aba954956542e37896252dde5cdab))
 * correctly use clockSkew for hasValid[Access|Id]Token ([68238fb](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/68238fb6ea4a2f88ada97b03b13663d1454b001c))
-* Disable nonce validation for id token for e2e tests ([f5bd96c](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/f5bd96ca81ec6b7af868de72b1098541264347cf))
-* fix scope/state removal for implicit flow with hash ([9e257d0](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/9e257d0d267942d716607f2a1c78700bd9d6e9ef))
-* in code flow pass options to error handler ([c9a2c55](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/c9a2c557178af26154adfbcf39e3db2d12ee0503)), closes [#972](https://github.com/manfredsteyer/angular-oauth2-oidc/issues/972)
 * issue with sha256 and prod build [#1120](https://github.com/manfredsteyer/angular-oauth2-oidc/issues/1120) ([b44e19a](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/b44e19a2f5c758e3b5dab259336ee1974bfe99c8))
 * **js-sha256:** wrap logic in a function to prevent optimizer destroy lib ([ae26fba](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/ae26fba258cc3effd693d23473ff51b63005b9ae))
-* **jwks:** update jsrsasign dependency to 10.2.0 ([a05bd8a](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/a05bd8a106035acb51fb06fd62e17de0de8decb4)), closes [#1061](https://github.com/manfredsteyer/angular-oauth2-oidc/issues/1061)
-* multiplying calls to token endpoint in code flow ([59f65d2](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/59f65d2eb9cd1a724301fb3de0b3def796920bd4))
-* Refresh tokens with a plus sign get corrupted before sending to token endpoint ([2204c5a](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/2204c5a307640d11b847a0c266b44ca2c18fd9a7))
-* **revoketokenandlogout:** 'customParameters' should accept boolean ([9761bad](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/9761baded0d85bd831947de4607296fb029579ab))
-* While Using POPUP mode, we click on login button multiple time it opens multiple popup instead of focusing already opened ([bbff95b](https://github.com/manfredsteyer/angular-oauth2-oidc/commit/bbff95b86173fa9262bf962e7fa4cfe4121b787e))
 
-## [12.0.0](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/v10.0.3...v10.0.2) (2021-07-16)
+## [12.0.0](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/10.0.0...12.0.0) (2021-07-16)
 
 
 ### Bug Fixes
@@ -99,13 +217,6 @@
 
 
 # [10.0.0](https://github.com/manfredsteyer/angular-oauth2-oidc/compare/v9.3.0...v10.0.0) (2020-06-30)
-
-
-
-# Changelog
-
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
-
 
 ### Features
 

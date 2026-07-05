@@ -30,19 +30,13 @@ export abstract class OAuthEvent {
 }
 
 export class OAuthSuccessEvent extends OAuthEvent {
-  constructor(
-    type: EventType,
-    readonly info: any = null
-  ) {
+  constructor(type: EventType, readonly info: any = null) {
     super(type);
   }
 }
 
 export class OAuthInfoEvent extends OAuthEvent {
-  constructor(
-    type: EventType,
-    readonly info: any = null
-  ) {
+  constructor(type: EventType, readonly info: any = null) {
     super(type);
   }
 }
