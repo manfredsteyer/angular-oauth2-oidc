@@ -108,6 +108,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   protected sessionCheckTimer: any;
   protected silentRefreshSubject: string;
   protected inImplicitFlow = false;
+  protected lastUpdatedAccessToken: string | null = null;
 
   protected saveNoncesInLocalStorage = false;
   private document: Document;
@@ -172,6 +173,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
 
     this.setupRefreshTimer();
+
+    if (this.hasValidAccessToken()) {
+      this.lastUpdatedAccessToken = this.getAccessToken();
+    }
   }
 
   private checkLocalStorageAccessable() {
@@ -928,6 +933,27 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * method silentRefresh.
    */
   public refreshToken(): Promise<TokenResponse> {
+    // Handle multiple browser tabs if navigator.locks is available
+    if (!navigator.locks) {
+      return this._refreshToken();
+    }
+    return navigator.locks.request(
+      `refresh_token_${location.origin}`,
+      async (): Promise<TokenResponse> => {
+        if (this.lastUpdatedAccessToken !== this.getAccessToken()) {
+          // Was already updated in another tab/window
+          this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
+          this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
+          this.lastUpdatedAccessToken = this.getAccessToken();
+          return;
+        } else {
+          // Simply run the original update
+          return this._refreshToken();
+        }
+      }
+    );
+  }
+  protected _refreshToken(): Promise<TokenResponse> {
     this.assertUrlNotNullAndCorrectProtocol(
       this.tokenEndpoint,
       'tokenEndpoint'
@@ -1050,6 +1076,32 @@ export class OAuthService extends AuthConfig implements OnDestroy {
    * the existing tokens expire.
    */
   public silentRefresh(
+    params: object = {},
+    noPrompt = true
+  ): Promise<OAuthEvent> {
+    // Handle multiple browser tabs if navigator.locks is available
+    if (!navigator.locks) {
+      return this._silentRefresh(params, noPrompt);
+    }
+    return navigator.locks.request(
+      `silent_refresh_${location.origin}`,
+      async (): Promise<OAuthEvent> => {
+        if (this.lastUpdatedAccessToken !== this.getAccessToken()) {
+          // Was already updated in another tab/window
+          this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
+          this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
+          const event = new OAuthSuccessEvent('silently_refreshed');
+          this.eventsSubject.next(event);
+          this.lastUpdatedAccessToken = this.getAccessToken();
+          return event;
+        } else {
+          // Simply run the original update
+          return this._silentRefresh(params, noPrompt);
+        }
+      }
+    );
+  }
+  protected _silentRefresh(
     params: object = {},
     noPrompt = true
   ): Promise<OAuthEvent> {
@@ -1678,6 +1730,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     customParameters?: Map<string, string>
   ): void {
     this._storage.setItem('access_token', accessToken);
+    this.lastUpdatedAccessToken = accessToken;
     if (grantedScopes && !Array.isArray(grantedScopes)) {
       this._storage.setItem(
         'granted_scopes',
@@ -2495,6 +2548,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
     const id_token = this.getIdToken();
     this._storage.removeItem('access_token');
+    this.lastUpdatedAccessToken = null;
     this._storage.removeItem('id_token');
     this._storage.removeItem('refresh_token');
 
