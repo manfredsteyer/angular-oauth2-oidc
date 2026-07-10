@@ -2101,7 +2101,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         userState = state.substr(idx + this.config.nonceStateSeparator.length);
       }
     }
-    return [nonce, userState];
+    return [nonce, decodeURIComponent(userState)];
   }
 
   protected validateNonce(nonceInState: string): boolean {
