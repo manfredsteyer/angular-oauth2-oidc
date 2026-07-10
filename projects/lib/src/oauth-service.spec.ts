@@ -71,4 +71,20 @@ describe('OAuthService', () => {
 
     await expectAsync(revokePromise).toBeResolved();
   });
+
+  it('decodes userState from code-flow state (no double encoding)', async () => {
+    service.configure({
+      clientId: 'test-client',
+      loginUrl: 'https://auth.example.com/auth',
+      responseType: 'code',
+    });
+
+    const original =
+      '/titles/automation-dashboard?pageSize=25&page=1&title_id_name=finals';
+    const url = await (service as any).createLoginUrl(original);
+    const stateParam = new URL(url).searchParams.get('state');
+    const [, userState] = (service as any).parseState(stateParam);
+
+    expect(userState).toBe(original);
+  });
 });
