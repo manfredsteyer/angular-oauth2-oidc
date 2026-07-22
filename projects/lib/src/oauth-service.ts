@@ -1275,7 +1275,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       return;
     }
 
-    return '#' + prefixedMessage.substr(expectedPrefix.length);
+    return '#' + prefixedMessage.substring(expectedPrefix.length);
   }
 
   protected canPerformSessionCheck(): boolean {
@@ -1726,7 +1726,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
 
     if (queryString.charAt(0) === '?') {
-      queryString = queryString.substr(1);
+      queryString = queryString.substring(1);
     }
 
     return this.urlHelper.parseQueryString(queryString);
@@ -1831,7 +1831,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
     // normalize query string
     if (queryString.charAt(0) === '?') {
-      queryString = queryString.substr(1);
+      queryString = queryString.substring(1);
     }
 
     return this.urlHelper.parseQueryString(queryString);
@@ -2097,8 +2097,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     if (state) {
       const idx = state.indexOf(this.config.nonceStateSeparator);
       if (idx > -1) {
-        nonce = state.substr(0, idx);
-        userState = state.substr(idx + this.config.nonceStateSeparator.length);
+        nonce = state.substring(0, idx);
+        userState = state.substring(idx + this.config.nonceStateSeparator.length);
       }
     }
     return [nonce, userState];

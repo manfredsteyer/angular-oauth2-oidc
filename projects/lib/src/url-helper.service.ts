@@ -14,9 +14,9 @@ export class UrlHelperService {
     const questionMarkPosition = hash.indexOf('?');
 
     if (questionMarkPosition > -1) {
-      hash = hash.substr(questionMarkPosition + 1);
+      hash = hash.substring(questionMarkPosition + 1);
     } else {
-      hash = hash.substr(1);
+      hash = hash.substring(1);
     }
 
     return this.parseQueryString(hash);
@@ -40,15 +40,15 @@ export class UrlHelperService {
         escapedKey = pair;
         escapedValue = null;
       } else {
-        escapedKey = pair.substr(0, separatorIndex);
-        escapedValue = pair.substr(separatorIndex + 1);
+        escapedKey = pair.substring(0, separatorIndex);
+        escapedValue = pair.substring(separatorIndex + 1);
       }
 
       key = decodeURIComponent(escapedKey);
       value = decodeURIComponent(escapedValue);
 
-      if (key.substr(0, 1) === '/') {
-        key = key.substr(1);
+      if (key.substring(0, 1) === '/') {
+        key = key.substring(1);
       }
 
       data[key] = value;

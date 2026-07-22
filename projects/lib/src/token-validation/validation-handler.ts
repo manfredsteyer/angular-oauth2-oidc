@@ -48,7 +48,7 @@ export abstract class AbstractValidationHandler implements ValidationHandler {
 
     const tokenHash = await this.calcHash(params.accessToken, hashAlg); // sha256(accessToken, { asString: true });
 
-    const leftMostHalf = tokenHash.substr(0, tokenHash.length / 2);
+    const leftMostHalf = tokenHash.substring(0, tokenHash.length / 2);
 
     const atHash = base64UrlEncode(leftMostHalf);
 
@@ -75,7 +75,7 @@ export abstract class AbstractValidationHandler implements ValidationHandler {
       throw new Error('Algorithm not supported: ' + alg);
     }
 
-    return 'sha-' + alg.substr(2);
+    return 'sha-' + alg.substring(2);
   }
 
   /**
