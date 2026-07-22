@@ -12,7 +12,7 @@ export abstract class HashHandler {
   abstract calcHash(valueToHash: string, algorithm: string): Promise<string>;
 }
 
-function decodeUTF8(s) {
+function decodeUTF8(s: string) {
   if (typeof s !== 'string') throw new TypeError('expected string');
   const d = s,
     b = new Uint8Array(d.length);
@@ -20,7 +20,7 @@ function decodeUTF8(s) {
   return b;
 }
 
-function encodeUTF8(arr) {
+function encodeUTF8(arr: Uint8Array<ArrayBufferLike>) {
   const s = [];
   for (let i = 0; i < arr.length; i++) s.push(String.fromCharCode(arr[i]));
   return s.join('');

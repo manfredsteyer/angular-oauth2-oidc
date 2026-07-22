@@ -22,9 +22,8 @@ export class UrlHelperService {
     return this.parseQueryString(hash);
   }
 
-  public parseQueryString(queryString: string): object {
-    const data = {};
-    let pair, separatorIndex, escapedKey, escapedValue, key, value;
+  public parseQueryString(queryString: string | null): object {
+    const data: Record<string, string> = {};
 
     if (queryString === null) {
       return data;
@@ -33,8 +32,11 @@ export class UrlHelperService {
     const pairs = queryString.split('&');
 
     for (let i = 0; i < pairs.length; i++) {
-      pair = pairs[i];
-      separatorIndex = pair.indexOf('=');
+      const pair = pairs[i];
+      const separatorIndex = pair.indexOf('=');
+
+      let escapedKey: string;
+      let escapedValue: string | null;
 
       if (separatorIndex === -1) {
         escapedKey = pair;
@@ -44,8 +46,8 @@ export class UrlHelperService {
         escapedValue = pair.substring(separatorIndex + 1);
       }
 
-      key = decodeURIComponent(escapedKey);
-      value = decodeURIComponent(escapedValue);
+      let key = decodeURIComponent(escapedKey);
+      const value = decodeURIComponent(escapedValue);
 
       if (key.substring(0, 1) === '/') {
         key = key.substring(1);

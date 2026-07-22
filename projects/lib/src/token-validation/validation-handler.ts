@@ -1,10 +1,11 @@
 import { base64UrlEncode } from '../base64-helper';
+import { IdTokenClaims, IdTokenHeader } from '../types';
 
 export interface ValidationParams {
   idToken: string;
   accessToken: string;
-  idTokenHeader: object;
-  idTokenClaims: object;
+  idTokenHeader: IdTokenHeader;
+  idTokenClaims: IdTokenClaims;
   jwks: object;
   loadKeys: () => Promise<object>;
 }
@@ -68,7 +69,7 @@ export abstract class AbstractValidationHandler implements ValidationHandler {
    *
    * @param jwtHeader the id_token's parsed header
    */
-  protected inferHashAlgorithm(jwtHeader: object): string {
+  protected inferHashAlgorithm(jwtHeader: IdTokenHeader): string {
     const alg: string = jwtHeader['alg'];
 
     if (!alg.match(/^.S[0-9]{3}$/)) {
