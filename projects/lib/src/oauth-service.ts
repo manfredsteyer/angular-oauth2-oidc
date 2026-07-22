@@ -545,8 +545,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         return;
       }
 
-      this.http.get<OidcDiscoveryDoc>(fullUrl).subscribe(
-        (doc) => {
+      this.http.get<OidcDiscoveryDoc>(fullUrl).subscribe({
+        next: (doc) => {
           if (!this.validateDiscoveryDocument(doc)) {
             this.eventsSubject.next(
               new OAuthErrorEvent('discovery_document_validation_error', null)
@@ -598,36 +598,36 @@ export class OAuthService extends AuthConfig implements OnDestroy {
               return;
             });
         },
-        (err) => {
+        error: (err) => {
           this.logger.error('error loading discovery document', err);
           this.eventsSubject.next(
             new OAuthErrorEvent('discovery_document_load_error', err)
           );
           reject(err);
         }
-      );
+      });
     });
   }
 
   protected loadJwks(): Promise<object> {
     return new Promise<object>((resolve, reject) => {
       if (this.jwksUri) {
-        this.http.get(this.jwksUri).subscribe(
-          (jwks) => {
+        this.http.get(this.jwksUri).subscribe({
+          next: (jwks) => {
             this.jwks = jwks;
             // this.eventsSubject.next(
             //   new OAuthSuccessEvent('discovery_document_loaded')
             // );
             resolve(jwks);
           },
-          (err) => {
+          error: (err) => {
             this.logger.error('error loading jwks', err);
             this.eventsSubject.next(
               new OAuthErrorEvent('jwks_load_error', err)
             );
             reject(err);
           }
-        );
+        });
       } else {
         resolve(null);
       }
@@ -760,8 +760,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
           observe: 'response',
           responseType: 'text',
         })
-        .subscribe(
-          (response) => {
+        .subscribe({
+          next: (response) => {
             this.debug('userinfo received', JSON.stringify(response));
             if (
               response.headers
@@ -804,14 +804,14 @@ export class OAuthService extends AuthConfig implements OnDestroy {
               resolve(JSON.parse(response.body));
             }
           },
-          (err) => {
+          error: (err) => {
             this.logger.error('error loading user info', err);
             this.eventsSubject.next(
               new OAuthErrorEvent('user_profile_load_error', err)
             );
             reject(err);
           }
-        );
+        });
     });
   }
 
@@ -888,8 +888,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     return new Promise((resolve, reject) => {
       this.http
         .post<TokenResponse>(this.tokenEndpoint, params, { headers })
-        .subscribe(
-          (tokenResponse) => {
+        .subscribe({
+          next: (tokenResponse) => {
             this.debug('tokenResponse', tokenResponse);
             this.storeAccessTokenResponse(
               tokenResponse.access_token,
@@ -911,12 +911,12 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
             resolve(tokenResponse);
           },
-          (err) => {
+          error: (err) => {
             this.logger.error('Error performing ${grantType} flow', err);
             this.eventsSubject.next(new OAuthErrorEvent('token_error', err));
             reject(err);
           }
-        );
+        });
     });
   }
 
@@ -982,8 +982,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             }
           })
         )
-        .subscribe(
-          (tokenResponse) => {
+        .subscribe({
+          next: (tokenResponse) => {
             this.debug('refresh tokenResponse', tokenResponse);
             this.storeAccessTokenResponse(
               tokenResponse.access_token,
@@ -998,14 +998,14 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
             resolve(tokenResponse);
           },
-          (err) => {
+          error: (err) => {
             this.logger.error('Error refreshing token', err);
             this.eventsSubject.next(
               new OAuthErrorEvent('token_refresh_error', err)
             );
             reject(err);
           }
-        );
+        });
     });
   }
 
@@ -1896,8 +1896,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
 
       this.http
         .post<TokenResponse>(this.tokenEndpoint, params, { headers })
-        .subscribe(
-          (tokenResponse) => {
+        .subscribe({
+          next: (tokenResponse) => {
             this.debug('refresh tokenResponse', tokenResponse);
             this.storeAccessTokenResponse(
               tokenResponse.access_token,
@@ -1942,12 +1942,12 @@ export class OAuthService extends AuthConfig implements OnDestroy {
               resolve(tokenResponse);
             }
           },
-          (err) => {
+          error: (err) => {
             console.error('Error getting token', err);
             this.eventsSubject.next(new OAuthErrorEvent('token_error', err));
             reject(err);
           }
-        );
+        });
     });
   }
 
@@ -2853,20 +2853,20 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         );
       }
 
-      combineLatest([revokeAccessToken, revokeRefreshToken]).subscribe(
-        (res) => {
+      combineLatest([revokeAccessToken, revokeRefreshToken]).subscribe({
+        next: (res) => {
           this.logOut(customParameters);
           resolve(res);
           this.logger.info('Token successfully revoked');
         },
-        (err) => {
+        error: (err) => {
           this.logger.error('Error revoking token', err);
           this.eventsSubject.next(
             new OAuthErrorEvent('token_revoke_error', err)
           );
           reject(err);
         }
-      );
+      });
     });
   }
 
