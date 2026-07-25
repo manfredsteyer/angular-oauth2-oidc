@@ -192,6 +192,26 @@ export interface IdTokenHeader {
 }
 
 /**
+ * Represents JSON Web Key
+ * https://datatracker.ietf.org/doc/html/rfc7517#section-4
+ */
+export interface JwkKey {
+  kty: string;
+  use?: 'sig' | 'enc';
+  key_ops?: string[];
+  alg?: string;
+  kid?: string;
+}
+
+/**
+ * Represents JSON Web Key Set
+ * https://datatracker.ietf.org/doc/html/rfc7517#section-5
+ */
+export interface JwkSet {
+  keys: JwkKey[];
+}
+
+/**
  * Represents an OpenID Connect discovery document
  */
 export interface OidcDiscoveryDoc {

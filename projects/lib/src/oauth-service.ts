@@ -50,6 +50,7 @@ import {
   IdTokenClaims,
   UserInfo,
   IdTokenHeader,
+  JwkSet,
 } from './types';
 import { b64DecodeUnicode, base64UrlEncode } from './base64-helper';
 import { AuthConfig } from './auth.config';
@@ -612,8 +613,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     });
   }
 
-  protected loadJwks(): Promise<object> {
-    return new Promise<object>((resolve, reject) => {
+  protected loadJwks(): Promise<JwkSet | null> {
+    return new Promise<JwkSet | null>((resolve, reject) => {
       if (this.jwksUri) {
         this.http.get(this.jwksUri).subscribe({
           next: (jwks) => {
@@ -621,7 +622,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             // this.eventsSubject.next(
             //   new OAuthSuccessEvent('discovery_document_loaded')
             // );
-            resolve(jwks);
+            resolve(jwks as JwkSet);
           },
           error: (err) => {
             this.logger.error('error loading jwks', err);
@@ -2270,7 +2271,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     const validationParams: ValidationParams = {
       accessToken: accessToken,
       idToken: idToken,
-      jwks: this.jwks,
+      jwks: this.jwks as JwkSet,
       idTokenClaims: claims,
       idTokenHeader: header,
       loadKeys: () => this.loadJwks(),

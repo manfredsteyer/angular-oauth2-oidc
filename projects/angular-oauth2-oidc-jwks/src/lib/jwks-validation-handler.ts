@@ -1,6 +1,7 @@
 import * as rs from 'jsrsasign';
 import {
   AbstractValidationHandler,
+  JwkKey,
   ValidationParams,
 } from 'angular-oauth2-oidc';
 
@@ -50,9 +51,9 @@ export class JwksValidationHandler extends AbstractValidationHandler {
 
     // console.debug('validateSignature: retry', retry);
 
-    let kid: string = params.idTokenHeader['kid'];
-    let keys: object[] = params.jwks['keys'];
-    let key: object;
+    let kid = params.idTokenHeader['kid'];
+    let keys = params.jwks['keys'];
+    let key: JwkKey | undefined;
 
     let alg = params.idTokenHeader['alg'];
 

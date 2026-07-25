@@ -1,13 +1,13 @@
 import { base64UrlEncode } from '../base64-helper';
-import { IdTokenClaims, IdTokenHeader } from '../types';
+import { IdTokenClaims, IdTokenHeader, JwkKey, JwkSet } from '../types';
 
 export interface ValidationParams {
   idToken: string;
   accessToken: string;
   idTokenHeader: IdTokenHeader;
   idTokenClaims: IdTokenClaims;
-  jwks: object;
-  loadKeys: () => Promise<object>;
+  jwks: JwkSet | null;
+  loadKeys: () => Promise<JwkSet | null>;
 }
 
 /**
