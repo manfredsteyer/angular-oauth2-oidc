@@ -1720,18 +1720,6 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     }
   }
 
-  private parseQueryString(queryString: string): object {
-    if (!queryString || queryString.length === 0) {
-      return {};
-    }
-
-    if (queryString.charAt(0) === '?') {
-      queryString = queryString.substring(1);
-    }
-
-    return this.urlHelper.parseQueryString(queryString);
-  }
-
   public async tryLoginCodeFlow(options: LoginOptions = null): Promise<void> {
     options = options || {};
 
