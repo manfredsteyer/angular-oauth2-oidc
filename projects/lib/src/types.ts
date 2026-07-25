@@ -104,8 +104,8 @@ export abstract class OAuthStorage {
 export class MemoryStorage implements OAuthStorage {
   private data = new Map<string, string>();
 
-  getItem(key: string): string {
-    return this.data.get(key);
+  getItem(key: string): string | null {
+    return this.data.get(key) ?? null;
   }
 
   removeItem(key: string): void {
@@ -121,7 +121,7 @@ export class MemoryStorage implements OAuthStorage {
  * Represents the received tokens, the received state
  * and the parsed claims from the id-token.
  */
-export class ReceivedTokens {
+export interface ReceivedTokens {
   idToken: string;
   accessToken: string;
   idClaims?: object;
@@ -133,8 +133,8 @@ export class ReceivedTokens {
  */
 export interface ParsedIdToken {
   idToken: string;
-  idTokenClaims: object;
-  idTokenHeader: object;
+  idTokenClaims: IdTokenClaims;
+  idTokenHeader: IdTokenHeader;
   idTokenClaimsJson: string;
   idTokenHeaderJson: string;
   idTokenExpiresAt: number;
@@ -161,6 +161,54 @@ export interface TokenResponse {
 export interface UserInfo {
   sub: string;
   [key: string]: any;
+}
+
+/**
+ * Represents the parsed ID Token claims
+ * https://openid.net/specs/openid-connect-core-1_0.html#IDToken
+ */
+export interface IdTokenClaims {
+  aud: string | string[];
+  sub: string;
+  iat: number;
+  exp: number;
+  iss: string;
+  nonce: string;
+  at_hash: string;
+}
+
+/**
+ * Represents JOSE Header
+ * https://www.rfc-editor.org/info/rfc7515/#section-4
+ */
+export interface IdTokenHeader {
+  alg: string;
+  jku?: string;
+  jwk?: string;
+  kid?: string;
+  typ?: string;
+  cty?: string;
+  crit?: string[];
+}
+
+/**
+ * Represents JSON Web Key
+ * https://datatracker.ietf.org/doc/html/rfc7517#section-4
+ */
+export interface JwkKey {
+  kty: string;
+  use?: 'sig' | 'enc';
+  key_ops?: string[];
+  alg?: string;
+  kid?: string;
+}
+
+/**
+ * Represents JSON Web Key Set
+ * https://datatracker.ietf.org/doc/html/rfc7517#section-5
+ */
+export interface JwkSet {
+  keys: JwkKey[];
 }
 
 /**

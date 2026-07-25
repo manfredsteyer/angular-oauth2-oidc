@@ -14,17 +14,16 @@ export class UrlHelperService {
     const questionMarkPosition = hash.indexOf('?');
 
     if (questionMarkPosition > -1) {
-      hash = hash.substr(questionMarkPosition + 1);
+      hash = hash.substring(questionMarkPosition + 1);
     } else {
-      hash = hash.substr(1);
+      hash = hash.substring(1);
     }
 
     return this.parseQueryString(hash);
   }
 
-  public parseQueryString(queryString: string): object {
-    const data = {};
-    let pair, separatorIndex, escapedKey, escapedValue, key, value;
+  public parseQueryString(queryString: string | null): object {
+    const data: Record<string, string> = {};
 
     if (queryString === null) {
       return data;
@@ -33,22 +32,25 @@ export class UrlHelperService {
     const pairs = queryString.split('&');
 
     for (let i = 0; i < pairs.length; i++) {
-      pair = pairs[i];
-      separatorIndex = pair.indexOf('=');
+      const pair = pairs[i];
+      const separatorIndex = pair.indexOf('=');
+
+      let escapedKey: string;
+      let escapedValue: string | null;
 
       if (separatorIndex === -1) {
         escapedKey = pair;
         escapedValue = null;
       } else {
-        escapedKey = pair.substr(0, separatorIndex);
-        escapedValue = pair.substr(separatorIndex + 1);
+        escapedKey = pair.substring(0, separatorIndex);
+        escapedValue = pair.substring(separatorIndex + 1);
       }
 
-      key = decodeURIComponent(escapedKey);
-      value = decodeURIComponent(escapedValue);
+      let key = decodeURIComponent(escapedKey);
+      const value = decodeURIComponent(escapedValue);
 
-      if (key.substr(0, 1) === '/') {
-        key = key.substr(1);
+      if (key.substring(0, 1) === '/') {
+        key = key.substring(1);
       }
 
       data[key] = value;
