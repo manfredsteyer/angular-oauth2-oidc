@@ -1146,16 +1146,24 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     height?: number;
     width?: number;
     windowRef?: Window;
+    params?: string | object
   }) {
     options = options || {};
+
+    let addParams: object = {};
+    let loginHint: string = null;
+    if (typeof options.params === 'string') {
+      loginHint = options.params;
+    } else if (typeof options.params === 'object') {
+      addParams = options.params;
+    }
+    addParams['display'] = 'popup';
     return this.createLoginUrl(
       null,
-      null,
+      loginHint,
       this.silentRefreshRedirectUri,
       false,
-      {
-        display: 'popup',
-      }
+      addParams
     ).then((url) => {
       return new Promise((resolve, reject) => {
         /**
