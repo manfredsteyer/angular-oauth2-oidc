@@ -905,11 +905,13 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                 tokenResponse.access_token
               ).then((result) => {
                 this.storeIdToken(result);
+                this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
                 resolve(tokenResponse);
               });
+            } else {
+              this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
+              resolve(tokenResponse);
             }
-            this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
-            resolve(tokenResponse);
           },
           (err) => {
             this.logger.error('Error performing ${grantType} flow', err);
