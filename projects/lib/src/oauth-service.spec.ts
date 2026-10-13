@@ -71,4 +71,81 @@ describe('OAuthService', () => {
 
     await expectAsync(revokePromise).toBeResolved();
   });
+
+  it('should continue logout if token revocation for access token fails', async () => {
+    const revokePromise = service.revokeTokenAndLogout();
+
+    const requests = httpMock.match('https://auth.example.com/oauth/revoke');
+    expect(requests.length).toBe(2);
+    expect(
+      requests.map((request) =>
+        (request.request.body as HttpParams).get('token_type_hint')
+      )
+    ).toEqual(['access_token', 'refresh_token']);
+
+    for (const request of requests) {
+      expect(request.request.method).toBe('POST');
+      expect(request.request.responseType).toBe('text');
+      expect(request.request.headers.get('Content-Type')).toBe(
+        'application/x-www-form-urlencoded'
+      );
+      if ((request.request.body as HttpParams).get('token_type_hint') === 'access_token') {
+        const errorResponse = {
+          error_description: "Access token revocation is not supported",
+          error: "unsupported_token_type"
+        };
+        request.flush(errorResponse, { status: 400, statusText: 'Bad Request' });
+      } else {
+        request.flush('Token revoked');
+      }
+    }
+
+    await expectAsync(revokePromise).toBeResolved();
+  });
+
+  it('should continue logout if token revocation fails with retryable error', async () => {
+    const revokePromise = service.revokeTokenAndLogout();
+
+    const requests = httpMock.match('https://auth.example.com/oauth/revoke');
+    expect(requests.length).toBe(2);
+    expect(
+      requests.map((request) =>
+        (request.request.body as HttpParams).get('token_type_hint')
+      )
+    ).toEqual(['access_token', 'refresh_token']);
+
+    for (const request of requests) {
+      expect(request.request.method).toBe('POST');
+      expect(request.request.responseType).toBe('text');
+      expect(request.request.headers.get('Content-Type')).toBe(
+        'application/x-www-form-urlencoded'
+      );
+      request.flush('Service Unavailable', { status: 503, statusText: 'Service Unavailable' });
+    }
+
+    await expectAsync(revokePromise).toBeRejected();
+  });
+
+  it('should continue logout if token revocation fails with permanent error', async () => {
+    const revokePromise = service.revokeTokenAndLogout();
+
+    const requests = httpMock.match('https://auth.example.com/oauth/revoke');
+    expect(requests.length).toBe(2);
+    expect(
+      requests.map((request) =>
+        (request.request.body as HttpParams).get('token_type_hint')
+      )
+    ).toEqual(['access_token', 'refresh_token']);
+
+    for (const request of requests) {
+      expect(request.request.method).toBe('POST');
+      expect(request.request.responseType).toBe('text');
+      expect(request.request.headers.get('Content-Type')).toBe(
+        'application/x-www-form-urlencoded'
+      );
+      request.flush('Server Error', { status: 500, statusText: 'Server Error' });
+    }
+
+    await expectAsync(revokePromise).toBeRejected();
+  });
 });
