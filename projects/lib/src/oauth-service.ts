@@ -25,6 +25,7 @@ import {
   switchMap,
   debounceTime,
   catchError,
+  takeUntil,
 } from 'rxjs/operators';
 
 import { DateTimeProvider } from './date-time-provider';
@@ -108,6 +109,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   protected sessionCheckTimer: any;
   protected silentRefreshSubject: string;
   protected inImplicitFlow = false;
+  private refreshGeneration = 0;
+  private refreshCancellation = new Subject<void>();
 
   protected saveNoncesInLocalStorage = false;
   private document: Document;
@@ -932,7 +935,10 @@ export class OAuthService extends AuthConfig implements OnDestroy {
       this.tokenEndpoint,
       'tokenEndpoint'
     );
+    const generation = this.refreshGeneration;
+
     return new Promise((resolve, reject) => {
+      let settled = false;
       let params = new HttpParams({ encoder: new WebHttpUrlEncodingCodec() })
         .set('grant_type', 'refresh_token')
         .set('scope', this.scope)
@@ -973,18 +979,27 @@ export class OAuthService extends AuthConfig implements OnDestroy {
                   tokenResponse.access_token,
                   true
                 )
-              ).pipe(
-                tap((result) => this.storeIdToken(result)),
-                map(() => tokenResponse)
-              );
-            } else {
-              return of(tokenResponse);
+              ).pipe(map((idToken) => ({ tokenResponse, idToken })));
             }
-          })
+
+            return of({ tokenResponse, idToken: null });
+          }),
+          takeUntil(this.refreshCancellation)
         )
-        .subscribe(
-          (tokenResponse) => {
+        .subscribe({
+          next: ({ tokenResponse, idToken }) => {
+            if (generation !== this.refreshGeneration) {
+              settled = true;
+              reject(new Error('Token refresh canceled after logout'));
+              return;
+            }
+
             this.debug('refresh tokenResponse', tokenResponse);
+
+            if (idToken) {
+              this.storeIdToken(idToken);
+            }
+
             this.storeAccessTokenResponse(
               tokenResponse.access_token,
               tokenResponse.refresh_token,
@@ -995,17 +1010,31 @@ export class OAuthService extends AuthConfig implements OnDestroy {
             );
 
             this.eventsSubject.next(new OAuthSuccessEvent('token_received'));
+            if (generation !== this.refreshGeneration) {
+              settled = true;
+              reject(new Error('Token refresh canceled after logout'));
+              return;
+            }
+
             this.eventsSubject.next(new OAuthSuccessEvent('token_refreshed'));
+            settled = true;
             resolve(tokenResponse);
           },
-          (err) => {
+          error: (err) => {
+            settled = true;
             this.logger.error('Error refreshing token', err);
             this.eventsSubject.next(
               new OAuthErrorEvent('token_refresh_error', err)
             );
             reject(err);
-          }
-        );
+          },
+          complete: () => {
+            if (!settled) {
+              settled = true;
+              reject(new Error('Token refresh canceled after logout'));
+            }
+          },
+        });
     });
   }
 
@@ -2487,6 +2516,8 @@ export class OAuthService extends AuthConfig implements OnDestroy {
   public logOut(noRedirectToLogoutUrl: boolean): void;
   public logOut(noRedirectToLogoutUrl: boolean, state: string): void;
   public logOut(customParameters: boolean | object = {}, state = ''): void {
+    this.refreshGeneration++;
+    this.refreshCancellation.next();
     let noRedirectToLogoutUrl = false;
     if (typeof customParameters === 'boolean') {
       noRedirectToLogoutUrl = customParameters;
