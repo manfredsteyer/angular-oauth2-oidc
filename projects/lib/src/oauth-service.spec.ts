@@ -71,4 +71,60 @@ describe('OAuthService', () => {
 
     await expectAsync(revokePromise).toBeResolved();
   });
+
+  describe('loadDiscoveryDocument', () => {
+    const issuer = 'https://auth.example.com';
+    const discoveryUrl = `${issuer}/.well-known/openid-configuration`;
+    const offIssuerUrl = 'https://evil.example.org/x';
+    const validDoc = {
+      issuer,
+      authorization_endpoint: `${issuer}/authorize`,
+      token_endpoint: `${issuer}/token`,
+      revocation_endpoint: `${issuer}/revoke`,
+      userinfo_endpoint: `${issuer}/userinfo`,
+      end_session_endpoint: `${issuer}/logout`,
+    };
+
+    beforeEach(() => {
+      service.configure({ clientId: 'test-client', issuer });
+    });
+
+    it('should accept a discovery document whose endpoints match the issuer', async () => {
+      const promise = service.loadDiscoveryDocument();
+      httpMock.expectOne(discoveryUrl).flush(validDoc);
+
+      await expectAsync(promise).toBeResolved();
+      expect(service.tokenEndpoint).toBe(validDoc.token_endpoint);
+    });
+
+    for (const endpoint of ['token_endpoint', 'revocation_endpoint']) {
+      it(`should reject a discovery document with an off-issuer ${endpoint}`, async () => {
+        const promise = service.loadDiscoveryDocument();
+        httpMock
+          .expectOne(discoveryUrl)
+          .flush({ ...validDoc, [endpoint]: offIssuerUrl });
+
+        await expectAsync(promise).toBeRejectedWith(
+          'discovery_document_validation_error'
+        );
+        expect(service.tokenEndpoint).not.toBe(offIssuerUrl);
+        expect(service.revocationEndpoint).not.toBe(offIssuerUrl);
+      });
+    }
+
+    it('should accept an off-issuer token_endpoint when strictDiscoveryDocumentValidation is false', async () => {
+      service.configure({
+        clientId: 'test-client',
+        issuer,
+        strictDiscoveryDocumentValidation: false,
+      });
+      const promise = service.loadDiscoveryDocument();
+      httpMock
+        .expectOne(discoveryUrl)
+        .flush({ ...validDoc, token_endpoint: offIssuerUrl });
+
+      await expectAsync(promise).toBeResolved();
+      expect(service.tokenEndpoint).toBe(offIssuerUrl);
+    });
+  });
 });

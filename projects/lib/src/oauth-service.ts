@@ -670,6 +670,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         'error validating token_endpoint in discovery document',
         errors
       );
+      return false;
     }
 
     errors = this.validateUrlFromDiscoveryDocument(doc.revocation_endpoint);
@@ -678,6 +679,7 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         'error validating revocation_endpoint in discovery document',
         errors
       );
+      return false;
     }
 
     errors = this.validateUrlFromDiscoveryDocument(doc.userinfo_endpoint);
