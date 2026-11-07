@@ -1023,11 +1023,21 @@ export class OAuthService extends AuthConfig implements OnDestroy {
     this.removeSilentRefreshEventListener();
 
     this.silentRefreshPostMessageEventListener = (e: MessageEvent) => {
-      const message = this.processMessageEventMessage(e);
+      // Only the silent refresh iframe may answer. Other frames, popups and
+      // openers can post to this window too.
+      const iframe = this.document.getElementById(
+        this.silentRefreshIFrameName
+      ) as HTMLIFrameElement | null;
+      if (!iframe || e.source !== iframe.contentWindow) {
+        return;
+      }
 
       if (this.checkOrigin && e.origin !== location.origin) {
         console.error('wrong origin requested silent refresh!');
+        return;
       }
+
+      const message = this.processMessageEventMessage(e);
 
       this.tryLogin({
         customHashFragment: message,
@@ -1222,6 +1232,11 @@ export class OAuthService extends AuthConfig implements OnDestroy {
         };
 
         const listener = (e: MessageEvent) => {
+          // Only the login popup may answer.
+          if (!windowRef || e.source !== windowRef) {
+            return;
+          }
+
           const message = this.processMessageEventMessage(e);
 
           if (message && message !== null) {
