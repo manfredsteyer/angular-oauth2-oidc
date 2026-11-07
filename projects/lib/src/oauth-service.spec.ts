@@ -71,4 +71,64 @@ describe('OAuthService', () => {
 
     await expectAsync(revokePromise).toBeResolved();
   });
+
+  describe('postMessage listeners', () => {
+    let frame: HTMLIFrameElement;
+
+    const post = (source: Window) =>
+      window.dispatchEvent(
+        new MessageEvent('message', {
+          data: '#code=c&state=s',
+          origin: location.origin,
+          source,
+        })
+      );
+
+    beforeEach(() => {
+      frame = document.createElement('iframe');
+      document.body.appendChild(frame);
+    });
+
+    afterEach(() => {
+      service.ngOnDestroy();
+      frame.remove();
+    });
+
+    it('silent refresh only accepts messages from its iframe', () => {
+      const tryLogin = spyOn(service, 'tryLogin').and.resolveTo(true);
+      frame.id = service.silentRefreshIFrameName;
+      // protected; silentRefresh() would also navigate the iframe to the IdP
+      (
+        service as unknown as { setupSilentRefreshEventListener(): void }
+      ).setupSilentRefreshEventListener();
+
+      post(window);
+      expect(tryLogin).not.toHaveBeenCalled();
+
+      post(frame.contentWindow);
+      expect(tryLogin).toHaveBeenCalledTimes(1);
+    });
+
+    it('popup login only accepts messages from its popup', async () => {
+      service.configure({
+        clientId: 'test-client',
+        loginUrl: 'https://auth.example.com/authorize',
+        responseType: 'code',
+      });
+      const tryLogin = spyOn(service, 'tryLogin').and.resolveTo(true);
+      const open = spyOn(window, 'open').and.returnValue(frame.contentWindow);
+
+      const login = service.initLoginFlowInPopup();
+      while (!open.calls.any()) {
+        await new Promise((resolve) => setTimeout(resolve));
+      }
+
+      post(window);
+      expect(tryLogin).not.toHaveBeenCalled();
+
+      post(frame.contentWindow);
+      await expectAsync(login).toBeResolvedTo(true);
+      expect(tryLogin).toHaveBeenCalledTimes(1);
+    });
+  });
 });
